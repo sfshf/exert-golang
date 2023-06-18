@@ -1,0 +1,307 @@
+services:
+
+# Code repository tool.
+  goproxy:
+    image: goproxy/goproxy:latest
+    pull_policy: missing
+    command: [ "-proxy", "https://goproxy.cn" ]
+    container_name: goproxy.cn
+    hostname: repo.goproxy.cn
+    restart: always
+    user: root
+    networks:
+      repo_net:
+        ipv4_address: 172.168.1.2
+    ports:
+      - "8888:8081"
+    volumes:
+      - /srv/goproxy.cn/go:/go
+  gitlab:
+    image: gitlab/gitlab-ee:latest
+    pull_policy: missing
+    depends_on:
+      - goproxy
+    container_name: gitlab
+    hostname: repo.gitlab.cn
+    restart: always
+    user: root
+    networks:
+      repo_net:
+        ipv4_address: 172.168.1.3
+    ports:
+      - "30022:22"
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /srv/gitlab/config:/etc/gitlab
+      - /srv/gitlab/logs:/var/log/gitlab
+      - /srv/gitlab/data:/var/opt/gitlab
+    extra_hosts:
+      - "repo.goproxy.cn:172.168.1.2"
+  gitlab-runner-01:
+    image: gitlab/gitlab-runner:latest
+    pull_policy: missing
+    depends_on:
+      - goproxy
+      - gitlab
+    container_name: gitlab-runner-01
+    hostname: repo.gitlab-runner-01.cn
+    restart: always
+    user: root
+    networks:
+      repo_net:
+        ipv4_address: 172.168.1.4
+    volumes:
+      - /srv/gitlab/gitlab-runner-01/home:/home/gitlab-runner
+      - /srv/gitlab/gitlab-runner-01/config:/etc/gitlab-runner
+      - /var/run/docker.sock:/var/run/docker.sock
+    extra_hosts:
+      - "repo.goproxy.cn:172.168.1.2"
+      - "repo.gitlab.cn:172.168.1.3"
+#  gitlab-runner-02:
+#    image: gitlab/gitlab-runner:latest
+#    pull_policy: missing
+#    depends_on:
+#      - goproxy
+#      - gitlab
+#    container_name: gitlab-runner-02
+#    hostname: repo.gitlab-runner-02.cn
+#    restart: always
+#    user: root
+#    networks:
+#      repo_net:
+#        ipv4_address: 172.168.1.5
+#    volumes:
+#      - /srv/gitlab/gitlab-runner-02/home:/home/gitlab-runner
+#      - /srv/gitlab/gitlab-runner-02/config:/etc/gitlab-runner
+#      - /var/run/docker.sock:/var/run/docker.sock
+#    extra_hosts:
+#      - "repo.goproxy.cn:172.168.1.2"
+#      - "repo.gitlab.cn:172.168.1.3"
+
+# Chat web tool -- rocket.chat.
+  rocket-mongo:
+    image: mongo:4.0
+    pull_policy: missing
+    command: 'mongod --smallfiles --replSet rs0 --oplogSize 128'
+    container_name: rocket-mongo
+    hostname: mongo.rocket.chat
+    restart: always
+    user: root
+    networks:
+      repo_net:
+        ipv4_address: 172.168.1.10
+    volumes:
+      - /srv/rocket-chat/mongo/db:/data/db
+      - /srv/rocket-chat/mongo/configdb/:/data/configdb
+  rocket-mongo-tmp:
+    image: mongo:4.0
+    pull_policy: missing
+    command: 'mongo 172.168.1.10/rocketchat --eval "rs.initiate({ _id: ''rs0'', members: [ { _id: 0, host: ''localhost:27017'' } ]})"'
+    depends_on:
+      - rocket-mongo
+    container_name: rocket-mongo-tmp
+    links:
+      - rocket-mongo
+    restart: on-failure
+    user: root
+    networks:
+      repo_net:
+        ipv4_address: 172.168.1.11
+    extra_hosts:
+      - "mongo.rocket.chat:172.168.1.10"
+  rocket-chat:
+    image: rocket.chat:latest
+    pull_policy: missing
+    depends_on:
+      - rocket-mongo
+      - rocket-mongo-tmp
+    container_name: rocket-chat
+    links:
+      - rocket-mongo
+    hostname: main.rocket.chat
+    restart: always
+    user: root
+    networks:
+      repo_net:
+        ipv4_address: 172.168.1.12
+    ports:
+      - "33000:3000"
+    volumes:
+      - /srv/rocket-chat/app/uploads:/app/uploads
+    environment:
+      - ROOT_URL=http://localhost
+      - MONGO_OPLOG_URL=mongodb://rocket-mongo:27017/local
+    extra_hosts:
+      - "db:172.168.1.10"
+      - "rocket-mongo:172.168.1.10"
+
+# Project management web application -- redmine.
+  redmine-postgres:
+    image: postgres:latest
+    pull_policy: missing
+    container_name: redmine-postgres
+    hostname: postgres.redmine.cn
+    restart: always
+    user: root
+    networks:
+      repo_net:
+        ipv4_address: 172.168.1.13
+    volumes:
+      - /srv/redmine/postgresql/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=redmine-postgres-password
+      - POSTGRES_USER=redmine
+  redmine:
+    image: redmine:latest
+    pull_policy: missing
+    depends_on:
+      - redmine-postgres
+    container_name: redmine
+    links:
+      - redmine-postgres
+    hostname: main.redmine.cn
+    restart: always
+    user: root
+    networks:
+      repo_net:
+        ipv4_address: 172.168.1.14
+    ports:
+      - "33001:3000"
+    volumes:
+      - /srv/redmine/files:/usr/src/redmine/files
+    environment:
+      - REDMINE_DB_POSTGRES=redmine-postgres
+      - REDMINE_DB_USERNAME=redmine
+      - REDMINE_DB_PASSWORD=redmine-postgres-password
+    extra_hosts:
+      - "db:172.168.1.13"
+      - "redmine-postgres:172.168.1.13"
+
+# System or application monitor -- prometheus.
+  prometheus:
+    image: quay.io/prometheus/prometheus:latest
+    pull_policy: missing
+    container_name: prometheus
+    hostname: main.prometheus.cn
+    restart: always
+    user: root
+    networks:
+      repo_net:
+        ipv4_address: 172.168.1.15
+    ports:
+      - "9090:9090"
+    volumes:
+      - /srv/prometheus:/prometheus
+      - /srv/prometheus/config:/etc/prometheus
+  node-exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    pull_policy: missing
+    container_name: node-exporter
+    hostname: main.node-exporter.cn
+    restart: always
+    user: root
+    networks:
+      repo_net:
+        ipv4_address: 172.168.1.16
+    ports:
+      - "9100:9100"
+  alertmanager:
+    image: quay.io/prometheus/alertmanager:latest
+    pull_policy: missing
+    command: 
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--storage.path=/alertmanager'
+      - '--cluster.listen-address=0.0.0.0:9094'
+      - '--cluster.advertise-address=0.0.0.0:9094'
+    container_name: alertmanager
+    hostname: main.alertmanager.cn
+    restart: always
+    user: root
+    networks:
+      repo_net:
+        ipv4_address: 172.168.1.17
+    ports:
+      - "9093:9093"
+    volumes:
+      - /srv/alertmanager:/alertmanager
+      - /srv/alertmanager/config:/etc/alertmanager
+  # webhook service refer to https://github.com/webhooksite/webhook.site/blob/master/docker-compose.yml
+  webhook-redis:
+    image: "redis:alpine"
+    container_name: webhook-redis
+    restart: always
+    user: root
+    networks:
+      repo_net:
+        ipv4_address: 172.168.1.18
+  laravel-echo-server:
+    image: "mintopia/laravel-echo-server"
+    container_name: laravel-echo-server
+    restart: always
+    user: root
+    networks:
+      repo_net:
+        ipv4_address: 172.168.1.19
+    environment:
+      - LARAVEL_ECHO_SERVER_AUTH_HOST=http://webhook
+      - LARAVEL_ECHO_SERVER_HOST=0.0.0.0
+      - LARAVEL_ECHO_SERVER_PORT=6001
+      - ECHO_REDIS_PORT=6379
+      - ECHO_REDIS_HOSTNAME=redis
+      - ECHO_PROTOCOL=http
+      - ECHO_ALLOW_CORS=true
+      - ECHO_ALLOW_ORIGIN=*
+      - ECHO_ALLOW_METHODS=*
+      - ECHO_ALLOW_HEADERS=*
+  webhook:
+    image: "fredsted/webhook.site"
+    command: php artisan queue:work --daemon --tries=3 --timeout=10
+    container_name: webhook
+    hostname: main.webhook.cn
+    restart: always
+    user: root
+    networks:
+      repo_net:
+        ipv4_address: 172.168.1.20
+    ports:
+      - "8084:80"
+    environment:
+      - APP_ENV=dev
+      - APP_DEBUG=true
+      - APP_URL=http://localhost:8084
+      - APP_LOG=errorlog
+      - DB_CONNECTION=sqlite
+      - REDIS_HOST=redis
+      - BROADCAST_DRIVER=redis
+      - CACHE_DRIVER=redis
+      - QUEUE_DRIVER=redis
+      - ECHO_HOST_MODE=path
+    extra_hosts:
+      - "redis:172.168.1.18"
+      - "laravel-echo-server:172.168.1.19"
+    depends_on:
+      - webhook-redis
+
+# Network config.
+networks:
+  repo_net:
+    name: repo_net
+    attachable: true
+    enable_ipv6: false
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.168.0.0/16
+          ip_range: 172.168.1.0/24
+          gateway: 172.168.1.1
+
+# ip address ranges:
+# .0 -- subnet;
+# .1 -- gateway;
+# .2 ~ .49 -- system servers.
+# .50 ~ .59 -- govern servers.
+
+# Visit the Gitlab URL, and log in with username `root` and the password from the following command:
+# docker exec -it ${GITLAB_EE_CONTAINER_NAME} grep 'Password:' /etc/gitlab/initial_root_password
+# Then change your root password and create your project group if you want to.

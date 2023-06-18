@@ -1,0 +1,257 @@
+- name: 系统
+  seq: 99
+  icon: system.svg
+  route: /system
+  memo: 系统菜单
+  show: true
+  enable: true
+  isItem: false
+  widgets: null
+  children:
+    - name: 菜单设置
+      seq: 1
+      icon: system_menu.svg
+      route: /system/menu
+      memo: 系统菜单设置菜单项
+      show: true
+      enable: true
+      isItem: true
+      widgets: 
+        - name: 列表
+          seq: 1
+          icon: system_menu_list.svg
+          apiMethod: GET
+          apiPath: /api/v1/menus
+          memo: 菜单设置/列表接口
+          show: true
+          enable: true
+        - name: 新增
+          seq: 2
+          icon: system_menu_add.svg
+          apiMethod: POST
+          apiPath: /api/v1/menus
+          memo: 菜单设置/新增按钮
+          show: true
+          enable: true
+        - name: 详情
+          seq: 3
+          icon: system_menu_detail.svg
+          apiMethod: GET
+          apiPath: /api/v1/menus/:id
+          memo: 菜单设置/详情按钮
+          show: true
+          enable: true
+        - name: 编辑
+          seq: 4
+          icon: system_menu_edit.svg
+          apiMethod: PUT
+          apiPath: /api/v1/menus/:id
+          memo: 菜单设置/编辑按钮
+          show: true
+          enable: true
+        - name: 删除
+          seq: 5
+          icon: system_menu_remove.svg
+          apiMethod: DELETE
+          apiPath: /api/v1/menus/:id
+          memo: 菜单设置/删除按钮
+          show: true
+          enable: true
+        - name: 启用
+          seq: 6
+          icon: system_menu_enable.svg
+          apiMethod: PATCH
+          apiPath: /api/v1/menus/:id/enable
+          memo: 菜单设置/启用按钮
+          show: true
+          enable: true
+        - name: 停用
+          seq: 7
+          icon: system_menu_disable.svg
+          apiMethod: PATCH
+          apiPath: /api/v1/menus/:id/disable
+          memo: 菜单设置/停用按钮
+          show: true
+          enable: true
+    - name: 角色设置
+      seq: 2
+      icon: system_role.svg
+      route: /system/role
+      memo: 系统角色设置菜单项
+      show: true
+      enable: true
+      isItem: true
+      widgets: 
+        - name: 列表
+          seq: 1
+          icon: system_role_list.svg
+          apiMethod: GET
+          apiPath: /api/v1/roles
+          memo: 角色设置/列表接口
+          show: true
+          enable: true
+        - name: 新增
+          seq: 2
+          icon: system_role_add.svg
+          apiMethod: POST
+          apiPath: /api/v1/roles
+          memo: 角色设置/新增按钮
+          show: true
+          enable: true
+        - name: 详情
+          seq: 3
+          icon: system_role_detail.svg
+          apiMethod: GET
+          apiPath: /api/v1/roles/:id
+          memo: 角色设置/详情按钮
+          show: true
+          enable: true
+        - name: 编辑
+          seq: 4
+          icon: system_role_edit.svg
+          apiMethod: PUT
+          apiPath: /api/v1/roles/:id
+          memo: 角色设置/编辑按钮
+          show: true
+          enable: true
+        - name: 删除
+          seq: 5
+          icon: system_role_remove.svg
+          apiMethod: DELETE
+          apiPath: /api/v1/roles/:id
+          memo: 角色设置/删除按钮
+          show: true
+          enable: true
+        - name: 启用
+          seq: 6
+          icon: system_role_enable.svg
+          apiMethod: PATCH
+          apiPath: /api/v1/roles/:id/enable
+          memo: 角色设置/启用按钮
+          show: true
+          enable: true
+        - name: 停用
+          seq: 7
+          icon: system_role_disable.svg
+          apiMethod: PATCH
+          apiPath: /api/v1/roles/:id/disable
+          memo: 角色设置/停用按钮
+          show: true
+          enable: true
+        - name: 角色授权
+          seq: 8
+          icon: system_role_authorize.svg
+          apiMethod: PATCH
+          apiPath: /api/v1/roles/:id/authorize
+          memo: 角色设置/角色授权
+          show: true
+          enable: true
+    - name: 员工管理
+      seq: 3
+      icon: system_staff.svg
+      route: /system/staff
+      memo: 系统员工管理菜单项
+      show: true
+      enable: true
+      isItem: true
+      widgets: 
+        - name: 列表
+          seq: 1
+          icon: system_staff_list.svg
+          apiMethod: GET
+          apiPath: /api/v1/staffs
+          memo: 员工管理/列表接口
+          show: true
+          enable: true
+        - name: 新增
+          seq: 2
+          icon: system_staff_add.svg
+          apiMethod: POST
+          apiPath: /api/v1/staffs
+          memo: 员工管理/新增按钮
+          show: true
+          enable: true
+        - name: 详情
+          seq: 3
+          icon: system_staff_detail.svg
+          apiMethod: GET
+          apiPath: /api/v1/staffs/:id
+          memo: 员工管理/详情按钮
+          show: true
+          enable: true
+        - name: 编辑
+          seq: 4
+          icon: system_staff_edit.svg
+          apiMethod: PUT
+          apiPath: /api/v1/staffs/:id
+          memo: 员工管理/编辑按钮
+          show: true
+          enable: true
+        - name: 删除
+          seq: 5
+          icon: system_staff_remove.svg
+          apiMethod: DELETE
+          apiPath: /api/v1/staffs/:id
+          memo: 员工管理/删除按钮
+          show: true
+          enable: true
+        - name: 启用
+          seq: 6
+          icon: system_staff_enable.svg
+          apiMethod: PATCH
+          apiPath: /api/v1/staffs/:id/enable
+          memo: 员工管理/启用按钮
+          show: true
+          enable: true
+        - name: 停用
+          seq: 7
+          icon: system_staff_disable.svg
+          apiMethod: PATCH
+          apiPath: /api/v1/staffs/:id/disable
+          memo: 员工管理/停用按钮
+          show: true
+          enable: true
+- name: 日志
+  seq: 100
+  icon: log.svg
+  route: /log
+  memo: 日志菜单项
+  show: true
+  enable: true
+  isItem: false
+  widgets: null
+  children:
+    - name: 操作日志
+      seq: 1
+      icon: change_log.svg
+      route: /log/changeLog
+      memo: 操作日志菜单项
+      show: true
+      enable: true
+      isItem: true
+      widgets:
+        - name: 列表
+          seq: 1
+          icon: change_log_list.svg
+          apiMethod: GET
+          apiPath: /api/v1/changeLogs
+          memo: 操作日志/列表接口
+          show: true
+          enable: true
+    - name: 访问日志
+      seq: 1
+      icon: access_log.svg
+      route: /log/accessLog
+      memo: 访问日志菜单项
+      show: true
+      enable: true
+      isItem: true
+      widgets:
+        - name: 列表
+          seq: 1
+          icon: access_log_list.svg
+          apiMethod: GET
+          apiPath: /api/v1/accessLogs
+          memo: 访问日志/列表接口
+          show: true
+          enable: true

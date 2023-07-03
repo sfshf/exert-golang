@@ -7,6 +7,7 @@ import (
 	"crypto/tls"
 	_ "expvar"
 	"fmt"
+	"io"
 	"log"
 	stdlog "log"
 	"net/http"
@@ -51,10 +52,15 @@ import (
 // @in header
 // @name Authorization
 func main() {
+	log.SetFlags(log.Lshortfile | log.LstdFlags)
+	if config.C.RunMode != "debug" {
+		log.SetOutput(io.Discard)
+	}
 	app := &cli.App{
 		Name:  "govern",
 		Usage: "",
 		Action: func(cliCtx *cli.Context) error {
+			stdlog.SetFlags(stdlog.LstdFlags | stdlog.Llongfile)
 			state := 1
 			sc := make(chan os.Signal, 1)
 			signal.Notify(sc, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)

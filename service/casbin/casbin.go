@@ -25,10 +25,12 @@ type CasbinOption struct {
 func LaunchDefaultWithOption(ctx context.Context, opt CasbinOption) (clear func(), err error) {
 	m, err := model.NewModelFromFile(opt.Model)
 	if err != nil {
+		log.Println(err)
 		return
 	}
 	casbinEnforcer, err = casbin.NewEnforcer(m, repo.CasbinAdapter(ctx))
 	if err != nil {
+		log.Println(err)
 		return
 	}
 	casbinEnforcer.EnableLog(opt.Debug)
@@ -37,6 +39,10 @@ func LaunchDefaultWithOption(ctx context.Context, opt CasbinOption) (clear func(
 	}
 	casbinEnforcer.EnableAutoSave(opt.AutoSave)
 	casbinEnforcer.EnableEnforce(true)
+	if err = CasbinEnforcerWithContext(ctx).LoadPolicy(); err != nil {
+		log.Println(err)
+		return
+	}
 	log.Println("Authority enforcer is on!!!")
 	return func() {
 		casbinEnforcer.SavePolicy()

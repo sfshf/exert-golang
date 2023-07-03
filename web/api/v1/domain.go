@@ -451,12 +451,13 @@ func DisableDomain(c *gin.Context) {
 		); err != nil {
 			return nil, err
 		}
-		// reload casbin policies
-		if err = casbin.CasbinEnforcer().LoadPolicy(); err != nil {
-			return nil, err
-		}
 		return nil, nil
 	}); err != nil {
+		JSONWithImplicitError(c, err)
+		return
+	}
+	// NOTE: need to reload casbin policies
+	if err = casbin.CasbinEnforcer().LoadPolicy(); err != nil {
 		JSONWithImplicitError(c, err)
 		return
 	}
@@ -535,12 +536,13 @@ func RemoveDomain(c *gin.Context) {
 		); err != nil {
 			return nil, err
 		}
-		// reload casbin policies
-		if err = casbin.CasbinEnforcer().LoadPolicy(); err != nil {
-			return nil, err
-		}
 		return nil, nil
 	}); err != nil {
+		JSONWithImplicitError(c, err)
+		return
+	}
+	// NOTE: need to reload casbin policies
+	if err = casbin.CasbinEnforcer().LoadPolicy(); err != nil {
 		JSONWithImplicitError(c, err)
 		return
 	}

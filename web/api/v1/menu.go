@@ -477,11 +477,13 @@ func DisableMenu(c *gin.Context) {
 				return nil, err
 			}
 		}
-		if err = casbin.CasbinEnforcer().LoadPolicy(); err != nil {
-			return nil, err
-		}
 		return nil, nil
 	}); err != nil {
+		JSONWithImplicitError(c, err)
+		return
+	}
+	// NOTE: need to reload casbin policies.
+	if err = casbin.CasbinEnforcer().LoadPolicy(); err != nil {
 		JSONWithImplicitError(c, err)
 		return
 	}
@@ -579,11 +581,13 @@ func RemoveMenu(c *gin.Context) {
 				return nil, err
 			}
 		}
-		if err = casbin.CasbinEnforcer().LoadPolicy(); err != nil {
-			return nil, err
-		}
 		return nil, nil
 	}); err != nil {
+		JSONWithImplicitError(c, err)
+		return
+	}
+	// NOTE: need to reload casbin policies.
+	if err = casbin.CasbinEnforcer().LoadPolicy(); err != nil {
 		JSONWithImplicitError(c, err)
 		return
 	}

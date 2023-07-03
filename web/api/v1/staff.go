@@ -506,6 +506,12 @@ func AuthorizeStaffRolesInDomain(c *gin.Context) {
 		JSONWithImplicitError(c, err)
 		return
 	}
+	// NOTE: need to reload casbin policies.
+	if err := casbin.CasbinEnforcer().LoadPolicy(); err != nil {
+		log.Println(err)
+		JSONWithImplicitError(c, err)
+		return
+	}
 	JSONWithOK(c, nil)
 	return
 }
@@ -660,11 +666,14 @@ func DisableStaff(c *gin.Context) {
 		); err != nil {
 			return nil, err
 		}
-		if err = casbin.CasbinEnforcer().LoadPolicy(); err != nil {
-			return nil, err
-		}
 		return nil, nil
 	}); err != nil {
+		JSONWithImplicitError(c, err)
+		return
+	}
+	// NOTE: need to reload casbin policies.
+	if err := casbin.CasbinEnforcer().LoadPolicy(); err != nil {
+		log.Println(err)
 		JSONWithImplicitError(c, err)
 		return
 	}
@@ -717,11 +726,14 @@ func RemoveStaff(c *gin.Context) {
 		); err != nil {
 			return nil, err
 		}
-		if err = casbin.CasbinEnforcer().LoadPolicy(); err != nil {
-			return nil, err
-		}
 		return nil, nil
 	}); err != nil {
+		JSONWithImplicitError(c, err)
+		return
+	}
+	// NOTE: need to reload casbin policies.
+	if err := casbin.CasbinEnforcer().LoadPolicy(); err != nil {
+		log.Println(err)
 		JSONWithImplicitError(c, err)
 		return
 	}

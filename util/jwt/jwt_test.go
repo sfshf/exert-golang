@@ -10,7 +10,9 @@ import (
 
 func TestJwt(t *testing.T) {
 	subject := "test_subject"
-	token, err := jwt.GenerateToken(jwt.DefaultSigningMethod, "", jwt.NewJwtClaims(subject, 60))
+	domain := "test_domain"
+	role := "test_role"
+	token, err := jwt.GenerateToken(jwt.DefaultSigningMethod, "", jwt.NewJwtClaims(subject, domain, role, 60))
 	if err != nil {
 		assert.Fail(t, err.Error())
 	}

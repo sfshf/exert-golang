@@ -2,6 +2,7 @@ package api
 
 import (
 	"errors"
+	"log"
 	"strings"
 	"time"
 
@@ -391,45 +392,54 @@ func PatchStaffPassword(c *gin.Context) {
 
 // PatchStaffRolesReq  request parameter to update the roles of a specific staff.
 type PatchStaffRolesReq struct {
-	DomainID *primitive.ObjectID   `form:"domainID" json:"domainID" binding:"required" label:"域ID"` // 域ID
-	RoleIDs  []*primitive.ObjectID `form:"roleIDs" json:"roleIDs" binding:"" label:"角色IDs"`         // 角色IDs
+	RoleIDs []*primitive.ObjectID `form:"roleIDs" json:"roleIDs" binding:"" label:"角色IDs"` // 角色IDs
 }
 
-// PatchStaffRoles
-// @description update the roles of a staff account.
+// AuthorizeStaffRolesInDomain
+// @description update the roles of a staff account in some domain.
 // @id staff-update-roles
 // @tags staff
-// @summary update the roles of a staff account.
+// @summary update the roles of a staff account in some domain.
 // @accept json
 // @produce json
 // @param id path string true "id of the staff account to update."
+// @param domainId path string true "id of some domain."
 // @param body body PatchStaffRolesReq true "attributes need to update the roles."
 // @security ApiKeyAuth
 // @success 200 {null} null "successful action."
 // @failure 400 {error} error "bad request."
 // @failure 401 {error} error "unauthorized."
 // @failure 500 {error} error "internal server error."
-// @router /staffs/:id/roles [PATCH]
-func PatchStaffRoles(c *gin.Context) {
+// @router /staffs/:id/domains/:domainId/roles [POST]
+func AuthorizeStaffRolesInDomain(c *gin.Context) {
 	sessionID := SessionIdFromGinX(c)
 	sessionDT := model.NewDatetime(time.Now())
 	ctx := model.WithSession(c.Request.Context(), sessionID, sessionDT)
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
 	if err != nil {
+		log.Println(err)
+		JSONWithBadRequest(c, err)
+		return
+	}
+	domainID, err := model.ObjectIDPtrFromHex(c.Param("domainId"))
+	if err != nil {
+		log.Println(err)
 		JSONWithBadRequest(c, err)
 		return
 	}
 	var req PatchStaffRolesReq
 	if err = c.ShouldBindBodyWith(&req, binding.JSON); err != nil {
+		log.Println(err)
 		JSONWithBadRequest(c, err)
 		return
 	}
 	// validate domainID.
 	if _, err := repo.FindByID[model.Domain](
 		ctx,
-		req.DomainID,
+		domainID,
 		options.FindOne().SetProjection(bson.D{{Key: "_id", Value: 1}}),
 	); err != nil {
+		log.Println(err)
 		JSONWithBadRequest(c, err)
 		return
 	}
@@ -437,13 +447,15 @@ func PatchStaffRoles(c *gin.Context) {
 	if len(req.RoleIDs) > 0 {
 		if roles, err := repo.FindMany[model.Role](
 			ctx,
-			model.FilterEnabled(bson.D{{Key: "_id", Value: bson.E{Key: "$in", Value: req.RoleIDs}}}),
+			model.FilterEnabled(bson.D{{Key: "_id", Value: bson.D{{Key: "$in", Value: req.RoleIDs}}}}),
 			options.Find().SetProjection(bson.D{{Key: "_id", Value: 1}}),
 		); err != nil {
+			log.Println(err)
 			JSONWithBadRequest(c, err)
 			return
 		} else {
 			if len(roles) != len(req.RoleIDs) {
+				log.Println(err)
 				JSONWithBadRequest(c, errors.New("invalid role id."))
 				return
 			}
@@ -451,6 +463,7 @@ func PatchStaffRoles(c *gin.Context) {
 	}
 	session, err := repo.Client().StartSession()
 	if err != nil {
+		log.Println(err)
 		JSONWithImplicitError(c, err)
 		return
 	}
@@ -462,6 +475,7 @@ func PatchStaffRoles(c *gin.Context) {
 			bson.D{
 				{Key: "pType", Value: model.PTypeG},
 				{Key: "v0", Value: id.Hex()},
+				{Key: "v2", Value: domainID.Hex()},
 			},
 		); err != nil {
 			return nil, err
@@ -479,7 +493,7 @@ func PatchStaffRoles(c *gin.Context) {
 					PType: model.StringPtr(model.PTypeG),
 					V0:    model.StringPtr(id.Hex()),
 					V1:    model.StringPtr(v.Hex()),
-					V2:    model.StringPtr(req.DomainID.Hex()),
+					V2:    model.StringPtr(domainID.Hex()),
 				})
 			}
 			if _, err = repo.InsertMany[model.Casbin](sessCtx, newPolicies); err != nil {
@@ -488,6 +502,7 @@ func PatchStaffRoles(c *gin.Context) {
 		}
 		return nil, nil
 	}); err != nil {
+		log.Println(err)
 		JSONWithImplicitError(c, err)
 		return
 	}
@@ -495,22 +510,16 @@ func PatchStaffRoles(c *gin.Context) {
 	return
 }
 
-// StaffRolesRet return of getting roles of a staff.
-type StaffRolesRet struct {
-	PaginationRet
+// StaffDomainsRet return of getting domains of a staff.
+type StaffDomainsRet struct {
+	DomainIDs []*primitive.ObjectID `json:"domainIDs"` // 域IDs
 }
 
-// StaffRolesElem element of a staff's authorities.
-type StaffRolesElem struct {
-	DomainID *primitive.ObjectID   `json:"domainID"` // 域ID
-	RoleIDs  []*primitive.ObjectID `json:"roleIDs"`  // 角色IDs
-}
-
-// StaffRoles
-// @description get roles of a staff.
-// @id staff-roles
+// StaffDomains
+// @description get domains of a staff.
+// @id staff-domains
 // @tags staff
-// @summary get roles of a staff.
+// @summary get domains of a staff.
 // @accept json
 // @produce json
 // @param id path string true "id of the staff."
@@ -519,81 +528,61 @@ type StaffRolesElem struct {
 // @failure 400 {error} error "bad request."
 // @failure 401 {error} error "unauthorized."
 // @failure 500 {error} error "internal server error."
-// @router /staffs/:id/roles [GET]
-func StaffRoles(c *gin.Context) {
+// @router /staffs/:id/domains [GET]
+func StaffDomains(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
 	if err != nil {
 		JSONWithBadRequest(c, err)
 		return
 	}
-	domainIds, err := repo.Collection(model.Casbin{}).
-		Distinct(
-			ctx,
-			"v2",
-			model.FilterEnabled(bson.D{
-				{Key: "pType", Value: model.PTypeG},
-				{Key: "v0", Value: id.Hex()},
-			}),
-		)
+	domainIDs, err := model_service.GetDomainIDsOfStaff(ctx, id)
 	if err != nil {
 		JSONWithImplicitError(c, err)
 		return
 	}
-	var ret []StaffRolesElem
-	for _, domainId := range domainIds {
-		domainID, err := model.ObjectIDPtrFromHex(domainId.(string))
-		if err != nil {
-			JSONWithImplicitError(c, err)
-			return
-		}
-		roleIds, err := repo.Collection(model.Casbin{}).
-			Distinct(
-				ctx,
-				"v1",
-				model.FilterEnabled(bson.D{
-					{Key: "pType", Value: model.PTypeG},
-					{Key: "v0", Value: id.Hex()},
-					{Key: "v2", Value: domainId},
-				}),
-			)
-		if err != nil {
-			JSONWithImplicitError(c, err)
-			return
-		}
-		var roleIDs []*primitive.ObjectID
-		for _, v := range roleIds {
-			roleID, err := model.ObjectIDPtrFromHex(v.(string))
-			if err != nil {
-				JSONWithImplicitError(c, err)
-				return
-			}
-			roleIDs = append(roleIDs, roleID)
-		}
-		if roles, err := repo.FindMany[model.Role](
-			ctx,
-			model.FilterEnabled(bson.D{{Key: "_id", Value: bson.E{Key: "$in", Value: roleIDs}}}),
-			options.Find().SetProjection(bson.D{{Key: "_id", Value: 1}}),
-		); err != nil {
-			JSONWithImplicitError(c, err)
-			return
-		} else {
-			if len(roles) != len(roleIDs) {
-				JSONWithImplicitError(c, errors.New("invalid role id."))
-				return
-			}
-		}
-		ret = append(ret, StaffRolesElem{
-			DomainID: domainID,
-			RoleIDs:  roleIDs,
-		})
+	JSONWithOK(c, &StaffDomainsRet{DomainIDs: domainIDs})
+	return
+}
+
+// StaffRolesInDomainRet return of getting roles of a staff in some domain.
+type StaffRolesInDomainRet struct {
+	RoleIDs []*primitive.ObjectID `json:"roleIDs"` // 角色IDs
+}
+
+// StaffRolesInDomain
+// @description get roles of a staff in some domain.
+// @id staff-roles
+// @tags staff
+// @summary get roles of a staff in some domain.
+// @accept json
+// @produce json
+// @param id path string true "id of the staff."
+// @param domainId path string true "id of some domain."
+// @security ApiKeyAuth
+// @success 200 {null} null "successful action."
+// @failure 400 {error} error "bad request."
+// @failure 401 {error} error "unauthorized."
+// @failure 500 {error} error "internal server error."
+// @router /staffs/:id/domains/:domainId/roles [GET]
+func StaffRolesInDomain(c *gin.Context) {
+	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
+	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
+	if err != nil {
+		JSONWithBadRequest(c, err)
+		return
 	}
-	JSONWithOK(c, &StaffRolesRet{
-		PaginationRet{
-			List:  ret,
-			Total: int64(len(ret)),
-		},
-	})
+	domainID, err := model.ObjectIDPtrFromHex(c.Param("domainId"))
+	if err != nil {
+		JSONWithBadRequest(c, err)
+		return
+	}
+	roleIDs, err := model_service.GetRoleIDsOfStaffInDomain(ctx, domainID, id)
+	if err != nil {
+		JSONWithImplicitError(c, err)
+		return
+	}
+	JSONWithOK(c, &StaffRolesInDomainRet{RoleIDs: roleIDs})
 	return
 }
 
@@ -645,6 +634,10 @@ func DisableStaff(c *gin.Context) {
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
 	if err != nil {
 		JSONWithBadRequest(c, err)
+		return
+	}
+	if model_service.IsRoot(id) {
+		JSONWithForbidden(c, model_service.ErrForbidden)
 		return
 	}
 	session, err := repo.Client().StartSession()

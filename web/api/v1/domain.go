@@ -2,6 +2,7 @@ package api
 
 import (
 	"errors"
+	"sort"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -9,6 +10,7 @@ import (
 	"github.com/sfshf/exert-golang/model"
 	"github.com/sfshf/exert-golang/repo"
 	"github.com/sfshf/exert-golang/service/casbin"
+	"github.com/sfshf/exert-golang/service/model_service"
 	"github.com/sfshf/exert-golang/util/structure"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -67,9 +69,10 @@ func AddDomain(c *gin.Context) {
 
 // ListDomainReq search arguments to list domains.
 type ListDomainReq struct {
-	Name    *string `form:"name" json:"name" binding:"" label:"名称"`           // 名称
-	SortBy  SortBy  `form:"sortBy" json:"sortBy" binding:"" label:"字段排序条件"`   // 字段排序条件
-	Deleted *bool   `form:"deleted" json:"deleted" binging:"" label:"是否被软删除"` // 是否被软删除
+	Name     *string `form:"name" json:"name" binding:"" label:"名称"`                 // 名称
+	NeedTree bool    `form:"needTree" json:"needTree" binding:"" label:"数据是否要转为树结构"` // 数据是否要转为树结构
+	SortBy   SortBy  `form:"sortBy" json:"sortBy" binding:"" label:"字段排序条件"`         // 字段排序条件
+	Deleted  *bool   `form:"deleted" json:"deleted" binging:"" label:"是否被软删除"`       // 是否被软删除
 	PaginationArg
 }
 
@@ -150,6 +153,13 @@ func ListDomain(c *gin.Context) {
 		JSONWithImplicitError(c, err)
 		return
 	}
+	if req.NeedTree {
+		ret, err = domainListConvertedToTree(ret, "")
+		if err != nil {
+			JSONWithImplicitError(c, err)
+			return
+		}
+	}
 	JSONWithOK(c, &ListDomainRet{
 		PaginationRet{
 			List:  ret,
@@ -157,6 +167,43 @@ func ListDomain(c *gin.Context) {
 		},
 	})
 	return
+}
+
+// domainListConvertedToTree convert domain models to domain list views.
+func domainListConvertedToTree(menuList []*DomainListElem, parentID string) ([]*DomainListElem, error) {
+	siblinDomains := make([]*DomainListElem, 0)
+	remainDomains := make([]*DomainListElem, 0)
+	for i := 0; i < len(menuList); i++ {
+		if (menuList[i].ParentID == nil && parentID == "") || (menuList[i].ParentID != nil && menuList[i].ParentID.Hex() == parentID) {
+			siblinDomains = append(siblinDomains, menuList[i])
+		} else {
+			remainDomains = append(remainDomains, menuList[i])
+		}
+	}
+	sort.Slice(siblinDomains, func(i, j int) bool {
+		if siblinDomains[i].Seq != nil && siblinDomains[j].Seq != nil {
+			return *siblinDomains[i].Seq < *siblinDomains[j].Seq
+		} else {
+			return false
+		}
+	})
+	if len(remainDomains) > 0 {
+		for i := 0; i < len(siblinDomains); i++ {
+			children, err := domainListConvertedToTree(remainDomains, siblinDomains[i].ID.Hex())
+			if err != nil {
+				return nil, err
+			}
+			sort.Slice(children, func(i, j int) bool {
+				if children[i].Seq != nil && children[j].Seq != nil {
+					return *children[i].Seq < *children[j].Seq
+				} else {
+					return false
+				}
+			})
+			siblinDomains[i].Children = children
+		}
+	}
+	return siblinDomains, nil
 }
 
 // ProfileDomainRet return of profiling a domain.
@@ -308,7 +355,7 @@ func EnableDomain(c *gin.Context) {
 				one.ParentID,
 				options.FindOne().SetProjection(
 					bson.D{
-						{Key: "_id", Value: 0},
+						{Key: "_id", Value: 1},
 						{Key: "deletedAt", Value: 1},
 					},
 				),
@@ -316,25 +363,12 @@ func EnableDomain(c *gin.Context) {
 			if err != nil {
 				return nil, err
 			}
-			if parent.DeletedAt != nil && !parent.DeletedAt.Time().IsZero() {
-				return nil, errors.New("forbidden: target's parent is disabled")
+			if parent.DeletedAt != nil {
+				return nil, model_service.ClientError(errors.New("forbidden: target's parent is disabled"))
 			}
 		}
 		// enable the domain.
 		if _, err = repo.EnableOneByID[model.Domain](sessCtx, id); err != nil {
-			return nil, err
-		}
-		// NOTE: need to enable casbin policies that belong to the target domain.
-		if _, err = repo.EnableMany[model.Casbin](
-			sessCtx,
-			bson.D{{Key: "$or", Value: bson.D{
-				{Key: "$and", Value: bson.D{{Key: "pType", Value: model.PTypeP}, {Key: "v1", Value: id.Hex()}}},
-				{Key: "$and", Value: bson.D{{Key: "pType", Value: model.PTypeG}, {Key: "v2", Value: id.Hex()}}},
-			}}}); err != nil {
-			return nil, err
-		}
-		// reload casbin policies
-		if err = casbin.CasbinEnforcer().LoadPolicy(); err != nil {
 			return nil, err
 		}
 		return nil, nil
@@ -383,22 +417,36 @@ func DisableDomain(c *gin.Context) {
 		}
 		if _, err = repo.DisableMany[model.Domain](
 			sessCtx,
-			bson.D{{Key: "_id", Value: bson.E{Key: "$in", Value: domainIDsNeedToDisabled}}},
+			bson.D{{Key: "_id", Value: bson.D{{Key: "$in", Value: domainIDsNeedToDisabled}}}},
+		); err != nil {
+			return nil, err
+		}
+		// NOTE: disable the relative RelationDomainMenus.
+		if _, err = repo.DeleteMany[model.RelationDomainRoleMenu](
+			sessCtx,
+			bson.D{{Key: "domainID", Value: bson.D{{Key: "$in", Value: domainIDsNeedToDisabled}}}},
+		); err != nil {
+			return nil, err
+		}
+		// NOTE: disable the relative RelationDomainMenuWidgets.
+		if _, err = repo.DeleteMany[model.RelationDomainRoleMenuWidget](
+			sessCtx,
+			bson.D{{Key: "domainID", Value: bson.D{{Key: "$in", Value: domainIDsNeedToDisabled}}}},
 		); err != nil {
 			return nil, err
 		}
 		// NOTE: need to disable casbin policies that belong to the target domains.
-		if _, err = repo.DisableMany[model.Casbin](
+		if _, err = repo.DeleteMany[model.Casbin](
 			sessCtx,
-			bson.D{{Key: "$or", Value: bson.D{
-				{Key: "$and", Value: bson.D{
-					{Key: "pType", Value: model.PTypeP},
-					{Key: "v1", Value: bson.E{Key: "$in", Value: model.HexsFromObjectIDPtrs(domainIDsNeedToDisabled)}},
-				}},
-				{Key: "$and", Value: bson.D{
-					{Key: "pType", Value: model.PTypeG},
-					{Key: "v2", Value: bson.E{Key: "$in", Value: model.HexsFromObjectIDPtrs(domainIDsNeedToDisabled)}},
-				}},
+			bson.D{{Key: "$or", Value: bson.A{
+				bson.D{{Key: "$and", Value: bson.A{
+					bson.D{{Key: "pType", Value: model.PTypeP}},
+					bson.D{{Key: "v1", Value: bson.D{{Key: "$in", Value: model.HexsFromObjectIDPtrs(domainIDsNeedToDisabled)}}}},
+				}}}, // role policies.
+				bson.D{{Key: "$and", Value: bson.A{
+					bson.D{{Key: "pType", Value: model.PTypeG}},
+					bson.D{{Key: "v2", Value: bson.D{{Key: "$in", Value: model.HexsFromObjectIDPtrs(domainIDsNeedToDisabled)}}}},
+				}}}, // subject policies.
 			}}},
 		); err != nil {
 			return nil, err
@@ -444,14 +492,45 @@ func RemoveDomain(c *gin.Context) {
 	}
 	defer session.EndSession(ctx)
 	if _, err = session.WithTransaction(ctx, func(sessCtx mongo.SessionContext) (interface{}, error) {
-		if _, err = repo.DeleteByID[model.Domain](sessCtx, id); err != nil {
+		// NOTE: need to remove target's children.
+		domainIDsNeedToRemoved, err := repo.ProjectDescendantIDs[model.Domain](sessCtx, id)
+		if err != nil {
+			return nil, err
+		} else {
+			domainIDsNeedToRemoved = append(domainIDsNeedToRemoved, id)
+		}
+		if _, err = repo.DeleteMany[model.Domain](
+			sessCtx,
+			bson.D{{Key: "_id", Value: bson.D{{Key: "$in", Value: domainIDsNeedToRemoved}}}},
+		); err != nil {
 			return nil, err
 		}
+		// NOTE: remove the relative RelationDomainMenus.
+		if _, err = repo.DeleteMany[model.RelationDomainRoleMenu](
+			sessCtx,
+			bson.D{{Key: "domainID", Value: bson.D{{Key: "$in", Value: domainIDsNeedToRemoved}}}},
+		); err != nil {
+			return nil, err
+		}
+		// NOTE: remove the relative RelationDomainMenuWidgets.
+		if _, err = repo.DeleteMany[model.RelationDomainRoleMenuWidget](
+			sessCtx,
+			bson.D{{Key: "domainID", Value: bson.D{{Key: "$in", Value: domainIDsNeedToRemoved}}}},
+		); err != nil {
+			return nil, err
+		}
+		// NOTE: need to remove casbin policies that belong to the target domains.
 		if _, err = repo.DeleteMany[model.Casbin](
 			sessCtx,
-			bson.D{{Key: "$or", Value: bson.D{
-				{Key: "$and", Value: bson.D{{Key: "pType", Value: model.PTypeP}, {Key: "v1", Value: id.Hex()}}},
-				{Key: "$and", Value: bson.D{{Key: "pType", Value: model.PTypeG}, {Key: "v2", Value: id.Hex()}}},
+			bson.D{{Key: "$or", Value: bson.A{
+				bson.D{{Key: "$and", Value: bson.A{
+					bson.D{{Key: "pType", Value: model.PTypeP}},
+					bson.D{{Key: "v1", Value: bson.D{{Key: "$in", Value: model.HexsFromObjectIDPtrs(domainIDsNeedToRemoved)}}}},
+				}}}, // role policies.
+				bson.D{{Key: "$and", Value: bson.A{
+					bson.D{{Key: "pType", Value: model.PTypeG}},
+					bson.D{{Key: "v2", Value: bson.D{{Key: "$in", Value: model.HexsFromObjectIDPtrs(domainIDsNeedToRemoved)}}}},
+				}}}, // subject policies.
 			}}},
 		); err != nil {
 			return nil, err

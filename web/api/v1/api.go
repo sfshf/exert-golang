@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 	"strings"
@@ -87,13 +88,13 @@ func RegisterAPIs(ctx context.Context, router *gin.Engine, conf Config) {
 		v1.GET("/picCaptcha", GetPicCaptcha)
 		v1.POST("/signIn", SignIn(conf))
 		if conf.JWTAuth.Enable {
-			v1.Use(JWT(ctx, conf.JWTAuth.SigningKey))
+			v1.Use(JWT(ctx, conf.JWTAuth.SigningKey, conf.JWTAuth.Expired))
 		}
 		{
 			v1.GET("/picCaptchaAnswer", GetPicCaptchaAnswer)
-			v1.GET("/GetOwnDomains", GetOwnDomains)
+			v1.GET("/getOwnDomains", GetOwnDomains)
 			v1.GET("/getOwnRoles", GetOwnRoles)
-			v1.GET("/getOwnMenus", GetOwnMenus)
+			v1.GET("/getOwnMenus", GetOwnMenus(conf))
 			v1.POST("/signOut", SignOut)
 		}
 		v1.Use(Casbin(ctx))
@@ -104,8 +105,9 @@ func RegisterAPIs(ctx context.Context, router *gin.Engine, conf Config) {
 			staff.GET("/:id", ProfileStaff)
 			staff.PUT("/:id", EditStaff)
 			staff.PATCH("/:id/password", PatchStaffPassword)
-			staff.PATCH("/:id/roles", PatchStaffRoles)
-			staff.GET("/:id/roles", StaffRoles)
+			staff.GET("/:id/domains", StaffDomains)
+			staff.POST("/:id/domains/:domainId/roles", AuthorizeStaffRolesInDomain)
+			staff.GET("/:id/domains/:domainId/roles", StaffRolesInDomain)
 			staff.PATCH("/:id/enable", EnableStaff)
 			staff.PATCH("/:id/disable", DisableStaff)
 			mustRoot := staff.Group("", MustRoot())
@@ -123,7 +125,7 @@ func RegisterAPIs(ctx context.Context, router *gin.Engine, conf Config) {
 			domain.PATCH("/:id/disable", DisableDomain)
 			mustRoot := domain.Group("", MustRoot())
 			{
-				mustRoot.DELETE("/:id", RemoveRole)
+				mustRoot.DELETE("/:id", RemoveDomain)
 			}
 		}
 		role := v1.Group("/roles")
@@ -132,8 +134,9 @@ func RegisterAPIs(ctx context.Context, router *gin.Engine, conf Config) {
 			role.GET("", ListRole)
 			role.GET("/:id", ProfileRole)
 			role.PUT("/:id", EditRole)
-			role.PATCH("/:id/authorize", AuthorizeRole)
-			role.GET("/:id/authorities", GetAuthoritiesOfRole)
+			role.GET("/:id/domains", RoleDomains)
+			role.GET("/:id/authorities/:domainId", RoleAuthorities)
+			role.POST("/:id/authorize/:domainId", AuthorizeRole)
 			role.PATCH("/:id/enable", EnableRole)
 			role.PATCH("/:id/disable", DisableRole)
 			mustRoot := role.Group("", MustRoot())
@@ -484,6 +487,8 @@ func CORS(conf cors.Config) gin.HandlerFunc {
 
 const (
 	SessionIdKey = "sessionId"
+	DomainIDKey  = "domainID"
+	RoleIDKey    = "roleID"
 )
 
 func SessionIdFromGinX(c *gin.Context) *primitive.ObjectID {
@@ -494,39 +499,97 @@ func SessionIdFromGinX(c *gin.Context) *primitive.ObjectID {
 	}
 }
 
-func JWT(ctx context.Context, signingKey string) gin.HandlerFunc {
+func DomainIDFromGinX(c *gin.Context) *primitive.ObjectID {
+	if domainID, exists := c.Get(DomainIDKey); exists {
+		return domainID.(*primitive.ObjectID)
+	} else {
+		return nil
+	}
+}
+
+func RoleIDFromGinX(c *gin.Context) *primitive.ObjectID {
+	if roleID, exists := c.Get(RoleIDKey); exists {
+		return roleID.(*primitive.ObjectID)
+	} else {
+		return nil
+	}
+}
+
+func JWT(ctx context.Context, signingKey string, expired int64) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if jwtString := c.GetHeader("Authorization"); jwtString != "" {
 			claims, err := jwt.ParseToken(jwt.DefaultSigningMethod, signingKey, jwtString)
 			if err != nil {
+				log.Println(err)
 				JSONWithUnauthorized(c, err)
 				return
 			}
-			objId, err := model.ObjectIDPtrFromHex(claims.Subject)
+			sessionID, err := model.ObjectIDPtrFromHex(claims.Subject)
 			if err != nil {
+				log.Println(err)
+				JSONWithUnauthorized(c, err)
+				return
+			}
+			domainID, err := model.ObjectIDPtrFromHex(claims.Domain)
+			if err != nil {
+				log.Println(err)
+				JSONWithUnauthorized(c, err)
+				return
+			}
+			roleID, err := model.ObjectIDPtrFromHex(claims.Role)
+			if err != nil {
+				log.Println(err)
 				JSONWithUnauthorized(c, err)
 				return
 			}
 			// Verify whether the token is in use, to guarantee an account signed in by only one person.
 			staff, err := repo.FindOne[model.Staff](
 				ctx,
-				bson.M{"_id": objId},
+				bson.M{"_id": sessionID},
 				options.FindOne().SetProjection(bson.D{
 					{Key: "_id", Value: 1},
 					{Key: "signInToken", Value: 1},
-					{Key: "enable", Value: 1},
+					{Key: "deletedAt", Value: 1},
 				}))
 			if err != nil {
+				log.Println(err)
 				JSONWithUnauthorized(c, err)
 				return
 			}
-			if staff.DeletedAt == nil || staff.SignInToken == nil || *staff.SignInToken != jwtString {
+			if staff.DeletedAt != nil || staff.SignInToken == nil || *staff.SignInToken != jwtString {
 				JSONWithUnauthorized(c, model_service.ErrInvalidToken)
 				return
 			}
-			LogWithGinX(c, SessionIdKey, objId)
-			c.Set(SessionIdKey, objId)
+			LogWithGinX(c, SessionIdKey, sessionID)
+			c.Set(SessionIdKey, sessionID)
+			c.Set(DomainIDKey, domainID)
+			c.Set(RoleIDKey, roleID)
 			c.Next()
+			// NOTE: need to verify token's expiration, and refresh the token if is expired.
+			if claims.ExpiresAt.Add(-24 * time.Hour).Before(time.Now()) {
+				token, err := jwt.GenerateToken(
+					jwt.DefaultSigningMethod,
+					signingKey,
+					jwt.NewJwtClaims(
+						sessionID.Hex(),
+						domainID.Hex(),
+						roleID.Hex(),
+						time.Duration(expired),
+					),
+				)
+				if err != nil {
+					JSONWithImplicitError(c, err)
+					return
+				}
+				token = "Bearer " + token
+				if err = model_service.SignIn(ctx, c.ClientIP(), token); err != nil {
+					log.Println(err)
+					JSONWithImplicitError(c, err)
+					return
+				}
+				c.Header("Access-Control-Expose-Headers", "Authorization")
+				c.Header("Authorization", token)
+			}
 			return
 		} else {
 			JSONWithUnauthorized(c, model_service.ErrInvalidToken)
@@ -537,7 +600,7 @@ func JWT(ctx context.Context, signingKey string) gin.HandlerFunc {
 
 func MustRoot() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		if model_service.IsRoot(SessionIdFromGinX(c)) {
+		if !model_service.IsRoot(SessionIdFromGinX(c)) {
 			JSONWithUnauthorized(c, model_service.ErrUnauthorized)
 			return
 		}
@@ -585,11 +648,21 @@ func Casbin(ctx context.Context) gin.HandlerFunc {
 			c.Next()
 			return
 		}
+		domainID := DomainIDFromGinX(c)
+		if domainID == nil {
+			JSONWithUnauthorized(c, model_service.ErrUnauthorized)
+			return
+		}
+		// roleID := RoleIDFromGinX(c)
+		// if roleID == nil {
+		// 	JSONWithUnauthorized(c, model_service.ErrUnauthorized)
+		// 	return
+		// }
 		// https://casbin.org/docs/en/how-it-works#request
 		// A basic request is a tuple object, at least including
 		// subject (accessed entity), object (accessed resource) and action (access method).
 		authorized, err := casbin.CasbinEnforcerWithContext(ctx).
-			Enforce(sessionId.Hex(), c.FullPath(), c.Request.Method)
+			Enforce(sessionId.Hex(), domainID.Hex(), c.FullPath(), c.Request.Method)
 		if err != nil {
 			JSONWithUnauthorized(c, err)
 			return

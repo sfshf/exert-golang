@@ -10,6 +10,7 @@ import (
 	"github.com/sfshf/exert-golang/model"
 	"github.com/sfshf/exert-golang/repo"
 	"github.com/sfshf/exert-golang/service/casbin"
+	"github.com/sfshf/exert-golang/service/model_service"
 	"github.com/sfshf/exert-golang/util/structure"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -100,8 +101,8 @@ type ListMenuRet struct {
 	PaginationRet
 }
 
-// convertToTree convert menu models to menu list views.
-func convertToTree(menuList []*MenuListElem, parentID string) ([]*MenuListElem, error) {
+// menuListConvertedToTree convert menu models to menu list views.
+func menuListConvertedToTree(menuList []*MenuListElem, parentID string) ([]*MenuListElem, error) {
 	siblingMenus := make([]*MenuListElem, 0)
 	remainMenus := make([]*MenuListElem, 0)
 	for i := 0; i < len(menuList); i++ {
@@ -120,7 +121,7 @@ func convertToTree(menuList []*MenuListElem, parentID string) ([]*MenuListElem, 
 	})
 	if len(remainMenus) > 0 {
 		for i := 0; i < len(siblingMenus); i++ {
-			children, err := convertToTree(remainMenus, siblingMenus[i].ID.Hex())
+			children, err := menuListConvertedToTree(remainMenus, siblingMenus[i].ID.Hex())
 			if err != nil {
 				return nil, err
 			}
@@ -194,7 +195,7 @@ func ListMenu(c *gin.Context) {
 		return
 	}
 	if req.NeedTree {
-		ret, err = convertToTree(ret, "")
+		ret, err = menuListConvertedToTree(ret, "")
 		if err != nil {
 			JSONWithImplicitError(c, err)
 			return
@@ -360,7 +361,7 @@ func EnableMenu(c *gin.Context) {
 				one.ParentID,
 				options.FindOne().SetProjection(
 					bson.D{
-						{Key: "_id", Value: 0},
+						{Key: "_id", Value: 1},
 						{Key: "deletedAt", Value: 1},
 					},
 				),
@@ -368,8 +369,8 @@ func EnableMenu(c *gin.Context) {
 			if err != nil {
 				return nil, err
 			}
-			if parent.DeletedAt != nil && !parent.DeletedAt.Time().IsZero() {
-				return nil, errors.New("forbidden: target's parent is disabled")
+			if parent.DeletedAt != nil {
+				return nil, model_service.ClientError(errors.New("forbidden: target's parent is disabled"))
 			}
 		}
 		// enable the menu.
@@ -422,14 +423,14 @@ func DisableMenu(c *gin.Context) {
 		}
 		if _, err = repo.DisableMany[model.Menu](
 			sessCtx,
-			bson.D{{Key: "_id", Value: bson.E{Key: "$in", Value: menuIDsNeedToDisabled}}},
+			bson.D{{Key: "_id", Value: bson.D{{Key: "$in", Value: menuIDsNeedToDisabled}}}},
 		); err != nil {
 			return nil, err
 		}
 		// NOTE: need to disable relative MenuWidgets.
 		widgetsNeedToDisabled, err := repo.FindMany[model.MenuWidget](
 			sessCtx,
-			bson.D{{Key: "menuID", Value: bson.E{Key: "$in", Value: menuIDsNeedToDisabled}}},
+			bson.D{{Key: "menuID", Value: bson.D{{Key: "$in", Value: menuIDsNeedToDisabled}}}},
 			options.Find().SetProjection(bson.D{
 				{Key: "_id", Value: 1},
 				{Key: "apiMethod", Value: 1},
@@ -445,21 +446,21 @@ func DisableMenu(c *gin.Context) {
 		}
 		if _, err = repo.DisableMany[model.MenuWidget](
 			sessCtx,
-			bson.D{{Key: "_id", Value: bson.E{Key: "$in", Value: widgetIDsNeedToDisabled}}},
+			bson.D{{Key: "_id", Value: bson.D{{Key: "$in", Value: widgetIDsNeedToDisabled}}}},
 		); err != nil {
 			return nil, err
 		}
-		// NOTE: need to remove relative RelationRoleMenus.
-		if _, err = repo.DeleteMany[model.RelationRoleMenu](
+		// NOTE: need to remove relative RelationDomainRoleMenus.
+		if _, err = repo.DeleteMany[model.RelationDomainRoleMenu](
 			sessCtx,
-			bson.D{{Key: "menuID", Value: bson.E{Key: "$in", Value: menuIDsNeedToDisabled}}},
+			bson.D{{Key: "menuID", Value: bson.D{{Key: "$in", Value: menuIDsNeedToDisabled}}}},
 		); err != nil {
 			return nil, err
 		}
-		// NOTE: need to remove relative RelationRoleMenusWidgets.
-		if _, err = repo.DeleteMany[model.RelationRoleMenuWidget](
+		// NOTE: need to remove relative RelationDomainRoleMenuWidgets.
+		if _, err = repo.DeleteMany[model.RelationDomainRoleMenuWidget](
 			sessCtx,
-			bson.D{{Key: "widgetID", Value: bson.E{Key: "$in", Value: widgetIDsNeedToDisabled}}},
+			bson.D{{Key: "widgetID", Value: bson.D{{Key: "$in", Value: widgetIDsNeedToDisabled}}}},
 		); err != nil {
 			return nil, err
 		}
@@ -524,14 +525,14 @@ func RemoveMenu(c *gin.Context) {
 		}
 		if _, err = repo.DeleteMany[model.Menu](
 			sessCtx,
-			bson.D{{Key: "_id", Value: bson.E{Key: "$in", Value: menuIDsNeedToRemoved}}},
+			bson.D{{Key: "_id", Value: bson.D{{Key: "$in", Value: menuIDsNeedToRemoved}}}},
 		); err != nil {
 			return nil, err
 		}
 		// NOTE: need to remove relative MenuWidgets.
 		widgetsNeedToRemoved, err := repo.FindMany[model.MenuWidget](
 			sessCtx,
-			bson.D{{Key: "menuID", Value: bson.E{Key: "$in", Value: menuIDsNeedToRemoved}}},
+			bson.D{{Key: "menuID", Value: bson.D{{Key: "$in", Value: menuIDsNeedToRemoved}}}},
 			options.Find().SetProjection(bson.D{
 				{Key: "_id", Value: 1},
 				{Key: "apiMethod", Value: 1},
@@ -547,21 +548,21 @@ func RemoveMenu(c *gin.Context) {
 		}
 		if _, err = repo.DeleteMany[model.MenuWidget](
 			sessCtx,
-			bson.D{{Key: "_id", Value: bson.E{Key: "$in", Value: widgetIDsNeedToRemoved}}},
+			bson.D{{Key: "_id", Value: bson.D{{Key: "$in", Value: widgetIDsNeedToRemoved}}}},
 		); err != nil {
 			return nil, err
 		}
-		// NOTE: need to remove relative RelationRoleMenus.
-		if _, err = repo.DeleteMany[model.RelationRoleMenu](
+		// NOTE: need to remove relative RelationDomainRoleMenus.
+		if _, err = repo.DeleteMany[model.RelationDomainRoleMenu](
 			sessCtx,
-			bson.D{{Key: "menuID", Value: bson.E{Key: "$in", Value: menuIDsNeedToRemoved}}},
+			bson.D{{Key: "menuID", Value: bson.D{{Key: "$in", Value: menuIDsNeedToRemoved}}}},
 		); err != nil {
 			return nil, err
 		}
-		// NOTE: need to remove relative RelationRoleMenusWidgets.
-		if _, err = repo.DeleteMany[model.RelationRoleMenuWidget](
+		// NOTE: need to remove relative RelationDomainRoleMenuWidgets.
+		if _, err = repo.DeleteMany[model.RelationDomainRoleMenuWidget](
 			sessCtx,
-			bson.D{{Key: "widgetID", Value: bson.E{Key: "$in", Value: widgetIDsNeedToRemoved}}},
+			bson.D{{Key: "widgetID", Value: bson.D{{Key: "$in", Value: widgetIDsNeedToRemoved}}}},
 		); err != nil {
 			return nil, err
 		}

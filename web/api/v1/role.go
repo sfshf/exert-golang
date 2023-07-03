@@ -2,6 +2,8 @@ package api
 
 import (
 	"errors"
+	"log"
+	"slices"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -9,6 +11,7 @@ import (
 	"github.com/sfshf/exert-golang/model"
 	"github.com/sfshf/exert-golang/repo"
 	"github.com/sfshf/exert-golang/service/casbin"
+	"github.com/sfshf/exert-golang/service/model_service"
 	"github.com/sfshf/exert-golang/util/structure"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -18,7 +21,6 @@ import (
 
 // AddRoleReq arguments to add a role.
 type AddRoleReq struct {
-	Group *string   `form:"group" json:"group" binding:"" label:"分组"`       // 分组
 	Name  *string   `form:"name" json:"name" binding:"required" label:"名称"` // 名称
 	Alias *[]string `form:"alias" json:"alias" binding:"" label:"别名"`       // 别名
 	Seq   *int      `form:"seq" json:"seq" binding:"required" label:"序号"`   // 序号
@@ -63,13 +65,13 @@ func AddRole(c *gin.Context) {
 
 // ListRoleReq search arguments to list roles.
 type ListRoleReq struct {
-	Group          *string   `form:"group" json:"group" binding:"" label:"分组"`                                      // 分组
 	Name           *string   `form:"name" json:"name" binding:"" label:"名称"`                                        // 名称
 	Alias          *[]string `form:"alias" json:"alias" binding:"" label:"别名"`                                      // 别名
 	Seq            *int      `form:"seq" json:"seq" binding:"omitempty,gte=0" label:"序号"`                           // 序号
 	CreatedBy      *string   `form:"createdBy" json:"v" binding:"" label:"创建者"`                                     // 创建者
 	CreatedAtBegin *int64    `form:"createdAtBegin" json:"createdAtBegin" binding:"omitempty,gte=0" label:"创建时间起始"` // 创建时间起始
 	CreatedAtEnd   *int64    `form:"createdAtEnd" json:"createdAtEnd" binding:"omitempty,gte=0" label:"创建时间结束"`     // 创建时间结束
+	DomainID       *string   `form:"domainID" json:"domainID" binding:"" label:"域ID"`                               // 域ID
 	SortBy         SortBy    `form:"sortBy" json:"sortBy" binding:"" label:"字段排序条件"`                                // 字段排序条件
 	Deleted        *bool     `form:"deleted" json:"deleted" binging:"" label:"是否被软删除"`                              // 是否被软删除
 	PaginationArg
@@ -77,19 +79,20 @@ type ListRoleReq struct {
 
 // RoleListElem an element of role list.
 type RoleListElem struct {
-	ID        *primitive.ObjectID `json:"id,omitempty"`        // ID
-	Group     *string             `json:"group,omitempty"`     // 分组
-	Name      *string             `json:"name,omitempty"`      // 名称
-	Alias     *[]string           `json:"alias"`               // 别名
-	Seq       *int                `json:"seq,omitempty"`       // 序号
-	Icon      *string             `json:"icon,omitempty"`      // 图标
-	Memo      *string             `json:"memo,omitempty"`      // 备注
-	CreatedBy *primitive.ObjectID `json:"createdBy,omitempty"` // 创建者
-	CreatedAt *primitive.DateTime `json:"createdAt,omitempty"` // 创建时间、注册时间
-	UpdatedBy *primitive.ObjectID `json:"updatedBy,omitempty"` // 更新者
-	UpdatedAt *primitive.DateTime `json:"updatedAt,omitempty"` // 更新时间
-	DeletedBy *primitive.ObjectID `json:"deletedBy,omitempty"` // 禁用者
-	DeletedAt *primitive.DateTime `json:"deletedAt,omitempty"` // 禁用时间
+	ID          *primitive.ObjectID   `json:"id,omitempty"`          // ID
+	Name        *string               `json:"name,omitempty"`        // 名称
+	Alias       *[]string             `json:"alias"`                 // 别名
+	Seq         *int                  `json:"seq,omitempty"`         // 序号
+	Icon        *string               `json:"icon,omitempty"`        // 图标
+	Memo        *string               `json:"memo,omitempty"`        // 备注
+	CreatedBy   *primitive.ObjectID   `json:"createdBy,omitempty"`   // 创建者
+	CreatedAt   *primitive.DateTime   `json:"createdAt,omitempty"`   // 创建时间、注册时间
+	UpdatedBy   *primitive.ObjectID   `json:"updatedBy,omitempty"`   // 更新者
+	UpdatedAt   *primitive.DateTime   `json:"updatedAt,omitempty"`   // 更新时间
+	DeletedBy   *primitive.ObjectID   `json:"deletedBy,omitempty"`   // 禁用者
+	DeletedAt   *primitive.DateTime   `json:"deletedAt,omitempty"`   // 禁用时间
+	DomainIDs   []*primitive.ObjectID `json:"domainIDs,omitempty"`   // 域IDs
+	DomainNames []string              `json:"domainNames,omitempty"` // 域名
 }
 
 // ListRoleRet return of listing roles.
@@ -114,13 +117,11 @@ func ListRole(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	var req ListRoleReq
 	if err := c.ShouldBindQuery(&req); err != nil {
+		log.Println(err)
 		JSONWithBadRequest(c, err)
 		return
 	}
-	var and bson.D
-	if req.Group != nil {
-		and = append(and, bson.E{Key: "group", Value: req.Group})
-	}
+	var and bson.A
 	if req.Name != nil {
 		and = append(and, bson.E{Key: "name", Value: req.Name})
 	}
@@ -144,29 +145,78 @@ func ListRole(c *gin.Context) {
 	if len(and) > 0 {
 		filter = append(filter, bson.E{Key: "$and", Value: and})
 	}
-	total, err := repo.Collection(model.Role{}).CountDocuments(ctx, filter, options.Count().SetMaxTime(time.Minute))
-	if err != nil {
-		JSONWithImplicitError(c, err)
-		return
-	}
+	// total, err := repo.Collection(model.Role{}).CountDocuments(ctx, filter, options.Count().SetMaxTime(time.Minute))
+	// if err != nil {
+	// 	JSONWithImplicitError(c, err)
+	// 	return
+	// }
 	opt := options.Find().
 		SetSort(OrderByToBsonD(req.SortBy)).
 		SetSkip(req.PaginationArg.PerPage * (req.PaginationArg.Page - 1)).
 		SetLimit(req.PaginationArg.PerPage)
 	res, err := repo.FindMany[model.Role](ctx, filter, opt)
 	if err != nil {
+		log.Println(err)
 		JSONWithImplicitError(c, err)
 		return
 	}
 	ret := make([]*RoleListElem, 0, len(res))
 	if err = structure.Copy(&ret, res); err != nil {
+		log.Println(err)
 		JSONWithImplicitError(c, err)
+		return
+	}
+	for _, role := range ret {
+		domainIDs, err := model_service.GetDomainIDsOfRole(ctx, role.ID)
+		if err != nil {
+			log.Println(err)
+			JSONWithImplicitError(c, err)
+			return
+		}
+		if len(domainIDs) > 0 {
+			role.DomainIDs = domainIDs
+			names, err := repo.Collection(model.Domain{}).
+				Distinct(
+					ctx,
+					"name",
+					model.FilterEnabled(
+						bson.D{{Key: "_id", Value: bson.D{{Key: "$in", Value: domainIDs}}}},
+					))
+			if err != nil {
+				log.Println(err)
+				JSONWithImplicitError(c, err)
+				return
+			}
+			var domainNames []string
+			for _, dn := range names {
+				domainNames = append(domainNames, dn.(string))
+			}
+			role.DomainNames = domainNames
+		}
+	}
+	if req.DomainID != nil {
+		var ret2 []*RoleListElem
+		for _, role := range ret {
+			if len(role.DomainIDs) > 0 {
+				if slices.ContainsFunc[*primitive.ObjectID](role.DomainIDs, func(e *primitive.ObjectID) bool {
+					return e.Hex() == *req.DomainID
+				}) {
+					ret2 = append(ret2, role)
+				}
+			}
+		}
+		JSONWithOK(c, &ListRoleRet{
+			PaginationRet{
+				List:  ret2,
+				Total: int64(len(ret2)),
+			},
+		})
 		return
 	}
 	JSONWithOK(c, &ListRoleRet{
 		PaginationRet{
 			List:  ret,
-			Total: total,
+			Total: int64(len(ret)),
 		},
 	})
 	return
@@ -175,7 +225,6 @@ func ListRole(c *gin.Context) {
 // ProfileRoleRet return of profile a role.
 type ProfileRoleRet struct {
 	ID        *primitive.ObjectID `json:"id"`                  // ID
-	Group     *string             `json:"group,omitempty"`     // 分组
 	Name      *string             `json:"name,omitempty"`      // 名称
 	Alias     *[]string           `json:"alias,omitempty"`     // 别名
 	Seq       *int                `json:"seq,omitempty"`       // 序号
@@ -225,7 +274,6 @@ func ProfileRole(c *gin.Context) {
 
 // EditRoleReq arguments to edit a role.
 type EditRoleReq struct {
-	Group *string   `form:"group" json:"group" binding:"" label:"分组"` // 分组
 	Name  *string   `form:"name" json:"name" binding:"" label:"名称"`   // 名称
 	Alias *[]string `form:"alias" json:"alias" binding:"" label:"别名"` // 别名
 	Seq   *int      `form:"seq" json:"seq" binding:"" label:"序号"`     // 序号
@@ -273,11 +321,125 @@ func EditRole(c *gin.Context) {
 	return
 }
 
+// RoleDomainsRet return of getting domains of a role.
+type RoleDomainsRet struct {
+	DomainIDs []*primitive.ObjectID `json:"domainIDs"` // 域IDs
+}
+
+// RoleDomains
+// @description Get domains of a specific role.
+// @id role-domains
+// @tags role
+// @summary Get domains of a specific role.
+// @accept json
+// @produce json
+// @param id path string true "id of the role."
+// @security ApiKeyAuth
+// @success 200 {object} RoleDomainsRet "domains of the role."
+// @failure 400 {error} error "bad request."
+// @failure 401 {error} error "unauthorized."
+// @failure 500 {error} error "internal server error."
+// @router /roles/:id/domains [GET]
+func RoleDomains(c *gin.Context) {
+	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
+	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
+	if err != nil {
+		JSONWithBadRequest(c, err)
+		return
+	}
+	domainIDs, err := model_service.GetDomainIDsOfRole(ctx, id)
+	if err != nil {
+		JSONWithImplicitError(c, err)
+		return
+	}
+	JSONWithOK(c, RoleDomainsRet{domainIDs})
+	return
+}
+
+// RoleAuthoritiesRet return of getting authorities of a role.
+type RoleAuthoritiesRet struct {
+	MenuIDs   []*primitive.ObjectID `json:"menuIDs"`   // 菜单IDs
+	WidgetIDs []*primitive.ObjectID `json:"widgetIDs"` // 组件IDs
+}
+
+// RoleAuthorities
+// @description Get authorities of a specific role.
+// @id role-authorities
+// @tags role
+// @summary Get authorities of a specific role.
+// @accept json
+// @produce json
+// @param id path string true "id of the role."
+// @param domainId path string true "id of a domain which the role belongs to."
+// @security ApiKeyAuth
+// @success 200 {object} RoleAuthoritiesRet "authorities of the role."
+// @failure 400 {error} error "bad request."
+// @failure 401 {error} error "unauthorized."
+// @failure 500 {error} error "internal server error."
+// @router /roles/:id/authorities/:domainId [GET]
+func RoleAuthorities(c *gin.Context) {
+	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
+	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
+	if err != nil {
+		JSONWithBadRequest(c, err)
+		return
+	}
+	domainID, err := model.ObjectIDPtrFromHex(c.Param("domainId"))
+	if err != nil {
+		JSONWithBadRequest(c, err)
+		return
+	}
+	menuIDs, err := repo.ProjectMany(
+		ctx,
+		func(m model.RelationDomainRoleMenu) *primitive.ObjectID {
+			return m.MenuID
+		},
+		model.FilterEnabled(
+			bson.D{
+				{Key: "domainID", Value: domainID},
+				{Key: "roleID", Value: id},
+			},
+		),
+		options.Find().SetProjection(bson.D{
+			{Key: "_id", Value: 0},
+			{Key: "menuID", Value: 1},
+		}),
+	)
+	if err != nil {
+		JSONWithImplicitError(c, err)
+		return
+	}
+	widgetIDs, err := repo.ProjectMany(
+		ctx,
+		func(m model.RelationDomainRoleMenuWidget) *primitive.ObjectID {
+			return m.WidgetID
+		},
+		model.FilterEnabled(
+			bson.D{
+				{Key: "domainID", Value: domainID},
+				{Key: "roleID", Value: id},
+			},
+		),
+		options.Find().SetProjection(bson.D{
+			{Key: "_id", Value: 0},
+			{Key: "widgetID", Value: 1},
+		}),
+	)
+	if err != nil {
+		JSONWithImplicitError(c, err)
+		return
+	}
+	JSONWithOK(c, &RoleAuthoritiesRet{
+		MenuIDs:   menuIDs,
+		WidgetIDs: widgetIDs,
+	})
+	return
+}
+
 // AuthorizeRoleReq arguments to authorize a role.
 type AuthorizeRoleReq struct {
-	DomainID  *primitive.ObjectID   `form:"domainID" json:"domainID" binding:"required" label:"域ID"` // 域ID
-	MenuIDs   []*primitive.ObjectID `form:"menuIDs" json:"menuIDs" binding:"" label:"菜单的IDs"`        // 菜单的IDs
-	WidgetIDs []*primitive.ObjectID `form:"widgetIDs" json:"widgetIDs" binding:"" label:"控件的IDs"`    // 控件的IDs
+	MenuIDs   []*primitive.ObjectID `form:"menuIDs" json:"menuIDs" binding:"" label:"菜单的IDs"`     // 菜单的IDs
+	WidgetIDs []*primitive.ObjectID `form:"widgetIDs" json:"widgetIDs" binding:"" label:"控件的IDs"` // 控件的IDs
 }
 
 // AuthorizeRole
@@ -288,18 +450,24 @@ type AuthorizeRoleReq struct {
 // @accept json
 // @produce json
 // @param id path string true "id of the role to be allocated authorities."
+// @param domainId path string true "id of a domain which the role belongs to."
 // @param body body AuthorizeRoleReq true "menu-widgets pairs."
 // @security ApiKeyAuth
 // @success 200 {null} null "successful action."
 // @failure 400 {error} error "bad request."
 // @failure 401 {error} error "unauthorized."
 // @failure 500 {error} error "internal server error."
-// @router /roles/:id/authorize [PATCH]
+// @router /roles/:id/authorize/:domainId [POST]
 func AuthorizeRole(c *gin.Context) {
 	sessionID := SessionIdFromGinX(c)
 	sessionDT := model.NewDatetime(time.Now())
 	ctx := model.WithSession(c.Request.Context(), sessionID, sessionDT)
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
+	if err != nil {
+		JSONWithBadRequest(c, err)
+		return
+	}
+	domainID, err := model.ObjectIDPtrFromHex(c.Param("domainId"))
 	if err != nil {
 		JSONWithBadRequest(c, err)
 		return
@@ -312,18 +480,18 @@ func AuthorizeRole(c *gin.Context) {
 	// validate domainID.
 	if _, err := repo.FindByID[model.Domain](
 		ctx,
-		req.DomainID,
+		domainID,
 		options.FindOne().SetProjection(bson.D{{Key: "_id", Value: 1}}),
 	); err != nil {
 		JSONWithBadRequest(c, err)
 		return
 	}
-	var validMenuWidgets []model.MenuWidget
+	var requiredMenuWidgets []model.MenuWidget
 	// validate menuIDs and widgetIDs if has.
 	if len(req.MenuIDs) > 0 {
 		if menus, err := repo.FindMany[model.Menu](
 			ctx,
-			model.FilterEnabled(bson.D{{Key: "_id", Value: bson.E{Key: "$in", Value: req.MenuIDs}}}),
+			model.FilterEnabled(bson.D{{Key: "_id", Value: bson.D{{Key: "$in", Value: req.MenuIDs}}}}),
 			options.Find().SetProjection(bson.D{{Key: "_id", Value: 1}}),
 		); err != nil {
 			JSONWithBadRequest(c, err)
@@ -336,7 +504,7 @@ func AuthorizeRole(c *gin.Context) {
 		}
 		menuWidgets, err := repo.FindMany[model.MenuWidget](
 			ctx,
-			model.FilterEnabled(bson.D{{Key: "menuID", Value: bson.E{Key: "$in", Value: req.MenuIDs}}}),
+			model.FilterEnabled(bson.D{{Key: "menuID", Value: bson.D{{Key: "$in", Value: req.MenuIDs}}}}),
 			options.Find().SetProjection(bson.D{
 				{Key: "_id", Value: 1},
 				{Key: "apiMethod", Value: 1},
@@ -348,40 +516,42 @@ func AuthorizeRole(c *gin.Context) {
 			return
 		}
 		for _, v := range req.WidgetIDs {
-			var valid bool
+			var required bool
 			for _, w := range menuWidgets {
 				if v.Hex() == w.ID.Hex() {
-					valid = true
-					validMenuWidgets = append(validMenuWidgets, w)
+					required = true
+					requiredMenuWidgets = append(requiredMenuWidgets, w)
 					break
 				}
 			}
-			if !valid {
+			if !required {
 				JSONWithBadRequest(c, errors.New("invalid widget id"))
 				return
 			}
 		}
 	}
-	var relationRoleMenus []model.RelationRoleMenu
+	var relationDomainRoleMenus []model.RelationDomainRoleMenu
 	for _, v := range req.MenuIDs {
-		relationRoleMenus = append(relationRoleMenus, model.RelationRoleMenu{
+		relationDomainRoleMenus = append(relationDomainRoleMenus, model.RelationDomainRoleMenu{
 			Model: &model.Model{
 				ID:        model.NewObjectIDPtr(),
 				CreatedBy: sessionID,
 				CreatedAt: sessionDT,
 			},
-			RoleID: id,
-			MenuID: v,
+			DomainID: domainID,
+			RoleID:   id,
+			MenuID:   v,
 		})
 	}
-	var relationRoleMenuWidgets []model.RelationRoleMenuWidget
+	var relationDomainRoleMenuWidgets []model.RelationDomainRoleMenuWidget
 	for _, v := range req.WidgetIDs {
-		relationRoleMenuWidgets = append(relationRoleMenuWidgets, model.RelationRoleMenuWidget{
+		relationDomainRoleMenuWidgets = append(relationDomainRoleMenuWidgets, model.RelationDomainRoleMenuWidget{
 			Model: &model.Model{
 				ID:        model.NewObjectIDPtr(),
 				CreatedBy: sessionID,
 				CreatedAt: sessionDT,
 			},
+			DomainID: domainID,
 			RoleID:   id,
 			WidgetID: v,
 		})
@@ -393,27 +563,35 @@ func AuthorizeRole(c *gin.Context) {
 	}
 	defer session.EndSession(ctx)
 	if _, err = session.WithTransaction(ctx, func(sessCtx mongo.SessionContext) (interface{}, error) {
-		// NOTE: remove relations between the role and menus.
-		if _, err = repo.DeleteMany[model.RelationRoleMenu](
+		// NOTE: remove relative RelationDomainRoleMenus.
+		if _, err = repo.DeleteMany[model.RelationDomainRoleMenu](
 			sessCtx,
-			bson.D{{Key: "roleID", Value: id}},
+			bson.D{
+				{Key: "domainID", Value: domainID},
+				{Key: "roleID", Value: id},
+			},
 		); err != nil {
 			return nil, err
 		}
-		if len(relationRoleMenus) > 0 {
-			if _, err = repo.InsertMany(sessCtx, relationRoleMenus); err != nil {
+		// NOTE: insert new RelationDomainRoleMenus if has.
+		if len(relationDomainRoleMenus) > 0 {
+			if _, err = repo.InsertMany(sessCtx, relationDomainRoleMenus); err != nil {
 				return nil, err
 			}
 		}
-		// NOTE: remove relations between the role and menu-widgets.
-		if _, err = repo.DeleteMany[model.RelationRoleMenuWidget](
+		// NOTE: remove relative RelationDomainRoleMenuWidgets.
+		if _, err = repo.DeleteMany[model.RelationDomainRoleMenuWidget](
 			sessCtx,
-			bson.D{{Key: "roleID", Value: id}},
+			bson.D{
+				{Key: "domainID", Value: domainID},
+				{Key: "roleID", Value: id},
+			},
 		); err != nil {
 			return nil, err
 		}
-		if len(relationRoleMenuWidgets) > 0 {
-			if _, err = repo.InsertMany(sessCtx, relationRoleMenuWidgets); err != nil {
+		// NOTE: insert new RelationDomainRoleMenuWidgets if has.
+		if len(relationDomainRoleMenuWidgets) > 0 {
+			if _, err = repo.InsertMany(sessCtx, relationDomainRoleMenuWidgets); err != nil {
 				return nil, err
 			}
 		}
@@ -424,15 +602,15 @@ func AuthorizeRole(c *gin.Context) {
 			bson.D{
 				{Key: "pType", Value: model.PTypeP},
 				{Key: "v0", Value: id.Hex()},
-				{Key: "v1", Value: req.DomainID.Hex()},
+				{Key: "v1", Value: domainID.Hex()},
 			},
 		); err != nil {
 			return nil, err
 		}
 		// second step: insert new policies of the role.
-		if len(validMenuWidgets) > 0 {
+		if len(requiredMenuWidgets) > 0 {
 			newPolicies := make([]model.Casbin, 0, len(req.WidgetIDs))
-			for _, v := range validMenuWidgets {
+			for _, v := range requiredMenuWidgets {
 				// reference to https://casbin.org/docs/rbac-with-domains
 				newPolicies = append(newPolicies, model.Casbin{
 					Model: &model.Model{
@@ -442,7 +620,7 @@ func AuthorizeRole(c *gin.Context) {
 					},
 					PType: model.StringPtr(model.PTypeP),
 					V0:    model.StringPtr(id.Hex()),
-					V1:    model.StringPtr(req.DomainID.Hex()),
+					V1:    model.StringPtr(domainID.Hex()),
 					V2:    v.ApiPath,
 					V3:    v.ApiMethod,
 				})
@@ -461,135 +639,6 @@ func AuthorizeRole(c *gin.Context) {
 		return
 	}
 	JSONWithOK(c, nil)
-	return
-}
-
-// RoleAuthoritiesRet return of getting authorities of a role.
-type RoleAuthoritiesRet struct {
-	PaginationRet
-}
-
-// RoleAuthoritiesElem element of a role's authorities.
-type RoleAuthoritiesElem struct {
-	DomainID  *primitive.ObjectID   `json:"domainID"`  // 域ID
-	MenuIDs   []*primitive.ObjectID `json:"menuIDs"`   // 菜单IDs
-	WidgetIDs []*primitive.ObjectID `json:"widgetIDs"` // 组件IDs
-}
-
-// GetAuthoritiesOfRole
-// @description Get authorities of a specific role.
-// @id role-authorities
-// @tags role
-// @summary Get authorities of a specific role.
-// @accept json
-// @produce json
-// @param id path string true "id of the role."
-// @security ApiKeyAuth
-// @success 200 {object} RoleAuthoritiesRet "authorities of the role."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /roles/:id/authorities [GET]
-func GetAuthoritiesOfRole(c *gin.Context) {
-	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
-	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
-	if err != nil {
-		JSONWithBadRequest(c, err)
-		return
-	}
-	domainIds, err := repo.Collection(model.Casbin{}).
-		Distinct(
-			ctx,
-			"v1",
-			model.FilterEnabled(bson.D{
-				{Key: "pType", Value: model.PTypeP},
-				{Key: "v0", Value: id.Hex()},
-			}),
-		)
-	if err != nil {
-		JSONWithImplicitError(c, err)
-		return
-	}
-	var ret []RoleAuthoritiesElem
-	for _, domainId := range domainIds {
-		domainID, err := model.ObjectIDPtrFromHex(domainId.(string))
-		if err != nil {
-			JSONWithImplicitError(c, err)
-			return
-		}
-		apis, err := repo.FindMany[model.Casbin](
-			ctx,
-			model.FilterEnabled(
-				bson.D{
-					{Key: "pType", Value: model.PTypeP},
-					{Key: "v0", Value: id.Hex()},
-					{Key: "v1", Value: domainId},
-				},
-			),
-			options.Find().SetProjection(bson.D{
-				{Key: "_id", Value: 0},
-				{Key: "v2", Value: 1},
-				{Key: "v3", Value: 1},
-			}),
-		)
-		if err != nil {
-			JSONWithImplicitError(c, err)
-			return
-		}
-		var widgetIDs []*primitive.ObjectID
-		var menuIDs []*primitive.ObjectID
-		for _, api := range apis {
-			widget, err := repo.FindOne[model.MenuWidget](
-				ctx,
-				model.FilterEnabled(bson.D{
-					{Key: "apiPath", Value: api.V2},
-					{Key: "apiMethod", Value: api.V3},
-				}),
-				options.FindOne().SetProjection(bson.D{
-					{Key: "_id", Value: 1},
-					{Key: "menuID", Value: 1},
-				}),
-			)
-			if err != nil {
-				JSONWithImplicitError(c, err)
-				return
-			}
-			widgetIDs = append(widgetIDs, widget.ID)
-			var has bool
-			for _, v := range menuIDs {
-				if v.Hex() == widget.MenuID.Hex() {
-					has = true
-				}
-			}
-			if !has {
-				menuIDs = append(menuIDs, widget.MenuID)
-			}
-		}
-		if menus, err := repo.FindMany[model.Menu](
-			ctx,
-			model.FilterEnabled(bson.D{{Key: "_id", Value: bson.E{Key: "$in", Value: menuIDs}}}),
-			options.Find().SetProjection(bson.D{{Key: "_id", Value: 1}}),
-		); err != nil {
-			JSONWithImplicitError(c, err)
-			return
-		} else {
-			if len(menus) != len(menuIDs) {
-				JSONWithImplicitError(c, errors.New("invalid menu id."))
-				return
-			}
-		}
-		ret = append(ret, RoleAuthoritiesElem{
-			DomainID:  domainID,
-			MenuIDs:   menuIDs,
-			WidgetIDs: widgetIDs,
-		})
-	}
-	JSONWithOK(c, &RoleAuthoritiesRet{
-		PaginationRet{
-			List:  ret,
-			Total: int64(len(ret)),
-		},
-	})
 	return
 }
 
@@ -666,15 +715,15 @@ func DisableRole(c *gin.Context) {
 		if _, err = repo.DisableOneByID[model.Role](sessCtx, id); err != nil {
 			return nil, err
 		}
-		// NOTE: need to remove the relative RelationRoleMenus.
-		if _, err = repo.DeleteMany[model.RelationRoleMenu](
+		// NOTE: need to remove the relative RelationDomainRoleMenus.
+		if _, err = repo.DeleteMany[model.RelationDomainRoleMenu](
 			sessCtx,
 			bson.D{{Key: "roleID", Value: id}},
 		); err != nil {
 			return nil, err
 		}
-		// NOTE: need to remove the relative RelationRoleMenuWidgets.
-		if _, err = repo.DeleteMany[model.RelationRoleMenuWidget](
+		// NOTE: need to remove the relative RelationDomainRoleMenuWidgets.
+		if _, err = repo.DeleteMany[model.RelationDomainRoleMenuWidget](
 			sessCtx,
 			bson.D{{Key: "roleID", Value: id}},
 		); err != nil {
@@ -683,9 +732,9 @@ func DisableRole(c *gin.Context) {
 		// NOTE: need to remove the relative Casbin policies.
 		if _, err = repo.DeleteMany[model.Casbin](
 			sessCtx,
-			bson.D{{Key: "$or", Value: bson.D{
-				{Key: "$and", Value: bson.D{{Key: "pType", Value: model.PTypeP}, {Key: "v0", Value: id.Hex()}}},
-				{Key: "$and", Value: bson.D{{Key: "pType", Value: model.PTypeG}, {Key: "v1", Value: id.Hex()}}},
+			bson.D{{Key: "$or", Value: bson.A{
+				bson.D{{Key: "pType", Value: model.PTypeP}, {Key: "v0", Value: id.Hex()}},
+				bson.D{{Key: "pType", Value: model.PTypeG}, {Key: "v1", Value: id.Hex()}},
 			}}},
 		); err != nil {
 			return nil, err
@@ -733,15 +782,15 @@ func RemoveRole(c *gin.Context) {
 		if _, err = repo.DeleteByID[model.Role](sessCtx, id); err != nil {
 			return nil, err
 		}
-		// NOTE: need to remove the relative RelationRoleMenus.
-		if _, err = repo.DeleteMany[model.RelationRoleMenu](
+		// NOTE: need to remove the relative RelationDomainRoleMenus.
+		if _, err = repo.DeleteMany[model.RelationDomainRoleMenu](
 			sessCtx,
 			bson.D{{Key: "roleID", Value: id}},
 		); err != nil {
 			return nil, err
 		}
-		// NOTE: need to remove the relative RelationRoleMenuWidgets.
-		if _, err = repo.DeleteMany[model.RelationRoleMenuWidget](
+		// NOTE: need to remove the relative RelationDomainRoleMenuWidgets.
+		if _, err = repo.DeleteMany[model.RelationDomainRoleMenuWidget](
 			sessCtx,
 			bson.D{{Key: "roleID", Value: id}},
 		); err != nil {
@@ -750,9 +799,9 @@ func RemoveRole(c *gin.Context) {
 		// NOTE: need to remove the relative Casbin policies.
 		if _, err = repo.DeleteMany[model.Casbin](
 			sessCtx,
-			bson.D{{Key: "$or", Value: bson.D{
-				{Key: "$and", Value: bson.D{{Key: "pType", Value: model.PTypeP}, {Key: "v0", Value: id.Hex()}}},
-				{Key: "$and", Value: bson.D{{Key: "pType", Value: model.PTypeG}, {Key: "v1", Value: id.Hex()}}},
+			bson.D{{Key: "$or", Value: bson.A{
+				bson.D{{Key: "pType", Value: model.PTypeP}, {Key: "v0", Value: id.Hex()}},
+				bson.D{{Key: "pType", Value: model.PTypeG}, {Key: "v1", Value: id.Hex()}},
 			}}},
 		); err != nil {
 			return nil, err

@@ -2,6 +2,7 @@ package api
 
 import (
 	"errors"
+	"log"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -61,11 +62,12 @@ func AddMenuWidget(c *gin.Context) {
 	} else {
 		one.MenuID = menuID
 	}
-	if _, err := repo.InsertOne(ctx, one); err != nil {
+	res, err := repo.InsertOne(ctx, one)
+	if err != nil {
 		JSONWithImplicitError(c, err)
 		return
 	}
-	JSONWithCreated(c, one.ID.Hex())
+	JSONWithCreated(c, res.InsertedID.(primitive.ObjectID).Hex())
 	return
 }
 
@@ -124,12 +126,12 @@ func ListMenuWidget(c *gin.Context) {
 		JSONWithBadRequest(c, err)
 		return
 	}
-	and := bson.D{{Key: "menuID", Value: menuID}}
+	and := bson.A{bson.D{{Key: "menuID", Value: menuID}}}
 	if req.Name != nil {
-		and = append(and, bson.E{Key: "name", Value: req.Name})
+		and = append(and, bson.D{{Key: "name", Value: req.Name}})
 	}
 	if req.Deleted != nil {
-		and = append(and, bson.E{Key: "deletedAt", Value: bson.E{Key: "$exists", Value: *req.Deleted}})
+		and = append(and, bson.D{{Key: "deletedAt", Value: bson.E{Key: "$exists", Value: *req.Deleted}}})
 	}
 	filter := make(bson.D, 0)
 	if len(and) > 0 {
@@ -137,6 +139,7 @@ func ListMenuWidget(c *gin.Context) {
 	}
 	total, err := repo.Collection(model.MenuWidget{}).CountDocuments(ctx, filter, options.Count().SetMaxTime(time.Minute))
 	if err != nil {
+		log.Println(err)
 		JSONWithImplicitError(c, err)
 		return
 	}
@@ -402,7 +405,7 @@ func DisableMenuWidget(c *gin.Context) {
 		JSONWithBadRequest(c, err)
 		return
 	}
-	oldM, err := repo.FindOne[model.MenuWidget](
+	widget, err := repo.FindOne[model.MenuWidget](
 		ctx,
 		model.FilterEnabled(bson.D{
 			{Key: "menuID", Value: menuID},
@@ -435,11 +438,11 @@ func DisableMenuWidget(c *gin.Context) {
 		); err != nil {
 			return nil, err
 		}
-		// NOTE: need to remove relative RelationRoleMenuWidget.
-		if _, err = repo.DeleteMany[model.RelationRoleMenuWidget](
+		// NOTE: need to remove relative RelationDomainRoleMenuWidgets.
+		if _, err = repo.DeleteMany[model.RelationDomainRoleMenuWidget](
 			sessCtx,
 			bson.D{
-				{Key: "WidgetID", Value: widgetID},
+				{Key: "widgetID", Value: widgetID},
 			},
 		); err != nil {
 			return nil, err
@@ -449,8 +452,8 @@ func DisableMenuWidget(c *gin.Context) {
 			sessCtx,
 			bson.D{
 				{Key: "pType", Value: model.PTypeP},
-				{Key: "v2", Value: oldM.ApiPath},
-				{Key: "v3", Value: oldM.ApiMethod},
+				{Key: "v2", Value: widget.ApiPath},
+				{Key: "v3", Value: widget.ApiMethod},
 			},
 		); err != nil {
 			return nil, err
@@ -495,7 +498,7 @@ func RemoveMenuWidget(c *gin.Context) {
 		JSONWithBadRequest(c, err)
 		return
 	}
-	oldM, err := repo.FindOne[model.MenuWidget](
+	widget, err := repo.FindOne[model.MenuWidget](
 		ctx,
 		model.FilterEnabled(bson.D{
 			{Key: "menuID", Value: menuID},
@@ -528,11 +531,11 @@ func RemoveMenuWidget(c *gin.Context) {
 		); err != nil {
 			return nil, err
 		}
-		// NOTE: need to remove relative RelationRoleMenuWidget.
-		if _, err = repo.DeleteMany[model.RelationRoleMenuWidget](
+		// NOTE: need to remove relative RelationDomainRoleMenuWidgets.
+		if _, err = repo.DeleteMany[model.RelationDomainRoleMenuWidget](
 			sessCtx,
 			bson.D{
-				{Key: "WidgetID", Value: widgetID},
+				{Key: "widgetID", Value: widgetID},
 			},
 		); err != nil {
 			return nil, err
@@ -542,8 +545,8 @@ func RemoveMenuWidget(c *gin.Context) {
 			sessCtx,
 			bson.D{
 				{Key: "pType", Value: model.PTypeP},
-				{Key: "v2", Value: oldM.ApiPath},
-				{Key: "v3", Value: oldM.ApiMethod},
+				{Key: "v2", Value: widget.ApiPath},
+				{Key: "v3", Value: widget.ApiMethod},
 			},
 		); err != nil {
 			return nil, err

@@ -2,6 +2,7 @@ package api
 
 import (
 	"errors"
+	"log"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -9,7 +10,6 @@ import (
 	"github.com/sfshf/exert-golang/model"
 	"github.com/sfshf/exert-golang/repo"
 	"github.com/sfshf/exert-golang/service/captcha"
-	"github.com/sfshf/exert-golang/service/casbin"
 	"github.com/sfshf/exert-golang/service/model_service"
 	"github.com/sfshf/exert-golang/util/jwt"
 	"github.com/sfshf/exert-golang/util/structure"
@@ -100,7 +100,6 @@ type SignInReq struct {
 
 // SignInRet return of sign-in.
 type SignInRet struct {
-	Id        string `json:"id"`
 	Token     string `json:"token"`
 	ExpiresAt int64  `json:"expiresAt"`
 }
@@ -123,15 +122,18 @@ func SignIn(conf Config) gin.HandlerFunc {
 		ctx := c.Request.Context()
 		var req SignInReq
 		if err := c.ShouldBindBodyWith(&req, binding.JSON); err != nil {
+			log.Println(err)
 			JSONWithBadRequest(c, err)
 			return
 		}
 		if !captcha.VerifyPictureCaptcha(req.PicCaptchaId, req.PicCaptchaAnswer) {
+			log.Println(model_service.ErrInvalidCaptcha)
 			JSONWithBadRequest(c, model_service.ErrInvalidCaptcha)
 			return
 		}
 		staff, err := model_service.VerifyAccountAndPassword(ctx, req.Account, req.Password)
 		if err != nil {
+			log.Println(err)
 			JSONWithUnauthorized(c, err)
 			return
 		}
@@ -145,6 +147,7 @@ func SignIn(conf Config) gin.HandlerFunc {
 				}
 			}
 			if !validIp {
+				log.Println(model_service.ErrUnauthorized)
 				JSONWithUnauthorized(c, model_service.ErrUnauthorized)
 				return
 			}
@@ -160,19 +163,22 @@ func SignIn(conf Config) gin.HandlerFunc {
 			conf.JWTAuth.SigningKey,
 			jwt.NewJwtClaims(
 				staff.ID.Hex(),
+				"",
+				"",
 				time.Duration(conf.JWTAuth.Expired),
 			),
 		)
 		if err != nil {
+			log.Println(err)
 			JSONWithImplicitError(c, err)
 			return
 		}
 		if err = model_service.SignIn(ctx, clientIp, token); err != nil {
+			log.Println(err)
 			JSONWithImplicitError(c, err)
 			return
 		}
 		JSONWithOK(c, &SignInRet{
-			Id:        staff.ID.Hex(),
 			Token:     token,
 			ExpiresAt: conf.JWTAuth.Expired,
 		})
@@ -213,23 +219,15 @@ func GetOwnDomains(c *gin.Context) {
 		return
 	}
 	ctx := model.WithSession(c.Request.Context(), sessionID, model.NewDatetime(time.Now()))
-	domainIds := casbin.GetDomainsBySubject(sessionID.Hex())
-	if len(domainIds) == 0 {
-		JSONWithBadRequest(c, errors.New("invalid account: not belong to any domain"))
-		return
-	}
-	domainIDs, err := model.ObjectIDPtrsFromHexs(domainIds)
+	domainIDs, err := model_service.GetDomainIDsOfStaff(ctx, sessionID)
 	if err != nil {
-		JSONWithImplicitError(c, err)
+		log.Println(err)
+		JSONWithBadRequest(c, err)
 		return
-	}
-	filter := bson.D{{Key: "enable", Value: true}}
-	if len(domainIDs) > 0 {
-		filter = append(filter, bson.E{Key: "_id", Value: bson.D{{Key: "$in", Value: domainIDs}}})
 	}
 	domains, err := repo.FindMany[model.Domain](
 		ctx,
-		filter,
+		bson.D{{Key: "_id", Value: bson.D{{Key: "$in", Value: domainIDs}}}},
 		options.Find().SetProjection(bson.D{
 			{Key: "_id", Value: 1},
 			{Key: "name", Value: 1},
@@ -258,7 +256,7 @@ func GetOwnDomains(c *gin.Context) {
 
 // GetOwnRolesReq request parameters.
 type GetOwnRolesReq struct {
-	DomainId string `form:"domainId" json:"domainId" binding:"required" label:"域Id"` // 域Id
+	DomainID *string `form:"domainID" json:"domainID" binding:"required" label:"域ID"` // 域ID
 }
 
 // GetOwnRolesElem element to return.
@@ -301,28 +299,24 @@ func GetOwnRoles(c *gin.Context) {
 		JSONWithBadRequest(c, err)
 		return
 	}
-	domainID, err := model.ObjectIDPtrFromHex(req.DomainId)
+	domainID, err := model.ObjectIDPtrFromHex(*req.DomainID)
 	if err != nil {
+		log.Println(err)
 		JSONWithBadRequest(c, err)
 		return
 	}
-	roleIds := casbin.CasbinEnforcer().GetRolesForUserInDomain(sessionID.Hex(), domainID.Hex())
-	if len(roleIds) == 0 {
-		JSONWithBadRequest(c, errors.New("invalid account: has no roles"))
-		return
-	}
-	roleIDs, err := model.ObjectIDPtrsFromHexs(roleIds)
+	roleIDs, err := model_service.GetRoleIDsOfStaffInDomain(ctx, domainID, sessionID)
 	if err != nil {
 		JSONWithImplicitError(c, err)
 		return
 	}
-	filter := bson.D{{Key: "enable", Value: true}}
-	if len(roleIDs) > 0 {
-		filter = append(filter, bson.E{Key: "_id", Value: bson.D{{Key: "$in", Value: roleIDs}}})
+	if len(roleIDs) == 0 {
+		JSONWithBadRequest(c, errors.New("invalid account: has no roles in the domain"))
+		return
 	}
 	roles, err := repo.FindMany[model.Role](
 		ctx,
-		filter,
+		bson.D{{Key: "_id", Value: bson.D{{Key: "$in", Value: roleIDs}}}},
 		options.Find().SetProjection(bson.D{
 			{Key: "_id", Value: 1},
 			{Key: "name", Value: 1},
@@ -351,7 +345,8 @@ func GetOwnRoles(c *gin.Context) {
 
 // GetOwnMenusReq request parameters.
 type GetOwnMenusReq struct {
-	RoleId string `form:"roleId" json:"roleId" binding:"" label:"角色Id"` // 角色Id
+	DomainID *string `form:"domainID" json:"domainID" binding:"" label:"域ID"` // 域ID
+	RoleID   *string `form:"roleID" json:"roleID" binding:"" label:"角色ID"`    // 角色ID
 }
 
 // GetOwnMenusElem element to return.
@@ -408,53 +403,84 @@ type GetOwnMenusRet struct {
 // @failure 401 {error} error "unauthorized."
 // @failure 500 {error} error "internal server error."
 // @router /getOwnMenus [GET]
-func GetOwnMenus(c *gin.Context) {
-	sessionID := SessionIdFromGinX(c)
-	ctx := model.WithSession(c.Request.Context(), sessionID, model.NewDatetime(time.Now()))
-	var err error
-	var req GetOwnMenusReq
-	if err = c.ShouldBindQuery(&req); err != nil {
-		JSONWithBadRequest(c, err)
-		return
-	}
-	var roleID *primitive.ObjectID
-	if req.RoleId != "" {
-		roleID, err = model.ObjectIDPtrFromHex(req.RoleId)
-		if err != nil {
+func GetOwnMenus(conf Config) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		sessionID := SessionIdFromGinX(c)
+		ctx := model.WithSession(c.Request.Context(), sessionID, model.NewDatetime(time.Now()))
+		var err error
+		var req GetOwnMenusReq
+		if err = c.ShouldBindQuery(&req); err != nil {
 			JSONWithBadRequest(c, err)
 			return
 		}
-	}
-	if roleID == nil {
-		if !model_service.IsRoot(sessionID) {
-			JSONWithBadRequest(c, errors.New("invalid account: without role"))
+		if req.DomainID == nil || req.RoleID == nil {
+			if !model_service.IsRoot(sessionID) {
+				JSONWithBadRequest(c, errors.New("invalid account: without domain and role"))
+				return
+			}
+			// find all menus when session id is root.
+			menuViews, err := model_service.GetFilteredMenuViews(ctx, bson.D{})
+			if err != nil {
+				JSONWithImplicitError(c, err)
+				return
+			}
+			JSONWithOK(c, &GetOwnMenusRet{
+				PaginationRet{
+					Total: int64(len(menuViews)),
+					List:  menuViews,
+				}})
 			return
 		}
-		// find all menus when session id is root.
-		menuViews, err := model_service.GetFilteredMenuViews(ctx, bson.D{})
+		domainID, err := model.ObjectIDPtrFromHex(*req.DomainID)
+		if err != nil {
+			log.Println(err)
+			JSONWithBadRequest(c, err)
+			return
+		}
+		roleID, err := model.ObjectIDPtrFromHex(*req.RoleID)
+		if err != nil {
+			log.Println(err)
+			JSONWithBadRequest(c, err)
+			return
+		}
+		menuViews, err := model_service.GetMenuAndFilteredWidgetViewsByDomainIDAndRoleID(ctx, domainID, roleID)
 		if err != nil {
 			JSONWithImplicitError(c, err)
 			return
 		}
+		// NOTE: need to regenerate jwt token, and notify the frontend
+		token, err := jwt.GenerateToken(
+			jwt.DefaultSigningMethod,
+			conf.JWTAuth.SigningKey,
+			jwt.NewJwtClaims(
+				sessionID.Hex(),
+				domainID.Hex(),
+				roleID.Hex(),
+				time.Duration(conf.JWTAuth.Expired),
+			),
+		)
+		if err != nil {
+			log.Println(err)
+			JSONWithImplicitError(c, err)
+			return
+		}
+		token = "Bearer " + token
+		// NOTE: resign in
+		if err = model_service.SignIn(ctx, c.ClientIP(), token); err != nil {
+			log.Println(err)
+			JSONWithImplicitError(c, err)
+			return
+		}
+		c.Header("Access-Control-Expose-Headers", "Authorization")
+		c.Header("Authorization", token)
 		JSONWithOK(c, &GetOwnMenusRet{
 			PaginationRet{
 				Total: int64(len(menuViews)),
 				List:  menuViews,
-			}})
+			},
+		})
 		return
 	}
-	menuViews, err := model_service.GetMenuAndFilteredWidgetViewsByRoleID(ctx, roleID)
-	if err != nil {
-		JSONWithImplicitError(c, err)
-		return
-	}
-	JSONWithOK(c, &GetOwnMenusRet{
-		PaginationRet{
-			Total: int64(len(menuViews)),
-			List:  menuViews,
-		},
-	})
-	return
 }
 
 // SignOut

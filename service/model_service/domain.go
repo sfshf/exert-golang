@@ -8,6 +8,7 @@ import (
 
 	"github.com/sfshf/exert-golang/model"
 	"github.com/sfshf/exert-golang/repo"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"gopkg.in/yaml.v3"
@@ -84,4 +85,21 @@ func ConvertToDomainModels(rootID *primitive.ObjectID, domainViews []DomainView,
 		domainModels = append(domainModels, one)
 	}
 	return domainModels, nil
+}
+
+func GetDomainIDsOfRole(ctx context.Context, roleID *primitive.ObjectID) ([]*primitive.ObjectID, error) {
+	domainIds, err := repo.Collection(model.RelationDomainRoleMenu{}).
+		Distinct(ctx, "domainID", model.FilterEnabled(bson.D{
+			{Key: "roleID", Value: roleID},
+		}),
+		)
+	if err != nil {
+		return nil, err
+	}
+	var domainIDs []*primitive.ObjectID
+	for _, v := range domainIds {
+		domainID := v.(primitive.ObjectID)
+		domainIDs = append(domainIDs, &domainID)
+	}
+	return domainIDs, nil
 }

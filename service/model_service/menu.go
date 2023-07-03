@@ -9,6 +9,7 @@ import (
 
 	"github.com/sfshf/exert-golang/model"
 	"github.com/sfshf/exert-golang/repo"
+	"github.com/sfshf/exert-golang/util/intersect"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -24,7 +25,6 @@ type MenuView struct {
 	Route    string            `yaml:"route,omitempty" json:"route,omitempty"`
 	Memo     string            `yaml:"memo,omitempty" json:"memo,omitempty"`
 	Show     bool              `yaml:"show,omitempty" json:"show,omitempty"`
-	Enable   bool              `yaml:"enable,omitempty" json:"enable,omitempty"`
 	IsItem   bool              `yaml:"isItem,omitempty" json:"isItem,omitempty"`
 	Widgets  []*MenuWidgetView `yaml:"widgets,omitempty" json:"widgets,omitempty"`
 	Children []*MenuView       `yaml:"children,omitempty" json:"children,omitempty"`
@@ -39,7 +39,6 @@ type MenuWidgetView struct {
 	ApiPath   string `yaml:"apiPath,omitempty" json:"apiPath,omitempty"`
 	Memo      string `yaml:"memo,omitempty" json:"memo,omitempty"`
 	Show      bool   `yaml:"show,omitempty" json:"show,omitempty"`
-	Enable    bool   `yaml:"enable,omitempty" json:"enable,omitempty"`
 }
 
 func ImportMenuWidgetsFromYaml(ctx context.Context, path string, sessionID *primitive.ObjectID) error {
@@ -131,10 +130,24 @@ func ConvertToMenuModels(sessionID *primitive.ObjectID, menuViews []*MenuView, p
 	return menuModels, menuWidgets, nil
 }
 
-func GetMenuAndFilteredWidgetViewsByRoleID(ctx context.Context, roleID *primitive.ObjectID) ([]*MenuView, error) {
-	menuIDs, err := repo.ProjectMany(
+func GetMenuAndFilteredWidgetViewsByDomainIDAndRoleID(ctx context.Context, domainID, roleID *primitive.ObjectID) ([]*MenuView, error) {
+	menuIDsByDomain, err := repo.ProjectMany(
 		ctx,
-		func(m model.RelationRoleMenu) primitive.ObjectID {
+		func(m model.RelationDomainRoleMenu) primitive.ObjectID {
+			return *m.MenuID
+		},
+		bson.D{{Key: "domainID", Value: domainID}},
+		options.Find().SetProjection(bson.D{
+			{Key: "menuID", Value: 1},
+			{Key: "_id", Value: 0},
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	menuIDsByRole, err := repo.ProjectMany(
+		ctx,
+		func(m model.RelationDomainRoleMenu) primitive.ObjectID {
 			return *m.MenuID
 		},
 		bson.D{{Key: "roleID", Value: roleID}},
@@ -146,9 +159,23 @@ func GetMenuAndFilteredWidgetViewsByRoleID(ctx context.Context, roleID *primitiv
 	if err != nil {
 		return nil, err
 	}
-	widgetIDs, err := repo.ProjectMany(
+	widgetIDsByDomain, err := repo.ProjectMany(
 		ctx,
-		func(m model.RelationRoleMenuWidget) primitive.ObjectID {
+		func(m model.RelationDomainRoleMenuWidget) primitive.ObjectID {
+			return *m.WidgetID
+		},
+		bson.D{{Key: "domainID", Value: domainID}},
+		options.Find().SetProjection(bson.D{
+			{Key: "widgetID", Value: 1},
+			{Key: "_id", Value: 0},
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	widgetIDsByRole, err := repo.ProjectMany(
+		ctx,
+		func(m model.RelationDomainRoleMenuWidget) primitive.ObjectID {
 			return *m.WidgetID
 		},
 		bson.D{{Key: "roleID", Value: roleID}},
@@ -160,14 +187,14 @@ func GetMenuAndFilteredWidgetViewsByRoleID(ctx context.Context, roleID *primitiv
 	if err != nil {
 		return nil, err
 	}
-	menuViews, err := GetFilteredMenuViews(ctx, bson.D{{Key: "_id", Value: bson.D{{Key: "$in", Value: menuIDs}}}})
+	menuViews, err := GetFilteredMenuViews(ctx, bson.D{{Key: "_id", Value: bson.D{{Key: "$in", Value: intersect.HashGeneric(menuIDsByDomain, menuIDsByRole)}}}})
 	if err != nil {
 		return nil, err
 	}
 	for _, menuView := range menuViews {
 		var filteredWidgetViews []*MenuWidgetView
 		for _, widgetView := range menuView.Widgets {
-			for _, widgetID := range widgetIDs {
+			for _, widgetID := range intersect.HashGeneric(widgetIDsByDomain, widgetIDsByRole) {
 				if widgetID.Hex() == widgetView.Id {
 					filteredWidgetViews = append(filteredWidgetViews, widgetView)
 					break
@@ -201,7 +228,7 @@ func convertToMenuViews(ctx context.Context, menuModels []model.Menu, parentId s
 				Memo:  *menuModels[i].Memo,
 				Show:  *menuModels[i].Show,
 			}
-			modelWidgets, err := repo.FindMany[model.MenuWidget](ctx, bson.D{{Key: "$in", Value: bson.D{{Key: "menuID", Value: menuModels[i].ID}}}})
+			modelWidgets, err := repo.FindMany[model.MenuWidget](ctx, bson.D{{Key: "menuID", Value: menuModels[i].ID}})
 			if err != nil {
 				return nil, err
 			}

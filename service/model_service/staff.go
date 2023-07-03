@@ -2,6 +2,7 @@ package model_service
 
 import (
 	"context"
+	"log"
 	"time"
 
 	"github.com/sfshf/exert-golang/model"
@@ -78,12 +79,14 @@ func VerifyAccountAndPassword(ctx context.Context, account, password string) (*m
 		}),
 	)
 	if err != nil {
+		log.Println(err)
 		return nil, err
 	}
 	if passwd := model.PasswdPtr(
 		password,
 		*staff.PasswordSalt,
 	); *passwd != *staff.Password {
+		log.Println(ErrInvalidAccountOrPassword)
 		return nil, ErrInvalidAccountOrPassword
 	}
 	return &staff, nil
@@ -92,16 +95,16 @@ func VerifyAccountAndPassword(ctx context.Context, account, password string) (*m
 // SignIn account sign in with some required arguments.
 func SignIn(ctx context.Context, clientIp string, token string) error {
 	sessionID := model.SessionID(ctx)
-	sessionDateTime := model.SessionDateTime(ctx)
+	sessionDT := model.SessionDateTime(ctx)
 	one := &model.Staff{
 		Model: &model.Model{
 			ID:        sessionID,
 			UpdatedBy: sessionID,
-			UpdatedAt: sessionDateTime,
+			UpdatedAt: sessionDT,
 		},
 		SignInToken:    &token,
 		LastSignInIp:   &clientIp,
-		LastSignInTime: sessionDateTime,
+		LastSignInTime: sessionDT,
 	}
 	if _, err := repo.UpdateOneModelByID(ctx, one.ID, one); err != nil {
 		return err

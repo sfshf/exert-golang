@@ -3,7 +3,7 @@ package repo
 import (
 	"context"
 	"errors"
-	"log"
+	stdlog "log"
 	"net/url"
 	"reflect"
 	"strings"
@@ -46,11 +46,11 @@ func InitRepo(ctx context.Context, srvUri, dbName string) (func(), error) {
 		ctx,
 		model.ChangeLog{},
 		model.Domain{},
+		model.RelationDomainRoleMenu{},
+		model.RelationDomainRoleMenuWidget{},
 		model.Menu{},
 		model.MenuWidget{},
 		model.Role{},
-		model.RelationRoleMenu{},
-		model.RelationRoleMenuWidget{},
 		model.Staff{},
 		model.Casbin{},
 		model.AccessLog{},
@@ -168,6 +168,7 @@ func InsertMany[M any](ctx context.Context, newMs []M, opts ...*options.InsertMa
 	for _, newM := range newMs {
 		log, er := changeLog(ctx, primitive.NilObjectID, oldM, newM)
 		if er != nil {
+			stdlog.Println(er)
 			return
 		}
 		logs = append(logs, log)
@@ -197,7 +198,7 @@ func UpdateOneModelByID[M any](ctx context.Context, id interface{}, newM M, opts
 	}
 	res, err = coll.UpdateOne(
 		ctx,
-		model.FilterEnabled(bson.D{{Key: "_id", Value: id}}),
+		bson.D{{Key: "_id", Value: id}},
 		bson.D{{Key: "$set", Value: newM}},
 		opts...,
 	)
@@ -224,7 +225,7 @@ func UpdateOneByID[M any](ctx context.Context, id, update interface{}, opts ...*
 	}
 	res, err = coll.UpdateOne(
 		ctx,
-		model.FilterEnabled(bson.D{{Key: "_id", Value: id}}),
+		bson.D{{Key: "_id", Value: id}},
 		update,
 		opts...,
 	)
@@ -255,7 +256,7 @@ func UpdateOne[M any](ctx context.Context, filter, update interface{}, opts ...*
 	}
 	res, err = coll.UpdateOne(
 		ctx,
-		model.FilterEnabled(filter),
+		filter,
 		update,
 		opts...,
 	)
@@ -280,7 +281,6 @@ func UpdateManyModel[M any](ctx context.Context, filter interface{}, newM M, opt
 	if err != nil {
 		return
 	}
-	filter = model.FilterEnabled(filter)
 	rids, err := projectMany(
 		ctx,
 		coll,
@@ -334,7 +334,6 @@ func UpdateMany[M any](ctx context.Context, filter, update interface{}, opts ...
 	if err != nil {
 		return
 	}
-	filter = model.FilterEnabled(filter)
 	rids, err := projectMany(
 		ctx,
 		coll,
@@ -441,37 +440,7 @@ func PullArrayByID[M any](ctx context.Context, id interface{}, newM M, opts ...*
 }
 
 func DisableOneByID[M any](ctx context.Context, id interface{}, opts ...*options.UpdateOptions) (res *mongo.UpdateResult, err error) {
-	var m M
-	mT := reflect.TypeOf(m)
-	if mT.Kind() == reflect.Pointer {
-		mT = mT.Elem()
-	}
-	if mT.Kind() != reflect.Struct {
-		err = errors.New(`type of "M" is not struct`)
-		return
-	}
-	if _, has := mT.FieldByName("Model"); !has {
-		err = errors.New(`type of "M" without field named "Model"`)
-		return
-	}
-	mf := reflect.ValueOf(&m).Elem().FieldByName("Model")
-	if !mf.CanSet() {
-		err = errors.New(`"Model" field of type "M" can not be set`)
-		return
-	}
-	mfIsPtr := mf.Kind() == reflect.Pointer
-	if mfIsPtr {
-		mf.Set(reflect.ValueOf(&model.Model{
-			DeletedBy: model.SessionID(ctx),
-			DeletedAt: model.SessionDateTime(ctx),
-		}))
-	} else {
-		mf.Set(reflect.ValueOf(model.Model{
-			DeletedBy: model.SessionID(ctx),
-			DeletedAt: model.SessionDateTime(ctx),
-		}))
-	}
-	return UpdateOneModelByID(ctx, id, m, opts...)
+	return DisableOne[M](ctx, bson.D{{Key: "_id", Value: id}}, opts...)
 }
 
 func DisableOne[M any](ctx context.Context, filter interface{}, opts ...*options.UpdateOptions) (res *mongo.UpdateResult, err error) {
@@ -505,7 +474,7 @@ func DisableOne[M any](ctx context.Context, filter interface{}, opts ...*options
 			DeletedAt: model.SessionDateTime(ctx),
 		}))
 	}
-	return UpdateOne[M](ctx, filter, m, opts...)
+	return UpdateOne[M](ctx, filter, bson.D{{Key: "$set", Value: m}}, opts...)
 }
 
 func DisableMany[M any](ctx context.Context, filter interface{}, opts ...*options.UpdateOptions) (res *mongo.UpdateResult, err error) {
@@ -526,15 +495,39 @@ func DisableMany[M any](ctx context.Context, filter interface{}, opts ...*option
 }
 
 func EnableOneByID[M any](ctx context.Context, id interface{}, opts ...*options.UpdateOptions) (res *mongo.UpdateResult, err error) {
-	return UpdateOneByID[M](ctx, id, bson.D{{Key: "$unset", Value: []string{"deletedBy", "deletedAt"}}}, opts...)
+	return UpdateOneByID[M](
+		ctx,
+		id,
+		bson.D{{Key: "$unset", Value: bson.D{
+			{Key: "deletedBy", Value: ""},
+			{Key: "deletedAt", Value: ""},
+		}}},
+		opts...,
+	)
 }
 
 func EnableOne[M any](ctx context.Context, filter interface{}, opts ...*options.UpdateOptions) (res *mongo.UpdateResult, err error) {
-	return UpdateOne[M](ctx, filter, bson.D{{Key: "$unset", Value: []string{"deletedBy", "deletedAt"}}}, opts...)
+	return UpdateOne[M](
+		ctx,
+		filter,
+		bson.D{{Key: "$unset", Value: bson.D{
+			{Key: "deletedBy", Value: ""},
+			{Key: "deletedAt", Value: ""},
+		}}},
+		opts...,
+	)
 }
 
 func EnableMany[M any](ctx context.Context, filter interface{}, opts ...*options.UpdateOptions) (res *mongo.UpdateResult, err error) {
-	return UpdateMany[M](ctx, filter, bson.D{{Key: "$unset", Value: []string{"deletedBy", "deletedAt"}}}, opts...)
+	return UpdateMany[M](
+		ctx,
+		filter,
+		bson.D{{Key: "$unset", Value: bson.D{
+			{Key: "deletedBy", Value: ""},
+			{Key: "deletedAt", Value: ""},
+		}}},
+		opts...,
+	)
 }
 
 func DeleteByID[M any](ctx context.Context, id interface{}, opts ...*options.DeleteOptions) (res *mongo.DeleteResult, err error) {
@@ -647,7 +640,6 @@ func FindOne[M any](ctx context.Context, filter interface{}, opts ...*options.Fi
 	if err != nil {
 		return m, err
 	}
-	log.Println(filter)
 	err = coll.FindOne(ctx, filter, opts...).Decode(&m)
 	return m, err
 }
@@ -709,10 +701,12 @@ func ProjectDescendantIDs[M any](ctx context.Context, parentID *primitive.Object
 		func(m M) *primitive.ObjectID {
 			mV := reflect.ValueOf(m)
 			if mV.Kind() == reflect.Pointer {
-				return mV.Interface().(*primitive.ObjectID)
-			} else {
-				return mV.Addr().Interface().(*primitive.ObjectID)
+				mV = mV.Elem()
 			}
+			if f := mV.FieldByName("ID"); !f.IsZero() || !f.IsNil() {
+				return f.Interface().(*primitive.ObjectID)
+			}
+			return &primitive.NilObjectID
 		},
 		bson.D{{Key: "parentID", Value: parentID}},
 		options.Find().SetProjection(bson.D{{Key: "_id", Value: 1}}),

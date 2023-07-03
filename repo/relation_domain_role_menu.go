@@ -17,7 +17,7 @@ func ProjectRoleIDsByMenuID(ctx context.Context, menuID *primitive.ObjectID, ena
 	}
 	res, err := ProjectMany(
 		ctx,
-		func(m model.RelationRoleMenu) primitive.ObjectID {
+		func(m model.RelationDomainRoleMenu) primitive.ObjectID {
 			return *m.RoleID
 		},
 		filter,
@@ -39,7 +39,7 @@ func ProjectMenuIDsByRoleID(ctx context.Context, roleID *primitive.ObjectID, ena
 	}
 	res, err := ProjectMany(
 		ctx,
-		func(m model.RelationRoleMenu) primitive.ObjectID {
+		func(m model.RelationDomainRoleMenu) primitive.ObjectID {
 			return *m.MenuID
 		},
 		filter,

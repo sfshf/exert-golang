@@ -113,7 +113,7 @@ func lineToBsonD(pType string, rule []string) bson.D {
 // LoadPolicy loads all policy rules from the storage.
 func (ca *Adapter) LoadPolicy(m casbinModel.Model) error {
 	// load enabled policies.
-	cursor, err := ca.coll.Find(ca.ctx, bson.D{{Key: "deletedAt", Value: bson.E{Key: "$exists", Value: false}}})
+	cursor, err := ca.coll.Find(ca.ctx, model.FilterEnabled(bson.D{}))
 	if err != nil {
 		return err
 	}

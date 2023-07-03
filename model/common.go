@@ -126,6 +126,9 @@ func NewObjectIDPtr() *primitive.ObjectID {
 }
 
 func ObjectIDPtrFromHex(id string) (*primitive.ObjectID, error) {
+	if strings.TrimSpace(id) == "" {
+		return &primitive.NilObjectID, nil
+	}
 	staffId, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, err
@@ -136,6 +139,10 @@ func ObjectIDPtrFromHex(id string) (*primitive.ObjectID, error) {
 func ObjectIDPtrsFromHexs(ids []string) ([]*primitive.ObjectID, error) {
 	var res []*primitive.ObjectID
 	for _, v := range ids {
+		if strings.TrimSpace(v) == "" {
+			res = append(res, &primitive.NilObjectID)
+			continue
+		}
 		ptr, err := ObjectIDPtrFromHex(v)
 		if err != nil {
 			return nil, err

@@ -17,7 +17,7 @@ func ProjectRoleIDByWidgetID(ctx context.Context, widgetId *primitive.ObjectID, 
 	}
 	res, err := ProjectMany(
 		ctx,
-		func(m model.RelationRoleMenuWidget) primitive.ObjectID {
+		func(m model.RelationDomainRoleMenuWidget) primitive.ObjectID {
 			return *m.RoleID
 		},
 		filter,

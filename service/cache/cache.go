@@ -13,21 +13,21 @@ var (
 )
 
 type CacheOption struct {
-	IsLRU   bool
+	LRU     bool
 	MaxKeys int
-	TTL     int
+	TTL     time.Duration
 }
 
 func LaunchDefaultWithOption(ctx context.Context, opt CacheOption) (clear func(), err error) {
 	strAnyCache = cache.NewCache[string, any]()
-	if opt.IsLRU {
+	if opt.LRU {
 		strAnyCache.WithLRU()
 	}
 	if opt.MaxKeys > 0 {
 		strAnyCache.WithMaxKeys(opt.MaxKeys)
 	}
 	if opt.TTL > 0 {
-		strAnyCache.WithTTL(time.Duration(opt.TTL))
+		strAnyCache.WithTTL(opt.TTL)
 		ctx, clear = context.WithCancel(ctx)
 		tick := time.Tick(time.Duration(opt.TTL / 2))
 		go func() {

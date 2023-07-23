@@ -100,8 +100,8 @@ type SignInReq struct {
 
 // SignInRet return of sign-in.
 type SignInRet struct {
-	Token     string `json:"token"`
-	ExpiresAt int64  `json:"expiresAt"`
+	Token     string        `json:"token"`
+	ExpiresAt time.Duration `json:"expiresAt"`
 }
 
 // SignIn

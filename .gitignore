@@ -43,5 +43,7 @@ pnpm-debug.log*
 # Others
 docs/
 
+# pid files
+*.pid
 
 

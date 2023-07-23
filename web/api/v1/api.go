@@ -17,7 +17,6 @@ import (
 	"github.com/sfshf/exert-golang/model"
 	"github.com/sfshf/exert-golang/repo"
 	"github.com/sfshf/exert-golang/service/casbin"
-	service_log "github.com/sfshf/exert-golang/service/log"
 	"github.com/sfshf/exert-golang/service/model_service"
 	"github.com/sfshf/exert-golang/util/json"
 	"github.com/sfshf/exert-golang/util/jwt"
@@ -30,9 +29,14 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type Config struct {
-	Swagger bool
-	CORS    struct {
+type (
+	Config struct {
+		Swagger bool
+		CORS    CORSConfig
+		GZIP    GZIPConfig
+		JWTAuth JWTAuthConfig
+	}
+	CORSConfig struct {
 		Enable           bool
 		AllowOrigins     []string
 		AllowMethods     []string
@@ -40,21 +44,21 @@ type Config struct {
 		AllowCredentials bool
 		MaxAge           time.Duration
 	}
-	GZIP struct {
+	GZIPConfig struct {
 		Enable bool
 	}
-	JWTAuth struct {
+	JWTAuthConfig struct {
 		Enable     bool
 		SigningKey string
-		Expired    int64
+		Expired    time.Duration
 		Stored     bool
 	}
-}
+)
 
 // RegisterAPIs register all api functions.
 func RegisterAPIs(ctx context.Context, router *gin.Engine, conf Config) {
-	if service_log.LoggerEnabled() {
-		router.Use(Logger(service_log.Logger()))
+	if model_service.LoggerEnabled() {
+		router.Use(Logger(model_service.Logger()))
 	} else {
 		router.Use(gin.Logger())
 	}
@@ -218,7 +222,7 @@ func JSONWithOK(c *gin.Context, any interface{}, msgs ...string) {
 		msg = http.StatusText(http.StatusOK)
 	}
 	resp := &Resp{Msg: msg, Any: any}
-	if service_log.LoggerEnabled() {
+	if model_service.LoggerEnabled() {
 		c.Set(ResponseBodyKey, json.Marshal2String(resp))
 	}
 	c.JSON(http.StatusOK, resp)
@@ -234,7 +238,7 @@ func JSONWithCreated(c *gin.Context, any interface{}, msgs ...string) {
 		msg = http.StatusText(http.StatusCreated)
 	}
 	resp := &Resp{Msg: msg, Any: any}
-	if service_log.LoggerEnabled() {
+	if model_service.LoggerEnabled() {
 		c.Set(ResponseBodyKey, json.Marshal2String(resp))
 	}
 	c.JSON(http.StatusCreated, resp)
@@ -249,7 +253,7 @@ func JSONWithNoContent(c *gin.Context, any interface{}, msgs ...string) {
 		msg = http.StatusText(http.StatusNoContent)
 	}
 	resp := &Resp{Msg: msg, Any: any}
-	if service_log.LoggerEnabled() {
+	if model_service.LoggerEnabled() {
 		c.Set(ResponseBodyKey, json.Marshal2String(resp))
 	}
 	c.JSON(http.StatusNoContent, resp)
@@ -264,7 +268,7 @@ func JSONWithBadRequest(c *gin.Context, any interface{}, msgs ...string) {
 		msg = http.StatusText(http.StatusBadRequest)
 	}
 	resp := &Resp{Msg: msg, Any: any}
-	if service_log.LoggerEnabled() {
+	if model_service.LoggerEnabled() {
 		c.Set(ResponseBodyKey, json.Marshal2String(resp))
 	}
 	c.JSON(http.StatusBadRequest, resp)
@@ -279,7 +283,7 @@ func JSONWithUnauthorized(c *gin.Context, any interface{}, msgs ...string) {
 		msg = http.StatusText(http.StatusUnauthorized)
 	}
 	resp := &Resp{Msg: msg, Any: any}
-	if service_log.LoggerEnabled() {
+	if model_service.LoggerEnabled() {
 		c.Set(ResponseBodyKey, json.Marshal2String(resp))
 	}
 	c.JSON(http.StatusUnauthorized, resp)
@@ -295,7 +299,7 @@ func JSONWithForbidden(c *gin.Context, any interface{}, msgs ...string) {
 		msg = http.StatusText(http.StatusForbidden)
 	}
 	resp := &Resp{Msg: msg, Any: any}
-	if service_log.LoggerEnabled() {
+	if model_service.LoggerEnabled() {
 		c.Set(ResponseBodyKey, json.Marshal2String(resp))
 	}
 	c.JSON(http.StatusForbidden, resp)
@@ -311,7 +315,7 @@ func JSONWithNotFound(c *gin.Context, any interface{}, msgs ...string) {
 		msg = http.StatusText(http.StatusNotFound)
 	}
 	resp := &Resp{Msg: msg, Any: any}
-	if service_log.LoggerEnabled() {
+	if model_service.LoggerEnabled() {
 		c.Set(ResponseBodyKey, json.Marshal2String(resp))
 	}
 	c.JSON(http.StatusNotFound, resp)
@@ -329,7 +333,7 @@ func JSONWithMethodNotAllowed(c *gin.Context, any interface{}, msgs ...string) {
 		msg = http.StatusText(http.StatusMethodNotAllowed)
 	}
 	resp := &Resp{Msg: msg, Any: any}
-	if service_log.LoggerEnabled() {
+	if model_service.LoggerEnabled() {
 		c.Set(ResponseBodyKey, json.Marshal2String(resp))
 	}
 	c.JSON(http.StatusMethodNotAllowed, resp)
@@ -346,7 +350,7 @@ func JSONWithConflict(c *gin.Context, any interface{}, msgs ...string) {
 		msg = http.StatusText(http.StatusConflict)
 	}
 	resp := &Resp{Msg: msg, Any: any}
-	if service_log.LoggerEnabled() {
+	if model_service.LoggerEnabled() {
 		c.Set(ResponseBodyKey, json.Marshal2String(resp))
 	}
 	c.JSON(http.StatusConflict, resp)
@@ -363,7 +367,7 @@ func JSONWithInternalServerError(c *gin.Context, any interface{}, msgs ...string
 		msg = http.StatusText(http.StatusInternalServerError)
 	}
 	resp := &Resp{Msg: msg, Any: any}
-	if service_log.LoggerEnabled() {
+	if model_service.LoggerEnabled() {
 		c.Set(ResponseBodyKey, json.Marshal2String(resp))
 	}
 	c.JSON(http.StatusInternalServerError, resp)
@@ -515,7 +519,7 @@ func RoleIDFromGinX(c *gin.Context) *primitive.ObjectID {
 	}
 }
 
-func JWT(ctx context.Context, signingKey string, expired int64) gin.HandlerFunc {
+func JWT(ctx context.Context, signingKey string, expired time.Duration) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if jwtString := c.GetHeader("Authorization"); jwtString != "" {
 			claims, err := jwt.ParseToken(jwt.DefaultSigningMethod, signingKey, jwtString)
@@ -574,7 +578,7 @@ func JWT(ctx context.Context, signingKey string, expired int64) gin.HandlerFunc 
 						sessionID.Hex(),
 						domainID.Hex(),
 						roleID.Hex(),
-						time.Duration(expired),
+						expired,
 					),
 				)
 				if err != nil {

@@ -1,4 +1,4 @@
-package log
+package model_service
 
 import (
 	"context"
@@ -7,7 +7,6 @@ import (
 	stdlog "log"
 	"os"
 
-	"github.com/rs/zerolog"
 	"github.com/sfshf/exert-golang/model"
 	"github.com/sfshf/exert-golang/repo"
 	"github.com/sfshf/exert-golang/util/log"
@@ -20,7 +19,7 @@ var (
 
 type LoggerOption struct {
 	SkipStdout bool
-	Log2Mongo  bool
+	LogToMongo bool
 	MaxWorkers int
 	MaxBuffers int
 }
@@ -32,7 +31,7 @@ func LaunchDefaultWithOption(ctx context.Context, opt LoggerOption) (clear func(
 		stdlog.Println("Enable logging to stdout !!!")
 	}
 	// TODO enable logging to files.
-	if opt.Log2Mongo {
+	if opt.LogToMongo {
 		var mongodbWriter io.Writer
 		mongodbWriter, err = log.MongoWriter(repo.Collection(model.AccessLog{}))
 		if err != nil {
@@ -52,18 +51,4 @@ func LoggerEnabled() bool {
 
 func Logger() *log.Logger {
 	return logger
-}
-
-func Info(ctx context.Context) *zerolog.Event {
-	if !LoggerEnabled() {
-		panic(ErrLoggerNotLaunch)
-	}
-	return logger.Info(ctx)
-}
-
-func Error(ctx context.Context) *zerolog.Event {
-	if !LoggerEnabled() {
-		panic(ErrLoggerNotLaunch)
-	}
-	return logger.Error(ctx)
 }

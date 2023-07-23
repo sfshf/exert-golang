@@ -19,7 +19,7 @@ type CasbinOption struct {
 	Model            string
 	AutoSave         bool
 	AutoLoad         bool
-	AutoLoadInternal int
+	AutoLoadInterval time.Duration
 }
 
 func LaunchDefaultWithOption(ctx context.Context, opt CasbinOption) (clear func(), err error) {
@@ -35,7 +35,7 @@ func LaunchDefaultWithOption(ctx context.Context, opt CasbinOption) (clear func(
 	}
 	casbinEnforcer.EnableLog(opt.Debug)
 	if opt.AutoLoad {
-		casbinEnforcer.StartAutoLoadPolicy(time.Second * time.Duration(opt.AutoLoadInternal))
+		casbinEnforcer.StartAutoLoadPolicy(time.Second * time.Duration(opt.AutoLoadInterval))
 	}
 	casbinEnforcer.EnableAutoSave(opt.AutoSave)
 	casbinEnforcer.EnableEnforce(true)

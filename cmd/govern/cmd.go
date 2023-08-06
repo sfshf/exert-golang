@@ -28,8 +28,8 @@ import (
 	"github.com/sfshf/exert-golang/service/casbin"
 	"github.com/sfshf/exert-golang/service/model_service"
 	"github.com/sfshf/exert-golang/service/redis"
-	"github.com/sfshf/exert-golang/web"
-	"github.com/sfshf/exert-golang/web/api/v1"
+	"github.com/sfshf/exert-golang/web/govern"
+	"github.com/sfshf/exert-golang/web/govern/api/v1"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -407,7 +407,7 @@ EXIT:
 
 // RunHTTPServer run the http server.
 func RunHTTPServer(ctx context.Context, cmd *WebSrvCmd) func() {
-	webHandler, err := web.NewHandler(ctx, web.Config{
+	webHandler, err := govern.NewHandler(ctx, govern.Config{
 		RunMode: cmd.Global.RunMode,
 		ApiConfig: api.Config{
 			Swagger: cmd.Global.RunMode == gin.DebugMode,

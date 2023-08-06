@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/jinzhu/copier"
 	"github.com/sfshf/exert-golang/util/crypto/hash"
-	"github.com/sfshf/exert-golang/util/structure"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -73,7 +73,7 @@ func CopyToModelWithSessionContext[M any](ctx context.Context, from interface{},
 			}))
 		}
 	}
-	err = structure.Copy(&m, from)
+	err = copier.Copy(&m, from)
 	return
 }
 
@@ -167,6 +167,38 @@ func FilterEnabled(filter interface{}) interface{} {
 		filter.(bson.M)["deletedAt"] = bson.M{"$exists": false}
 	}
 	return filter
+}
+
+func Copy(toValue interface{}, fromValue interface{}) error {
+	if err := copier.CopyWithOption(toValue, fromValue, copier.Option{
+		IgnoreEmpty: true,
+		DeepCopy:    true,
+		Converters: []copier.TypeConverter{
+			{
+				SrcType: new(primitive.ObjectID),
+				DstType: "",
+				Fn: func(src interface{}) (interface{}, error) {
+					if base, is := src.(*primitive.ObjectID); is {
+						return base.Hex(), nil
+					}
+					return "", nil
+				},
+			},
+			{
+				SrcType: new(primitive.DateTime),
+				DstType: "",
+				Fn: func(src interface{}) (interface{}, error) {
+					if base, is := src.(*primitive.DateTime); is {
+						return base.Time().String(), nil
+					}
+					return "", nil
+				},
+			},
+		},
+	}); err != nil {
+		return err
+	}
+	return nil
 }
 
 type ContextKey int

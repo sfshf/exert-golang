@@ -7,6 +7,7 @@ import (
 	"sort"
 	"time"
 
+	"github.com/sfshf/exert-golang/dto"
 	"github.com/sfshf/exert-golang/model"
 	"github.com/sfshf/exert-golang/repo"
 	"github.com/sfshf/exert-golang/util/intersect"
@@ -17,30 +18,6 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-type MenuView struct {
-	Id       string            `yaml:"-" json:"-"`
-	Name     string            `yaml:"name,omitempty" json:"name,omitempty"`
-	Seq      int               `yaml:"seq,omitempty" json:"seq,omitempty"`
-	Icon     string            `yaml:"icon,omitempty" json:"icon,omitempty"`
-	Route    string            `yaml:"route,omitempty" json:"route,omitempty"`
-	Memo     string            `yaml:"memo,omitempty" json:"memo,omitempty"`
-	Show     bool              `yaml:"show,omitempty" json:"show,omitempty"`
-	IsItem   bool              `yaml:"isItem,omitempty" json:"isItem,omitempty"`
-	Widgets  []*MenuWidgetView `yaml:"widgets,omitempty" json:"widgets,omitempty"`
-	Children []*MenuView       `yaml:"children,omitempty" json:"children,omitempty"`
-}
-
-type MenuWidgetView struct {
-	Id        string `yaml:"-" json:"-"`
-	Name      string `yaml:"name,omitempty" json:"name,omitempty"`
-	Seq       int    `yaml:"seq,omitempty" json:"seq,omitempty"`
-	Icon      string `yaml:"icon,omitempty" json:"icon,omitempty"`
-	ApiMethod string `yaml:"apiMethod,omitempty" json:"apiMethod,omitempty"`
-	ApiPath   string `yaml:"apiPath,omitempty" json:"apiPath,omitempty"`
-	Memo      string `yaml:"memo,omitempty" json:"memo,omitempty"`
-	Show      bool   `yaml:"show,omitempty" json:"show,omitempty"`
-}
-
 func ImportMenuWidgetsFromYaml(ctx context.Context, path string, sessionID *primitive.ObjectID) error {
 	if path == "" {
 		return errors.New("invalid file path")
@@ -50,7 +27,7 @@ func ImportMenuWidgetsFromYaml(ctx context.Context, path string, sessionID *prim
 	if err != nil {
 		return err
 	}
-	var originMenus []*MenuView
+	var originMenus []*dto.MenuView
 	if err := yaml.NewDecoder(f).Decode(&originMenus); err != nil {
 		return err
 	}
@@ -78,7 +55,7 @@ func ImportMenuWidgetsFromYaml(ctx context.Context, path string, sessionID *prim
 	return nil
 }
 
-func ConvertToMenuModels(sessionID *primitive.ObjectID, menuViews []*MenuView, parentID *primitive.ObjectID) ([]*model.Menu, []*model.MenuWidget, error) {
+func ConvertToMenuModels(sessionID *primitive.ObjectID, menuViews []*dto.MenuView, parentID *primitive.ObjectID) ([]*model.Menu, []*model.MenuWidget, error) {
 	menuModels := make([]*model.Menu, 0)
 	menuWidgets := make([]*model.MenuWidget, 0)
 	for i := 0; i < len(menuViews); i++ {
@@ -89,7 +66,7 @@ func ConvertToMenuModels(sessionID *primitive.ObjectID, menuViews []*MenuView, p
 				CreatedBy: sessionID,
 			},
 			Name:     &menuViews[i].Name,
-			Seq:      &menuViews[i].Seq,
+			Seq:      model.IntPtr(int(menuViews[i].Seq)),
 			Icon:     &menuViews[i].Icon,
 			Route:    &menuViews[i].Route,
 			Memo:     &menuViews[i].Memo,
@@ -107,7 +84,7 @@ func ConvertToMenuModels(sessionID *primitive.ObjectID, menuViews []*MenuView, p
 					},
 					MenuID:    menu.ID,
 					Name:      &menuViews[i].Widgets[j].Name,
-					Seq:       &menuViews[i].Widgets[j].Seq,
+					Seq:       model.IntPtr(int(menuViews[i].Widgets[j].Seq)),
 					Icon:      &menuViews[i].Widgets[j].Icon,
 					ApiMethod: &menuViews[i].Widgets[j].ApiMethod,
 					ApiPath:   &menuViews[i].Widgets[j].ApiPath,
@@ -130,7 +107,7 @@ func ConvertToMenuModels(sessionID *primitive.ObjectID, menuViews []*MenuView, p
 	return menuModels, menuWidgets, nil
 }
 
-func GetMenuAndFilteredWidgetViewsByDomainIDAndRoleID(ctx context.Context, domainID, roleID *primitive.ObjectID) ([]*MenuView, error) {
+func GetMenuAndFilteredWidgetViewsByDomainIDAndRoleID(ctx context.Context, domainID, roleID *primitive.ObjectID) ([]*dto.MenuView, error) {
 	menuIDsByDomain, err := repo.ProjectMany(
 		ctx,
 		func(m model.RelationDomainRoleMenu) primitive.ObjectID {
@@ -192,7 +169,7 @@ func GetMenuAndFilteredWidgetViewsByDomainIDAndRoleID(ctx context.Context, domai
 		return nil, err
 	}
 	for _, menuView := range menuViews {
-		var filteredWidgetViews []*MenuWidgetView
+		var filteredWidgetViews []*dto.MenuWidgetView
 		for _, widgetView := range menuView.Widgets {
 			for _, widgetID := range intersect.HashGeneric(widgetIDsByDomain, widgetIDsByRole) {
 				if widgetID.Hex() == widgetView.Id {
@@ -206,7 +183,7 @@ func GetMenuAndFilteredWidgetViewsByDomainIDAndRoleID(ctx context.Context, domai
 	return menuViews, nil
 }
 
-func GetFilteredMenuViews(ctx context.Context, filter interface{}, opts ...*options.FindOptions) ([]*MenuView, error) {
+func GetFilteredMenuViews(ctx context.Context, filter interface{}, opts ...*options.FindOptions) ([]*dto.MenuView, error) {
 	menus, err := repo.FindMany[model.Menu](ctx, filter)
 	if err != nil {
 		return nil, err
@@ -214,15 +191,15 @@ func GetFilteredMenuViews(ctx context.Context, filter interface{}, opts ...*opti
 	return convertToMenuViews(ctx, menus, "")
 }
 
-func convertToMenuViews(ctx context.Context, menuModels []model.Menu, parentId string) ([]*MenuView, error) {
-	siblingViews := make([]*MenuView, 0)
+func convertToMenuViews(ctx context.Context, menuModels []model.Menu, parentId string) ([]*dto.MenuView, error) {
+	siblingViews := make([]*dto.MenuView, 0)
 	remainModels := make([]model.Menu, 0)
 	for i := 0; i < len(menuModels); i++ {
 		if (menuModels[i].ParentID == nil && parentId == "") || (menuModels[i].ParentID != nil && menuModels[i].ParentID.Hex() == parentId) {
-			menu := &MenuView{
+			menu := &dto.MenuView{
 				Id:    menuModels[i].ID.Hex(),
 				Name:  *menuModels[i].Name,
-				Seq:   *menuModels[i].Seq,
+				Seq:   int32(*menuModels[i].Seq),
 				Icon:  *menuModels[i].Icon,
 				Route: *menuModels[i].Route,
 				Memo:  *menuModels[i].Memo,
@@ -233,12 +210,12 @@ func convertToMenuViews(ctx context.Context, menuModels []model.Menu, parentId s
 				return nil, err
 			}
 			if len(modelWidgets) > 0 {
-				var widgets []*MenuWidgetView
+				var widgets []*dto.MenuWidgetView
 				for j := 0; j < len(modelWidgets); j++ {
-					widgets = append(widgets, &MenuWidgetView{
+					widgets = append(widgets, &dto.MenuWidgetView{
 						Id:        modelWidgets[j].ID.Hex(),
 						Name:      *modelWidgets[j].Name,
-						Seq:       *modelWidgets[j].Seq,
+						Seq:       int32(*modelWidgets[j].Seq),
 						Icon:      *modelWidgets[j].Icon,
 						ApiMethod: *modelWidgets[j].ApiMethod,
 						ApiPath:   *modelWidgets[j].ApiPath,

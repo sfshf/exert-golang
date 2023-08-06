@@ -87,7 +87,11 @@ func ConvertToDomainModels(rootID *primitive.ObjectID, domainViews []DomainView,
 	return domainModels, nil
 }
 
-func GetDomainIDsOfRole(ctx context.Context, roleID *primitive.ObjectID) ([]*primitive.ObjectID, error) {
+func GetDomainIDsOfRole(ctx context.Context, roleId string) ([]string, error) {
+	roleID, err := model.ObjectIDPtrFromHex(roleId)
+	if err != nil {
+		return nil, err
+	}
 	domainIds, err := repo.Collection(model.RelationDomainRoleMenu{}).
 		Distinct(ctx, "domainID", model.FilterEnabled(bson.D{
 			{Key: "roleID", Value: roleID},
@@ -96,10 +100,10 @@ func GetDomainIDsOfRole(ctx context.Context, roleID *primitive.ObjectID) ([]*pri
 	if err != nil {
 		return nil, err
 	}
-	var domainIDs []*primitive.ObjectID
+	var domainIDs []string
 	for _, v := range domainIds {
 		domainID := v.(primitive.ObjectID)
-		domainIDs = append(domainIDs, &domainID)
+		domainIDs = append(domainIDs, domainID.Hex())
 	}
 	return domainIDs, nil
 }

@@ -59,7 +59,7 @@ watch(staffId, async (newId) => {
     const listDomainResp = await listDomain({ needTree: true })
     domainTreeData.value = listDomainResp.data.list
     const getStaffDomainsResp = await getDomainsOfStaff(staffId.value)
-    selectedDomainIds.value = new Set(getStaffDomainsResp.data.domainIDs)
+    selectedDomainIds.value = new Set(getStaffDomainsResp.data.domainIds)
     const listRoleResp = await listRole()
     roleTreeData.value = listRoleResp.data.list
     if (props.readOnly || !clickedDomainId.value) {
@@ -85,13 +85,13 @@ const clickedDomainId = ref('')
 const handleDomainTreeNodeClick = async (node:any) => {
   try {
     clickedDomainId.value = node.id
-    const listRoleResp = await listRole({domainID: clickedDomainId.value})
+    const listRoleResp = await listRole({domainId: clickedDomainId.value})
     roleTreeData.value = listRoleResp.data.list
     if (props.readOnly) {
       disableRoleTree(roleTreeData.value)
     }
     const getStaffRolesInDomainResp = await getStaffRolesInDomain(clickedDomainId.value, staffId.value)
-    selectedRoleIds.value = new Set(getStaffRolesInDomainResp.data.roleIDs)
+    selectedRoleIds.value = new Set(getStaffRolesInDomainResp.data.roleIds)
     roleTree.value.setCheckedKeys(getRoleTreeDefaultCheckedKeys(Array.from(selectedRoleIds.value), roleTreeData.value), true)
   } catch (err:any) {
     let errMsg = ''
@@ -154,7 +154,7 @@ onMounted(async () => {
     const listDomainResp = await listDomain({ needTree: true })
     domainTreeData.value = listDomainResp.data.list
     const getStaffDomainsResp = await getDomainsOfStaff(staffId.value)
-    selectedDomainIds.value = new Set(getStaffDomainsResp.data.domainIDs)
+    selectedDomainIds.value = new Set(getStaffDomainsResp.data.domainIds)
     const listRoleResp = await listRole()
     roleTreeData.value = listRoleResp.data.list
     if (props.readOnly || !clickedDomainId.value) {
@@ -211,7 +211,7 @@ const resetForm = async () => {
     const listDomainResp = await listDomain({ needTree: true })
     domainTreeData.value = listDomainResp.data.list
     const getStaffDomainsResp = await getDomainsOfStaff(staffId.value)
-    selectedDomainIds.value = getStaffDomainsResp.data.domainIDs
+    selectedDomainIds.value = getStaffDomainsResp.data.domainIds
     const listRoleResp = await listRole()
     roleTreeData.value = listRoleResp.data.list
     if (props.readOnly || !clickedDomainId.value) {
@@ -234,7 +234,7 @@ const resetForm = async () => {
 }
 const submitForm = async () => {
   try {
-    const authorizeStaffRolesInDomainResp = await authorizeStaffRolesInDomain(clickedDomainId.value, staffId.value, {roleIDs: Array.from(selectedRoleIds.value)})
+    const authorizeStaffRolesInDomainResp = await authorizeStaffRolesInDomain(clickedDomainId.value, staffId.value, {roleIds: Array.from(selectedRoleIds.value)})
     if (authorizeStaffRolesInDomainResp.status === 200) {
       ElMessage({
         message: '设置成功！',
@@ -242,7 +242,7 @@ const submitForm = async () => {
         duration: 3000
       })
       const getStaffDomainsResp = await getDomainsOfStaff(staffId.value)
-      selectedDomainIds.value = new Set(getStaffDomainsResp.data.domainIDs)
+      selectedDomainIds.value = new Set(getStaffDomainsResp.data.domainIds)
     }
   } catch (err:any) {
     let errMsg = ''

@@ -35,9 +35,9 @@ el-container
           el-form-item(label="Memo:")
             el-input(v-model="detailForm.memo")
         el-col(:span="6")
-          el-form-item(label="ParentID:")
+          el-form-item(label="ParentId:")
             el-cascader(
-              v-model="detailForm.parentID"
+              v-model="detailForm.parentId"
               :options="domainOpts"
               :props="{ label: 'name', value: 'id', checkStrictly: true }"
               placeholder="null"
@@ -59,7 +59,7 @@ el-container
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps, defineEmits, onMounted, computed, watch } from 'vue'
+import { Ref, ref, defineProps, defineEmits, onMounted, computed, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import { profileDomain } from '@/apis'
 
@@ -77,6 +77,7 @@ const domainId = computed({
 watch(domainId, async (newId:string) => {
   try {
     if (newId == '') { return }
+    curDomainOpts.value = excludeSelf(JSON.parse(JSON.stringify(props.domainOpts)))
     const profileDomainResp = await profileDomain(newId)
     detailForm.value = profileDomainResp.data
   } catch (err:any) {
@@ -93,8 +94,23 @@ watch(domainId, async (newId:string) => {
     })
   }
 })
+const excludeSelf = (arr:any[]):any[] => {
+  let res:any[] = []
+  for (let i=0; i< arr.length; i++) {
+    if (arr[i].id != props.domainId) {
+      let children:any[] = []
+      if (arr[i].children) {
+        arr[i].children = excludeSelf(arr[i].children)
+      }
+      res.push(arr[i])
+    }
+  }
+  return res
+}
+const curDomainOpts:Ref<any[]> = ref([])
 onMounted(async () => {
   try {
+    curDomainOpts.value = excludeSelf(JSON.parse(JSON.stringify(props.domainOpts)))
     const profileDomainResp = await profileDomain(props.domainId)
     detailForm.value = profileDomainResp.data
   } catch (err:any) {

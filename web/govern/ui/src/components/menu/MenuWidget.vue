@@ -52,8 +52,8 @@ const treeProps = ref({
 const menuTree = ref()
 const menuTreeData = ref([])
 const authorities = ref({
-  menuIDs: [],
-  widgetIDs: []
+  menuIds: [],
+  widgetIds: []
 })
 const domainId = computed({
   get: () => {
@@ -75,9 +75,9 @@ watch(domainId, async (newId:string) => {
     if (domainId.value && roleId.value) {
       const getAuthoritiesOfRoleResp = await getAuthoritiesOfRole(roleId.value, domainId.value)
       authorities.value = getAuthoritiesOfRoleResp.data
-      selectedMenuIds.value = new Set(authorities.value.menuIDs)
-      selectedWidgetIds.value = new Set(authorities.value.widgetIDs)
-      menuTree.value.setCheckedKeys(getMenuTreeDefaultCheckedKeys(authorities.value.menuIDs, menuTreeData.value), true)
+      selectedMenuIds.value = new Set(authorities.value.menuIds)
+      selectedWidgetIds.value = new Set(authorities.value.widgetIds)
+      menuTree.value.setCheckedKeys(getMenuTreeDefaultCheckedKeys(authorities.value.menuIds, menuTreeData.value), true)
     }
   } catch (err:any) {
     let errMsg = ''
@@ -113,9 +113,9 @@ watch(roleId, async (newId:string) => {
     if (domainId.value && roleId.value) {
       const getAuthoritiesOfRoleResp = await getAuthoritiesOfRole(roleId.value, domainId.value)
       authorities.value = getAuthoritiesOfRoleResp.data
-      selectedMenuIds.value = new Set(authorities.value.menuIDs)
-      selectedWidgetIds.value = new Set(authorities.value.widgetIDs)
-      menuTree.value.setCheckedKeys(getMenuTreeDefaultCheckedKeys(authorities.value.menuIDs, menuTreeData.value), true)
+      selectedMenuIds.value = new Set(authorities.value.menuIds)
+      selectedWidgetIds.value = new Set(authorities.value.widgetIds)
+      menuTree.value.setCheckedKeys(getMenuTreeDefaultCheckedKeys(authorities.value.menuIds, menuTreeData.value), true)
     }
   } catch (err:any) {
     let errMsg = ''
@@ -167,9 +167,9 @@ onMounted(async () => {
     if (domainId.value && roleId.value) {
       const getAuthoritiesOfRoleResp = await getAuthoritiesOfRole(roleId.value, domainId.value)
       authorities.value = getAuthoritiesOfRoleResp.data
-      selectedMenuIds.value = new Set(authorities.value.menuIDs)
-      selectedWidgetIds.value = new Set(authorities.value.widgetIDs)
-      menuTree.value.setCheckedKeys(getMenuTreeDefaultCheckedKeys(authorities.value.menuIDs, menuTreeData.value), true)
+      selectedMenuIds.value = new Set(authorities.value.menuIds)
+      selectedWidgetIds.value = new Set(authorities.value.widgetIds)
+      menuTree.value.setCheckedKeys(getMenuTreeDefaultCheckedKeys(authorities.value.menuIds, menuTreeData.value), true)
     }
   } catch (err:any) {
     let errMsg = ''
@@ -218,7 +218,7 @@ const selectedMenuIds = ref(new Set(null))
 interface Node {
   id:never
   name:never
-  parentID:never
+  parentId:never
 }
 const handleMenuCheckChange = async (data:Node, checked:boolean, indeterminate:boolean) => {
   try {
@@ -227,9 +227,11 @@ const handleMenuCheckChange = async (data:Node, checked:boolean, indeterminate:b
     } else {
       selectedMenuIds.value.delete(data.id)
       const listMenuWidgetResp = await listMenuWidget(data.id)
-      for (let i = 0; i < listMenuWidgetResp.data.list.length; i++) {
-        if (selectedWidgetIds.value.has(listMenuWidgetResp.data.list[i].id)) {
-          selectedWidgetIds.value.delete(listMenuWidgetResp.data.list[i].id)
+      if (listMenuWidgetResp.data.list) {
+        for (let i = 0; i < listMenuWidgetResp.data.list.length; i++) {
+          if (selectedWidgetIds.value.has(listMenuWidgetResp.data.list[i].id)) {
+            selectedWidgetIds.value.delete(listMenuWidgetResp.data.list[i].id)
+          }
         }
       }
     }
@@ -291,9 +293,9 @@ const resetForm = async () => {
     if (domainId.value && roleId.value) {
       const getAuthoritiesOfRoleResp = await getAuthoritiesOfRole(roleId.value, domainId.value)
       authorities.value = getAuthoritiesOfRoleResp.data
-      selectedMenuIds.value = new Set(authorities.value.menuIDs)
-      selectedWidgetIds.value = new Set(authorities.value.widgetIDs)
-      menuTree.value.setCheckedKeys(getMenuTreeDefaultCheckedKeys(authorities.value.menuIDs, menuTreeData.value), true)
+      selectedMenuIds.value = new Set(authorities.value.menuIds)
+      selectedWidgetIds.value = new Set(authorities.value.widgetIds)
+      menuTree.value.setCheckedKeys(getMenuTreeDefaultCheckedKeys(authorities.value.menuIds, menuTreeData.value), true)
     }
   } catch (err:any) {
     let errMsg = ''
@@ -311,9 +313,9 @@ const resetForm = async () => {
 }
 const submitForm = async () => {
   try {
-    let menuIDs = Array.from(selectedMenuIds.value)
-    let widgetIDs = Array.from(selectedWidgetIds.value)
-    const authorizeRoleResp = await authorizeRole(roleId.value, domainId.value, {"menuIDs": menuIDs, "widgetIDs": widgetIDs})
+    let menuIds = Array.from(selectedMenuIds.value)
+    let widgetIds = Array.from(selectedWidgetIds.value)
+    const authorizeRoleResp = await authorizeRole(roleId.value, domainId.value, {"menuIds": menuIds, "widgetIds": widgetIds})
     if (authorizeRoleResp.status === 200) {
       ElMessage({
         message: '设置权限成功！',

@@ -77,7 +77,7 @@ el-container
         row-key="id"
         default-expand-all
       )
-        el-table-column(fixed prop="id" label="ID" width="220")
+        el-table-column(fixed prop="id" label="Id" width="220")
         el-table-column(fixed prop="account" label="Account" width="150")
         el-table-column(prop="email" label="Email" width="200")
         el-table-column(prop="phone" label="Phone" width="150")

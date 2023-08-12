@@ -12,7 +12,7 @@ import (
 )
 
 func GetDomainIDsOfStaff(ctx context.Context, staffID *primitive.ObjectID) ([]*primitive.ObjectID, error) {
-	policies := casbin.CasbinEnforcerWithContext(ctx).GetFilteredGroupingPolicy(0, staffID.Hex())
+	policies := casbin.CasbinEnforcer().GetFilteredGroupingPolicy(0, staffID.Hex())
 	var domainIDs []*primitive.ObjectID
 	for _, policy := range policies {
 		domainID, err := model.ObjectIDPtrFromHex(policy[2])
@@ -46,7 +46,7 @@ func GetDomainIDsOfStaffFromDB(ctx context.Context, staffID *primitive.ObjectID)
 }
 
 func GetRoleIDsOfStaffInDomain(ctx context.Context, domainID, staffID *primitive.ObjectID) ([]*primitive.ObjectID, error) {
-	roleIds := casbin.CasbinEnforcerWithContext(ctx).GetRolesForUserInDomain(staffID.Hex(), domainID.Hex())
+	roleIds := casbin.CasbinEnforcer().GetRolesForUserInDomain(staffID.Hex(), domainID.Hex())
 	var roleIDs []*primitive.ObjectID
 	for _, v := range roleIds {
 		roleID, err := model.ObjectIDPtrFromHex(v)

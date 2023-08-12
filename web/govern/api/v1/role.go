@@ -50,22 +50,8 @@ func AddRole(c *gin.Context) {
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
-	ProtoBufWithCreated(c, res.InsertedID.(primitive.ObjectID).Hex())
+	ProtoBufWithCreated(c, &dto.AddRoleRet{Id: res.InsertedID.(primitive.ObjectID).Hex()})
 	return
-}
-
-// ListRoleReq search arguments to list roles.
-type ListRoleReq struct {
-	Name           *string   `form:"name" json:"name" binding:"" label:"名称"`                                        // 名称
-	Alias          *[]string `form:"alias" json:"alias" binding:"" label:"别名"`                                      // 别名
-	Seq            *int      `form:"seq" json:"seq" binding:"omitempty,gte=0" label:"序号"`                           // 序号
-	CreatedBy      *string   `form:"createdBy" json:"v" binding:"" label:"创建者"`                                     // 创建者
-	CreatedAtBegin *int64    `form:"createdAtBegin" json:"createdAtBegin" binding:"omitempty,gte=0" label:"创建时间起始"` // 创建时间起始
-	CreatedAtEnd   *int64    `form:"createdAtEnd" json:"createdAtEnd" binding:"omitempty,gte=0" label:"创建时间结束"`     // 创建时间结束
-	DomainID       *string   `form:"domainID" json:"domainID" binding:"" label:"域ID"`                               // 域ID
-	SortBy         SortBy    `form:"sortBy" json:"sortBy" binding:"" label:"字段排序条件"`                                // 字段排序条件
-	Deleted        *bool     `form:"deleted" json:"deleted" binging:"" label:"是否被软删除"`                              // 是否被软删除
-	PaginationArg
 }
 
 // ListRole
@@ -83,31 +69,28 @@ type ListRoleReq struct {
 // @router /roles [GET]
 func ListRole(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
-	var req ListRoleReq
+	var req dto.ListRoleReq
 	if err := c.ShouldBindQuery(&req); err != nil {
 		log.Println(err)
 		ProtoBufWithBadRequest(c, err)
 		return
 	}
 	var and bson.A
-	if req.Name != nil {
+	if req.Name != "" {
 		and = append(and, bson.E{Key: "name", Value: req.Name})
 	}
-	if req.Seq != nil {
-		and = append(and, bson.E{Key: "seq", Value: req.Seq})
-	}
 	// TODO should use the creator's account.
-	if req.CreatedBy != nil {
+	if req.CreatedBy != "" {
 		and = append(and, bson.E{Key: "creator", Value: req.CreatedBy})
 	}
-	if req.CreatedAtBegin != nil {
-		and = append(and, bson.E{Key: "createdAt", Value: bson.E{Key: "$gte", Value: primitive.DateTime(*req.CreatedAtBegin)}})
+	if req.CreatedAtBegin > 0 {
+		and = append(and, bson.E{Key: "createdAt", Value: bson.E{Key: "$gte", Value: primitive.DateTime(req.CreatedAtBegin)}})
 	}
-	if req.CreatedAtEnd != nil {
-		and = append(and, bson.E{Key: "createdAt", Value: bson.E{Key: "$lt", Value: primitive.DateTime(*req.CreatedAtBegin)}})
+	if req.CreatedAtEnd > 0 {
+		and = append(and, bson.E{Key: "createdAt", Value: bson.E{Key: "$lt", Value: primitive.DateTime(req.CreatedAtBegin)}})
 	}
-	if req.Deleted != nil {
-		and = append(and, bson.E{Key: "deletedAt", Value: bson.E{Key: "$exists", Value: *req.Deleted}})
+	if req.Deleted {
+		and = append(and, bson.E{Key: "deletedAt", Value: bson.E{Key: "$exists", Value: req.Deleted}})
 	}
 	filter := make(bson.D, 0)
 	if len(and) > 0 {
@@ -120,8 +103,8 @@ func ListRole(c *gin.Context) {
 	// }
 	opt := options.Find().
 		SetSort(OrderByToBsonD(req.SortBy)).
-		SetSkip(req.PaginationArg.PerPage * (req.PaginationArg.Page - 1)).
-		SetLimit(req.PaginationArg.PerPage)
+		SetSkip(req.PerPage * (req.Page - 1)).
+		SetLimit(req.PerPage)
 	res, err := repo.FindMany[model.Role](ctx, filter, opt)
 	if err != nil {
 		log.Println(err)
@@ -135,14 +118,20 @@ func ListRole(c *gin.Context) {
 		return
 	}
 	for _, role := range ret {
-		domainIDs, err := model_service.GetDomainIDsOfRole(ctx, role.Id)
+		domainIds, err := model_service.GetDomainIDsOfRole(ctx, role.Id)
 		if err != nil {
 			log.Println(err)
 			ProtoBufWithImplicitError(c, err)
 			return
 		}
-		if len(domainIDs) > 0 {
-			role.DomainIds = domainIDs
+		if len(domainIds) > 0 {
+			domainIDs, err := model.ObjectIDPtrsFromHexs(domainIds)
+			if err != nil {
+				log.Println(err)
+				ProtoBufWithImplicitError(c, err)
+				return
+			}
+			role.DomainIds = domainIds
 			names, err := repo.Collection(model.Domain{}).
 				Distinct(
 					ctx,
@@ -162,12 +151,12 @@ func ListRole(c *gin.Context) {
 			role.DomainNames = domainNames
 		}
 	}
-	if req.DomainID != nil {
+	if req.DomainId != "" {
 		var ret2 []*dto.RoleListElem
 		for _, role := range ret {
 			if len(role.DomainIds) > 0 {
 				if slices.ContainsFunc[string](role.DomainIds, func(e string) bool {
-					return e == *req.DomainID
+					return e == req.DomainId
 				}) {
 					ret2 = append(ret2, role)
 				}
@@ -250,7 +239,7 @@ func EditRole(c *gin.Context) {
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
-	ProtoBufWithOK(c, nil)
+	ProtoBufWithOK(c, &dto.EditRoleRet{Id: id.Hex()})
 	return
 }
 
@@ -560,7 +549,7 @@ func AuthorizeRole(c *gin.Context) {
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
-	ProtoBufWithOK(c, nil)
+	ProtoBufWithOK(c, &dto.AuthorizeRoleRet{Id: id.Hex(), DomainId: domainID.Hex()})
 	return
 }
 
@@ -601,7 +590,7 @@ func EnableRole(c *gin.Context) {
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
-	ProtoBufWithOK(c, nil)
+	ProtoBufWithOK(c, &dto.EnableRoleRet{Id: id.Hex()})
 	return
 }
 
@@ -671,7 +660,7 @@ func DisableRole(c *gin.Context) {
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
-	ProtoBufWithOK(c, nil)
+	ProtoBufWithOK(c, &dto.DisableRoleRet{Id: id.Hex()})
 	return
 }
 
@@ -740,6 +729,6 @@ func RemoveRole(c *gin.Context) {
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
-	ProtoBufWithOK(c, nil)
+	ProtoBufWithOK(c, &dto.RemoveRoleRet{Id: id.Hex()})
 	return
 }

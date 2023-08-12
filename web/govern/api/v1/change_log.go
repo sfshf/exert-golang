@@ -12,16 +12,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// ChangeLogListReq request parameters to list change-logs.
-type ChangeLogListReq struct {
-	CollName    *string             `form:"collName" json:"collName" binding:"" label:"集合（表）名"`       // 集合（表）名
-	RecordId    *primitive.ObjectID `form:"recordId" json:"recordId" binding:"" label:"记录ID"`         // 记录ID
-	OpTimeBegin *int64              `form:"opTimeBegin" json:"opTimeBegin" binding:"" label:"操作时间起始"` // 操作时间起始
-	OpTimeEnd   *int64              `form:"opTimeEnd" json:"opTimeEnd" binding:"" label:"操作时间结束"`     // 操作时间结束
-	SortBy      SortBy              `form:"sortBy" json:"sortBy" binding:"" label:"字段排序条件"`           // 字段排序条件
-	PaginationArg
-}
-
 // ListChangeLog
 // @description get a list of change logs.
 // @id change-log-list
@@ -37,22 +27,22 @@ type ChangeLogListReq struct {
 // @router /changeLogs [GET]
 func ListChangeLog(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
-	var req ChangeLogListReq
+	var req dto.ListChangeLogReq
 	if err := c.ShouldBindQuery(&req); err != nil {
 		ProtoBufWithBadRequest(c, err)
 		return
 	}
 	var and bson.D
-	if req.CollName != nil {
+	if req.CollName != "" {
 		and = append(and, bson.E{Key: "collName", Value: req.CollName})
 	}
-	if req.OpTimeBegin != nil {
-		and = append(and, bson.E{Key: "createdAt", Value: bson.D{{Key: "$gte", Value: primitive.DateTime(*req.OpTimeBegin)}}})
+	if req.OpTimeBegin > 0 {
+		and = append(and, bson.E{Key: "createdAt", Value: bson.D{{Key: "$gte", Value: primitive.DateTime(req.OpTimeBegin)}}})
 	}
-	if req.OpTimeEnd != nil {
-		and = append(and, bson.E{Key: "createdAt", Value: bson.D{{Key: "$lt", Value: primitive.DateTime(*req.OpTimeEnd)}}})
+	if req.OpTimeEnd > 0 {
+		and = append(and, bson.E{Key: "createdAt", Value: bson.D{{Key: "$lt", Value: primitive.DateTime(req.OpTimeEnd)}}})
 	}
-	if req.RecordId != nil {
+	if req.RecordId != "" {
 		and = append(and, bson.E{Key: "recordId", Value: req.RecordId})
 	}
 	filter := make(bson.D, 0)
@@ -66,8 +56,8 @@ func ListChangeLog(c *gin.Context) {
 	}
 	opt := options.Find().
 		SetSort(OrderByToBsonD(req.SortBy)).
-		SetSkip(req.PaginationArg.PerPage * (req.PaginationArg.Page - 1)).
-		SetLimit(req.PaginationArg.PerPage)
+		SetSkip(req.PerPage * (req.Page - 1)).
+		SetLimit(req.PerPage)
 	res, err := repo.FindMany[model.ChangeLog](ctx, filter, opt)
 	if err != nil {
 		ProtoBufWithImplicitError(c, err)

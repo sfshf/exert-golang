@@ -70,6 +70,7 @@ const submitForm = async () => {
       })
     }
     roleIdAdded.value = addRoleResp.data.result
+    emits('update:dialog', false)
     emits('refreshTable')
   } catch (err:any) {
     let errMsg = ''

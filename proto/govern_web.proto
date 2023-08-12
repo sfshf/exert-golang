@@ -8,15 +8,14 @@ import "google/protobuf/any.proto";
 option go_package = "./dto";
 
 // common messages.
-message PaginationArg {
-  // @gotags: binging:"" label:"是否不分页"
-  bool noPaging = 1; // 是否不分页
-  // @gotags: binding:"" label:"当前页码"
-  sint64 page = 2; // 当前页码
-  // @gotags: binding:"" label:"每页数据量"
-  sint64 perPage = 3; // 每页数据量
+
+// SortDirection indocate the direction of sorting.
+enum SortDirection {
+  Asc = 0; // 正序
+  Desc = 1; // 倒序
 }
 
+// Error error response.
 message Error {
   string msg = 1; // error message
 }
@@ -35,14 +34,32 @@ message AddDomainReq {
   string icon = 4; // 图标
   // @gotags: binding:"" label:"备注"
   string memo = 5; // 备注
-  // @gotags: binding:"" label:"父级Id"
+  // @gotags: copier:"ParentID" binding:"" label:"父级Id"
   string parentId = 6; // 父级Id
 }
 
-// AddDomainRet return of add a domain.
+// AddDomainRet return of adding a domain.
 message AddDomainRet {
   // @gotags: copier:"ID"
   string id = 1; // Id
+}
+
+// ListDomainReq search arguments to list domains.
+message ListDomainReq {
+  // @gotags: form:"noPaging" binging:"" label:"是否不分页"
+  bool noPaging = 20001; // 是否不分页
+  // @gotags: form:"page" binding:"" label:"当前页码"
+  sint64 page = 20002; // 当前页码
+  // @gotags: form:"perPage" binding:"" label:"每页数据量"
+  sint64 perPage = 20003; // 每页数据量
+  // @gotags: form:"sortBy" binding:"" label:"字段排序条件"
+  map<string, SortDirection> sortBy = 20004; // 字段排序条件
+  // @gotags: form:"deleted" binding:"" label:"是否被软删除"
+  bool deleted = 20005; // 是否被软删除
+  // @gotags: form:"name" binding:"" label:"名称"
+  string name = 1; // 名称
+  // @gotags: form:"needTree" binding:"" label:"数据是否要转为树结构"
+  bool needTree = 2; // 数据是否要转为树结构
 }
 
 // DomainListElem view model of listing domains.
@@ -60,8 +77,8 @@ message DomainListElem {
   string createdAt = 20001; // 创建时间
   string updatedBy = 20002; // 更新者
   string updatedAt = 20003; // 更新时间
-  optional string deletedBy = 20004; // 禁用者
-  optional string deletedAt = 20005; // 禁用时间
+  string deletedBy = 20004; // 禁用者
+  string deletedAt = 20005; // 禁用时间
   repeated DomainListElem children = 20006; // 子节点
 }
 
@@ -86,8 +103,8 @@ message ProfileDomainRet {
   string createdAt = 20001; // 创建时间
   string updatedBy = 20002; // 更新者
   string updatedAt = 20003; // 更新时间
-  optional string deletedBy = 20004; // 禁用者
-  optional string deletedAt = 20005; // 禁用时间
+  string deletedBy = 20004; // 禁用者
+  string deletedAt = 20005; // 禁用时间
 }
 
 // EditDomainReq arguments to edit a domain.
@@ -102,7 +119,7 @@ message EditDomainReq {
   string icon = 4; // 图标
   // @gotags: binding:"" label:"备注"
   string memo = 5; // 备注
-  // @gotags: binding:"" label:"父级Id"
+  // @gotags: copier:"ParentID" binding:"" label:"父级Id"
   string parentId = 6; // 父级Id
 }
 
@@ -146,7 +163,7 @@ message AddMenuReq {
   string memo = 5; // 备注
   // @gotags: binding:"" label:"是否显示"
   bool show = 6;// 是否显示
-  // @gotags: binding:"" label:"父级Id"
+  // @gotags: copier:"ParentID" binding:"" label:"父级Id"
   string parentId = 7; // 父级Id
   // @gotags: binding:"" label:"是否是菜单项"
   bool isItem = 8; // 是否是菜单项
@@ -156,6 +173,28 @@ message AddMenuReq {
 message AddMenuRet {
   // @gotags: copier:"ID"
   string id = 1; // Id
+}
+
+// ListMenuReq search arguments to list menus.
+message ListMenuReq {
+  // @gotags: form:"noPaging" binging:"" label:"是否不分页"
+  bool noPaging = 20001; // 是否不分页
+  // @gotags: form:"page" binding:"" label:"当前页码"
+  sint64 page = 20002; // 当前页码
+  // @gotags: form:"perPage" binding:"" label:"每页数据量"
+  sint64 perPage = 20003; // 每页数据量
+  // @gotags: form:"sortBy" binding:"" label:"字段排序条件"
+  map<string, SortDirection> sortBy = 20004; // 字段排序条件
+  // @gotags: form:"deleted" binding:"" label:"是否被软删除"
+  bool deleted = 20005; // 是否被软删除
+  // @gotags: form:"name" binding:"" label:"名称"
+  string name = 1; // 名称
+  // @gotags: form:"needTree" binding:"" label:"数据是否要转为树结构"
+  bool needTree = 2; // 数据是否要转为树结构
+  // @gotags: form:"route" binding:"" label:"页面路由"
+  string route = 3; // 页面路由
+  // @gotags: form:"show" binding:"" label:"是否已显示"
+  bool show = 4; // 是否已显示
 }
 
 // MenuListElem view model of listing domains.
@@ -175,8 +214,8 @@ message MenuListElem {
   string createdAt = 20001; // 创建时间
   string updatedBy = 20002; // 更新者
   string updatedAt = 20003; // 更新时间
-  optional string deletedBy = 20004; // 禁用者
-  optional string deletedAt = 20005; // 禁用时间
+  string deletedBy = 20004; // 禁用者
+  string deletedAt = 20005; // 禁用时间
   repeated MenuListElem children = 20006; // 子节点
 }
 
@@ -203,11 +242,11 @@ message ProfileMenuRet {
   string createdAt = 20001; // 创建时间
   string updatedBy = 20002; // 更新者
   string updatedAt = 20003; // 更新时间
-  optional string deletedBy = 20004; // 禁用者
-  optional string deletedAt = 20005; // 禁用时间
+  string deletedBy = 20004; // 禁用者
+  string deletedAt = 20005; // 禁用时间
 }
 
-// EditMenuReq arguments to edit a menu.
+// EditMenuReq arguments to editing a menu.
 message EditMenuReq {
   // @gotags: binding:"required" label:"名称"
   string name = 1; // 名称
@@ -221,7 +260,7 @@ message EditMenuReq {
   string memo = 5; // 备注
   // @gotags: binding:"" label:"是否显示"
   bool show = 6; // 是否显示
-  // @gotags: binding:"" label:"父级Id"
+  // @gotags: copier:"ParentID" binding:"" label:"父级Id"
   string parentId = 7; // 父级Id
   // @gotags: binding:"" label:"是否是菜单项"
   bool isItem = 8; // 是否是菜单项
@@ -277,6 +316,22 @@ message AddMenuWidgetRet {
   string id = 1; // Id
 }
 
+// ListMenuWidgetReq search arguments to list menu-widgets.
+message ListMenuWidgetReq {
+  // @gotags: form:"noPaging" binging:"" label:"是否不分页"
+  bool noPaging = 20001; // 是否不分页
+  // @gotags: form:"page" binding:"" label:"当前页码"
+  sint64 page = 20002; // 当前页码
+  // @gotags: form:"perPage" binding:"" label:"每页数据量"
+  sint64 perPage = 20003; // 每页数据量
+  // @gotags: form:"sortBy" binding:"" label:"字段排序条件"
+  map<string, SortDirection> sortBy = 20004; // 字段排序条件
+  // @gotags: form:"deleted" binding:"" label:"是否被软删除"
+  bool deleted = 20005; // 是否被软删除
+  // @gotags: form:"name" binding:"" label:"名称"
+  string name = 1; // 名称
+}
+
 // MenuWidgetListElem an element of menu-widget list.
 message MenuWidgetListElem {
   // @gotags: copier:"ID"
@@ -291,8 +346,8 @@ message MenuWidgetListElem {
   string createdAt = 20001; // 创建时间
   string updatedBy = 20002; // 更新者
   string updatedAt = 20003; // 更新时间
-  optional string deletedBy = 20004; // 禁用者
-  optional string deletedAt = 20005; // 禁用时间
+  string deletedBy = 20004; // 禁用者
+  string deletedAt = 20005; // 禁用时间
 }
 
 // ListMenuWidgetRet  return of listing menu-widgets.
@@ -301,7 +356,7 @@ message ListMenuWidgetRet {
   sint64 total = 2; // 总量
 }
 
-// ProfileMenuWidgetRet return of profile a menu-widget.
+// ProfileMenuWidgetRet return of profiling a menu-widget.
 message ProfileMenuWidgetRet {
   // @gotags: copier:"ID"
   string id = 1; // Id
@@ -316,8 +371,8 @@ message ProfileMenuWidgetRet {
   string createdAt = 20001; // 创建时间
   string updatedBy = 20002; // 更新者
   string updatedAt = 20003; // 更新时间
-  optional string deletedBy = 20004; // 禁用者
-  optional string deletedAt = 20005; // 禁用时间
+  string deletedBy = 20004; // 禁用者
+  string deletedAt = 20005; // 禁用时间
 }
 
 // EditMenuWidgetReq arguments to edit a menu-widget.
@@ -384,6 +439,32 @@ message AddRoleRet {
   string id = 1; // Id
 }
 
+// ListRoleReq search arguments to list roles.
+message ListRoleReq {
+  // @gotags: form:"noPaging" binging:"" label:"是否不分页"
+  bool noPaging = 20001; // 是否不分页
+  // @gotags: form:"page" binding:"" label:"当前页码"
+  sint64 page = 20002; // 当前页码
+  // @gotags: form:"perPage" binding:"" label:"每页数据量"
+  sint64 perPage = 20003; // 每页数据量
+  // @gotags: form:"sortBy" binding:"" label:"字段排序条件"
+  map<string, SortDirection> sortBy = 20004; // 字段排序条件
+  // @gotags: form:"deleted" binding:"" label:"是否被软删除"
+  bool deleted = 20005; // 是否被软删除
+  // @gotags: form:"name" binding:"" label:"名称"
+  string name = 1; // 名称
+  // @gotags: form:"alias" binding:"" label:"别名" 
+  string alias = 2; // 别名
+  // @gotags: form:"createdBy" binding:"" label:"创建者" 
+  string createdBy = 3; // 创建者
+  // @gotags: form:"createdAtBegin" binding:"" label:"创建时间起始" 
+  sint64 createdAtBegin = 4; // 创建时间起始
+  // @gotags: form:"createdAtEnd" binding:"" label:"创建时间结束" 
+  sint64 createdAtEnd = 5; // 创建时间结束
+  // @gotags: form:"domainId" binding:"" label:"域ID" 
+  string domainId = 6; // 域ID
+}
+
 // RoleListElem an element of role list.
 message RoleListElem {
   // @gotags: copier:"ID"
@@ -399,8 +480,8 @@ message RoleListElem {
   string createdAt = 20001; // 创建时间
   string updatedBy = 20002; // 更新者
   string updatedAt = 20003; // 更新时间
-  optional string deletedBy = 20004; // 禁用者
-  optional string deletedAt = 20005; // 禁用时间
+  string deletedBy = 20004; // 禁用者
+  string deletedAt = 20005; // 禁用时间
 }
 
 // ListRoleRet return of listing roles.
@@ -409,7 +490,7 @@ message ListRoleRet {
   sint64 total = 2; // 总量
 }
 
-// ProfileRoleRet return of profile a role.
+// ProfileRoleRet return of profiling a role.
 message ProfileRoleRet {
   // @gotags: copier:"ID"
   string id = 1; // Id
@@ -422,8 +503,8 @@ message ProfileRoleRet {
   string createdAt = 20001; // 创建时间
   string updatedBy = 20002; // 更新者
   string updatedAt = 20003; // 更新时间
-  optional string deletedBy = 20004; // 禁用者
-  optional string deletedAt = 20005; // 禁用时间
+  string deletedBy = 20004; // 禁用者
+  string deletedAt = 20005; // 禁用时间
 }
 
 // EditRoleReq arguments to edit a role.
@@ -519,6 +600,40 @@ message AddStaffRet {
   string id = 1; // Id
 }
 
+// ListStaffReq  request parameter to list staffs.
+message ListStaffReq {
+  // @gotags: form:"noPaging" binging:"" label:"是否不分页"
+  bool noPaging = 20001; // 是否不分页
+  // @gotags: form:"page" binding:"" label:"当前页码"
+  sint64 page = 20002; // 当前页码
+  // @gotags: form:"perPage" binding:"" label:"每页数据量"
+  sint64 perPage = 20003; // 每页数据量
+  // @gotags: form:"sortBy" binding:"" label:"字段排序条件"
+  map<string, SortDirection> sortBy = 20004; // 字段排序条件
+  // @gotags: form:"deleted" binding:"" label:"是否被软删除"
+  bool deleted = 20005; // 是否被软删除
+  // @gotags: form:"account" binding:"" label:"账号"
+  string account = 1; // 账号
+  // @gotags: form:"signIn" binding:"" label:"是否已登录"
+  bool signIn = 2; // 是否已登录
+  // @gotags: form:"nickName" binding:"" label:"昵称"
+  string nickName = 3; // 昵称
+  // @gotags: form:"realName" binding:"" label:"真实姓名"
+  string realName = 4; // 真实姓名
+  // @gotags: form:"email" binding:"" label:"邮箱"
+  string email = 5; // 邮箱
+  // @gotags: form:"phone" binding:"" label:"手机号"
+  string phone = 6; // 手机号
+  // @gotags: form:"gender" binding:"omitempty,oneof=Male Female" label:"性别"
+  string gender = 7; // 性别
+  // @gotags: form:"lastSignInIp" binding:"" label:"最近登录IP"
+  string lastSignInIp = 8; // 最近登录IP
+  // @gotags: form:"lastSignInTimeBegin" binding:"omitempty,gte=0" label:"最近登录时间起始"
+  sint64 lastSignInTimeBegin = 9; // 最近登录时间起始
+  // @gotags: form:"lastSignInTimeEnd" binding:"omitempty,gte=0" label:"最近登录时间结束"
+  sint64 lastSignInTimeEnd = 10; // 最近登录时间结束
+}
+
 // StaffListElem an element of staff list.
 message StaffListElem {
   // @gotags: copier:"ID"
@@ -539,8 +654,8 @@ message StaffListElem {
   string createdAt = 20001; // 创建时间
   string updatedBy = 20002; // 更新者
   string updatedAt = 20003; // 更新时间
-  optional string deletedBy = 20004; // 禁用者
-  optional string deletedAt = 20005; // 禁用时间
+  string deletedBy = 20004; // 禁用者
+  string deletedAt = 20005; // 禁用时间
 }
 
 // ListStaffRet return of listing staffs.
@@ -549,7 +664,7 @@ message ListStaffRet {
   sint64 total = 2; // 总量
 }
 
-// ProfileStaffRet return of profile a staff.
+// ProfileStaffRet return of profiling a staff.
 message ProfileStaffRet {
   // @gotags: copier:"ID"
   string id = 1; // Id
@@ -569,8 +684,8 @@ message ProfileStaffRet {
   string createdAt = 20001; // 创建时间
   string updatedBy = 20002; // 更新者
   string updatedAt = 20003; // 更新时间
-  optional string deletedBy = 20004; // 禁用者
-  optional string deletedAt = 20005; // 禁用时间
+  string deletedBy = 20004; // 禁用者
+  string deletedAt = 20005; // 禁用时间
 }
 
 // EditStaffReq arguments to edit a staff.
@@ -655,7 +770,27 @@ message RemoveStaffRet {
 
 // change-log dtos.
 
-// ListChangeLogElem an element of change logs list.
+// ChangeLogListReq request parameters to list change-logs.
+message ListChangeLogReq {
+  // @gotags: form:"noPaging" binging:"" label:"是否不分页"
+  bool noPaging = 20001; // 是否不分页
+  // @gotags: form:"page" binding:"" label:"当前页码"
+  sint64 page = 20002; // 当前页码
+  // @gotags: form:"perPage" binding:"" label:"每页数据量"
+  sint64 perPage = 20003; // 每页数据量
+  // @gotags: form:"sortBy" binding:"" label:"字段排序条件"
+  map<string, SortDirection> sortBy = 20004; // 字段排序条件
+  // @gotags: form:"collName" binding:"" label:"集合（表）名 
+  string collName = 1; // 集合（表）名
+  // @gotags: form:"recordId" binding:"" label:"记录ID" 
+  string recordId = 2; // 记录ID
+  // @gotags: form:"opTimeBegin" binding:"" label:"操作时间起始" 
+  sint64 opTimeBegin = 3; // 操作时间起始
+  // @gotags: form:"opTimeEnd" binding:"" label:"操作时间结束" 
+  sint64 opTimeEnd = 4; // 操作时间结束
+}
+
+// ListChangeLogElem an element of change-logs list.
 message ListChangeLogElem {
   // @gotags: copier:"ID"
   string id = 1; // Id
@@ -676,7 +811,35 @@ message ListChangeLogRet {
 
 // access-log dtos.
 
-// ListAccessLogElem an element of access logs list.
+// AccessLogListReq request parameters to list access-logs.
+message ListAccessLogReq {
+  // @gotags: form:"noPaging" binging:"" label:"是否不分页"
+  bool noPaging = 20001; // 是否不分页
+  // @gotags: form:"page" binding:"" label:"当前页码"
+  sint64 page = 20002; // 当前页码
+  // @gotags: form:"perPage" binding:"" label:"每页数据量"
+  sint64 perPage = 20003; // 每页数据量
+  // @gotags: form:"sortBy" binding:"" label:"字段排序条件"
+  map<string, SortDirection> sortBy = 20004; // 字段排序条件
+  // @gotags: form:"level" binding:"" label:"日志级别"
+  string level = 1; // 日志级别
+  // @gotags: form:"timeBegin" binding:"" label:"访问时间起始"
+  sint64 timeBegin = 2; // 访问时间起始
+  // @gotags: form:"timeEnd" binding:"" label:"访问时间结束"
+  sint64 timeEnd = 3; // 访问时间结束
+  // @gotags: form:"clientIp" binding:"" label:"客户端IP"
+  string clientIp = 4; // 客户端IP
+  // @gotags: form:"path" binding:"" label:"请求路径"
+  string path = 5; // 请求路径
+  // @gotags: form:"traceId" binding:"" label:"跟踪Id"
+  string traceId = 6; // 跟踪Id
+  // @gotags: from:"sessionId" binding:"" label:"会话Id"
+  string sessionId = 7; // 会话Id
+  // @gotags: form:"tag" binding:"" label:"标签"
+  string tag = 8; // 标签
+}
+
+// ListAccessLogElem an element of access-logs list.
 message ListAccessLogElem {
   // @gotags: copier:"ID"
   string id = 1; // Id
@@ -711,13 +874,13 @@ message ListAccessLogRet {
 
 // auth dtos.
 
-// GetPicCaptchaRet return of get picture captcha.
+// GetPicCaptchaRet return of getting picture captcha.
 message GetPicCaptchaRet {
   string picCaptchaId = 1; // 验证码Id
   string picCaptchaB64s = 2; // 验证码图片
 }
 
-// GetPicCaptchaAnswerRet return of get picture captcha answer.
+// GetPicCaptchaAnswerRet return of getting picture captcha answer.
 message GetPicCaptchaAnswerRet {
   string answer = 1; // 验证码值
 }
@@ -749,7 +912,7 @@ message GetOwnDomainsElem {
   string icon = 4; // 图标
 }
 
-// GetOwnDomainsRet return of request to get own domains.
+// GetOwnDomainsRet return of getting own domains.
 message GetOwnDomainsRet {
   repeated GetOwnDomainsElem list = 1; // 列表
   sint64 total = 2; // 总量
@@ -764,10 +927,21 @@ message GetOwnRolesElem {
   string icon = 4; // 图标
 }
 
-// GetOwnRolesRet return of get own roles.
+// GetOwnRolesReq request parameters.
+message GetOwnRolesReq {
+  // @gotags: form:"domainId" binding:"" label:"域Id"
+  string domainId = 1; // 域Id
+}
+
+// GetOwnRolesRet return of getting own roles.
 message GetOwnRolesRet {
   repeated GetOwnRolesElem list = 1; // 列表
   sint64 total = 2; // 总量
+}
+
+// SignOutRet return of signing out.
+message SignOutRet {
+  string id = 1; // Id
 }
 
 // MenuView menu view.
@@ -814,7 +988,15 @@ message MenuWidgetView {
   bool show = 8;
 }
 
-// GetOwnMenusRet return of get own menus.
+// GetOwnMenusReq request parameters.
+message GetOwnMenusReq {
+  // @gotags: form:"domainId" binding:"" label:"域Id"
+  string domainId = 1; // 域Id
+  // @gotags: form:"roleId" binding:"" label:"角色Id"
+  string roleId = 2; // 角色Id
+}
+
+// GetOwnMenusRet return of getting own menus.
 message GetOwnMenusRet {
   repeated MenuView list = 1; // 列表
   sint64 total = 2; // 总量

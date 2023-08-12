@@ -120,7 +120,7 @@ const doSignIn = async () => {
 }
 const handleDomainRadioGroupChange = async (id:string) => {
   try {
-    const getOwnRolesResp = await getOwnRoles({domainID: id})
+    const getOwnRolesResp = await getOwnRoles({domainId: id})
     ownRoles.value = getOwnRolesResp.data.list
     curRoleId.value = ''
   } catch (err:any) {
@@ -145,12 +145,12 @@ const loadMenus = async () => {
     if (!curDomainId.value || !curRoleId.value) {
       ElMessage({
         message: '登录失败！ 请选择域及角色！',
-        type: 'success',
+        type: 'error',
         duration: 3000
       })
       return
     }
-    const getOwnMenusResp = await getOwnMenus({ domainID: curDomainId.value, roleID: curRoleId.value })
+    const getOwnMenusResp = await getOwnMenus({ domainId: curDomainId.value, roleId: curRoleId.value })
     ownMenus.value = getOwnMenusResp.data.list
     if (ownMenus.value && (ownMenus.value as Array<any>).length > 0) {
       localStorage.setItem('menus', JSON.stringify(ownMenus.value))

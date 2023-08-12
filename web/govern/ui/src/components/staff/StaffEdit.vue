@@ -66,15 +66,7 @@ import RBAC from '@/components/staff/RBAC.vue'
 
 const props = defineProps(['drawer', 'staffId'])
 const emits = defineEmits(['update:drawer', 'update:staffId', 'refreshTable'])
-const editForm = ref({
-  account: null,
-  realName: null,
-  email: null,
-  phone: null,
-  gender: null,
-  signInIpWhitelist: null,
-})
-let detailForm:any = {}
+const editForm = ref({})
 const staffId = computed({
   get: () => {
     return props.staffId
@@ -87,14 +79,7 @@ watch(staffId, async (newId:string) => {
   try {
     if (newId == '') { return }
     const profileStaffResp = await profileStaff(newId)
-    detailForm = profileStaffResp.data
-     // TODO need to optimize
-    editForm.value.account = detailForm.account
-    editForm.value.realName = detailForm.realName
-    editForm.value.email = detailForm.email
-    editForm.value.phone = detailForm.phone
-    editForm.value.gender = detailForm.gender
-    editForm.value.signInIpWhitelist = detailForm.signInIpWhitelist
+    editForm.value = profileStaffResp.data
   } catch (err:any) {
     let errMsg = ''
     if (err.response) {
@@ -112,14 +97,7 @@ watch(staffId, async (newId:string) => {
 onMounted(async () => {
   try {
     const profileStaffResp = await profileStaff(props.staffId)
-    detailForm = profileStaffResp.data
-    // TODO need to optimize
-    editForm.value.account = detailForm.account
-    editForm.value.realName = detailForm.realName
-    editForm.value.email = detailForm.email
-    editForm.value.phone = detailForm.phone
-    editForm.value.gender = detailForm.gender
-    editForm.value.signInIpWhitelist = detailForm.signInIpWhitelist
+    editForm.value = profileStaffResp.data
   } catch (err:any) {
     let errMsg = ''
     if (err.response) {
@@ -137,16 +115,20 @@ onMounted(async () => {
 const cancelForm = () => {
   ElMessageBox.confirm('cancelForm')
     .then(() => {
-      // TODO need to optimize
-      editForm.value.account = detailForm.account
-      editForm.value.realName = detailForm.realName
-      editForm.value.email = detailForm.email
-      editForm.value.phone = detailForm.phone
-      editForm.value.gender = detailForm.gender
-      editForm.value.signInIpWhitelist = detailForm.signInIpWhitelist
+      editForm.value = {}
       emits('update:drawer', false)
-    }).catch(() => {
-      // catch error
+    }).catch((err:any) => {
+      let errMsg = ''
+      if (err.response) {
+        errMsg = err.response.data.error
+      } else {
+        errMsg = err
+      }
+      ElMessage({
+        message: '取消失败：' + errMsg,
+        type: 'error',
+        duration: 3000
+      })
     })
 }
 const submitForm = async () => {

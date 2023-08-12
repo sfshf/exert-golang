@@ -1,14 +1,12 @@
 package api
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"log"
 	"net/http"
 	"strconv"
 	"strings"
-	"text/template"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -252,7 +250,7 @@ func ProtoBufWithBadRequest(c *gin.Context, err error) {
 	if model_service.LoggerEnabled() {
 		c.Set(ResponseBodyKey, json.Marshal2String(err))
 	}
-	c.ProtoBuf(http.StatusBadRequest, dto.Error{Msg: err.Error()})
+	c.ProtoBuf(http.StatusBadRequest, &dto.Error{Msg: err.Error()})
 	c.Abort()
 }
 
@@ -262,7 +260,7 @@ func ProtoBufWithUnauthorized(c *gin.Context, err error) {
 	if model_service.LoggerEnabled() {
 		c.Set(ResponseBodyKey, json.Marshal2String(err))
 	}
-	c.ProtoBuf(http.StatusUnauthorized, dto.Error{Msg: err.Error()})
+	c.ProtoBuf(http.StatusUnauthorized, &dto.Error{Msg: err.Error()})
 	c.Abort()
 }
 
@@ -273,7 +271,7 @@ func ProtoBufWithForbidden(c *gin.Context, err error) {
 	if model_service.LoggerEnabled() {
 		c.Set(ResponseBodyKey, json.Marshal2String(err))
 	}
-	c.ProtoBuf(http.StatusForbidden, dto.Error{Msg: err.Error()})
+	c.ProtoBuf(http.StatusForbidden, &dto.Error{Msg: err.Error()})
 	c.Abort()
 }
 
@@ -284,7 +282,7 @@ func ProtoBufWithNotFound(c *gin.Context, err error) {
 	if model_service.LoggerEnabled() {
 		c.Set(ResponseBodyKey, json.Marshal2String(err))
 	}
-	c.ProtoBuf(http.StatusNotFound, dto.Error{Msg: err.Error()})
+	c.ProtoBuf(http.StatusNotFound, &dto.Error{Msg: err.Error()})
 	c.Abort()
 }
 
@@ -297,7 +295,7 @@ func ProtoBufWithMethodNotAllowed(c *gin.Context, err error) {
 	if model_service.LoggerEnabled() {
 		c.Set(ResponseBodyKey, json.Marshal2String(err))
 	}
-	c.ProtoBuf(http.StatusMethodNotAllowed, dto.Error{Msg: err.Error()})
+	c.ProtoBuf(http.StatusMethodNotAllowed, &dto.Error{Msg: err.Error()})
 	c.Abort()
 }
 
@@ -309,7 +307,7 @@ func ProtoBufWithConflict(c *gin.Context, err error) {
 	if model_service.LoggerEnabled() {
 		c.Set(ResponseBodyKey, json.Marshal2String(err))
 	}
-	c.ProtoBuf(http.StatusConflict, dto.Error{Msg: err.Error()})
+	c.ProtoBuf(http.StatusConflict, &dto.Error{Msg: err.Error()})
 	c.Abort()
 }
 
@@ -321,7 +319,7 @@ func ProtoBufWithInternalServerError(c *gin.Context, err error) {
 	if model_service.LoggerEnabled() {
 		c.Set(ResponseBodyKey, json.Marshal2String(err))
 	}
-	c.ProtoBuf(http.StatusInternalServerError, dto.Error{Msg: err.Error()})
+	c.ProtoBuf(http.StatusInternalServerError, &dto.Error{Msg: err.Error()})
 	c.Abort()
 }
 
@@ -599,6 +597,7 @@ func Casbin(ctx context.Context) gin.HandlerFunc {
 		}
 		sessionId := SessionIdFromGinX(c)
 		if sessionId == nil {
+			log.Println(model_service.ErrUnauthorized)
 			ProtoBufWithUnauthorized(c, model_service.ErrUnauthorized)
 			return
 		}
@@ -608,6 +607,7 @@ func Casbin(ctx context.Context) gin.HandlerFunc {
 		}
 		domainID := DomainIDFromGinX(c)
 		if domainID == nil {
+			log.Println(model_service.ErrUnauthorized)
 			ProtoBufWithUnauthorized(c, model_service.ErrUnauthorized)
 			return
 		}
@@ -619,13 +619,15 @@ func Casbin(ctx context.Context) gin.HandlerFunc {
 		// https://casbin.org/docs/en/how-it-works#request
 		// A basic request is a tuple object, at least including
 		// subject (accessed entity), object (accessed resource) and action (access method).
-		authorized, err := casbin.CasbinEnforcerWithContext(ctx).
+		authorized, err := casbin.CasbinEnforcer().
 			Enforce(sessionId.Hex(), domainID.Hex(), c.FullPath(), c.Request.Method)
 		if err != nil {
+			log.Println(err)
 			ProtoBufWithUnauthorized(c, err)
 			return
 		}
 		if !authorized {
+			log.Println(model_service.ErrUnauthorized)
 			ProtoBufWithUnauthorized(c, model_service.ErrUnauthorized)
 			return
 		}
@@ -634,76 +636,17 @@ func Casbin(ctx context.Context) gin.HandlerFunc {
 	}
 }
 
-type PaginationArg struct {
-	NoPaging bool  `form:"noPaging" json:"noPaging" binging:"" label:"是否不分页"` // 是否不分页
-	Page     int64 `form:"page" json:"page" binding:"" label:"当前页码"`          // 当前页码
-	PerPage  int64 `form:"perPage" json:"perPage" binding:"" label:"每页数据量"`   // 每页数据量
-}
-
-type PaginationRet struct {
-	List  interface{} `form:"list" json:"list"`
-	Total int64       `form:"total" json:"total"`
-}
-
-// SortDirection 排序方向
-type SortDirection int
-
-const (
-	Asc  SortDirection = 1
-	Desc SortDirection = -1
-)
-
-type SortBy map[string]SortDirection
-
-func OrderByToBsonD(a SortBy) bson.D {
+func OrderByToBsonD(a map[string]dto.SortDirection) bson.D {
 	sort := make(bson.D, 0)
 	for k, v := range a {
-		sort = append(sort, bson.E{Key: k, Value: v})
+		ev := 0
+		switch v {
+		case 0:
+			ev = 1 // 正序
+		case 1:
+			ev = -1 // 倒序
+		}
+		sort = append(sort, bson.E{Key: k, Value: ev})
 	}
 	return sort
-}
-
-type Resp struct {
-	Msg string
-	Any interface{}
-}
-
-func (resp *Resp) MarshalJSON() ([]byte, error) {
-	var buf bytes.Buffer
-	replacer := strings.NewReplacer(`\'`, `'`)
-	_, err := buf.WriteString(strings.Join([]string{`{"msg":"`, replacer.Replace(strings.Trim(resp.Msg, `"`)) + `"`}, ""))
-	if err != nil {
-		return nil, err
-	}
-	if resp.Any != nil {
-		if _, err = buf.WriteString(`,`); err != nil {
-			return nil, err
-		}
-		if e, is := resp.Any.(error); is {
-			if _, err = buf.WriteString(strings.Join([]string{`"error":"`, replacer.Replace(template.JSEscapeString(strings.Trim(e.Error(), `"`))) + `"}`}, "")); err != nil {
-				return nil, err
-			}
-		} else {
-			// TODO check space characters.
-			ret, err := json.Marshal(resp.Any)
-			if err != nil {
-				return nil, err
-			}
-			if !bytes.HasPrefix(ret, []byte("{")) {
-				if _, err = buf.WriteString(strings.Join([]string{`"result":"`, replacer.Replace(string(bytes.Trim(ret, `"`))) + `"}`}, "")); err != nil {
-					return nil, err
-				}
-			} else {
-				if _, err = buf.Write(bytes.TrimLeft(ret, "{")); err != nil {
-					return nil, err
-				}
-			}
-		}
-	} else {
-		if _, err = buf.WriteString(`}`); err != nil {
-			return nil, err
-		}
-	}
-	res := buf.Bytes()
-	return res, nil
 }

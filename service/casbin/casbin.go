@@ -28,7 +28,7 @@ func LaunchDefaultWithOption(ctx context.Context, opt CasbinOption) (clear func(
 		log.Println(err)
 		return
 	}
-	casbinEnforcer, err = casbin.NewEnforcer(m, repo.CasbinAdapter(ctx))
+	casbinEnforcer, err = casbin.NewEnforcer(m, repo.Adapter(repo.CasbinRepo))
 	if err != nil {
 		log.Println(err)
 		return
@@ -39,7 +39,7 @@ func LaunchDefaultWithOption(ctx context.Context, opt CasbinOption) (clear func(
 	}
 	casbinEnforcer.EnableAutoSave(opt.AutoSave)
 	casbinEnforcer.EnableEnforce(true)
-	if err = CasbinEnforcerWithContext(ctx).LoadPolicy(); err != nil {
+	if err = CasbinEnforcer().LoadPolicy(); err != nil {
 		log.Println(err)
 		return
 	}
@@ -55,14 +55,6 @@ func CasbinEnforcerEnabled() bool {
 
 func CasbinEnforcer() *casbin.Enforcer {
 	return casbinEnforcer
-}
-
-func CasbinEnforcerWithContext(ctx context.Context) *casbin.Enforcer {
-	// TODO need to check data race.
-	enforcer := new(casbin.Enforcer)
-	*enforcer = *casbinEnforcer
-	enforcer.SetAdapter(repo.CasbinAdapter(ctx))
-	return enforcer
 }
 
 func GetDomainsBySubject(subject string) []string {

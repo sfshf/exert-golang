@@ -34,7 +34,7 @@ el-container(class="change-log-main-container")
         row-key="id"
         default-expand-all
       )
-        el-table-column(fixed prop="id" label="ID" width="220")
+        el-table-column(fixed prop="id" label="Id" width="220")
         el-table-column(fixed prop="collName" label="CollName" width="100")
         el-table-column(fixed prop="recordId" label="RecordId" width="220")
         el-table-column(show-overflow-tooltip prop="fieldDiff" label="FieldDiff" width="240")

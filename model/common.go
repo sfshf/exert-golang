@@ -73,7 +73,7 @@ func CopyToModelWithSessionContext[M any](ctx context.Context, from interface{},
 			}))
 		}
 	}
-	err = copier.Copy(&m, from)
+	err = Copy(&m, from)
 	return
 }
 
@@ -185,11 +185,33 @@ func Copy(toValue interface{}, fromValue interface{}) error {
 				},
 			},
 			{
+				SrcType: "",
+				DstType: new(primitive.ObjectID),
+				Fn: func(src interface{}) (interface{}, error) {
+					if base, is := src.(string); is {
+						oid, err := primitive.ObjectIDFromHex(base)
+						return &oid, err
+					}
+					return nil, nil
+				},
+			},
+			{
 				SrcType: new(primitive.DateTime),
 				DstType: "",
 				Fn: func(src interface{}) (interface{}, error) {
 					if base, is := src.(*primitive.DateTime); is {
 						return base.Time().String(), nil
+					}
+					return "", nil
+				},
+			},
+			{
+				SrcType: int64(0),
+				DstType: new(primitive.DateTime),
+				Fn: func(src interface{}) (interface{}, error) {
+					if base, is := src.(int64); is {
+						dt := primitive.NewDateTimeFromTime(time.UnixMilli(base))
+						return &dt, nil
 					}
 					return "", nil
 				},

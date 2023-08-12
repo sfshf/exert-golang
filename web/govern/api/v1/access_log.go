@@ -12,20 +12,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// AccessLogListReq request parameters to list access-logs.
-type AccessLogListReq struct {
-	Level     *string `form:"level" json:"level" binding:"" label:"日志级别"`           // 日志级别
-	TimeBegin *int64  `form:"timeBegin" json:"timeBegin" binding:"" label:"访问时间起始"` // 访问时间起始
-	TimeEnd   *int64  `form:"timeEnd" json:"timeEnd" binding:"" label:"访问时间结束"`     // 访问时间结束
-	ClientIp  *string `form:"clientIp" json:"clientIp" binding:"" label:"客户端IP"`    // 客户端IP
-	Path      *string `form:"path" json:"path" binding:"" label:"请求路径"`             // 请求路径
-	TraceId   *string `form:"traceId" json:"traceId" binding:"" label:"跟踪Id"`       // 跟踪Id
-	SessionId *string `form:"sessionId" json:"sessionId" binding:"" label:"会话Id"`   // 会话Id
-	Tag       *string `form:"tag" json:"tag" binding:"" label:"标签"`                 // 标签
-	SortBy    SortBy  `form:"sortBy" json:"sortBy" binding:"" label:"字段排序条件"`       // 字段排序条件
-	PaginationArg
-}
-
 // ListAccessLog
 // @description get a list of access logs.
 // @id access-log-list
@@ -41,34 +27,34 @@ type AccessLogListReq struct {
 // @router /accessLogs [GET]
 func ListAccessLog(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
-	var req AccessLogListReq
+	var req dto.ListAccessLogReq
 	if err := c.ShouldBindQuery(&req); err != nil {
 		ProtoBufWithBadRequest(c, err)
 		return
 	}
 	var and bson.D
-	if req.Level != nil {
+	if req.Level != "" {
 		and = append(and, bson.E{Key: "level", Value: req.Level})
 	}
-	if req.TimeBegin != nil {
-		and = append(and, bson.E{Key: "time", Value: bson.D{{Key: "$gte", Value: primitive.DateTime(*req.TimeBegin)}}})
+	if req.TimeBegin > 0 {
+		and = append(and, bson.E{Key: "time", Value: bson.D{{Key: "$gte", Value: primitive.DateTime(req.TimeBegin)}}})
 	}
-	if req.TimeEnd != nil {
-		and = append(and, bson.E{Key: "time", Value: bson.D{{Key: "$lt", Value: primitive.DateTime(*req.TimeEnd)}}})
+	if req.TimeEnd > 0 {
+		and = append(and, bson.E{Key: "time", Value: bson.D{{Key: "$lt", Value: primitive.DateTime(req.TimeEnd)}}})
 	}
-	if req.ClientIp != nil {
+	if req.ClientIp != "" {
 		and = append(and, bson.E{Key: "clientIp", Value: req.ClientIp})
 	}
-	if req.Path != nil {
+	if req.Path != "" {
 		and = append(and, bson.E{Key: "path", Value: req.Path})
 	}
-	if req.TraceId != nil {
+	if req.TraceId != "" {
 		and = append(and, bson.E{Key: "traceId", Value: req.TraceId})
 	}
-	if req.SessionId != nil {
+	if req.SessionId != "" {
 		and = append(and, bson.E{Key: "sessionId", Value: req.SessionId})
 	}
-	if req.Tag != nil {
+	if req.Tag != "" {
 		and = append(and, bson.E{Key: "tag", Value: req.Tag})
 	}
 	filter := make(bson.D, 0)
@@ -82,8 +68,8 @@ func ListAccessLog(c *gin.Context) {
 	}
 	opt := options.Find().
 		SetSort(OrderByToBsonD(req.SortBy)).
-		SetSkip(req.PaginationArg.PerPage * (req.PaginationArg.Page - 1)).
-		SetLimit(req.PaginationArg.PerPage)
+		SetSkip(req.PerPage * (req.Page - 1)).
+		SetLimit(req.PerPage)
 	res, err := repo.FindMany[model.AccessLog](ctx, filter, opt)
 	if err != nil {
 		ProtoBufWithImplicitError(c, err)

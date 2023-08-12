@@ -7,7 +7,7 @@ el-table(
   row-key="id"
   default-expand-all
 )
-  el-table-column(fixed prop="id" label="ID" width="210")
+  el-table-column(fixed prop="id" label="Id" width="210")
   el-table-column(fixed prop="name" label="Name" width="80")
   el-table-column(prop="seq" label="Seq" width="50")
   el-table-column(prop="icon" label="Icon" width="150")

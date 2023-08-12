@@ -27,7 +27,7 @@ el-container
         row-key="id"
         default-expand-all
       )
-        el-table-column(fixed prop="id" label="ID" width="210")
+        el-table-column(fixed prop="id" label="Id" width="210")
         el-table-column(fixed prop="name" label="Name" width="150")
         el-table-column(prop="domainNames" label="DomainNames" width="150")
         el-table-column(show-overflow-tooltip prop="alias" label="Alias" width="200")

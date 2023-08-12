@@ -11,21 +11,15 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-var _ persist.Adapter = (*Adapter)(nil)
-var _ persist.BatchAdapter = (*Adapter)(nil)
-
-// A implementation of Adapter, BatchAdapter, FilteredAdapter interfaces of github.com/casbin/casbin/v2/persist package.
-type Adapter struct {
-	ctx  context.Context
-	coll *mongo.Collection
+func CasbinRepo() *mongo.Collection {
+	return Collection(model.Casbin{})
 }
 
-func CasbinAdapter(ctx context.Context) *Adapter {
-	return &Adapter{
-		ctx:  ctx,
-		coll: Collection(model.Casbin{}),
-	}
-}
+var _ persist.Adapter = (Adapter)(nil)
+var _ persist.BatchAdapter = (Adapter)(nil)
+
+// A implementation of Adapter, BatchAdapter, FilteredAdapter interfaces of github.com/casbin/casbin/v3/persist package.
+type Adapter func() *mongo.Collection
 
 func loadPolicyLine(line *model.Casbin, m casbinModel.Model) {
 	var p string
@@ -77,15 +71,6 @@ func lineToModel(pType string, rule []string) *model.Casbin {
 	return m
 }
 
-func newModelFromLine(ctx context.Context, pType string, rule []string) *model.Casbin {
-	m := lineToModel(pType, rule)
-	m.Model = &model.Model{
-		CreatedBy: model.SessionID(ctx),
-		CreatedAt: model.SessionDateTime(ctx),
-	}
-	return m
-}
-
 func lineToBsonD(pType string, rule []string) bson.D {
 	m := make(bson.D, 0, 6)
 	m = append(m, bson.E{Key: "pType", Value: pType})
@@ -111,14 +96,15 @@ func lineToBsonD(pType string, rule []string) bson.D {
 }
 
 // LoadPolicy loads all policy rules from the storage.
-func (ca *Adapter) LoadPolicy(m casbinModel.Model) error {
+func (a Adapter) LoadPolicy(m casbinModel.Model) error {
+	ctx := context.Background()
 	// load enabled policies.
-	cursor, err := ca.coll.Find(ca.ctx, model.FilterEnabled(bson.D{}))
+	cursor, err := a().Find(ctx, model.FilterEnabled(bson.D{}))
 	if err != nil {
 		return err
 	}
 	var p model.Casbin
-	for cursor.Next(ca.ctx) {
+	for cursor.Next(ctx) {
 		if err := cursor.Decode(&p); err != nil {
 			return err
 		}
@@ -127,28 +113,29 @@ func (ca *Adapter) LoadPolicy(m casbinModel.Model) error {
 	if err := cursor.Err(); err != nil {
 		return err
 	}
-	return cursor.Close(ca.ctx)
+	return cursor.Close(ctx)
 }
 
 // SavePolicy saves all policy rules to the storage.
-func (ca *Adapter) SavePolicy(m casbinModel.Model) error {
-	if err := ca.coll.Drop(ca.ctx); err != nil {
+func (a Adapter) SavePolicy(m casbinModel.Model) error {
+	ctx := context.Background()
+	if err := a().Drop(ctx); err != nil {
 		return err
 	}
 	var ms []interface{}
 	for pType, ast := range m[model.PTypeP] {
 		for _, rule := range ast.Policy {
-			m := newModelFromLine(ca.ctx, pType, rule)
+			m := lineToModel(pType, rule)
 			ms = append(ms, m)
 		}
 	}
 	for pType, ast := range m[model.PTypeG] {
 		for _, rule := range ast.Policy {
-			m := newModelFromLine(ca.ctx, pType, rule)
+			m := lineToModel(pType, rule)
 			ms = append(ms, m)
 		}
 	}
-	if _, err := ca.coll.InsertMany(ca.ctx, ms); err != nil {
+	if _, err := a().InsertMany(ctx, ms); err != nil {
 		return err
 	}
 	return nil
@@ -156,9 +143,10 @@ func (ca *Adapter) SavePolicy(m casbinModel.Model) error {
 
 // AddPolicy adds a policy rule to the storage.
 // This is part of the Auto-Save feature.
-func (ca *Adapter) AddPolicy(sec string, pType string, rule []string) error {
-	m := newModelFromLine(ca.ctx, pType, rule)
-	if _, err := ca.coll.InsertOne(ca.ctx, m); err != nil {
+func (a Adapter) AddPolicy(sec string, pType string, rule []string) error {
+	ctx := context.Background()
+	m := lineToModel(pType, rule)
+	if _, err := a().InsertOne(ctx, m); err != nil {
 		return err
 	}
 	return nil
@@ -166,9 +154,10 @@ func (ca *Adapter) AddPolicy(sec string, pType string, rule []string) error {
 
 // RemovePolicy removes a policy rule from the storage.
 // This is part of the Auto-Save feature.
-func (ca *Adapter) RemovePolicy(sec string, pType string, rule []string) error {
+func (a Adapter) RemovePolicy(sec string, pType string, rule []string) error {
+	ctx := context.Background()
 	line := lineToBsonD(pType, rule)
-	if _, err := ca.coll.DeleteOne(ca.ctx, line); err != nil {
+	if _, err := a().DeleteOne(ctx, line); err != nil {
 		return err
 	}
 	return nil
@@ -176,14 +165,15 @@ func (ca *Adapter) RemovePolicy(sec string, pType string, rule []string) error {
 
 // RemoveFilteredPolicy removes policy rules that match the filter from the storage.
 // This is part of the Auto-Save feature.
-func (ca *Adapter) RemoveFilteredPolicy(sec string, pType string, fieldIndex int, fieldValues ...string) error {
+func (a Adapter) RemoveFilteredPolicy(sec string, pType string, fieldIndex int, fieldValues ...string) error {
+	ctx := context.Background()
 	if len(fieldValues) > 0 {
 		field := fmt.Sprintf("v%d", fieldIndex)
 		filter := bson.D{
 			{Key: "pType", Value: pType},
 			{Key: field, Value: fieldValues[0]},
 		}
-		_, err := ca.coll.DeleteMany(ca.ctx, filter)
+		_, err := a().DeleteMany(ctx, filter)
 		return err
 	}
 	return nil
@@ -191,13 +181,14 @@ func (ca *Adapter) RemoveFilteredPolicy(sec string, pType string, fieldIndex int
 
 // AddPolicies adds policy rules to the storage.
 // This is part of the Auto-Save feature.
-func (ca *Adapter) AddPolicies(sec string, pType string, rules [][]string) error {
+func (a Adapter) AddPolicies(sec string, pType string, rules [][]string) error {
+	ctx := context.Background()
 	var ms []interface{}
 	for _, rule := range rules {
-		m := newModelFromLine(ca.ctx, pType, rule)
+		m := lineToModel(pType, rule)
 		ms = append(ms, m)
 	}
-	if _, err := ca.coll.InsertMany(ca.ctx, ms); err != nil {
+	if _, err := a().InsertMany(ctx, ms); err != nil {
 		return err
 	}
 	return nil
@@ -205,10 +196,11 @@ func (ca *Adapter) AddPolicies(sec string, pType string, rules [][]string) error
 
 // RemovePolicies removes policy rules from the storage.
 // This is part of the Auto-Save feature.
-func (ca *Adapter) RemovePolicies(sec string, pType string, rules [][]string) error {
+func (a Adapter) RemovePolicies(sec string, pType string, rules [][]string) error {
+	ctx := context.Background()
 	for _, rule := range rules {
 		line := lineToBsonD(pType, rule)
-		if _, err := ca.coll.DeleteOne(ca.ctx, line); err != nil {
+		if _, err := a().DeleteOne(ctx, line); err != nil {
 			return err
 		}
 	}

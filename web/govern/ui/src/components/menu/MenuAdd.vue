@@ -89,7 +89,17 @@ const submitForm = async () => {
         type: 'success',
         duration: 3000
       })
-      menuIdAdded.value = addMenuResp.data.result
+      menuIdAdded.value = addMenuResp.data.id
+      addForm.value = {
+        name: '',
+        seq: 0,
+        icon: '',
+        route: '',
+        memo: '',
+        parentId: null,
+        show: false,
+      }
+      emits('update:drawer', false)
     }
     emits('refreshTable')
   } catch (err:any) {

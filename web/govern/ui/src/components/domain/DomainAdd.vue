@@ -35,10 +35,10 @@ el-container
           el-form-item(label="Memo:")
             el-input(v-model="addForm.memo" placeholder="Memo")
         el-col(:span="6")
-          el-form-item(label="ParentID:")
+          el-form-item(label="ParentId:")
             el-cascader(
-              v-model="addForm.parentID"
-              @change="handleParentIDCascaderChange"
+              v-model="addForm.parentId"
+              @change="handleParentIdCascaderChange"
               :options="props.domainOpts"
               :props="{ label: 'name', value: 'id', checkStrictly: true }"
               clearable
@@ -64,9 +64,8 @@ const addForm = ref({
   seq: 0,
   icon: '',
   memo: '',
-  parentID: ''
+  parentId: ''
 })
-// const domainIdAdded = ref('')
 const resetForm = () => {
   ElMessageBox.confirm('resetForm')
     .then(() => {
@@ -76,15 +75,17 @@ const resetForm = () => {
         seq: 0,
         icon: '',
         memo: '',
-        parentID: ''
+        parentId: ''
       }
+      domainIdAdded.value = ''
     }).catch(() => {
       // catch error
     })
 }
-const handleParentIDCascaderChange = (value:any) => {
-  addForm.value.parentID = value[0]
+const handleParentIdCascaderChange = (value:any) => {
+  addForm.value.parentId = value[value.length-1]
 }
+const domainIdAdded = ref('')
 const submitForm = async () => {
   try {
     const addDomainResp = await addDomain(addForm.value)
@@ -94,8 +95,17 @@ const submitForm = async () => {
         type: 'success',
         duration: 3000
       })
+      domainIdAdded.value = addDomainResp.data.id
+      addForm.value = {
+        name: '',
+        alias: [],
+        seq: 0,
+        icon: '',
+        memo: '',
+        parentId: ''
+      }
+      emits('update:dialog', false)
     }
-    // domainIdAdded.value = addDomainResp.data.result
     emits('refreshTable')
   } catch (err:any) {
     let errMsg = ''

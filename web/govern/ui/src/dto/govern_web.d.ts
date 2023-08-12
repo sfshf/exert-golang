@@ -3,113 +3,10 @@ import Long = require("long");
 /** Namespace dto. */
 export namespace dto {
 
-    /** Properties of a PaginationArg. */
-    interface IPaginationArg {
-
-        /** PaginationArg noPaging */
-        noPaging?: (boolean|null);
-
-        /** PaginationArg page */
-        page?: (number|Long|null);
-
-        /** PaginationArg perPage */
-        perPage?: (number|Long|null);
-    }
-
-    /** Represents a PaginationArg. */
-    class PaginationArg implements IPaginationArg {
-
-        /**
-         * Constructs a new PaginationArg.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: dto.IPaginationArg);
-
-        /** PaginationArg noPaging. */
-        public noPaging: boolean;
-
-        /** PaginationArg page. */
-        public page: (number|Long);
-
-        /** PaginationArg perPage. */
-        public perPage: (number|Long);
-
-        /**
-         * Creates a new PaginationArg instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns PaginationArg instance
-         */
-        public static create(properties?: dto.IPaginationArg): dto.PaginationArg;
-
-        /**
-         * Encodes the specified PaginationArg message. Does not implicitly {@link dto.PaginationArg.verify|verify} messages.
-         * @param message PaginationArg message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: dto.IPaginationArg, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Encodes the specified PaginationArg message, length delimited. Does not implicitly {@link dto.PaginationArg.verify|verify} messages.
-         * @param message PaginationArg message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: dto.IPaginationArg, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a PaginationArg message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns PaginationArg
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.PaginationArg;
-
-        /**
-         * Decodes a PaginationArg message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns PaginationArg
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.PaginationArg;
-
-        /**
-         * Verifies a PaginationArg message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates a PaginationArg message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns PaginationArg
-         */
-        public static fromObject(object: { [k: string]: any }): dto.PaginationArg;
-
-        /**
-         * Creates a plain object from a PaginationArg message. Also converts values to other types if specified.
-         * @param message PaginationArg
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: dto.PaginationArg, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this PaginationArg to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-
-        /**
-         * Gets the default type url for PaginationArg
-         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-         * @returns The default type url
-         */
-        public static getTypeUrl(typeUrlPrefix?: string): string;
+    /** SortDirection enum. */
+    enum SortDirection {
+        Asc = 0,
+        Desc = 1
     }
 
     /** Properties of an Error. */
@@ -433,6 +330,139 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of a ListDomainReq. */
+    interface IListDomainReq {
+
+        /** ListDomainReq noPaging */
+        noPaging?: (boolean|null);
+
+        /** ListDomainReq page */
+        page?: (number|Long|null);
+
+        /** ListDomainReq perPage */
+        perPage?: (number|Long|null);
+
+        /** ListDomainReq sortBy */
+        sortBy?: ({ [k: string]: dto.SortDirection }|null);
+
+        /** ListDomainReq deleted */
+        deleted?: (boolean|null);
+
+        /** ListDomainReq name */
+        name?: (string|null);
+
+        /** ListDomainReq needTree */
+        needTree?: (boolean|null);
+    }
+
+    /** Represents a ListDomainReq. */
+    class ListDomainReq implements IListDomainReq {
+
+        /**
+         * Constructs a new ListDomainReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IListDomainReq);
+
+        /** ListDomainReq noPaging. */
+        public noPaging: boolean;
+
+        /** ListDomainReq page. */
+        public page: (number|Long);
+
+        /** ListDomainReq perPage. */
+        public perPage: (number|Long);
+
+        /** ListDomainReq sortBy. */
+        public sortBy: { [k: string]: dto.SortDirection };
+
+        /** ListDomainReq deleted. */
+        public deleted: boolean;
+
+        /** ListDomainReq name. */
+        public name: string;
+
+        /** ListDomainReq needTree. */
+        public needTree: boolean;
+
+        /**
+         * Creates a new ListDomainReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ListDomainReq instance
+         */
+        public static create(properties?: dto.IListDomainReq): dto.ListDomainReq;
+
+        /**
+         * Encodes the specified ListDomainReq message. Does not implicitly {@link dto.ListDomainReq.verify|verify} messages.
+         * @param message ListDomainReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IListDomainReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ListDomainReq message, length delimited. Does not implicitly {@link dto.ListDomainReq.verify|verify} messages.
+         * @param message ListDomainReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IListDomainReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ListDomainReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ListDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.ListDomainReq;
+
+        /**
+         * Decodes a ListDomainReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ListDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.ListDomainReq;
+
+        /**
+         * Verifies a ListDomainReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ListDomainReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ListDomainReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.ListDomainReq;
+
+        /**
+         * Creates a plain object from a ListDomainReq message. Also converts values to other types if specified.
+         * @param message ListDomainReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.ListDomainReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ListDomainReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for ListDomainReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of a DomainListElem. */
     interface IDomainListElem {
 
@@ -522,19 +552,13 @@ export namespace dto {
         public updatedAt: string;
 
         /** DomainListElem deletedBy. */
-        public deletedBy?: (string|null);
+        public deletedBy: string;
 
         /** DomainListElem deletedAt. */
-        public deletedAt?: (string|null);
+        public deletedAt: string;
 
         /** DomainListElem children. */
         public children: dto.IDomainListElem[];
-
-        /** DomainListElem _deletedBy. */
-        public _deletedBy?: "deletedBy";
-
-        /** DomainListElem _deletedAt. */
-        public _deletedAt?: "deletedAt";
 
         /**
          * Creates a new DomainListElem instance using the specified properties.
@@ -803,16 +827,10 @@ export namespace dto {
         public updatedAt: string;
 
         /** ProfileDomainRet deletedBy. */
-        public deletedBy?: (string|null);
+        public deletedBy: string;
 
         /** ProfileDomainRet deletedAt. */
-        public deletedAt?: (string|null);
-
-        /** ProfileDomainRet _deletedBy. */
-        public _deletedBy?: "deletedBy";
-
-        /** ProfileDomainRet _deletedAt. */
-        public _deletedAt?: "deletedAt";
+        public deletedAt: string;
 
         /**
          * Creates a new ProfileDomainRet instance using the specified properties.
@@ -1643,6 +1661,151 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of a ListMenuReq. */
+    interface IListMenuReq {
+
+        /** ListMenuReq noPaging */
+        noPaging?: (boolean|null);
+
+        /** ListMenuReq page */
+        page?: (number|Long|null);
+
+        /** ListMenuReq perPage */
+        perPage?: (number|Long|null);
+
+        /** ListMenuReq sortBy */
+        sortBy?: ({ [k: string]: dto.SortDirection }|null);
+
+        /** ListMenuReq deleted */
+        deleted?: (boolean|null);
+
+        /** ListMenuReq name */
+        name?: (string|null);
+
+        /** ListMenuReq needTree */
+        needTree?: (boolean|null);
+
+        /** ListMenuReq route */
+        route?: (string|null);
+
+        /** ListMenuReq show */
+        show?: (boolean|null);
+    }
+
+    /** Represents a ListMenuReq. */
+    class ListMenuReq implements IListMenuReq {
+
+        /**
+         * Constructs a new ListMenuReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IListMenuReq);
+
+        /** ListMenuReq noPaging. */
+        public noPaging: boolean;
+
+        /** ListMenuReq page. */
+        public page: (number|Long);
+
+        /** ListMenuReq perPage. */
+        public perPage: (number|Long);
+
+        /** ListMenuReq sortBy. */
+        public sortBy: { [k: string]: dto.SortDirection };
+
+        /** ListMenuReq deleted. */
+        public deleted: boolean;
+
+        /** ListMenuReq name. */
+        public name: string;
+
+        /** ListMenuReq needTree. */
+        public needTree: boolean;
+
+        /** ListMenuReq route. */
+        public route: string;
+
+        /** ListMenuReq show. */
+        public show: boolean;
+
+        /**
+         * Creates a new ListMenuReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ListMenuReq instance
+         */
+        public static create(properties?: dto.IListMenuReq): dto.ListMenuReq;
+
+        /**
+         * Encodes the specified ListMenuReq message. Does not implicitly {@link dto.ListMenuReq.verify|verify} messages.
+         * @param message ListMenuReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IListMenuReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ListMenuReq message, length delimited. Does not implicitly {@link dto.ListMenuReq.verify|verify} messages.
+         * @param message ListMenuReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IListMenuReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ListMenuReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ListMenuReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.ListMenuReq;
+
+        /**
+         * Decodes a ListMenuReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ListMenuReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.ListMenuReq;
+
+        /**
+         * Verifies a ListMenuReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ListMenuReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ListMenuReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.ListMenuReq;
+
+        /**
+         * Creates a plain object from a ListMenuReq message. Also converts values to other types if specified.
+         * @param message ListMenuReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.ListMenuReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ListMenuReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for ListMenuReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of a MenuListElem. */
     interface IMenuListElem {
 
@@ -1744,19 +1907,13 @@ export namespace dto {
         public updatedAt: string;
 
         /** MenuListElem deletedBy. */
-        public deletedBy?: (string|null);
+        public deletedBy: string;
 
         /** MenuListElem deletedAt. */
-        public deletedAt?: (string|null);
+        public deletedAt: string;
 
         /** MenuListElem children. */
         public children: dto.IMenuListElem[];
-
-        /** MenuListElem _deletedBy. */
-        public _deletedBy?: "deletedBy";
-
-        /** MenuListElem _deletedAt. */
-        public _deletedAt?: "deletedAt";
 
         /**
          * Creates a new MenuListElem instance using the specified properties.
@@ -2037,16 +2194,10 @@ export namespace dto {
         public updatedAt: string;
 
         /** ProfileMenuRet deletedBy. */
-        public deletedBy?: (string|null);
+        public deletedBy: string;
 
         /** ProfileMenuRet deletedAt. */
-        public deletedAt?: (string|null);
-
-        /** ProfileMenuRet _deletedBy. */
-        public _deletedBy?: "deletedBy";
-
-        /** ProfileMenuRet _deletedAt. */
-        public _deletedAt?: "deletedAt";
+        public deletedAt: string;
 
         /**
          * Creates a new ProfileMenuRet instance using the specified properties.
@@ -2883,6 +3034,133 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of a ListMenuWidgetReq. */
+    interface IListMenuWidgetReq {
+
+        /** ListMenuWidgetReq noPaging */
+        noPaging?: (boolean|null);
+
+        /** ListMenuWidgetReq page */
+        page?: (number|Long|null);
+
+        /** ListMenuWidgetReq perPage */
+        perPage?: (number|Long|null);
+
+        /** ListMenuWidgetReq sortBy */
+        sortBy?: ({ [k: string]: dto.SortDirection }|null);
+
+        /** ListMenuWidgetReq deleted */
+        deleted?: (boolean|null);
+
+        /** ListMenuWidgetReq name */
+        name?: (string|null);
+    }
+
+    /** Represents a ListMenuWidgetReq. */
+    class ListMenuWidgetReq implements IListMenuWidgetReq {
+
+        /**
+         * Constructs a new ListMenuWidgetReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IListMenuWidgetReq);
+
+        /** ListMenuWidgetReq noPaging. */
+        public noPaging: boolean;
+
+        /** ListMenuWidgetReq page. */
+        public page: (number|Long);
+
+        /** ListMenuWidgetReq perPage. */
+        public perPage: (number|Long);
+
+        /** ListMenuWidgetReq sortBy. */
+        public sortBy: { [k: string]: dto.SortDirection };
+
+        /** ListMenuWidgetReq deleted. */
+        public deleted: boolean;
+
+        /** ListMenuWidgetReq name. */
+        public name: string;
+
+        /**
+         * Creates a new ListMenuWidgetReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ListMenuWidgetReq instance
+         */
+        public static create(properties?: dto.IListMenuWidgetReq): dto.ListMenuWidgetReq;
+
+        /**
+         * Encodes the specified ListMenuWidgetReq message. Does not implicitly {@link dto.ListMenuWidgetReq.verify|verify} messages.
+         * @param message ListMenuWidgetReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IListMenuWidgetReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ListMenuWidgetReq message, length delimited. Does not implicitly {@link dto.ListMenuWidgetReq.verify|verify} messages.
+         * @param message ListMenuWidgetReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IListMenuWidgetReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ListMenuWidgetReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ListMenuWidgetReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.ListMenuWidgetReq;
+
+        /**
+         * Decodes a ListMenuWidgetReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ListMenuWidgetReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.ListMenuWidgetReq;
+
+        /**
+         * Verifies a ListMenuWidgetReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ListMenuWidgetReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ListMenuWidgetReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.ListMenuWidgetReq;
+
+        /**
+         * Creates a plain object from a ListMenuWidgetReq message. Also converts values to other types if specified.
+         * @param message ListMenuWidgetReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.ListMenuWidgetReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ListMenuWidgetReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for ListMenuWidgetReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of a MenuWidgetListElem. */
     interface IMenuWidgetListElem {
 
@@ -2969,16 +3247,10 @@ export namespace dto {
         public updatedAt: string;
 
         /** MenuWidgetListElem deletedBy. */
-        public deletedBy?: (string|null);
+        public deletedBy: string;
 
         /** MenuWidgetListElem deletedAt. */
-        public deletedAt?: (string|null);
-
-        /** MenuWidgetListElem _deletedBy. */
-        public _deletedBy?: "deletedBy";
-
-        /** MenuWidgetListElem _deletedAt. */
-        public _deletedAt?: "deletedAt";
+        public deletedAt: string;
 
         /**
          * Creates a new MenuWidgetListElem instance using the specified properties.
@@ -3253,16 +3525,10 @@ export namespace dto {
         public updatedAt: string;
 
         /** ProfileMenuWidgetRet deletedBy. */
-        public deletedBy?: (string|null);
+        public deletedBy: string;
 
         /** ProfileMenuWidgetRet deletedAt. */
-        public deletedAt?: (string|null);
-
-        /** ProfileMenuWidgetRet _deletedBy. */
-        public _deletedBy?: "deletedBy";
-
-        /** ProfileMenuWidgetRet _deletedAt. */
-        public _deletedAt?: "deletedAt";
+        public deletedAt: string;
 
         /**
          * Creates a new ProfileMenuWidgetRet instance using the specified properties.
@@ -4081,6 +4347,163 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of a ListRoleReq. */
+    interface IListRoleReq {
+
+        /** ListRoleReq noPaging */
+        noPaging?: (boolean|null);
+
+        /** ListRoleReq page */
+        page?: (number|Long|null);
+
+        /** ListRoleReq perPage */
+        perPage?: (number|Long|null);
+
+        /** ListRoleReq sortBy */
+        sortBy?: ({ [k: string]: dto.SortDirection }|null);
+
+        /** ListRoleReq deleted */
+        deleted?: (boolean|null);
+
+        /** ListRoleReq name */
+        name?: (string|null);
+
+        /** ListRoleReq alias */
+        alias?: (string|null);
+
+        /** ListRoleReq createdBy */
+        createdBy?: (string|null);
+
+        /** ListRoleReq createdAtBegin */
+        createdAtBegin?: (number|Long|null);
+
+        /** ListRoleReq createdAtEnd */
+        createdAtEnd?: (number|Long|null);
+
+        /** ListRoleReq domainId */
+        domainId?: (string|null);
+    }
+
+    /** Represents a ListRoleReq. */
+    class ListRoleReq implements IListRoleReq {
+
+        /**
+         * Constructs a new ListRoleReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IListRoleReq);
+
+        /** ListRoleReq noPaging. */
+        public noPaging: boolean;
+
+        /** ListRoleReq page. */
+        public page: (number|Long);
+
+        /** ListRoleReq perPage. */
+        public perPage: (number|Long);
+
+        /** ListRoleReq sortBy. */
+        public sortBy: { [k: string]: dto.SortDirection };
+
+        /** ListRoleReq deleted. */
+        public deleted: boolean;
+
+        /** ListRoleReq name. */
+        public name: string;
+
+        /** ListRoleReq alias. */
+        public alias: string;
+
+        /** ListRoleReq createdBy. */
+        public createdBy: string;
+
+        /** ListRoleReq createdAtBegin. */
+        public createdAtBegin: (number|Long);
+
+        /** ListRoleReq createdAtEnd. */
+        public createdAtEnd: (number|Long);
+
+        /** ListRoleReq domainId. */
+        public domainId: string;
+
+        /**
+         * Creates a new ListRoleReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ListRoleReq instance
+         */
+        public static create(properties?: dto.IListRoleReq): dto.ListRoleReq;
+
+        /**
+         * Encodes the specified ListRoleReq message. Does not implicitly {@link dto.ListRoleReq.verify|verify} messages.
+         * @param message ListRoleReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IListRoleReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ListRoleReq message, length delimited. Does not implicitly {@link dto.ListRoleReq.verify|verify} messages.
+         * @param message ListRoleReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IListRoleReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ListRoleReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ListRoleReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.ListRoleReq;
+
+        /**
+         * Decodes a ListRoleReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ListRoleReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.ListRoleReq;
+
+        /**
+         * Verifies a ListRoleReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ListRoleReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ListRoleReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.ListRoleReq;
+
+        /**
+         * Creates a plain object from a ListRoleReq message. Also converts values to other types if specified.
+         * @param message ListRoleReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.ListRoleReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ListRoleReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for ListRoleReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of a RoleListElem. */
     interface IRoleListElem {
 
@@ -4173,16 +4596,10 @@ export namespace dto {
         public updatedAt: string;
 
         /** RoleListElem deletedBy. */
-        public deletedBy?: (string|null);
+        public deletedBy: string;
 
         /** RoleListElem deletedAt. */
-        public deletedAt?: (string|null);
-
-        /** RoleListElem _deletedBy. */
-        public _deletedBy?: "deletedBy";
-
-        /** RoleListElem _deletedAt. */
-        public _deletedAt?: "deletedAt";
+        public deletedAt: string;
 
         /**
          * Creates a new RoleListElem instance using the specified properties.
@@ -4445,16 +4862,10 @@ export namespace dto {
         public updatedAt: string;
 
         /** ProfileRoleRet deletedBy. */
-        public deletedBy?: (string|null);
+        public deletedBy: string;
 
         /** ProfileRoleRet deletedAt. */
-        public deletedAt?: (string|null);
-
-        /** ProfileRoleRet _deletedBy. */
-        public _deletedBy?: "deletedBy";
-
-        /** ProfileRoleRet _deletedAt. */
-        public _deletedAt?: "deletedAt";
+        public deletedAt: string;
 
         /**
          * Creates a new ProfileRoleRet instance using the specified properties.
@@ -5691,6 +6102,187 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of a ListStaffReq. */
+    interface IListStaffReq {
+
+        /** ListStaffReq noPaging */
+        noPaging?: (boolean|null);
+
+        /** ListStaffReq page */
+        page?: (number|Long|null);
+
+        /** ListStaffReq perPage */
+        perPage?: (number|Long|null);
+
+        /** ListStaffReq sortBy */
+        sortBy?: ({ [k: string]: dto.SortDirection }|null);
+
+        /** ListStaffReq deleted */
+        deleted?: (boolean|null);
+
+        /** ListStaffReq account */
+        account?: (string|null);
+
+        /** ListStaffReq signIn */
+        signIn?: (boolean|null);
+
+        /** ListStaffReq nickName */
+        nickName?: (string|null);
+
+        /** ListStaffReq realName */
+        realName?: (string|null);
+
+        /** ListStaffReq email */
+        email?: (string|null);
+
+        /** ListStaffReq phone */
+        phone?: (string|null);
+
+        /** ListStaffReq gender */
+        gender?: (string|null);
+
+        /** ListStaffReq lastSignInIp */
+        lastSignInIp?: (string|null);
+
+        /** ListStaffReq lastSignInTimeBegin */
+        lastSignInTimeBegin?: (number|Long|null);
+
+        /** ListStaffReq lastSignInTimeEnd */
+        lastSignInTimeEnd?: (number|Long|null);
+    }
+
+    /** Represents a ListStaffReq. */
+    class ListStaffReq implements IListStaffReq {
+
+        /**
+         * Constructs a new ListStaffReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IListStaffReq);
+
+        /** ListStaffReq noPaging. */
+        public noPaging: boolean;
+
+        /** ListStaffReq page. */
+        public page: (number|Long);
+
+        /** ListStaffReq perPage. */
+        public perPage: (number|Long);
+
+        /** ListStaffReq sortBy. */
+        public sortBy: { [k: string]: dto.SortDirection };
+
+        /** ListStaffReq deleted. */
+        public deleted: boolean;
+
+        /** ListStaffReq account. */
+        public account: string;
+
+        /** ListStaffReq signIn. */
+        public signIn: boolean;
+
+        /** ListStaffReq nickName. */
+        public nickName: string;
+
+        /** ListStaffReq realName. */
+        public realName: string;
+
+        /** ListStaffReq email. */
+        public email: string;
+
+        /** ListStaffReq phone. */
+        public phone: string;
+
+        /** ListStaffReq gender. */
+        public gender: string;
+
+        /** ListStaffReq lastSignInIp. */
+        public lastSignInIp: string;
+
+        /** ListStaffReq lastSignInTimeBegin. */
+        public lastSignInTimeBegin: (number|Long);
+
+        /** ListStaffReq lastSignInTimeEnd. */
+        public lastSignInTimeEnd: (number|Long);
+
+        /**
+         * Creates a new ListStaffReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ListStaffReq instance
+         */
+        public static create(properties?: dto.IListStaffReq): dto.ListStaffReq;
+
+        /**
+         * Encodes the specified ListStaffReq message. Does not implicitly {@link dto.ListStaffReq.verify|verify} messages.
+         * @param message ListStaffReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IListStaffReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ListStaffReq message, length delimited. Does not implicitly {@link dto.ListStaffReq.verify|verify} messages.
+         * @param message ListStaffReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IListStaffReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ListStaffReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ListStaffReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.ListStaffReq;
+
+        /**
+         * Decodes a ListStaffReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ListStaffReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.ListStaffReq;
+
+        /**
+         * Verifies a ListStaffReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ListStaffReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ListStaffReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.ListStaffReq;
+
+        /**
+         * Creates a plain object from a ListStaffReq message. Also converts values to other types if specified.
+         * @param message ListStaffReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.ListStaffReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ListStaffReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for ListStaffReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of a StaffListElem. */
     interface IStaffListElem {
 
@@ -5813,16 +6405,10 @@ export namespace dto {
         public updatedAt: string;
 
         /** StaffListElem deletedBy. */
-        public deletedBy?: (string|null);
+        public deletedBy: string;
 
         /** StaffListElem deletedAt. */
-        public deletedAt?: (string|null);
-
-        /** StaffListElem _deletedBy. */
-        public _deletedBy?: "deletedBy";
-
-        /** StaffListElem _deletedAt. */
-        public _deletedAt?: "deletedAt";
+        public deletedAt: string;
 
         /**
          * Creates a new StaffListElem instance using the specified properties.
@@ -6127,16 +6713,10 @@ export namespace dto {
         public updatedAt: string;
 
         /** ProfileStaffRet deletedBy. */
-        public deletedBy?: (string|null);
+        public deletedBy: string;
 
         /** ProfileStaffRet deletedAt. */
-        public deletedAt?: (string|null);
-
-        /** ProfileStaffRet _deletedBy. */
-        public _deletedBy?: "deletedBy";
-
-        /** ProfileStaffRet _deletedAt. */
-        public _deletedAt?: "deletedAt";
+        public deletedAt: string;
 
         /**
          * Creates a new ProfileStaffRet instance using the specified properties.
@@ -7331,6 +7911,145 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of a ListChangeLogReq. */
+    interface IListChangeLogReq {
+
+        /** ListChangeLogReq noPaging */
+        noPaging?: (boolean|null);
+
+        /** ListChangeLogReq page */
+        page?: (number|Long|null);
+
+        /** ListChangeLogReq perPage */
+        perPage?: (number|Long|null);
+
+        /** ListChangeLogReq sortBy */
+        sortBy?: ({ [k: string]: dto.SortDirection }|null);
+
+        /** ListChangeLogReq collName */
+        collName?: (string|null);
+
+        /** ListChangeLogReq recordId */
+        recordId?: (string|null);
+
+        /** ListChangeLogReq opTimeBegin */
+        opTimeBegin?: (number|Long|null);
+
+        /** ListChangeLogReq opTimeEnd */
+        opTimeEnd?: (number|Long|null);
+    }
+
+    /** Represents a ListChangeLogReq. */
+    class ListChangeLogReq implements IListChangeLogReq {
+
+        /**
+         * Constructs a new ListChangeLogReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IListChangeLogReq);
+
+        /** ListChangeLogReq noPaging. */
+        public noPaging: boolean;
+
+        /** ListChangeLogReq page. */
+        public page: (number|Long);
+
+        /** ListChangeLogReq perPage. */
+        public perPage: (number|Long);
+
+        /** ListChangeLogReq sortBy. */
+        public sortBy: { [k: string]: dto.SortDirection };
+
+        /** ListChangeLogReq collName. */
+        public collName: string;
+
+        /** ListChangeLogReq recordId. */
+        public recordId: string;
+
+        /** ListChangeLogReq opTimeBegin. */
+        public opTimeBegin: (number|Long);
+
+        /** ListChangeLogReq opTimeEnd. */
+        public opTimeEnd: (number|Long);
+
+        /**
+         * Creates a new ListChangeLogReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ListChangeLogReq instance
+         */
+        public static create(properties?: dto.IListChangeLogReq): dto.ListChangeLogReq;
+
+        /**
+         * Encodes the specified ListChangeLogReq message. Does not implicitly {@link dto.ListChangeLogReq.verify|verify} messages.
+         * @param message ListChangeLogReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IListChangeLogReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ListChangeLogReq message, length delimited. Does not implicitly {@link dto.ListChangeLogReq.verify|verify} messages.
+         * @param message ListChangeLogReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IListChangeLogReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ListChangeLogReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ListChangeLogReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.ListChangeLogReq;
+
+        /**
+         * Decodes a ListChangeLogReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ListChangeLogReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.ListChangeLogReq;
+
+        /**
+         * Verifies a ListChangeLogReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ListChangeLogReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ListChangeLogReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.ListChangeLogReq;
+
+        /**
+         * Creates a plain object from a ListChangeLogReq message. Also converts values to other types if specified.
+         * @param message ListChangeLogReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.ListChangeLogReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ListChangeLogReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for ListChangeLogReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of a ListChangeLogElem. */
     interface IListChangeLogElem {
 
@@ -7567,6 +8286,169 @@ export namespace dto {
 
         /**
          * Gets the default type url for ListChangeLogRet
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
+    /** Properties of a ListAccessLogReq. */
+    interface IListAccessLogReq {
+
+        /** ListAccessLogReq noPaging */
+        noPaging?: (boolean|null);
+
+        /** ListAccessLogReq page */
+        page?: (number|Long|null);
+
+        /** ListAccessLogReq perPage */
+        perPage?: (number|Long|null);
+
+        /** ListAccessLogReq sortBy */
+        sortBy?: ({ [k: string]: dto.SortDirection }|null);
+
+        /** ListAccessLogReq level */
+        level?: (string|null);
+
+        /** ListAccessLogReq timeBegin */
+        timeBegin?: (number|Long|null);
+
+        /** ListAccessLogReq timeEnd */
+        timeEnd?: (number|Long|null);
+
+        /** ListAccessLogReq clientIp */
+        clientIp?: (string|null);
+
+        /** ListAccessLogReq path */
+        path?: (string|null);
+
+        /** ListAccessLogReq traceId */
+        traceId?: (string|null);
+
+        /** ListAccessLogReq sessionId */
+        sessionId?: (string|null);
+
+        /** ListAccessLogReq tag */
+        tag?: (string|null);
+    }
+
+    /** Represents a ListAccessLogReq. */
+    class ListAccessLogReq implements IListAccessLogReq {
+
+        /**
+         * Constructs a new ListAccessLogReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IListAccessLogReq);
+
+        /** ListAccessLogReq noPaging. */
+        public noPaging: boolean;
+
+        /** ListAccessLogReq page. */
+        public page: (number|Long);
+
+        /** ListAccessLogReq perPage. */
+        public perPage: (number|Long);
+
+        /** ListAccessLogReq sortBy. */
+        public sortBy: { [k: string]: dto.SortDirection };
+
+        /** ListAccessLogReq level. */
+        public level: string;
+
+        /** ListAccessLogReq timeBegin. */
+        public timeBegin: (number|Long);
+
+        /** ListAccessLogReq timeEnd. */
+        public timeEnd: (number|Long);
+
+        /** ListAccessLogReq clientIp. */
+        public clientIp: string;
+
+        /** ListAccessLogReq path. */
+        public path: string;
+
+        /** ListAccessLogReq traceId. */
+        public traceId: string;
+
+        /** ListAccessLogReq sessionId. */
+        public sessionId: string;
+
+        /** ListAccessLogReq tag. */
+        public tag: string;
+
+        /**
+         * Creates a new ListAccessLogReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ListAccessLogReq instance
+         */
+        public static create(properties?: dto.IListAccessLogReq): dto.ListAccessLogReq;
+
+        /**
+         * Encodes the specified ListAccessLogReq message. Does not implicitly {@link dto.ListAccessLogReq.verify|verify} messages.
+         * @param message ListAccessLogReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IListAccessLogReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ListAccessLogReq message, length delimited. Does not implicitly {@link dto.ListAccessLogReq.verify|verify} messages.
+         * @param message ListAccessLogReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IListAccessLogReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ListAccessLogReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ListAccessLogReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.ListAccessLogReq;
+
+        /**
+         * Decodes a ListAccessLogReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ListAccessLogReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.ListAccessLogReq;
+
+        /**
+         * Verifies a ListAccessLogReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ListAccessLogReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ListAccessLogReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.ListAccessLogReq;
+
+        /**
+         * Creates a plain object from a ListAccessLogReq message. Also converts values to other types if specified.
+         * @param message ListAccessLogReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.ListAccessLogReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ListAccessLogReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for ListAccessLogReq
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
@@ -8650,6 +9532,103 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of a GetOwnRolesReq. */
+    interface IGetOwnRolesReq {
+
+        /** GetOwnRolesReq domainId */
+        domainId?: (string|null);
+    }
+
+    /** Represents a GetOwnRolesReq. */
+    class GetOwnRolesReq implements IGetOwnRolesReq {
+
+        /**
+         * Constructs a new GetOwnRolesReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IGetOwnRolesReq);
+
+        /** GetOwnRolesReq domainId. */
+        public domainId: string;
+
+        /**
+         * Creates a new GetOwnRolesReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns GetOwnRolesReq instance
+         */
+        public static create(properties?: dto.IGetOwnRolesReq): dto.GetOwnRolesReq;
+
+        /**
+         * Encodes the specified GetOwnRolesReq message. Does not implicitly {@link dto.GetOwnRolesReq.verify|verify} messages.
+         * @param message GetOwnRolesReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IGetOwnRolesReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified GetOwnRolesReq message, length delimited. Does not implicitly {@link dto.GetOwnRolesReq.verify|verify} messages.
+         * @param message GetOwnRolesReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IGetOwnRolesReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a GetOwnRolesReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns GetOwnRolesReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.GetOwnRolesReq;
+
+        /**
+         * Decodes a GetOwnRolesReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns GetOwnRolesReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.GetOwnRolesReq;
+
+        /**
+         * Verifies a GetOwnRolesReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a GetOwnRolesReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns GetOwnRolesReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.GetOwnRolesReq;
+
+        /**
+         * Creates a plain object from a GetOwnRolesReq message. Also converts values to other types if specified.
+         * @param message GetOwnRolesReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.GetOwnRolesReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this GetOwnRolesReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for GetOwnRolesReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of a GetOwnRolesRet. */
     interface IGetOwnRolesRet {
 
@@ -8747,6 +9726,103 @@ export namespace dto {
 
         /**
          * Gets the default type url for GetOwnRolesRet
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
+    /** Properties of a SignOutRet. */
+    interface ISignOutRet {
+
+        /** SignOutRet id */
+        id?: (string|null);
+    }
+
+    /** Represents a SignOutRet. */
+    class SignOutRet implements ISignOutRet {
+
+        /**
+         * Constructs a new SignOutRet.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.ISignOutRet);
+
+        /** SignOutRet id. */
+        public id: string;
+
+        /**
+         * Creates a new SignOutRet instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns SignOutRet instance
+         */
+        public static create(properties?: dto.ISignOutRet): dto.SignOutRet;
+
+        /**
+         * Encodes the specified SignOutRet message. Does not implicitly {@link dto.SignOutRet.verify|verify} messages.
+         * @param message SignOutRet message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.ISignOutRet, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified SignOutRet message, length delimited. Does not implicitly {@link dto.SignOutRet.verify|verify} messages.
+         * @param message SignOutRet message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.ISignOutRet, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a SignOutRet message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns SignOutRet
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.SignOutRet;
+
+        /**
+         * Decodes a SignOutRet message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns SignOutRet
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.SignOutRet;
+
+        /**
+         * Verifies a SignOutRet message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a SignOutRet message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns SignOutRet
+         */
+        public static fromObject(object: { [k: string]: any }): dto.SignOutRet;
+
+        /**
+         * Creates a plain object from a SignOutRet message. Also converts values to other types if specified.
+         * @param message SignOutRet
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.SignOutRet, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this SignOutRet to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for SignOutRet
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
@@ -9037,6 +10113,109 @@ export namespace dto {
 
         /**
          * Gets the default type url for MenuWidgetView
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
+    /** Properties of a GetOwnMenusReq. */
+    interface IGetOwnMenusReq {
+
+        /** GetOwnMenusReq domainId */
+        domainId?: (string|null);
+
+        /** GetOwnMenusReq roleId */
+        roleId?: (string|null);
+    }
+
+    /** Represents a GetOwnMenusReq. */
+    class GetOwnMenusReq implements IGetOwnMenusReq {
+
+        /**
+         * Constructs a new GetOwnMenusReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IGetOwnMenusReq);
+
+        /** GetOwnMenusReq domainId. */
+        public domainId: string;
+
+        /** GetOwnMenusReq roleId. */
+        public roleId: string;
+
+        /**
+         * Creates a new GetOwnMenusReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns GetOwnMenusReq instance
+         */
+        public static create(properties?: dto.IGetOwnMenusReq): dto.GetOwnMenusReq;
+
+        /**
+         * Encodes the specified GetOwnMenusReq message. Does not implicitly {@link dto.GetOwnMenusReq.verify|verify} messages.
+         * @param message GetOwnMenusReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IGetOwnMenusReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified GetOwnMenusReq message, length delimited. Does not implicitly {@link dto.GetOwnMenusReq.verify|verify} messages.
+         * @param message GetOwnMenusReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IGetOwnMenusReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a GetOwnMenusReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns GetOwnMenusReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.GetOwnMenusReq;
+
+        /**
+         * Decodes a GetOwnMenusReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns GetOwnMenusReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.GetOwnMenusReq;
+
+        /**
+         * Verifies a GetOwnMenusReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a GetOwnMenusReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns GetOwnMenusReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.GetOwnMenusReq;
+
+        /**
+         * Creates a plain object from a GetOwnMenusReq message. Also converts values to other types if specified.
+         * @param message GetOwnMenusReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.GetOwnMenusReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this GetOwnMenusReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for GetOwnMenusReq
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */

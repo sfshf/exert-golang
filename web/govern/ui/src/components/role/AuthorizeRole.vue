@@ -33,8 +33,8 @@ const domainTreeData = ref([])
 const menuTree = ref()
 const menuTreeData = ref([])
 const authorities = ref({
-  menuIDs: [],
-  widgetIDs: []
+  menuIds: [],
+  widgetIds: []
 })
 const roleId = computed({
   get: () => {
@@ -54,8 +54,8 @@ watch(roleId, async (newId:string) => {
     }
     if (roleId.value) {
       const getDomainsOfRoleResp = await getDomainsOfRole(roleId.value)
-      let domainIDsArr = getDomainsOfRoleResp.data.domainIDs
-      selectedDomainIds.value = new Set(domainIDsArr)
+      let domainIdsArr = getDomainsOfRoleResp.data.domainIds
+      selectedDomainIds.value = new Set(domainIdsArr)
     }
   } catch (err:any) {
     let errMsg = ''
@@ -88,8 +88,8 @@ onMounted(async () => {
     }
     if (roleId.value) {
       const getDomainsOfRoleResp = await getDomainsOfRole(roleId.value)
-      let domainIDsArr = getDomainsOfRoleResp.data.domainIDs
-      selectedDomainIds.value = new Set(domainIDsArr)
+      let domainIdsArr = getDomainsOfRoleResp.data.domainIds
+      selectedDomainIds.value = new Set(domainIdsArr)
     }
   } catch (err:any) {
     let errMsg = ''

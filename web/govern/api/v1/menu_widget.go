@@ -60,14 +60,6 @@ func AddMenuWidget(c *gin.Context) {
 	return
 }
 
-// ListMenuWidgetReq search arguments to list menu-widgets.
-type ListMenuWidgetReq struct {
-	Name    *string `form:"name" json:"name" binding:"" label:"名称"`           // 名称
-	SortBy  SortBy  `form:"sortBy" json:"sortBy" binding:"" label:"字段排序条件"`   // 字段排序条件
-	Deleted *bool   `form:"deleted" json:"deleted" binging:"" label:"是否被软删除"` // 是否被软删除
-	PaginationArg
-}
-
 // ListMenuWidget
 // @description Get a widget list of a specific menu.
 // @id menu-widget-list
@@ -88,17 +80,17 @@ func ListMenuWidget(c *gin.Context) {
 		ProtoBufWithBadRequest(c, err)
 		return
 	}
-	var req ListMenuWidgetReq
+	var req dto.ListMenuWidgetReq
 	if err := c.ShouldBindQuery(&req); err != nil {
 		ProtoBufWithBadRequest(c, err)
 		return
 	}
 	and := bson.A{bson.D{{Key: "menuID", Value: menuID}}}
-	if req.Name != nil {
+	if req.Name != "" {
 		and = append(and, bson.D{{Key: "name", Value: req.Name}})
 	}
-	if req.Deleted != nil {
-		and = append(and, bson.D{{Key: "deletedAt", Value: bson.E{Key: "$exists", Value: *req.Deleted}}})
+	if req.Deleted {
+		and = append(and, bson.D{{Key: "deletedAt", Value: bson.E{Key: "$exists", Value: req.Deleted}}})
 	}
 	filter := make(bson.D, 0)
 	if len(and) > 0 {
@@ -112,8 +104,8 @@ func ListMenuWidget(c *gin.Context) {
 	}
 	opt := options.Find().
 		SetSort(OrderByToBsonD(req.SortBy)).
-		SetSkip(req.PaginationArg.PerPage * (req.PaginationArg.Page - 1)).
-		SetLimit(req.PaginationArg.PerPage)
+		SetSkip(req.PerPage * (req.Page - 1)).
+		SetLimit(req.PerPage)
 	res, err := repo.FindMany[model.MenuWidget](ctx, filter, opt)
 	if err != nil {
 		ProtoBufWithImplicitError(c, err)
@@ -270,7 +262,7 @@ func EditMenuWidget(c *gin.Context) {
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
-	ProtoBufWithOK(c, nil)
+	ProtoBufWithOK(c, &dto.EditMenuWidgetRet{Id: widgetID.Hex()})
 	return
 }
 
@@ -310,7 +302,7 @@ func EnableMenuWidget(c *gin.Context) {
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
-	ProtoBufWithOK(c, nil)
+	ProtoBufWithOK(c, &dto.EnableMenuWidgetRet{Id: widgetID.Hex()})
 	return
 }
 
@@ -403,7 +395,7 @@ func DisableMenuWidget(c *gin.Context) {
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
-	ProtoBufWithOK(c, nil)
+	ProtoBufWithOK(c, &dto.DisableMenuWidgetRet{Id: widgetID.Hex()})
 	return
 }
 

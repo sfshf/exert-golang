@@ -53,17 +53,6 @@ func AddMenu(c *gin.Context) {
 	return
 }
 
-// ListMenuReq search arguments to list menus.
-type ListMenuReq struct {
-	Name     *string `form:"name" json:"name" binding:"" label:"名称"`                 // 名称
-	Route    *string `form:"route" json:"route" binding:"" label:"页面路由"`             // 页面路由
-	Show     *bool   `form:"show" json:"show" binding:"" label:"是否已显示"`              // 是否已显示
-	NeedTree bool    `form:"needTree" json:"needTree" binding:"" label:"数据是否要转为树结构"` // 数据是否要转为树结构
-	SortBy   SortBy  `form:"sortBy" json:"sortBy" binding:"" label:"字段排序条件"`         // 字段排序条件
-	Deleted  *bool   `form:"deleted" json:"deleted" binging:"" label:"是否被软删除"`       // 是否被软删除
-	PaginationArg
-}
-
 // menuListConvertedToTree convert menu models to menu list views.
 func menuListConvertedToTree(menuList []*dto.MenuListElem, parentId string) ([]*dto.MenuListElem, error) {
 	siblingMenus := make([]*dto.MenuListElem, 0)
@@ -108,23 +97,23 @@ func menuListConvertedToTree(menuList []*dto.MenuListElem, parentId string) ([]*
 // @router /menus [GET]
 func ListMenu(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
-	var req ListMenuReq
+	var req dto.ListMenuReq
 	if err := c.ShouldBindQuery(&req); err != nil {
 		ProtoBufWithBadRequest(c, err)
 		return
 	}
 	var and bson.D
-	if req.Name != nil {
+	if req.Name != "" {
 		and = append(and, bson.E{Key: "name", Value: req.Name})
 	}
-	if req.Route != nil {
+	if req.Route != "" {
 		and = append(and, bson.E{Key: "route", Value: req.Route})
 	}
-	if req.Show != nil {
+	if req.Show {
 		and = append(and, bson.E{Key: "show", Value: req.Show})
 	}
-	if req.Deleted != nil {
-		and = append(and, bson.E{Key: "deletedAt", Value: bson.E{Key: "$exists", Value: *req.Deleted}})
+	if req.Deleted {
+		and = append(and, bson.E{Key: "deletedAt", Value: bson.E{Key: "$exists", Value: req.Deleted}})
 	}
 	filter := make(bson.D, 0)
 	if len(and) > 0 {
@@ -137,8 +126,8 @@ func ListMenu(c *gin.Context) {
 	}
 	opt := options.Find().
 		SetSort(OrderByToBsonD(req.SortBy)).
-		SetSkip(req.PaginationArg.PerPage * (req.PaginationArg.Page - 1)).
-		SetLimit(req.PaginationArg.PerPage)
+		SetSkip(req.PerPage * (req.Page - 1)).
+		SetLimit(req.PerPage)
 	res, err := repo.FindMany[model.Menu](ctx, filter, opt)
 	if err != nil {
 		ProtoBufWithImplicitError(c, err)
@@ -230,7 +219,7 @@ func EditMenu(c *gin.Context) {
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
-	ProtoBufWithOK(c, nil)
+	ProtoBufWithOK(c, &dto.EditMenuRet{Id: id.Hex()})
 	return
 }
 
@@ -301,7 +290,7 @@ func EnableMenu(c *gin.Context) {
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
-	ProtoBufWithOK(c, nil)
+	ProtoBufWithOK(c, &dto.EnableMenuRet{Id: id.Hex()})
 	return
 }
 
@@ -406,7 +395,7 @@ func DisableMenu(c *gin.Context) {
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
-	ProtoBufWithOK(c, nil)
+	ProtoBufWithOK(c, &dto.DisableMenuRet{Id: id.Hex()})
 	return
 }
 
@@ -510,6 +499,6 @@ func RemoveMenu(c *gin.Context) {
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
-	ProtoBufWithOK(c, nil)
+	ProtoBufWithOK(c, &dto.RemoveMenuRet{Id: id.Hex()})
 	return
 }

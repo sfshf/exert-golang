@@ -31,7 +31,7 @@ import (
 // @router /picCaptcha [GET]
 func GetPicCaptcha(c *gin.Context) {
 	if !captcha.PicCaptchaEnabled() {
-		ProtoBufWithOK(c, nil)
+		ProtoBufWithOK(c, &dto.GetPicCaptchaRet{})
 		return
 	}
 	_ = captcha.PicCaptcha().Store.Get(c.Query("obsoleteId"), true)
@@ -62,7 +62,7 @@ func GetPicCaptcha(c *gin.Context) {
 // @router /picCaptchaAnswer [GET]
 func GetPicCaptchaAnswer(c *gin.Context) {
 	if !captcha.PicCaptchaEnabled() {
-		ProtoBufWithOK(c, nil)
+		ProtoBufWithOK(c, &dto.GetPicCaptchaAnswerRet{})
 		return
 	}
 	if model_service.IsRoot(SessionIdFromGinX(c)) {
@@ -127,7 +127,7 @@ func SignIn(conf Config) gin.HandlerFunc {
 			}
 		}
 		if !conf.JWTAuth.Enable {
-			ProtoBufWithOK(c, nil)
+			ProtoBufWithOK(c, &dto.SignInRet{})
 			return
 		}
 		ctx = model.WithSession(ctx, staff.ID, model.NewDatetime(time.Now()))
@@ -176,7 +176,7 @@ func SignIn(conf Config) gin.HandlerFunc {
 func GetOwnDomains(c *gin.Context) {
 	sessionID := SessionIdFromGinX(c)
 	if model_service.IsRoot(sessionID) {
-		ProtoBufWithOK(c, nil)
+		ProtoBufWithOK(c, &dto.GetOwnDomainsRet{})
 		return
 	}
 	ctx := model.WithSession(c.Request.Context(), sessionID, model.NewDatetime(time.Now()))
@@ -197,22 +197,19 @@ func GetOwnDomains(c *gin.Context) {
 		}),
 	)
 	if err != nil {
+		log.Println(err)
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
 	domainsLen := len(domains)
 	ret := make([]*dto.GetOwnDomainsElem, 0, domainsLen)
-	if err = model.Copy(&ret, &domains); err != nil {
+	if err = model.Copy(&ret, domains); err != nil {
+		log.Println(err)
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
 	ProtoBufWithOK(c, &dto.GetOwnDomainsRet{List: ret, Total: int64(domainsLen)})
 	return
-}
-
-// GetOwnRolesReq request parameters.
-type GetOwnRolesReq struct {
-	DomainID *string `form:"domainID" json:"domainID" binding:"required" label:"域ID"` // 域ID
 }
 
 // GetOwnRoles
@@ -232,17 +229,18 @@ type GetOwnRolesReq struct {
 func GetOwnRoles(c *gin.Context) {
 	sessionID := SessionIdFromGinX(c)
 	if model_service.IsRoot(sessionID) {
-		ProtoBufWithOK(c, nil)
+		ProtoBufWithOK(c, &dto.GetOwnRolesRet{})
 		return
 	}
 	ctx := model.WithSession(c.Request.Context(), sessionID, model.NewDatetime(time.Now()))
 	var err error
-	var req GetOwnRolesReq
+	var req dto.GetOwnRolesReq
 	if err = c.ShouldBindQuery(&req); err != nil {
+		log.Println(err)
 		ProtoBufWithBadRequest(c, err)
 		return
 	}
-	domainID, err := model.ObjectIDPtrFromHex(*req.DomainID)
+	domainID, err := model.ObjectIDPtrFromHex(req.DomainId)
 	if err != nil {
 		log.Println(err)
 		ProtoBufWithBadRequest(c, err)
@@ -250,6 +248,7 @@ func GetOwnRoles(c *gin.Context) {
 	}
 	roleIDs, err := model_service.GetRoleIDsOfStaffInDomain(ctx, domainID, sessionID)
 	if err != nil {
+		log.Println(err)
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
@@ -268,23 +267,19 @@ func GetOwnRoles(c *gin.Context) {
 		}),
 	)
 	if err != nil {
+		log.Println(err)
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
 	rolesLen := len(roles)
 	ret := make([]*dto.GetOwnRolesElem, 0, rolesLen)
-	if err = model.Copy(&ret, &roles); err != nil {
+	if err = model.Copy(&ret, roles); err != nil {
+		log.Println(err)
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
 	ProtoBufWithOK(c, &dto.GetOwnRolesRet{List: ret, Total: int64(rolesLen)})
 	return
-}
-
-// GetOwnMenusReq request parameters.
-type GetOwnMenusReq struct {
-	DomainID *string `form:"domainID" json:"domainID" binding:"" label:"域ID"` // 域ID
-	RoleID   *string `form:"roleID" json:"roleID" binding:"" label:"角色ID"`    // 角色ID
 }
 
 // GetOwnMenus
@@ -306,12 +301,12 @@ func GetOwnMenus(conf Config) gin.HandlerFunc {
 		sessionID := SessionIdFromGinX(c)
 		ctx := model.WithSession(c.Request.Context(), sessionID, model.NewDatetime(time.Now()))
 		var err error
-		var req GetOwnMenusReq
+		var req dto.GetOwnMenusReq
 		if err = c.ShouldBindQuery(&req); err != nil {
 			ProtoBufWithBadRequest(c, err)
 			return
 		}
-		if req.DomainID == nil || req.RoleID == nil {
+		if req.DomainId == "" || req.RoleId == "" {
 			if !model_service.IsRoot(sessionID) {
 				ProtoBufWithBadRequest(c, errors.New("invalid account: without domain and role"))
 				return
@@ -325,13 +320,13 @@ func GetOwnMenus(conf Config) gin.HandlerFunc {
 			ProtoBufWithOK(c, &dto.GetOwnMenusRet{Total: int64(len(menuViews)), List: menuViews})
 			return
 		}
-		domainID, err := model.ObjectIDPtrFromHex(*req.DomainID)
+		domainID, err := model.ObjectIDPtrFromHex(req.DomainId)
 		if err != nil {
 			log.Println(err)
 			ProtoBufWithBadRequest(c, err)
 			return
 		}
-		roleID, err := model.ObjectIDPtrFromHex(*req.RoleID)
+		roleID, err := model.ObjectIDPtrFromHex(req.RoleId)
 		if err != nil {
 			log.Println(err)
 			ProtoBufWithBadRequest(c, err)
@@ -385,16 +380,17 @@ func GetOwnMenus(conf Config) gin.HandlerFunc {
 // @failure 500 {error} error "internal server error."
 // @router /signOut [POST]
 func SignOut(c *gin.Context) {
+	sessionID := SessionIdFromGinX(c)
 	if err := model_service.SignOut(
 		model.WithSession(
 			c.Request.Context(),
-			SessionIdFromGinX(c),
+			sessionID,
 			model.NewDatetime(time.Now()),
 		),
 	); err != nil {
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
-	ProtoBufWithOK(c, nil)
+	ProtoBufWithOK(c, &dto.SignOutRet{Id: sessionID.Hex()})
 	return
 }

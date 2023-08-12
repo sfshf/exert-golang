@@ -53,25 +53,8 @@ func AddStaff(c *gin.Context) {
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
-	ProtoBufWithCreated(c, res.InsertedID.(primitive.ObjectID).Hex())
+	ProtoBufWithCreated(c, &dto.AddStaffRet{Id: res.InsertedID.(primitive.ObjectID).Hex()})
 	return
-}
-
-// ListStaffReq  request parameter to list staffs.
-type ListStaffReq struct {
-	Account             *string `form:"account" json:"account" binding:"" label:"账号"`                                              // 账号
-	SignIn              *bool   `form:"signIn" json:"signIn" binding:"" label:"是否已登录"`                                             // 是否已登录
-	NickName            *string `form:"nickName" json:"nickName" binding:"" label:"昵称"`                                            // 昵称
-	RealName            *string `form:"realName" json:"realName" binding:"" label:"真实姓名"`                                          // 真实姓名
-	Email               *string `form:"email" json:"email" binding:"" label:"邮箱"`                                                  // 邮箱
-	Phone               *string `form:"phone" json:"phone" binding:"" label:"手机号"`                                                 // 手机号
-	Gender              *string `form:"gender" json:"gender" binding:"omitempty,oneof=Male Female" label:"性别"`                     // 性别
-	LastSignInIp        *string `form:"lastSignInIp" json:"lastSignInIp" binding:"" label:"最近登录IP"`                                // 最近登录IP
-	LastSignInTimeBegin *int64  `form:"lastSignInTimeBegin" json:"LastSignInTimeBegin" binding:"omitempty,gte=0" label:"最近登录时间起始"` // 最近登录时间起始
-	LastSignInTimeEnd   *int64  `form:"lastSignInTimeEnd" json:"lastSignInTimeEnd" binding:"omitempty,gte=0" label:"最近登录时间结束"`     // 最近登录时间结束
-	SortBy              SortBy  `form:"sortBy" json:"sortBy" binding:"" label:"字段排序条件"`                                            // 字段排序条件
-	Deleted             *bool   `form:"deleted" json:"deleted" binging:"" label:"是否被软删除"`                                          // 是否被软删除
-	PaginationArg
 }
 
 // ListStaff
@@ -89,46 +72,46 @@ type ListStaffReq struct {
 // @router /staffs [GET]
 func ListStaff(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
-	var req ListStaffReq
+	var req dto.ListStaffReq
 	if err := c.ShouldBindQuery(&req); err != nil {
 		ProtoBufWithBadRequest(c, err)
 		return
 	}
 	var and bson.D
-	if req.Account != nil {
+	if req.Account != "" {
 		and = append(and, bson.E{Key: "account", Value: req.Account})
 	}
-	if req.SignIn != nil {
+	if req.SignIn {
 		// TODO need to check
 		and = append(and, bson.E{Key: "signInToken", Value: bson.E{Key: "$exists", Value: true}})
 		and = append(and, bson.E{Key: "signInToken", Value: bson.E{Key: "$ne", Value: ""}})
 	}
-	if req.NickName != nil {
+	if req.NickName != "" {
 		and = append(and, bson.E{Key: "nickName", Value: req.NickName})
 	}
-	if req.RealName != nil {
+	if req.RealName != "" {
 		and = append(and, bson.E{Key: "realName", Value: req.RealName})
 	}
-	if req.Email != nil {
+	if req.Email != "" {
 		and = append(and, bson.E{Key: "email", Value: req.Email})
 	}
-	if req.Phone != nil {
+	if req.Phone != "" {
 		and = append(and, bson.E{Key: "phone", Value: req.Phone})
 	}
-	if req.Gender != nil {
-		and = append(and, bson.E{Key: "gender", Value: strings.ToUpper(*req.Gender)})
+	if req.Gender != "" {
+		and = append(and, bson.E{Key: "gender", Value: strings.ToUpper(req.Gender)})
 	}
-	if req.LastSignInIp != nil {
+	if req.LastSignInIp != "" {
 		and = append(and, bson.E{Key: "lastSignInIp", Value: req.LastSignInIp})
 	}
-	if req.LastSignInTimeBegin != nil {
-		and = append(and, bson.E{Key: "lastSignInTime", Value: bson.E{Key: "$gte", Value: primitive.DateTime(*req.LastSignInTimeBegin)}})
+	if req.LastSignInTimeBegin > 0 {
+		and = append(and, bson.E{Key: "lastSignInTime", Value: bson.E{Key: "$gte", Value: primitive.DateTime(req.LastSignInTimeBegin)}})
 	}
-	if req.LastSignInTimeEnd != nil {
-		and = append(and, bson.E{Key: "lastSignInTime", Value: bson.E{Key: "$lt", Value: primitive.DateTime(*req.LastSignInTimeEnd)}})
+	if req.LastSignInTimeEnd > 0 {
+		and = append(and, bson.E{Key: "lastSignInTime", Value: bson.E{Key: "$lt", Value: primitive.DateTime(req.LastSignInTimeEnd)}})
 	}
-	if req.Deleted != nil {
-		and = append(and, bson.E{Key: "deletedAt", Value: bson.E{Key: "$exists", Value: *req.Deleted}})
+	if req.Deleted {
+		and = append(and, bson.E{Key: "deletedAt", Value: bson.E{Key: "$exists", Value: req.Deleted}})
 	}
 	filter := make(bson.D, 0)
 	if len(and) > 0 {
@@ -141,8 +124,8 @@ func ListStaff(c *gin.Context) {
 	}
 	opt := options.Find().
 		SetSort(OrderByToBsonD(req.SortBy)).
-		SetSkip(req.PaginationArg.PerPage * (req.PaginationArg.Page - 1)).
-		SetLimit(req.PaginationArg.PerPage)
+		SetSkip(req.PerPage * (req.Page - 1)).
+		SetLimit(req.PerPage)
 	res, err := repo.FindMany[model.Staff](ctx, filter, opt)
 	if err != nil {
 		ProtoBufWithImplicitError(c, err)
@@ -197,7 +180,7 @@ func ProfileStaff(c *gin.Context) {
 			ret.SignIn = true
 		}
 	}
-	ProtoBufWithOK(c, ret)
+	ProtoBufWithOK(c, &ret)
 	return
 }
 
@@ -237,7 +220,7 @@ func EditStaff(c *gin.Context) {
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
-	ProtoBufWithOK(c, nil)
+	ProtoBufWithOK(c, &dto.EditStaffRet{Id: id.Hex()})
 	return
 }
 
@@ -300,7 +283,7 @@ func PatchStaffPassword(c *gin.Context) {
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
-	ProtoBufWithOK(c, nil)
+	ProtoBufWithOK(c, &dto.PatchPasswordRet{Id: id.Hex()})
 	return
 }
 
@@ -427,7 +410,7 @@ func AuthorizeStaffRolesInDomain(c *gin.Context) {
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
-	ProtoBufWithOK(c, nil)
+	ProtoBufWithOK(c, &dto.AuthorizeStaffRolesInDomainRet{Id: id.Hex()})
 	return
 }
 
@@ -449,11 +432,13 @@ func StaffDomains(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
 	if err != nil {
+		log.Println(err)
 		ProtoBufWithBadRequest(c, err)
 		return
 	}
 	domainIDs, err := model_service.GetDomainIDsOfStaff(ctx, id)
 	if err != nil {
+		log.Println(err)
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
@@ -522,7 +507,7 @@ func EnableStaff(c *gin.Context) {
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
-	ProtoBufWithOK(c, nil)
+	ProtoBufWithOK(c, &dto.EnableStaffRet{Id: id.Hex()})
 	return
 }
 
@@ -582,7 +567,7 @@ func DisableStaff(c *gin.Context) {
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
-	ProtoBufWithOK(c, nil)
+	ProtoBufWithOK(c, &dto.DisableStaffRet{Id: id.Hex()})
 	return
 }
 
@@ -642,6 +627,6 @@ func RemoveStaff(c *gin.Context) {
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
-	ProtoBufWithOK(c, nil)
+	ProtoBufWithOK(c, &dto.RemoveStaffRet{Id: id.Hex()})
 	return
 }

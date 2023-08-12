@@ -18,282 +18,18 @@ $root.dto = (function() {
      */
     var dto = {};
 
-    dto.PaginationArg = (function() {
-
-        /**
-         * Properties of a PaginationArg.
-         * @memberof dto
-         * @interface IPaginationArg
-         * @property {boolean|null} [noPaging] PaginationArg noPaging
-         * @property {number|Long|null} [page] PaginationArg page
-         * @property {number|Long|null} [perPage] PaginationArg perPage
-         */
-
-        /**
-         * Constructs a new PaginationArg.
-         * @memberof dto
-         * @classdesc Represents a PaginationArg.
-         * @implements IPaginationArg
-         * @constructor
-         * @param {dto.IPaginationArg=} [properties] Properties to set
-         */
-        function PaginationArg(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * PaginationArg noPaging.
-         * @member {boolean} noPaging
-         * @memberof dto.PaginationArg
-         * @instance
-         */
-        PaginationArg.prototype.noPaging = false;
-
-        /**
-         * PaginationArg page.
-         * @member {number|Long} page
-         * @memberof dto.PaginationArg
-         * @instance
-         */
-        PaginationArg.prototype.page = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-        /**
-         * PaginationArg perPage.
-         * @member {number|Long} perPage
-         * @memberof dto.PaginationArg
-         * @instance
-         */
-        PaginationArg.prototype.perPage = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-        /**
-         * Creates a new PaginationArg instance using the specified properties.
-         * @function create
-         * @memberof dto.PaginationArg
-         * @static
-         * @param {dto.IPaginationArg=} [properties] Properties to set
-         * @returns {dto.PaginationArg} PaginationArg instance
-         */
-        PaginationArg.create = function create(properties) {
-            return new PaginationArg(properties);
-        };
-
-        /**
-         * Encodes the specified PaginationArg message. Does not implicitly {@link dto.PaginationArg.verify|verify} messages.
-         * @function encode
-         * @memberof dto.PaginationArg
-         * @static
-         * @param {dto.IPaginationArg} message PaginationArg message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        PaginationArg.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.noPaging != null && Object.hasOwnProperty.call(message, "noPaging"))
-                writer.uint32(/* id 1, wireType 0 =*/8).bool(message.noPaging);
-            if (message.page != null && Object.hasOwnProperty.call(message, "page"))
-                writer.uint32(/* id 2, wireType 0 =*/16).sint64(message.page);
-            if (message.perPage != null && Object.hasOwnProperty.call(message, "perPage"))
-                writer.uint32(/* id 3, wireType 0 =*/24).sint64(message.perPage);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified PaginationArg message, length delimited. Does not implicitly {@link dto.PaginationArg.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof dto.PaginationArg
-         * @static
-         * @param {dto.IPaginationArg} message PaginationArg message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        PaginationArg.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a PaginationArg message from the specified reader or buffer.
-         * @function decode
-         * @memberof dto.PaginationArg
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {dto.PaginationArg} PaginationArg
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        PaginationArg.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.PaginationArg();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1: {
-                        message.noPaging = reader.bool();
-                        break;
-                    }
-                case 2: {
-                        message.page = reader.sint64();
-                        break;
-                    }
-                case 3: {
-                        message.perPage = reader.sint64();
-                        break;
-                    }
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a PaginationArg message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof dto.PaginationArg
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {dto.PaginationArg} PaginationArg
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        PaginationArg.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a PaginationArg message.
-         * @function verify
-         * @memberof dto.PaginationArg
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        PaginationArg.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.noPaging != null && message.hasOwnProperty("noPaging"))
-                if (typeof message.noPaging !== "boolean")
-                    return "noPaging: boolean expected";
-            if (message.page != null && message.hasOwnProperty("page"))
-                if (!$util.isInteger(message.page) && !(message.page && $util.isInteger(message.page.low) && $util.isInteger(message.page.high)))
-                    return "page: integer|Long expected";
-            if (message.perPage != null && message.hasOwnProperty("perPage"))
-                if (!$util.isInteger(message.perPage) && !(message.perPage && $util.isInteger(message.perPage.low) && $util.isInteger(message.perPage.high)))
-                    return "perPage: integer|Long expected";
-            return null;
-        };
-
-        /**
-         * Creates a PaginationArg message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof dto.PaginationArg
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {dto.PaginationArg} PaginationArg
-         */
-        PaginationArg.fromObject = function fromObject(object) {
-            if (object instanceof $root.dto.PaginationArg)
-                return object;
-            var message = new $root.dto.PaginationArg();
-            if (object.noPaging != null)
-                message.noPaging = Boolean(object.noPaging);
-            if (object.page != null)
-                if ($util.Long)
-                    (message.page = $util.Long.fromValue(object.page)).unsigned = false;
-                else if (typeof object.page === "string")
-                    message.page = parseInt(object.page, 10);
-                else if (typeof object.page === "number")
-                    message.page = object.page;
-                else if (typeof object.page === "object")
-                    message.page = new $util.LongBits(object.page.low >>> 0, object.page.high >>> 0).toNumber();
-            if (object.perPage != null)
-                if ($util.Long)
-                    (message.perPage = $util.Long.fromValue(object.perPage)).unsigned = false;
-                else if (typeof object.perPage === "string")
-                    message.perPage = parseInt(object.perPage, 10);
-                else if (typeof object.perPage === "number")
-                    message.perPage = object.perPage;
-                else if (typeof object.perPage === "object")
-                    message.perPage = new $util.LongBits(object.perPage.low >>> 0, object.perPage.high >>> 0).toNumber();
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a PaginationArg message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof dto.PaginationArg
-         * @static
-         * @param {dto.PaginationArg} message PaginationArg
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        PaginationArg.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                object.noPaging = false;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.page = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.page = options.longs === String ? "0" : 0;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.perPage = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.perPage = options.longs === String ? "0" : 0;
-            }
-            if (message.noPaging != null && message.hasOwnProperty("noPaging"))
-                object.noPaging = message.noPaging;
-            if (message.page != null && message.hasOwnProperty("page"))
-                if (typeof message.page === "number")
-                    object.page = options.longs === String ? String(message.page) : message.page;
-                else
-                    object.page = options.longs === String ? $util.Long.prototype.toString.call(message.page) : options.longs === Number ? new $util.LongBits(message.page.low >>> 0, message.page.high >>> 0).toNumber() : message.page;
-            if (message.perPage != null && message.hasOwnProperty("perPage"))
-                if (typeof message.perPage === "number")
-                    object.perPage = options.longs === String ? String(message.perPage) : message.perPage;
-                else
-                    object.perPage = options.longs === String ? $util.Long.prototype.toString.call(message.perPage) : options.longs === Number ? new $util.LongBits(message.perPage.low >>> 0, message.perPage.high >>> 0).toNumber() : message.perPage;
-            return object;
-        };
-
-        /**
-         * Converts this PaginationArg to JSON.
-         * @function toJSON
-         * @memberof dto.PaginationArg
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        PaginationArg.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        /**
-         * Gets the default type url for PaginationArg
-         * @function getTypeUrl
-         * @memberof dto.PaginationArg
-         * @static
-         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-         * @returns {string} The default type url
-         */
-        PaginationArg.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-            if (typeUrlPrefix === undefined) {
-                typeUrlPrefix = "type.googleapis.com";
-            }
-            return typeUrlPrefix + "/dto.PaginationArg";
-        };
-
-        return PaginationArg;
+    /**
+     * SortDirection enum.
+     * @name dto.SortDirection
+     * @enum {number}
+     * @property {number} Asc=0 Asc value
+     * @property {number} Desc=1 Desc value
+     */
+    dto.SortDirection = (function() {
+        var valuesById = {}, values = Object.create(valuesById);
+        values[valuesById[0] = "Asc"] = 0;
+        values[valuesById[1] = "Desc"] = 1;
+        return values;
     })();
 
     dto.Error = (function() {
@@ -1038,6 +774,432 @@ $root.dto = (function() {
         return AddDomainRet;
     })();
 
+    dto.ListDomainReq = (function() {
+
+        /**
+         * Properties of a ListDomainReq.
+         * @memberof dto
+         * @interface IListDomainReq
+         * @property {boolean|null} [noPaging] ListDomainReq noPaging
+         * @property {number|Long|null} [page] ListDomainReq page
+         * @property {number|Long|null} [perPage] ListDomainReq perPage
+         * @property {Object.<string,dto.SortDirection>|null} [sortBy] ListDomainReq sortBy
+         * @property {boolean|null} [deleted] ListDomainReq deleted
+         * @property {string|null} [name] ListDomainReq name
+         * @property {boolean|null} [needTree] ListDomainReq needTree
+         */
+
+        /**
+         * Constructs a new ListDomainReq.
+         * @memberof dto
+         * @classdesc Represents a ListDomainReq.
+         * @implements IListDomainReq
+         * @constructor
+         * @param {dto.IListDomainReq=} [properties] Properties to set
+         */
+        function ListDomainReq(properties) {
+            this.sortBy = {};
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * ListDomainReq noPaging.
+         * @member {boolean} noPaging
+         * @memberof dto.ListDomainReq
+         * @instance
+         */
+        ListDomainReq.prototype.noPaging = false;
+
+        /**
+         * ListDomainReq page.
+         * @member {number|Long} page
+         * @memberof dto.ListDomainReq
+         * @instance
+         */
+        ListDomainReq.prototype.page = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * ListDomainReq perPage.
+         * @member {number|Long} perPage
+         * @memberof dto.ListDomainReq
+         * @instance
+         */
+        ListDomainReq.prototype.perPage = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * ListDomainReq sortBy.
+         * @member {Object.<string,dto.SortDirection>} sortBy
+         * @memberof dto.ListDomainReq
+         * @instance
+         */
+        ListDomainReq.prototype.sortBy = $util.emptyObject;
+
+        /**
+         * ListDomainReq deleted.
+         * @member {boolean} deleted
+         * @memberof dto.ListDomainReq
+         * @instance
+         */
+        ListDomainReq.prototype.deleted = false;
+
+        /**
+         * ListDomainReq name.
+         * @member {string} name
+         * @memberof dto.ListDomainReq
+         * @instance
+         */
+        ListDomainReq.prototype.name = "";
+
+        /**
+         * ListDomainReq needTree.
+         * @member {boolean} needTree
+         * @memberof dto.ListDomainReq
+         * @instance
+         */
+        ListDomainReq.prototype.needTree = false;
+
+        /**
+         * Creates a new ListDomainReq instance using the specified properties.
+         * @function create
+         * @memberof dto.ListDomainReq
+         * @static
+         * @param {dto.IListDomainReq=} [properties] Properties to set
+         * @returns {dto.ListDomainReq} ListDomainReq instance
+         */
+        ListDomainReq.create = function create(properties) {
+            return new ListDomainReq(properties);
+        };
+
+        /**
+         * Encodes the specified ListDomainReq message. Does not implicitly {@link dto.ListDomainReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.ListDomainReq
+         * @static
+         * @param {dto.IListDomainReq} message ListDomainReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListDomainReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.name != null && Object.hasOwnProperty.call(message, "name"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
+            if (message.needTree != null && Object.hasOwnProperty.call(message, "needTree"))
+                writer.uint32(/* id 2, wireType 0 =*/16).bool(message.needTree);
+            if (message.noPaging != null && Object.hasOwnProperty.call(message, "noPaging"))
+                writer.uint32(/* id 20001, wireType 0 =*/160008).bool(message.noPaging);
+            if (message.page != null && Object.hasOwnProperty.call(message, "page"))
+                writer.uint32(/* id 20002, wireType 0 =*/160016).sint64(message.page);
+            if (message.perPage != null && Object.hasOwnProperty.call(message, "perPage"))
+                writer.uint32(/* id 20003, wireType 0 =*/160024).sint64(message.perPage);
+            if (message.sortBy != null && Object.hasOwnProperty.call(message, "sortBy"))
+                for (var keys = Object.keys(message.sortBy), i = 0; i < keys.length; ++i)
+                    writer.uint32(/* id 20004, wireType 2 =*/160034).fork().uint32(/* id 1, wireType 2 =*/10).string(keys[i]).uint32(/* id 2, wireType 0 =*/16).int32(message.sortBy[keys[i]]).ldelim();
+            if (message.deleted != null && Object.hasOwnProperty.call(message, "deleted"))
+                writer.uint32(/* id 20005, wireType 0 =*/160040).bool(message.deleted);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ListDomainReq message, length delimited. Does not implicitly {@link dto.ListDomainReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.ListDomainReq
+         * @static
+         * @param {dto.IListDomainReq} message ListDomainReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListDomainReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ListDomainReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.ListDomainReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.ListDomainReq} ListDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListDomainReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListDomainReq(), key, value;
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 20001: {
+                        message.noPaging = reader.bool();
+                        break;
+                    }
+                case 20002: {
+                        message.page = reader.sint64();
+                        break;
+                    }
+                case 20003: {
+                        message.perPage = reader.sint64();
+                        break;
+                    }
+                case 20004: {
+                        if (message.sortBy === $util.emptyObject)
+                            message.sortBy = {};
+                        var end2 = reader.uint32() + reader.pos;
+                        key = "";
+                        value = 0;
+                        while (reader.pos < end2) {
+                            var tag2 = reader.uint32();
+                            switch (tag2 >>> 3) {
+                            case 1:
+                                key = reader.string();
+                                break;
+                            case 2:
+                                value = reader.int32();
+                                break;
+                            default:
+                                reader.skipType(tag2 & 7);
+                                break;
+                            }
+                        }
+                        message.sortBy[key] = value;
+                        break;
+                    }
+                case 20005: {
+                        message.deleted = reader.bool();
+                        break;
+                    }
+                case 1: {
+                        message.name = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.needTree = reader.bool();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ListDomainReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.ListDomainReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.ListDomainReq} ListDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListDomainReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ListDomainReq message.
+         * @function verify
+         * @memberof dto.ListDomainReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ListDomainReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.noPaging != null && message.hasOwnProperty("noPaging"))
+                if (typeof message.noPaging !== "boolean")
+                    return "noPaging: boolean expected";
+            if (message.page != null && message.hasOwnProperty("page"))
+                if (!$util.isInteger(message.page) && !(message.page && $util.isInteger(message.page.low) && $util.isInteger(message.page.high)))
+                    return "page: integer|Long expected";
+            if (message.perPage != null && message.hasOwnProperty("perPage"))
+                if (!$util.isInteger(message.perPage) && !(message.perPage && $util.isInteger(message.perPage.low) && $util.isInteger(message.perPage.high)))
+                    return "perPage: integer|Long expected";
+            if (message.sortBy != null && message.hasOwnProperty("sortBy")) {
+                if (!$util.isObject(message.sortBy))
+                    return "sortBy: object expected";
+                var key = Object.keys(message.sortBy);
+                for (var i = 0; i < key.length; ++i)
+                    switch (message.sortBy[key[i]]) {
+                    default:
+                        return "sortBy: enum value{k:string} expected";
+                    case 0:
+                    case 1:
+                        break;
+                    }
+            }
+            if (message.deleted != null && message.hasOwnProperty("deleted"))
+                if (typeof message.deleted !== "boolean")
+                    return "deleted: boolean expected";
+            if (message.name != null && message.hasOwnProperty("name"))
+                if (!$util.isString(message.name))
+                    return "name: string expected";
+            if (message.needTree != null && message.hasOwnProperty("needTree"))
+                if (typeof message.needTree !== "boolean")
+                    return "needTree: boolean expected";
+            return null;
+        };
+
+        /**
+         * Creates a ListDomainReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.ListDomainReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.ListDomainReq} ListDomainReq
+         */
+        ListDomainReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.ListDomainReq)
+                return object;
+            var message = new $root.dto.ListDomainReq();
+            if (object.noPaging != null)
+                message.noPaging = Boolean(object.noPaging);
+            if (object.page != null)
+                if ($util.Long)
+                    (message.page = $util.Long.fromValue(object.page)).unsigned = false;
+                else if (typeof object.page === "string")
+                    message.page = parseInt(object.page, 10);
+                else if (typeof object.page === "number")
+                    message.page = object.page;
+                else if (typeof object.page === "object")
+                    message.page = new $util.LongBits(object.page.low >>> 0, object.page.high >>> 0).toNumber();
+            if (object.perPage != null)
+                if ($util.Long)
+                    (message.perPage = $util.Long.fromValue(object.perPage)).unsigned = false;
+                else if (typeof object.perPage === "string")
+                    message.perPage = parseInt(object.perPage, 10);
+                else if (typeof object.perPage === "number")
+                    message.perPage = object.perPage;
+                else if (typeof object.perPage === "object")
+                    message.perPage = new $util.LongBits(object.perPage.low >>> 0, object.perPage.high >>> 0).toNumber();
+            if (object.sortBy) {
+                if (typeof object.sortBy !== "object")
+                    throw TypeError(".dto.ListDomainReq.sortBy: object expected");
+                message.sortBy = {};
+                for (var keys = Object.keys(object.sortBy), i = 0; i < keys.length; ++i)
+                    switch (object.sortBy[keys[i]]) {
+                    default:
+                        if (typeof object.sortBy[keys[i]] === "number") {
+                            message.sortBy[keys[i]] = object.sortBy[keys[i]];
+                            break;
+                        }
+                        break;
+                    case "Asc":
+                    case 0:
+                        message.sortBy[keys[i]] = 0;
+                        break;
+                    case "Desc":
+                    case 1:
+                        message.sortBy[keys[i]] = 1;
+                        break;
+                    }
+            }
+            if (object.deleted != null)
+                message.deleted = Boolean(object.deleted);
+            if (object.name != null)
+                message.name = String(object.name);
+            if (object.needTree != null)
+                message.needTree = Boolean(object.needTree);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a ListDomainReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.ListDomainReq
+         * @static
+         * @param {dto.ListDomainReq} message ListDomainReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ListDomainReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.objects || options.defaults)
+                object.sortBy = {};
+            if (options.defaults) {
+                object.name = "";
+                object.needTree = false;
+                object.noPaging = false;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.page = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.page = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.perPage = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.perPage = options.longs === String ? "0" : 0;
+                object.deleted = false;
+            }
+            if (message.name != null && message.hasOwnProperty("name"))
+                object.name = message.name;
+            if (message.needTree != null && message.hasOwnProperty("needTree"))
+                object.needTree = message.needTree;
+            if (message.noPaging != null && message.hasOwnProperty("noPaging"))
+                object.noPaging = message.noPaging;
+            if (message.page != null && message.hasOwnProperty("page"))
+                if (typeof message.page === "number")
+                    object.page = options.longs === String ? String(message.page) : message.page;
+                else
+                    object.page = options.longs === String ? $util.Long.prototype.toString.call(message.page) : options.longs === Number ? new $util.LongBits(message.page.low >>> 0, message.page.high >>> 0).toNumber() : message.page;
+            if (message.perPage != null && message.hasOwnProperty("perPage"))
+                if (typeof message.perPage === "number")
+                    object.perPage = options.longs === String ? String(message.perPage) : message.perPage;
+                else
+                    object.perPage = options.longs === String ? $util.Long.prototype.toString.call(message.perPage) : options.longs === Number ? new $util.LongBits(message.perPage.low >>> 0, message.perPage.high >>> 0).toNumber() : message.perPage;
+            var keys2;
+            if (message.sortBy && (keys2 = Object.keys(message.sortBy)).length) {
+                object.sortBy = {};
+                for (var j = 0; j < keys2.length; ++j)
+                    object.sortBy[keys2[j]] = options.enums === String ? $root.dto.SortDirection[message.sortBy[keys2[j]]] === undefined ? message.sortBy[keys2[j]] : $root.dto.SortDirection[message.sortBy[keys2[j]]] : message.sortBy[keys2[j]];
+            }
+            if (message.deleted != null && message.hasOwnProperty("deleted"))
+                object.deleted = message.deleted;
+            return object;
+        };
+
+        /**
+         * Converts this ListDomainReq to JSON.
+         * @function toJSON
+         * @memberof dto.ListDomainReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ListDomainReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for ListDomainReq
+         * @function getTypeUrl
+         * @memberof dto.ListDomainReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        ListDomainReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.ListDomainReq";
+        };
+
+        return ListDomainReq;
+    })();
+
     dto.DomainListElem = (function() {
 
         /**
@@ -1167,19 +1329,19 @@ $root.dto = (function() {
 
         /**
          * DomainListElem deletedBy.
-         * @member {string|null|undefined} deletedBy
+         * @member {string} deletedBy
          * @memberof dto.DomainListElem
          * @instance
          */
-        DomainListElem.prototype.deletedBy = null;
+        DomainListElem.prototype.deletedBy = "";
 
         /**
          * DomainListElem deletedAt.
-         * @member {string|null|undefined} deletedAt
+         * @member {string} deletedAt
          * @memberof dto.DomainListElem
          * @instance
          */
-        DomainListElem.prototype.deletedAt = null;
+        DomainListElem.prototype.deletedAt = "";
 
         /**
          * DomainListElem children.
@@ -1188,31 +1350,6 @@ $root.dto = (function() {
          * @instance
          */
         DomainListElem.prototype.children = $util.emptyArray;
-
-        // OneOf field names bound to virtual getters and setters
-        var $oneOfFields;
-
-        /**
-         * DomainListElem _deletedBy.
-         * @member {"deletedBy"|undefined} _deletedBy
-         * @memberof dto.DomainListElem
-         * @instance
-         */
-        Object.defineProperty(DomainListElem.prototype, "_deletedBy", {
-            get: $util.oneOfGetter($oneOfFields = ["deletedBy"]),
-            set: $util.oneOfSetter($oneOfFields)
-        });
-
-        /**
-         * DomainListElem _deletedAt.
-         * @member {"deletedAt"|undefined} _deletedAt
-         * @memberof dto.DomainListElem
-         * @instance
-         */
-        Object.defineProperty(DomainListElem.prototype, "_deletedAt", {
-            get: $util.oneOfGetter($oneOfFields = ["deletedAt"]),
-            set: $util.oneOfSetter($oneOfFields)
-        });
 
         /**
          * Creates a new DomainListElem instance using the specified properties.
@@ -1397,7 +1534,6 @@ $root.dto = (function() {
         DomainListElem.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            var properties = {};
             if (message.id != null && message.hasOwnProperty("id"))
                 if (!$util.isString(message.id))
                     return "id: string expected";
@@ -1435,16 +1571,12 @@ $root.dto = (function() {
             if (message.updatedAt != null && message.hasOwnProperty("updatedAt"))
                 if (!$util.isString(message.updatedAt))
                     return "updatedAt: string expected";
-            if (message.deletedBy != null && message.hasOwnProperty("deletedBy")) {
-                properties._deletedBy = 1;
+            if (message.deletedBy != null && message.hasOwnProperty("deletedBy"))
                 if (!$util.isString(message.deletedBy))
                     return "deletedBy: string expected";
-            }
-            if (message.deletedAt != null && message.hasOwnProperty("deletedAt")) {
-                properties._deletedAt = 1;
+            if (message.deletedAt != null && message.hasOwnProperty("deletedAt"))
                 if (!$util.isString(message.deletedAt))
                     return "deletedAt: string expected";
-            }
             if (message.children != null && message.hasOwnProperty("children")) {
                 if (!Array.isArray(message.children))
                     return "children: array expected";
@@ -1541,6 +1673,8 @@ $root.dto = (function() {
                 object.createdAt = "";
                 object.updatedBy = "";
                 object.updatedAt = "";
+                object.deletedBy = "";
+                object.deletedAt = "";
             }
             if (message.id != null && message.hasOwnProperty("id"))
                 object.id = message.id;
@@ -1567,16 +1701,10 @@ $root.dto = (function() {
                 object.updatedBy = message.updatedBy;
             if (message.updatedAt != null && message.hasOwnProperty("updatedAt"))
                 object.updatedAt = message.updatedAt;
-            if (message.deletedBy != null && message.hasOwnProperty("deletedBy")) {
+            if (message.deletedBy != null && message.hasOwnProperty("deletedBy"))
                 object.deletedBy = message.deletedBy;
-                if (options.oneofs)
-                    object._deletedBy = "deletedBy";
-            }
-            if (message.deletedAt != null && message.hasOwnProperty("deletedAt")) {
+            if (message.deletedAt != null && message.hasOwnProperty("deletedAt"))
                 object.deletedAt = message.deletedAt;
-                if (options.oneofs)
-                    object._deletedAt = "deletedAt";
-            }
             if (message.children && message.children.length) {
                 object.children = [];
                 for (var j = 0; j < message.children.length; ++j)
@@ -2003,44 +2131,19 @@ $root.dto = (function() {
 
         /**
          * ProfileDomainRet deletedBy.
-         * @member {string|null|undefined} deletedBy
+         * @member {string} deletedBy
          * @memberof dto.ProfileDomainRet
          * @instance
          */
-        ProfileDomainRet.prototype.deletedBy = null;
+        ProfileDomainRet.prototype.deletedBy = "";
 
         /**
          * ProfileDomainRet deletedAt.
-         * @member {string|null|undefined} deletedAt
+         * @member {string} deletedAt
          * @memberof dto.ProfileDomainRet
          * @instance
          */
-        ProfileDomainRet.prototype.deletedAt = null;
-
-        // OneOf field names bound to virtual getters and setters
-        var $oneOfFields;
-
-        /**
-         * ProfileDomainRet _deletedBy.
-         * @member {"deletedBy"|undefined} _deletedBy
-         * @memberof dto.ProfileDomainRet
-         * @instance
-         */
-        Object.defineProperty(ProfileDomainRet.prototype, "_deletedBy", {
-            get: $util.oneOfGetter($oneOfFields = ["deletedBy"]),
-            set: $util.oneOfSetter($oneOfFields)
-        });
-
-        /**
-         * ProfileDomainRet _deletedAt.
-         * @member {"deletedAt"|undefined} _deletedAt
-         * @memberof dto.ProfileDomainRet
-         * @instance
-         */
-        Object.defineProperty(ProfileDomainRet.prototype, "_deletedAt", {
-            get: $util.oneOfGetter($oneOfFields = ["deletedAt"]),
-            set: $util.oneOfSetter($oneOfFields)
-        });
+        ProfileDomainRet.prototype.deletedAt = "";
 
         /**
          * Creates a new ProfileDomainRet instance using the specified properties.
@@ -2216,7 +2319,6 @@ $root.dto = (function() {
         ProfileDomainRet.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            var properties = {};
             if (message.id != null && message.hasOwnProperty("id"))
                 if (!$util.isString(message.id))
                     return "id: string expected";
@@ -2254,16 +2356,12 @@ $root.dto = (function() {
             if (message.updatedAt != null && message.hasOwnProperty("updatedAt"))
                 if (!$util.isString(message.updatedAt))
                     return "updatedAt: string expected";
-            if (message.deletedBy != null && message.hasOwnProperty("deletedBy")) {
-                properties._deletedBy = 1;
+            if (message.deletedBy != null && message.hasOwnProperty("deletedBy"))
                 if (!$util.isString(message.deletedBy))
                     return "deletedBy: string expected";
-            }
-            if (message.deletedAt != null && message.hasOwnProperty("deletedAt")) {
-                properties._deletedAt = 1;
+            if (message.deletedAt != null && message.hasOwnProperty("deletedAt"))
                 if (!$util.isString(message.deletedAt))
                     return "deletedAt: string expected";
-            }
             return null;
         };
 
@@ -2339,6 +2437,8 @@ $root.dto = (function() {
                 object.createdAt = "";
                 object.updatedBy = "";
                 object.updatedAt = "";
+                object.deletedBy = "";
+                object.deletedAt = "";
             }
             if (message.id != null && message.hasOwnProperty("id"))
                 object.id = message.id;
@@ -2365,16 +2465,10 @@ $root.dto = (function() {
                 object.updatedBy = message.updatedBy;
             if (message.updatedAt != null && message.hasOwnProperty("updatedAt"))
                 object.updatedAt = message.updatedAt;
-            if (message.deletedBy != null && message.hasOwnProperty("deletedBy")) {
+            if (message.deletedBy != null && message.hasOwnProperty("deletedBy"))
                 object.deletedBy = message.deletedBy;
-                if (options.oneofs)
-                    object._deletedBy = "deletedBy";
-            }
-            if (message.deletedAt != null && message.hasOwnProperty("deletedAt")) {
+            if (message.deletedAt != null && message.hasOwnProperty("deletedAt"))
                 object.deletedAt = message.deletedAt;
-                if (options.oneofs)
-                    object._deletedAt = "deletedAt";
-            }
             return object;
         };
 
@@ -4123,6 +4217,478 @@ $root.dto = (function() {
         return AddMenuRet;
     })();
 
+    dto.ListMenuReq = (function() {
+
+        /**
+         * Properties of a ListMenuReq.
+         * @memberof dto
+         * @interface IListMenuReq
+         * @property {boolean|null} [noPaging] ListMenuReq noPaging
+         * @property {number|Long|null} [page] ListMenuReq page
+         * @property {number|Long|null} [perPage] ListMenuReq perPage
+         * @property {Object.<string,dto.SortDirection>|null} [sortBy] ListMenuReq sortBy
+         * @property {boolean|null} [deleted] ListMenuReq deleted
+         * @property {string|null} [name] ListMenuReq name
+         * @property {boolean|null} [needTree] ListMenuReq needTree
+         * @property {string|null} [route] ListMenuReq route
+         * @property {boolean|null} [show] ListMenuReq show
+         */
+
+        /**
+         * Constructs a new ListMenuReq.
+         * @memberof dto
+         * @classdesc Represents a ListMenuReq.
+         * @implements IListMenuReq
+         * @constructor
+         * @param {dto.IListMenuReq=} [properties] Properties to set
+         */
+        function ListMenuReq(properties) {
+            this.sortBy = {};
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * ListMenuReq noPaging.
+         * @member {boolean} noPaging
+         * @memberof dto.ListMenuReq
+         * @instance
+         */
+        ListMenuReq.prototype.noPaging = false;
+
+        /**
+         * ListMenuReq page.
+         * @member {number|Long} page
+         * @memberof dto.ListMenuReq
+         * @instance
+         */
+        ListMenuReq.prototype.page = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * ListMenuReq perPage.
+         * @member {number|Long} perPage
+         * @memberof dto.ListMenuReq
+         * @instance
+         */
+        ListMenuReq.prototype.perPage = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * ListMenuReq sortBy.
+         * @member {Object.<string,dto.SortDirection>} sortBy
+         * @memberof dto.ListMenuReq
+         * @instance
+         */
+        ListMenuReq.prototype.sortBy = $util.emptyObject;
+
+        /**
+         * ListMenuReq deleted.
+         * @member {boolean} deleted
+         * @memberof dto.ListMenuReq
+         * @instance
+         */
+        ListMenuReq.prototype.deleted = false;
+
+        /**
+         * ListMenuReq name.
+         * @member {string} name
+         * @memberof dto.ListMenuReq
+         * @instance
+         */
+        ListMenuReq.prototype.name = "";
+
+        /**
+         * ListMenuReq needTree.
+         * @member {boolean} needTree
+         * @memberof dto.ListMenuReq
+         * @instance
+         */
+        ListMenuReq.prototype.needTree = false;
+
+        /**
+         * ListMenuReq route.
+         * @member {string} route
+         * @memberof dto.ListMenuReq
+         * @instance
+         */
+        ListMenuReq.prototype.route = "";
+
+        /**
+         * ListMenuReq show.
+         * @member {boolean} show
+         * @memberof dto.ListMenuReq
+         * @instance
+         */
+        ListMenuReq.prototype.show = false;
+
+        /**
+         * Creates a new ListMenuReq instance using the specified properties.
+         * @function create
+         * @memberof dto.ListMenuReq
+         * @static
+         * @param {dto.IListMenuReq=} [properties] Properties to set
+         * @returns {dto.ListMenuReq} ListMenuReq instance
+         */
+        ListMenuReq.create = function create(properties) {
+            return new ListMenuReq(properties);
+        };
+
+        /**
+         * Encodes the specified ListMenuReq message. Does not implicitly {@link dto.ListMenuReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.ListMenuReq
+         * @static
+         * @param {dto.IListMenuReq} message ListMenuReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListMenuReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.name != null && Object.hasOwnProperty.call(message, "name"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
+            if (message.needTree != null && Object.hasOwnProperty.call(message, "needTree"))
+                writer.uint32(/* id 2, wireType 0 =*/16).bool(message.needTree);
+            if (message.route != null && Object.hasOwnProperty.call(message, "route"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.route);
+            if (message.show != null && Object.hasOwnProperty.call(message, "show"))
+                writer.uint32(/* id 4, wireType 0 =*/32).bool(message.show);
+            if (message.noPaging != null && Object.hasOwnProperty.call(message, "noPaging"))
+                writer.uint32(/* id 20001, wireType 0 =*/160008).bool(message.noPaging);
+            if (message.page != null && Object.hasOwnProperty.call(message, "page"))
+                writer.uint32(/* id 20002, wireType 0 =*/160016).sint64(message.page);
+            if (message.perPage != null && Object.hasOwnProperty.call(message, "perPage"))
+                writer.uint32(/* id 20003, wireType 0 =*/160024).sint64(message.perPage);
+            if (message.sortBy != null && Object.hasOwnProperty.call(message, "sortBy"))
+                for (var keys = Object.keys(message.sortBy), i = 0; i < keys.length; ++i)
+                    writer.uint32(/* id 20004, wireType 2 =*/160034).fork().uint32(/* id 1, wireType 2 =*/10).string(keys[i]).uint32(/* id 2, wireType 0 =*/16).int32(message.sortBy[keys[i]]).ldelim();
+            if (message.deleted != null && Object.hasOwnProperty.call(message, "deleted"))
+                writer.uint32(/* id 20005, wireType 0 =*/160040).bool(message.deleted);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ListMenuReq message, length delimited. Does not implicitly {@link dto.ListMenuReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.ListMenuReq
+         * @static
+         * @param {dto.IListMenuReq} message ListMenuReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListMenuReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ListMenuReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.ListMenuReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.ListMenuReq} ListMenuReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListMenuReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListMenuReq(), key, value;
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 20001: {
+                        message.noPaging = reader.bool();
+                        break;
+                    }
+                case 20002: {
+                        message.page = reader.sint64();
+                        break;
+                    }
+                case 20003: {
+                        message.perPage = reader.sint64();
+                        break;
+                    }
+                case 20004: {
+                        if (message.sortBy === $util.emptyObject)
+                            message.sortBy = {};
+                        var end2 = reader.uint32() + reader.pos;
+                        key = "";
+                        value = 0;
+                        while (reader.pos < end2) {
+                            var tag2 = reader.uint32();
+                            switch (tag2 >>> 3) {
+                            case 1:
+                                key = reader.string();
+                                break;
+                            case 2:
+                                value = reader.int32();
+                                break;
+                            default:
+                                reader.skipType(tag2 & 7);
+                                break;
+                            }
+                        }
+                        message.sortBy[key] = value;
+                        break;
+                    }
+                case 20005: {
+                        message.deleted = reader.bool();
+                        break;
+                    }
+                case 1: {
+                        message.name = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.needTree = reader.bool();
+                        break;
+                    }
+                case 3: {
+                        message.route = reader.string();
+                        break;
+                    }
+                case 4: {
+                        message.show = reader.bool();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ListMenuReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.ListMenuReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.ListMenuReq} ListMenuReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListMenuReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ListMenuReq message.
+         * @function verify
+         * @memberof dto.ListMenuReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ListMenuReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.noPaging != null && message.hasOwnProperty("noPaging"))
+                if (typeof message.noPaging !== "boolean")
+                    return "noPaging: boolean expected";
+            if (message.page != null && message.hasOwnProperty("page"))
+                if (!$util.isInteger(message.page) && !(message.page && $util.isInteger(message.page.low) && $util.isInteger(message.page.high)))
+                    return "page: integer|Long expected";
+            if (message.perPage != null && message.hasOwnProperty("perPage"))
+                if (!$util.isInteger(message.perPage) && !(message.perPage && $util.isInteger(message.perPage.low) && $util.isInteger(message.perPage.high)))
+                    return "perPage: integer|Long expected";
+            if (message.sortBy != null && message.hasOwnProperty("sortBy")) {
+                if (!$util.isObject(message.sortBy))
+                    return "sortBy: object expected";
+                var key = Object.keys(message.sortBy);
+                for (var i = 0; i < key.length; ++i)
+                    switch (message.sortBy[key[i]]) {
+                    default:
+                        return "sortBy: enum value{k:string} expected";
+                    case 0:
+                    case 1:
+                        break;
+                    }
+            }
+            if (message.deleted != null && message.hasOwnProperty("deleted"))
+                if (typeof message.deleted !== "boolean")
+                    return "deleted: boolean expected";
+            if (message.name != null && message.hasOwnProperty("name"))
+                if (!$util.isString(message.name))
+                    return "name: string expected";
+            if (message.needTree != null && message.hasOwnProperty("needTree"))
+                if (typeof message.needTree !== "boolean")
+                    return "needTree: boolean expected";
+            if (message.route != null && message.hasOwnProperty("route"))
+                if (!$util.isString(message.route))
+                    return "route: string expected";
+            if (message.show != null && message.hasOwnProperty("show"))
+                if (typeof message.show !== "boolean")
+                    return "show: boolean expected";
+            return null;
+        };
+
+        /**
+         * Creates a ListMenuReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.ListMenuReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.ListMenuReq} ListMenuReq
+         */
+        ListMenuReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.ListMenuReq)
+                return object;
+            var message = new $root.dto.ListMenuReq();
+            if (object.noPaging != null)
+                message.noPaging = Boolean(object.noPaging);
+            if (object.page != null)
+                if ($util.Long)
+                    (message.page = $util.Long.fromValue(object.page)).unsigned = false;
+                else if (typeof object.page === "string")
+                    message.page = parseInt(object.page, 10);
+                else if (typeof object.page === "number")
+                    message.page = object.page;
+                else if (typeof object.page === "object")
+                    message.page = new $util.LongBits(object.page.low >>> 0, object.page.high >>> 0).toNumber();
+            if (object.perPage != null)
+                if ($util.Long)
+                    (message.perPage = $util.Long.fromValue(object.perPage)).unsigned = false;
+                else if (typeof object.perPage === "string")
+                    message.perPage = parseInt(object.perPage, 10);
+                else if (typeof object.perPage === "number")
+                    message.perPage = object.perPage;
+                else if (typeof object.perPage === "object")
+                    message.perPage = new $util.LongBits(object.perPage.low >>> 0, object.perPage.high >>> 0).toNumber();
+            if (object.sortBy) {
+                if (typeof object.sortBy !== "object")
+                    throw TypeError(".dto.ListMenuReq.sortBy: object expected");
+                message.sortBy = {};
+                for (var keys = Object.keys(object.sortBy), i = 0; i < keys.length; ++i)
+                    switch (object.sortBy[keys[i]]) {
+                    default:
+                        if (typeof object.sortBy[keys[i]] === "number") {
+                            message.sortBy[keys[i]] = object.sortBy[keys[i]];
+                            break;
+                        }
+                        break;
+                    case "Asc":
+                    case 0:
+                        message.sortBy[keys[i]] = 0;
+                        break;
+                    case "Desc":
+                    case 1:
+                        message.sortBy[keys[i]] = 1;
+                        break;
+                    }
+            }
+            if (object.deleted != null)
+                message.deleted = Boolean(object.deleted);
+            if (object.name != null)
+                message.name = String(object.name);
+            if (object.needTree != null)
+                message.needTree = Boolean(object.needTree);
+            if (object.route != null)
+                message.route = String(object.route);
+            if (object.show != null)
+                message.show = Boolean(object.show);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a ListMenuReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.ListMenuReq
+         * @static
+         * @param {dto.ListMenuReq} message ListMenuReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ListMenuReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.objects || options.defaults)
+                object.sortBy = {};
+            if (options.defaults) {
+                object.name = "";
+                object.needTree = false;
+                object.route = "";
+                object.show = false;
+                object.noPaging = false;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.page = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.page = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.perPage = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.perPage = options.longs === String ? "0" : 0;
+                object.deleted = false;
+            }
+            if (message.name != null && message.hasOwnProperty("name"))
+                object.name = message.name;
+            if (message.needTree != null && message.hasOwnProperty("needTree"))
+                object.needTree = message.needTree;
+            if (message.route != null && message.hasOwnProperty("route"))
+                object.route = message.route;
+            if (message.show != null && message.hasOwnProperty("show"))
+                object.show = message.show;
+            if (message.noPaging != null && message.hasOwnProperty("noPaging"))
+                object.noPaging = message.noPaging;
+            if (message.page != null && message.hasOwnProperty("page"))
+                if (typeof message.page === "number")
+                    object.page = options.longs === String ? String(message.page) : message.page;
+                else
+                    object.page = options.longs === String ? $util.Long.prototype.toString.call(message.page) : options.longs === Number ? new $util.LongBits(message.page.low >>> 0, message.page.high >>> 0).toNumber() : message.page;
+            if (message.perPage != null && message.hasOwnProperty("perPage"))
+                if (typeof message.perPage === "number")
+                    object.perPage = options.longs === String ? String(message.perPage) : message.perPage;
+                else
+                    object.perPage = options.longs === String ? $util.Long.prototype.toString.call(message.perPage) : options.longs === Number ? new $util.LongBits(message.perPage.low >>> 0, message.perPage.high >>> 0).toNumber() : message.perPage;
+            var keys2;
+            if (message.sortBy && (keys2 = Object.keys(message.sortBy)).length) {
+                object.sortBy = {};
+                for (var j = 0; j < keys2.length; ++j)
+                    object.sortBy[keys2[j]] = options.enums === String ? $root.dto.SortDirection[message.sortBy[keys2[j]]] === undefined ? message.sortBy[keys2[j]] : $root.dto.SortDirection[message.sortBy[keys2[j]]] : message.sortBy[keys2[j]];
+            }
+            if (message.deleted != null && message.hasOwnProperty("deleted"))
+                object.deleted = message.deleted;
+            return object;
+        };
+
+        /**
+         * Converts this ListMenuReq to JSON.
+         * @function toJSON
+         * @memberof dto.ListMenuReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ListMenuReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for ListMenuReq
+         * @function getTypeUrl
+         * @memberof dto.ListMenuReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        ListMenuReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.ListMenuReq";
+        };
+
+        return ListMenuReq;
+    })();
+
     dto.MenuListElem = (function() {
 
         /**
@@ -4269,19 +4835,19 @@ $root.dto = (function() {
 
         /**
          * MenuListElem deletedBy.
-         * @member {string|null|undefined} deletedBy
+         * @member {string} deletedBy
          * @memberof dto.MenuListElem
          * @instance
          */
-        MenuListElem.prototype.deletedBy = null;
+        MenuListElem.prototype.deletedBy = "";
 
         /**
          * MenuListElem deletedAt.
-         * @member {string|null|undefined} deletedAt
+         * @member {string} deletedAt
          * @memberof dto.MenuListElem
          * @instance
          */
-        MenuListElem.prototype.deletedAt = null;
+        MenuListElem.prototype.deletedAt = "";
 
         /**
          * MenuListElem children.
@@ -4290,31 +4856,6 @@ $root.dto = (function() {
          * @instance
          */
         MenuListElem.prototype.children = $util.emptyArray;
-
-        // OneOf field names bound to virtual getters and setters
-        var $oneOfFields;
-
-        /**
-         * MenuListElem _deletedBy.
-         * @member {"deletedBy"|undefined} _deletedBy
-         * @memberof dto.MenuListElem
-         * @instance
-         */
-        Object.defineProperty(MenuListElem.prototype, "_deletedBy", {
-            get: $util.oneOfGetter($oneOfFields = ["deletedBy"]),
-            set: $util.oneOfSetter($oneOfFields)
-        });
-
-        /**
-         * MenuListElem _deletedAt.
-         * @member {"deletedAt"|undefined} _deletedAt
-         * @memberof dto.MenuListElem
-         * @instance
-         */
-        Object.defineProperty(MenuListElem.prototype, "_deletedAt", {
-            get: $util.oneOfGetter($oneOfFields = ["deletedAt"]),
-            set: $util.oneOfSetter($oneOfFields)
-        });
 
         /**
          * Creates a new MenuListElem instance using the specified properties.
@@ -4508,7 +5049,6 @@ $root.dto = (function() {
         MenuListElem.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            var properties = {};
             if (message.id != null && message.hasOwnProperty("id"))
                 if (!$util.isString(message.id))
                     return "id: string expected";
@@ -4548,16 +5088,12 @@ $root.dto = (function() {
             if (message.updatedAt != null && message.hasOwnProperty("updatedAt"))
                 if (!$util.isString(message.updatedAt))
                     return "updatedAt: string expected";
-            if (message.deletedBy != null && message.hasOwnProperty("deletedBy")) {
-                properties._deletedBy = 1;
+            if (message.deletedBy != null && message.hasOwnProperty("deletedBy"))
                 if (!$util.isString(message.deletedBy))
                     return "deletedBy: string expected";
-            }
-            if (message.deletedAt != null && message.hasOwnProperty("deletedAt")) {
-                properties._deletedAt = 1;
+            if (message.deletedAt != null && message.hasOwnProperty("deletedAt"))
                 if (!$util.isString(message.deletedAt))
                     return "deletedAt: string expected";
-            }
             if (message.children != null && message.hasOwnProperty("children")) {
                 if (!Array.isArray(message.children))
                     return "children: array expected";
@@ -4654,6 +5190,8 @@ $root.dto = (function() {
                 object.createdAt = "";
                 object.updatedBy = "";
                 object.updatedAt = "";
+                object.deletedBy = "";
+                object.deletedAt = "";
             }
             if (message.id != null && message.hasOwnProperty("id"))
                 object.id = message.id;
@@ -4681,16 +5219,10 @@ $root.dto = (function() {
                 object.updatedBy = message.updatedBy;
             if (message.updatedAt != null && message.hasOwnProperty("updatedAt"))
                 object.updatedAt = message.updatedAt;
-            if (message.deletedBy != null && message.hasOwnProperty("deletedBy")) {
+            if (message.deletedBy != null && message.hasOwnProperty("deletedBy"))
                 object.deletedBy = message.deletedBy;
-                if (options.oneofs)
-                    object._deletedBy = "deletedBy";
-            }
-            if (message.deletedAt != null && message.hasOwnProperty("deletedAt")) {
+            if (message.deletedAt != null && message.hasOwnProperty("deletedAt"))
                 object.deletedAt = message.deletedAt;
-                if (options.oneofs)
-                    object._deletedAt = "deletedAt";
-            }
             if (message.children && message.children.length) {
                 object.children = [];
                 for (var j = 0; j < message.children.length; ++j)
@@ -5134,44 +5666,19 @@ $root.dto = (function() {
 
         /**
          * ProfileMenuRet deletedBy.
-         * @member {string|null|undefined} deletedBy
+         * @member {string} deletedBy
          * @memberof dto.ProfileMenuRet
          * @instance
          */
-        ProfileMenuRet.prototype.deletedBy = null;
+        ProfileMenuRet.prototype.deletedBy = "";
 
         /**
          * ProfileMenuRet deletedAt.
-         * @member {string|null|undefined} deletedAt
+         * @member {string} deletedAt
          * @memberof dto.ProfileMenuRet
          * @instance
          */
-        ProfileMenuRet.prototype.deletedAt = null;
-
-        // OneOf field names bound to virtual getters and setters
-        var $oneOfFields;
-
-        /**
-         * ProfileMenuRet _deletedBy.
-         * @member {"deletedBy"|undefined} _deletedBy
-         * @memberof dto.ProfileMenuRet
-         * @instance
-         */
-        Object.defineProperty(ProfileMenuRet.prototype, "_deletedBy", {
-            get: $util.oneOfGetter($oneOfFields = ["deletedBy"]),
-            set: $util.oneOfSetter($oneOfFields)
-        });
-
-        /**
-         * ProfileMenuRet _deletedAt.
-         * @member {"deletedAt"|undefined} _deletedAt
-         * @memberof dto.ProfileMenuRet
-         * @instance
-         */
-        Object.defineProperty(ProfileMenuRet.prototype, "_deletedAt", {
-            get: $util.oneOfGetter($oneOfFields = ["deletedAt"]),
-            set: $util.oneOfSetter($oneOfFields)
-        });
+        ProfileMenuRet.prototype.deletedAt = "";
 
         /**
          * Creates a new ProfileMenuRet instance using the specified properties.
@@ -5356,7 +5863,6 @@ $root.dto = (function() {
         ProfileMenuRet.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            var properties = {};
             if (message.id != null && message.hasOwnProperty("id"))
                 if (!$util.isString(message.id))
                     return "id: string expected";
@@ -5396,16 +5902,12 @@ $root.dto = (function() {
             if (message.updatedAt != null && message.hasOwnProperty("updatedAt"))
                 if (!$util.isString(message.updatedAt))
                     return "updatedAt: string expected";
-            if (message.deletedBy != null && message.hasOwnProperty("deletedBy")) {
-                properties._deletedBy = 1;
+            if (message.deletedBy != null && message.hasOwnProperty("deletedBy"))
                 if (!$util.isString(message.deletedBy))
                     return "deletedBy: string expected";
-            }
-            if (message.deletedAt != null && message.hasOwnProperty("deletedAt")) {
-                properties._deletedAt = 1;
+            if (message.deletedAt != null && message.hasOwnProperty("deletedAt"))
                 if (!$util.isString(message.deletedAt))
                     return "deletedAt: string expected";
-            }
             return null;
         };
 
@@ -5481,6 +5983,8 @@ $root.dto = (function() {
                 object.createdAt = "";
                 object.updatedBy = "";
                 object.updatedAt = "";
+                object.deletedBy = "";
+                object.deletedAt = "";
             }
             if (message.id != null && message.hasOwnProperty("id"))
                 object.id = message.id;
@@ -5508,16 +6012,10 @@ $root.dto = (function() {
                 object.updatedBy = message.updatedBy;
             if (message.updatedAt != null && message.hasOwnProperty("updatedAt"))
                 object.updatedAt = message.updatedAt;
-            if (message.deletedBy != null && message.hasOwnProperty("deletedBy")) {
+            if (message.deletedBy != null && message.hasOwnProperty("deletedBy"))
                 object.deletedBy = message.deletedBy;
-                if (options.oneofs)
-                    object._deletedBy = "deletedBy";
-            }
-            if (message.deletedAt != null && message.hasOwnProperty("deletedAt")) {
+            if (message.deletedAt != null && message.hasOwnProperty("deletedAt"))
                 object.deletedAt = message.deletedAt;
-                if (options.oneofs)
-                    object._deletedAt = "deletedAt";
-            }
             return object;
         };
 
@@ -7272,6 +7770,409 @@ $root.dto = (function() {
         return AddMenuWidgetRet;
     })();
 
+    dto.ListMenuWidgetReq = (function() {
+
+        /**
+         * Properties of a ListMenuWidgetReq.
+         * @memberof dto
+         * @interface IListMenuWidgetReq
+         * @property {boolean|null} [noPaging] ListMenuWidgetReq noPaging
+         * @property {number|Long|null} [page] ListMenuWidgetReq page
+         * @property {number|Long|null} [perPage] ListMenuWidgetReq perPage
+         * @property {Object.<string,dto.SortDirection>|null} [sortBy] ListMenuWidgetReq sortBy
+         * @property {boolean|null} [deleted] ListMenuWidgetReq deleted
+         * @property {string|null} [name] ListMenuWidgetReq name
+         */
+
+        /**
+         * Constructs a new ListMenuWidgetReq.
+         * @memberof dto
+         * @classdesc Represents a ListMenuWidgetReq.
+         * @implements IListMenuWidgetReq
+         * @constructor
+         * @param {dto.IListMenuWidgetReq=} [properties] Properties to set
+         */
+        function ListMenuWidgetReq(properties) {
+            this.sortBy = {};
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * ListMenuWidgetReq noPaging.
+         * @member {boolean} noPaging
+         * @memberof dto.ListMenuWidgetReq
+         * @instance
+         */
+        ListMenuWidgetReq.prototype.noPaging = false;
+
+        /**
+         * ListMenuWidgetReq page.
+         * @member {number|Long} page
+         * @memberof dto.ListMenuWidgetReq
+         * @instance
+         */
+        ListMenuWidgetReq.prototype.page = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * ListMenuWidgetReq perPage.
+         * @member {number|Long} perPage
+         * @memberof dto.ListMenuWidgetReq
+         * @instance
+         */
+        ListMenuWidgetReq.prototype.perPage = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * ListMenuWidgetReq sortBy.
+         * @member {Object.<string,dto.SortDirection>} sortBy
+         * @memberof dto.ListMenuWidgetReq
+         * @instance
+         */
+        ListMenuWidgetReq.prototype.sortBy = $util.emptyObject;
+
+        /**
+         * ListMenuWidgetReq deleted.
+         * @member {boolean} deleted
+         * @memberof dto.ListMenuWidgetReq
+         * @instance
+         */
+        ListMenuWidgetReq.prototype.deleted = false;
+
+        /**
+         * ListMenuWidgetReq name.
+         * @member {string} name
+         * @memberof dto.ListMenuWidgetReq
+         * @instance
+         */
+        ListMenuWidgetReq.prototype.name = "";
+
+        /**
+         * Creates a new ListMenuWidgetReq instance using the specified properties.
+         * @function create
+         * @memberof dto.ListMenuWidgetReq
+         * @static
+         * @param {dto.IListMenuWidgetReq=} [properties] Properties to set
+         * @returns {dto.ListMenuWidgetReq} ListMenuWidgetReq instance
+         */
+        ListMenuWidgetReq.create = function create(properties) {
+            return new ListMenuWidgetReq(properties);
+        };
+
+        /**
+         * Encodes the specified ListMenuWidgetReq message. Does not implicitly {@link dto.ListMenuWidgetReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.ListMenuWidgetReq
+         * @static
+         * @param {dto.IListMenuWidgetReq} message ListMenuWidgetReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListMenuWidgetReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.name != null && Object.hasOwnProperty.call(message, "name"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
+            if (message.noPaging != null && Object.hasOwnProperty.call(message, "noPaging"))
+                writer.uint32(/* id 20001, wireType 0 =*/160008).bool(message.noPaging);
+            if (message.page != null && Object.hasOwnProperty.call(message, "page"))
+                writer.uint32(/* id 20002, wireType 0 =*/160016).sint64(message.page);
+            if (message.perPage != null && Object.hasOwnProperty.call(message, "perPage"))
+                writer.uint32(/* id 20003, wireType 0 =*/160024).sint64(message.perPage);
+            if (message.sortBy != null && Object.hasOwnProperty.call(message, "sortBy"))
+                for (var keys = Object.keys(message.sortBy), i = 0; i < keys.length; ++i)
+                    writer.uint32(/* id 20004, wireType 2 =*/160034).fork().uint32(/* id 1, wireType 2 =*/10).string(keys[i]).uint32(/* id 2, wireType 0 =*/16).int32(message.sortBy[keys[i]]).ldelim();
+            if (message.deleted != null && Object.hasOwnProperty.call(message, "deleted"))
+                writer.uint32(/* id 20005, wireType 0 =*/160040).bool(message.deleted);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ListMenuWidgetReq message, length delimited. Does not implicitly {@link dto.ListMenuWidgetReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.ListMenuWidgetReq
+         * @static
+         * @param {dto.IListMenuWidgetReq} message ListMenuWidgetReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListMenuWidgetReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ListMenuWidgetReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.ListMenuWidgetReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.ListMenuWidgetReq} ListMenuWidgetReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListMenuWidgetReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListMenuWidgetReq(), key, value;
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 20001: {
+                        message.noPaging = reader.bool();
+                        break;
+                    }
+                case 20002: {
+                        message.page = reader.sint64();
+                        break;
+                    }
+                case 20003: {
+                        message.perPage = reader.sint64();
+                        break;
+                    }
+                case 20004: {
+                        if (message.sortBy === $util.emptyObject)
+                            message.sortBy = {};
+                        var end2 = reader.uint32() + reader.pos;
+                        key = "";
+                        value = 0;
+                        while (reader.pos < end2) {
+                            var tag2 = reader.uint32();
+                            switch (tag2 >>> 3) {
+                            case 1:
+                                key = reader.string();
+                                break;
+                            case 2:
+                                value = reader.int32();
+                                break;
+                            default:
+                                reader.skipType(tag2 & 7);
+                                break;
+                            }
+                        }
+                        message.sortBy[key] = value;
+                        break;
+                    }
+                case 20005: {
+                        message.deleted = reader.bool();
+                        break;
+                    }
+                case 1: {
+                        message.name = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ListMenuWidgetReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.ListMenuWidgetReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.ListMenuWidgetReq} ListMenuWidgetReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListMenuWidgetReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ListMenuWidgetReq message.
+         * @function verify
+         * @memberof dto.ListMenuWidgetReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ListMenuWidgetReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.noPaging != null && message.hasOwnProperty("noPaging"))
+                if (typeof message.noPaging !== "boolean")
+                    return "noPaging: boolean expected";
+            if (message.page != null && message.hasOwnProperty("page"))
+                if (!$util.isInteger(message.page) && !(message.page && $util.isInteger(message.page.low) && $util.isInteger(message.page.high)))
+                    return "page: integer|Long expected";
+            if (message.perPage != null && message.hasOwnProperty("perPage"))
+                if (!$util.isInteger(message.perPage) && !(message.perPage && $util.isInteger(message.perPage.low) && $util.isInteger(message.perPage.high)))
+                    return "perPage: integer|Long expected";
+            if (message.sortBy != null && message.hasOwnProperty("sortBy")) {
+                if (!$util.isObject(message.sortBy))
+                    return "sortBy: object expected";
+                var key = Object.keys(message.sortBy);
+                for (var i = 0; i < key.length; ++i)
+                    switch (message.sortBy[key[i]]) {
+                    default:
+                        return "sortBy: enum value{k:string} expected";
+                    case 0:
+                    case 1:
+                        break;
+                    }
+            }
+            if (message.deleted != null && message.hasOwnProperty("deleted"))
+                if (typeof message.deleted !== "boolean")
+                    return "deleted: boolean expected";
+            if (message.name != null && message.hasOwnProperty("name"))
+                if (!$util.isString(message.name))
+                    return "name: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a ListMenuWidgetReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.ListMenuWidgetReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.ListMenuWidgetReq} ListMenuWidgetReq
+         */
+        ListMenuWidgetReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.ListMenuWidgetReq)
+                return object;
+            var message = new $root.dto.ListMenuWidgetReq();
+            if (object.noPaging != null)
+                message.noPaging = Boolean(object.noPaging);
+            if (object.page != null)
+                if ($util.Long)
+                    (message.page = $util.Long.fromValue(object.page)).unsigned = false;
+                else if (typeof object.page === "string")
+                    message.page = parseInt(object.page, 10);
+                else if (typeof object.page === "number")
+                    message.page = object.page;
+                else if (typeof object.page === "object")
+                    message.page = new $util.LongBits(object.page.low >>> 0, object.page.high >>> 0).toNumber();
+            if (object.perPage != null)
+                if ($util.Long)
+                    (message.perPage = $util.Long.fromValue(object.perPage)).unsigned = false;
+                else if (typeof object.perPage === "string")
+                    message.perPage = parseInt(object.perPage, 10);
+                else if (typeof object.perPage === "number")
+                    message.perPage = object.perPage;
+                else if (typeof object.perPage === "object")
+                    message.perPage = new $util.LongBits(object.perPage.low >>> 0, object.perPage.high >>> 0).toNumber();
+            if (object.sortBy) {
+                if (typeof object.sortBy !== "object")
+                    throw TypeError(".dto.ListMenuWidgetReq.sortBy: object expected");
+                message.sortBy = {};
+                for (var keys = Object.keys(object.sortBy), i = 0; i < keys.length; ++i)
+                    switch (object.sortBy[keys[i]]) {
+                    default:
+                        if (typeof object.sortBy[keys[i]] === "number") {
+                            message.sortBy[keys[i]] = object.sortBy[keys[i]];
+                            break;
+                        }
+                        break;
+                    case "Asc":
+                    case 0:
+                        message.sortBy[keys[i]] = 0;
+                        break;
+                    case "Desc":
+                    case 1:
+                        message.sortBy[keys[i]] = 1;
+                        break;
+                    }
+            }
+            if (object.deleted != null)
+                message.deleted = Boolean(object.deleted);
+            if (object.name != null)
+                message.name = String(object.name);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a ListMenuWidgetReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.ListMenuWidgetReq
+         * @static
+         * @param {dto.ListMenuWidgetReq} message ListMenuWidgetReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ListMenuWidgetReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.objects || options.defaults)
+                object.sortBy = {};
+            if (options.defaults) {
+                object.name = "";
+                object.noPaging = false;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.page = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.page = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.perPage = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.perPage = options.longs === String ? "0" : 0;
+                object.deleted = false;
+            }
+            if (message.name != null && message.hasOwnProperty("name"))
+                object.name = message.name;
+            if (message.noPaging != null && message.hasOwnProperty("noPaging"))
+                object.noPaging = message.noPaging;
+            if (message.page != null && message.hasOwnProperty("page"))
+                if (typeof message.page === "number")
+                    object.page = options.longs === String ? String(message.page) : message.page;
+                else
+                    object.page = options.longs === String ? $util.Long.prototype.toString.call(message.page) : options.longs === Number ? new $util.LongBits(message.page.low >>> 0, message.page.high >>> 0).toNumber() : message.page;
+            if (message.perPage != null && message.hasOwnProperty("perPage"))
+                if (typeof message.perPage === "number")
+                    object.perPage = options.longs === String ? String(message.perPage) : message.perPage;
+                else
+                    object.perPage = options.longs === String ? $util.Long.prototype.toString.call(message.perPage) : options.longs === Number ? new $util.LongBits(message.perPage.low >>> 0, message.perPage.high >>> 0).toNumber() : message.perPage;
+            var keys2;
+            if (message.sortBy && (keys2 = Object.keys(message.sortBy)).length) {
+                object.sortBy = {};
+                for (var j = 0; j < keys2.length; ++j)
+                    object.sortBy[keys2[j]] = options.enums === String ? $root.dto.SortDirection[message.sortBy[keys2[j]]] === undefined ? message.sortBy[keys2[j]] : $root.dto.SortDirection[message.sortBy[keys2[j]]] : message.sortBy[keys2[j]];
+            }
+            if (message.deleted != null && message.hasOwnProperty("deleted"))
+                object.deleted = message.deleted;
+            return object;
+        };
+
+        /**
+         * Converts this ListMenuWidgetReq to JSON.
+         * @function toJSON
+         * @memberof dto.ListMenuWidgetReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ListMenuWidgetReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for ListMenuWidgetReq
+         * @function getTypeUrl
+         * @memberof dto.ListMenuWidgetReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        ListMenuWidgetReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.ListMenuWidgetReq";
+        };
+
+        return ListMenuWidgetReq;
+    })();
+
     dto.MenuWidgetListElem = (function() {
 
         /**
@@ -7398,44 +8299,19 @@ $root.dto = (function() {
 
         /**
          * MenuWidgetListElem deletedBy.
-         * @member {string|null|undefined} deletedBy
+         * @member {string} deletedBy
          * @memberof dto.MenuWidgetListElem
          * @instance
          */
-        MenuWidgetListElem.prototype.deletedBy = null;
+        MenuWidgetListElem.prototype.deletedBy = "";
 
         /**
          * MenuWidgetListElem deletedAt.
-         * @member {string|null|undefined} deletedAt
+         * @member {string} deletedAt
          * @memberof dto.MenuWidgetListElem
          * @instance
          */
-        MenuWidgetListElem.prototype.deletedAt = null;
-
-        // OneOf field names bound to virtual getters and setters
-        var $oneOfFields;
-
-        /**
-         * MenuWidgetListElem _deletedBy.
-         * @member {"deletedBy"|undefined} _deletedBy
-         * @memberof dto.MenuWidgetListElem
-         * @instance
-         */
-        Object.defineProperty(MenuWidgetListElem.prototype, "_deletedBy", {
-            get: $util.oneOfGetter($oneOfFields = ["deletedBy"]),
-            set: $util.oneOfSetter($oneOfFields)
-        });
-
-        /**
-         * MenuWidgetListElem _deletedAt.
-         * @member {"deletedAt"|undefined} _deletedAt
-         * @memberof dto.MenuWidgetListElem
-         * @instance
-         */
-        Object.defineProperty(MenuWidgetListElem.prototype, "_deletedAt", {
-            get: $util.oneOfGetter($oneOfFields = ["deletedAt"]),
-            set: $util.oneOfSetter($oneOfFields)
-        });
+        MenuWidgetListElem.prototype.deletedAt = "";
 
         /**
          * Creates a new MenuWidgetListElem instance using the specified properties.
@@ -7608,7 +8484,6 @@ $root.dto = (function() {
         MenuWidgetListElem.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            var properties = {};
             if (message.id != null && message.hasOwnProperty("id"))
                 if (!$util.isString(message.id))
                     return "id: string expected";
@@ -7642,16 +8517,12 @@ $root.dto = (function() {
             if (message.updatedAt != null && message.hasOwnProperty("updatedAt"))
                 if (!$util.isString(message.updatedAt))
                     return "updatedAt: string expected";
-            if (message.deletedBy != null && message.hasOwnProperty("deletedBy")) {
-                properties._deletedBy = 1;
+            if (message.deletedBy != null && message.hasOwnProperty("deletedBy"))
                 if (!$util.isString(message.deletedBy))
                     return "deletedBy: string expected";
-            }
-            if (message.deletedAt != null && message.hasOwnProperty("deletedAt")) {
-                properties._deletedAt = 1;
+            if (message.deletedAt != null && message.hasOwnProperty("deletedAt"))
                 if (!$util.isString(message.deletedAt))
                     return "deletedAt: string expected";
-            }
             return null;
         };
 
@@ -7721,6 +8592,8 @@ $root.dto = (function() {
                 object.createdAt = "";
                 object.updatedBy = "";
                 object.updatedAt = "";
+                object.deletedBy = "";
+                object.deletedAt = "";
             }
             if (message.id != null && message.hasOwnProperty("id"))
                 object.id = message.id;
@@ -7744,16 +8617,10 @@ $root.dto = (function() {
                 object.updatedBy = message.updatedBy;
             if (message.updatedAt != null && message.hasOwnProperty("updatedAt"))
                 object.updatedAt = message.updatedAt;
-            if (message.deletedBy != null && message.hasOwnProperty("deletedBy")) {
+            if (message.deletedBy != null && message.hasOwnProperty("deletedBy"))
                 object.deletedBy = message.deletedBy;
-                if (options.oneofs)
-                    object._deletedBy = "deletedBy";
-            }
-            if (message.deletedAt != null && message.hasOwnProperty("deletedAt")) {
+            if (message.deletedAt != null && message.hasOwnProperty("deletedAt"))
                 object.deletedAt = message.deletedAt;
-                if (options.oneofs)
-                    object._deletedAt = "deletedAt";
-            }
             return object;
         };
 
@@ -8183,44 +9050,19 @@ $root.dto = (function() {
 
         /**
          * ProfileMenuWidgetRet deletedBy.
-         * @member {string|null|undefined} deletedBy
+         * @member {string} deletedBy
          * @memberof dto.ProfileMenuWidgetRet
          * @instance
          */
-        ProfileMenuWidgetRet.prototype.deletedBy = null;
+        ProfileMenuWidgetRet.prototype.deletedBy = "";
 
         /**
          * ProfileMenuWidgetRet deletedAt.
-         * @member {string|null|undefined} deletedAt
+         * @member {string} deletedAt
          * @memberof dto.ProfileMenuWidgetRet
          * @instance
          */
-        ProfileMenuWidgetRet.prototype.deletedAt = null;
-
-        // OneOf field names bound to virtual getters and setters
-        var $oneOfFields;
-
-        /**
-         * ProfileMenuWidgetRet _deletedBy.
-         * @member {"deletedBy"|undefined} _deletedBy
-         * @memberof dto.ProfileMenuWidgetRet
-         * @instance
-         */
-        Object.defineProperty(ProfileMenuWidgetRet.prototype, "_deletedBy", {
-            get: $util.oneOfGetter($oneOfFields = ["deletedBy"]),
-            set: $util.oneOfSetter($oneOfFields)
-        });
-
-        /**
-         * ProfileMenuWidgetRet _deletedAt.
-         * @member {"deletedAt"|undefined} _deletedAt
-         * @memberof dto.ProfileMenuWidgetRet
-         * @instance
-         */
-        Object.defineProperty(ProfileMenuWidgetRet.prototype, "_deletedAt", {
-            get: $util.oneOfGetter($oneOfFields = ["deletedAt"]),
-            set: $util.oneOfSetter($oneOfFields)
-        });
+        ProfileMenuWidgetRet.prototype.deletedAt = "";
 
         /**
          * Creates a new ProfileMenuWidgetRet instance using the specified properties.
@@ -8399,7 +9241,6 @@ $root.dto = (function() {
         ProfileMenuWidgetRet.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            var properties = {};
             if (message.id != null && message.hasOwnProperty("id"))
                 if (!$util.isString(message.id))
                     return "id: string expected";
@@ -8436,16 +9277,12 @@ $root.dto = (function() {
             if (message.updatedAt != null && message.hasOwnProperty("updatedAt"))
                 if (!$util.isString(message.updatedAt))
                     return "updatedAt: string expected";
-            if (message.deletedBy != null && message.hasOwnProperty("deletedBy")) {
-                properties._deletedBy = 1;
+            if (message.deletedBy != null && message.hasOwnProperty("deletedBy"))
                 if (!$util.isString(message.deletedBy))
                     return "deletedBy: string expected";
-            }
-            if (message.deletedAt != null && message.hasOwnProperty("deletedAt")) {
-                properties._deletedAt = 1;
+            if (message.deletedAt != null && message.hasOwnProperty("deletedAt"))
                 if (!$util.isString(message.deletedAt))
                     return "deletedAt: string expected";
-            }
             return null;
         };
 
@@ -8518,6 +9355,8 @@ $root.dto = (function() {
                 object.createdAt = "";
                 object.updatedBy = "";
                 object.updatedAt = "";
+                object.deletedBy = "";
+                object.deletedAt = "";
             }
             if (message.id != null && message.hasOwnProperty("id"))
                 object.id = message.id;
@@ -8543,16 +9382,10 @@ $root.dto = (function() {
                 object.updatedBy = message.updatedBy;
             if (message.updatedAt != null && message.hasOwnProperty("updatedAt"))
                 object.updatedAt = message.updatedAt;
-            if (message.deletedBy != null && message.hasOwnProperty("deletedBy")) {
+            if (message.deletedBy != null && message.hasOwnProperty("deletedBy"))
                 object.deletedBy = message.deletedBy;
-                if (options.oneofs)
-                    object._deletedBy = "deletedBy";
-            }
-            if (message.deletedAt != null && message.hasOwnProperty("deletedAt")) {
+            if (message.deletedAt != null && message.hasOwnProperty("deletedAt"))
                 object.deletedAt = message.deletedAt;
-                if (options.oneofs)
-                    object._deletedAt = "deletedAt";
-            }
             return object;
         };
 
@@ -10255,6 +11088,552 @@ $root.dto = (function() {
         return AddRoleRet;
     })();
 
+    dto.ListRoleReq = (function() {
+
+        /**
+         * Properties of a ListRoleReq.
+         * @memberof dto
+         * @interface IListRoleReq
+         * @property {boolean|null} [noPaging] ListRoleReq noPaging
+         * @property {number|Long|null} [page] ListRoleReq page
+         * @property {number|Long|null} [perPage] ListRoleReq perPage
+         * @property {Object.<string,dto.SortDirection>|null} [sortBy] ListRoleReq sortBy
+         * @property {boolean|null} [deleted] ListRoleReq deleted
+         * @property {string|null} [name] ListRoleReq name
+         * @property {string|null} [alias] ListRoleReq alias
+         * @property {string|null} [createdBy] ListRoleReq createdBy
+         * @property {number|Long|null} [createdAtBegin] ListRoleReq createdAtBegin
+         * @property {number|Long|null} [createdAtEnd] ListRoleReq createdAtEnd
+         * @property {string|null} [domainId] ListRoleReq domainId
+         */
+
+        /**
+         * Constructs a new ListRoleReq.
+         * @memberof dto
+         * @classdesc Represents a ListRoleReq.
+         * @implements IListRoleReq
+         * @constructor
+         * @param {dto.IListRoleReq=} [properties] Properties to set
+         */
+        function ListRoleReq(properties) {
+            this.sortBy = {};
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * ListRoleReq noPaging.
+         * @member {boolean} noPaging
+         * @memberof dto.ListRoleReq
+         * @instance
+         */
+        ListRoleReq.prototype.noPaging = false;
+
+        /**
+         * ListRoleReq page.
+         * @member {number|Long} page
+         * @memberof dto.ListRoleReq
+         * @instance
+         */
+        ListRoleReq.prototype.page = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * ListRoleReq perPage.
+         * @member {number|Long} perPage
+         * @memberof dto.ListRoleReq
+         * @instance
+         */
+        ListRoleReq.prototype.perPage = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * ListRoleReq sortBy.
+         * @member {Object.<string,dto.SortDirection>} sortBy
+         * @memberof dto.ListRoleReq
+         * @instance
+         */
+        ListRoleReq.prototype.sortBy = $util.emptyObject;
+
+        /**
+         * ListRoleReq deleted.
+         * @member {boolean} deleted
+         * @memberof dto.ListRoleReq
+         * @instance
+         */
+        ListRoleReq.prototype.deleted = false;
+
+        /**
+         * ListRoleReq name.
+         * @member {string} name
+         * @memberof dto.ListRoleReq
+         * @instance
+         */
+        ListRoleReq.prototype.name = "";
+
+        /**
+         * ListRoleReq alias.
+         * @member {string} alias
+         * @memberof dto.ListRoleReq
+         * @instance
+         */
+        ListRoleReq.prototype.alias = "";
+
+        /**
+         * ListRoleReq createdBy.
+         * @member {string} createdBy
+         * @memberof dto.ListRoleReq
+         * @instance
+         */
+        ListRoleReq.prototype.createdBy = "";
+
+        /**
+         * ListRoleReq createdAtBegin.
+         * @member {number|Long} createdAtBegin
+         * @memberof dto.ListRoleReq
+         * @instance
+         */
+        ListRoleReq.prototype.createdAtBegin = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * ListRoleReq createdAtEnd.
+         * @member {number|Long} createdAtEnd
+         * @memberof dto.ListRoleReq
+         * @instance
+         */
+        ListRoleReq.prototype.createdAtEnd = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * ListRoleReq domainId.
+         * @member {string} domainId
+         * @memberof dto.ListRoleReq
+         * @instance
+         */
+        ListRoleReq.prototype.domainId = "";
+
+        /**
+         * Creates a new ListRoleReq instance using the specified properties.
+         * @function create
+         * @memberof dto.ListRoleReq
+         * @static
+         * @param {dto.IListRoleReq=} [properties] Properties to set
+         * @returns {dto.ListRoleReq} ListRoleReq instance
+         */
+        ListRoleReq.create = function create(properties) {
+            return new ListRoleReq(properties);
+        };
+
+        /**
+         * Encodes the specified ListRoleReq message. Does not implicitly {@link dto.ListRoleReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.ListRoleReq
+         * @static
+         * @param {dto.IListRoleReq} message ListRoleReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListRoleReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.name != null && Object.hasOwnProperty.call(message, "name"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
+            if (message.alias != null && Object.hasOwnProperty.call(message, "alias"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.alias);
+            if (message.createdBy != null && Object.hasOwnProperty.call(message, "createdBy"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.createdBy);
+            if (message.createdAtBegin != null && Object.hasOwnProperty.call(message, "createdAtBegin"))
+                writer.uint32(/* id 4, wireType 0 =*/32).sint64(message.createdAtBegin);
+            if (message.createdAtEnd != null && Object.hasOwnProperty.call(message, "createdAtEnd"))
+                writer.uint32(/* id 5, wireType 0 =*/40).sint64(message.createdAtEnd);
+            if (message.domainId != null && Object.hasOwnProperty.call(message, "domainId"))
+                writer.uint32(/* id 6, wireType 2 =*/50).string(message.domainId);
+            if (message.noPaging != null && Object.hasOwnProperty.call(message, "noPaging"))
+                writer.uint32(/* id 20001, wireType 0 =*/160008).bool(message.noPaging);
+            if (message.page != null && Object.hasOwnProperty.call(message, "page"))
+                writer.uint32(/* id 20002, wireType 0 =*/160016).sint64(message.page);
+            if (message.perPage != null && Object.hasOwnProperty.call(message, "perPage"))
+                writer.uint32(/* id 20003, wireType 0 =*/160024).sint64(message.perPage);
+            if (message.sortBy != null && Object.hasOwnProperty.call(message, "sortBy"))
+                for (var keys = Object.keys(message.sortBy), i = 0; i < keys.length; ++i)
+                    writer.uint32(/* id 20004, wireType 2 =*/160034).fork().uint32(/* id 1, wireType 2 =*/10).string(keys[i]).uint32(/* id 2, wireType 0 =*/16).int32(message.sortBy[keys[i]]).ldelim();
+            if (message.deleted != null && Object.hasOwnProperty.call(message, "deleted"))
+                writer.uint32(/* id 20005, wireType 0 =*/160040).bool(message.deleted);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ListRoleReq message, length delimited. Does not implicitly {@link dto.ListRoleReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.ListRoleReq
+         * @static
+         * @param {dto.IListRoleReq} message ListRoleReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListRoleReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ListRoleReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.ListRoleReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.ListRoleReq} ListRoleReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListRoleReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListRoleReq(), key, value;
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 20001: {
+                        message.noPaging = reader.bool();
+                        break;
+                    }
+                case 20002: {
+                        message.page = reader.sint64();
+                        break;
+                    }
+                case 20003: {
+                        message.perPage = reader.sint64();
+                        break;
+                    }
+                case 20004: {
+                        if (message.sortBy === $util.emptyObject)
+                            message.sortBy = {};
+                        var end2 = reader.uint32() + reader.pos;
+                        key = "";
+                        value = 0;
+                        while (reader.pos < end2) {
+                            var tag2 = reader.uint32();
+                            switch (tag2 >>> 3) {
+                            case 1:
+                                key = reader.string();
+                                break;
+                            case 2:
+                                value = reader.int32();
+                                break;
+                            default:
+                                reader.skipType(tag2 & 7);
+                                break;
+                            }
+                        }
+                        message.sortBy[key] = value;
+                        break;
+                    }
+                case 20005: {
+                        message.deleted = reader.bool();
+                        break;
+                    }
+                case 1: {
+                        message.name = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.alias = reader.string();
+                        break;
+                    }
+                case 3: {
+                        message.createdBy = reader.string();
+                        break;
+                    }
+                case 4: {
+                        message.createdAtBegin = reader.sint64();
+                        break;
+                    }
+                case 5: {
+                        message.createdAtEnd = reader.sint64();
+                        break;
+                    }
+                case 6: {
+                        message.domainId = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ListRoleReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.ListRoleReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.ListRoleReq} ListRoleReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListRoleReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ListRoleReq message.
+         * @function verify
+         * @memberof dto.ListRoleReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ListRoleReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.noPaging != null && message.hasOwnProperty("noPaging"))
+                if (typeof message.noPaging !== "boolean")
+                    return "noPaging: boolean expected";
+            if (message.page != null && message.hasOwnProperty("page"))
+                if (!$util.isInteger(message.page) && !(message.page && $util.isInteger(message.page.low) && $util.isInteger(message.page.high)))
+                    return "page: integer|Long expected";
+            if (message.perPage != null && message.hasOwnProperty("perPage"))
+                if (!$util.isInteger(message.perPage) && !(message.perPage && $util.isInteger(message.perPage.low) && $util.isInteger(message.perPage.high)))
+                    return "perPage: integer|Long expected";
+            if (message.sortBy != null && message.hasOwnProperty("sortBy")) {
+                if (!$util.isObject(message.sortBy))
+                    return "sortBy: object expected";
+                var key = Object.keys(message.sortBy);
+                for (var i = 0; i < key.length; ++i)
+                    switch (message.sortBy[key[i]]) {
+                    default:
+                        return "sortBy: enum value{k:string} expected";
+                    case 0:
+                    case 1:
+                        break;
+                    }
+            }
+            if (message.deleted != null && message.hasOwnProperty("deleted"))
+                if (typeof message.deleted !== "boolean")
+                    return "deleted: boolean expected";
+            if (message.name != null && message.hasOwnProperty("name"))
+                if (!$util.isString(message.name))
+                    return "name: string expected";
+            if (message.alias != null && message.hasOwnProperty("alias"))
+                if (!$util.isString(message.alias))
+                    return "alias: string expected";
+            if (message.createdBy != null && message.hasOwnProperty("createdBy"))
+                if (!$util.isString(message.createdBy))
+                    return "createdBy: string expected";
+            if (message.createdAtBegin != null && message.hasOwnProperty("createdAtBegin"))
+                if (!$util.isInteger(message.createdAtBegin) && !(message.createdAtBegin && $util.isInteger(message.createdAtBegin.low) && $util.isInteger(message.createdAtBegin.high)))
+                    return "createdAtBegin: integer|Long expected";
+            if (message.createdAtEnd != null && message.hasOwnProperty("createdAtEnd"))
+                if (!$util.isInteger(message.createdAtEnd) && !(message.createdAtEnd && $util.isInteger(message.createdAtEnd.low) && $util.isInteger(message.createdAtEnd.high)))
+                    return "createdAtEnd: integer|Long expected";
+            if (message.domainId != null && message.hasOwnProperty("domainId"))
+                if (!$util.isString(message.domainId))
+                    return "domainId: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a ListRoleReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.ListRoleReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.ListRoleReq} ListRoleReq
+         */
+        ListRoleReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.ListRoleReq)
+                return object;
+            var message = new $root.dto.ListRoleReq();
+            if (object.noPaging != null)
+                message.noPaging = Boolean(object.noPaging);
+            if (object.page != null)
+                if ($util.Long)
+                    (message.page = $util.Long.fromValue(object.page)).unsigned = false;
+                else if (typeof object.page === "string")
+                    message.page = parseInt(object.page, 10);
+                else if (typeof object.page === "number")
+                    message.page = object.page;
+                else if (typeof object.page === "object")
+                    message.page = new $util.LongBits(object.page.low >>> 0, object.page.high >>> 0).toNumber();
+            if (object.perPage != null)
+                if ($util.Long)
+                    (message.perPage = $util.Long.fromValue(object.perPage)).unsigned = false;
+                else if (typeof object.perPage === "string")
+                    message.perPage = parseInt(object.perPage, 10);
+                else if (typeof object.perPage === "number")
+                    message.perPage = object.perPage;
+                else if (typeof object.perPage === "object")
+                    message.perPage = new $util.LongBits(object.perPage.low >>> 0, object.perPage.high >>> 0).toNumber();
+            if (object.sortBy) {
+                if (typeof object.sortBy !== "object")
+                    throw TypeError(".dto.ListRoleReq.sortBy: object expected");
+                message.sortBy = {};
+                for (var keys = Object.keys(object.sortBy), i = 0; i < keys.length; ++i)
+                    switch (object.sortBy[keys[i]]) {
+                    default:
+                        if (typeof object.sortBy[keys[i]] === "number") {
+                            message.sortBy[keys[i]] = object.sortBy[keys[i]];
+                            break;
+                        }
+                        break;
+                    case "Asc":
+                    case 0:
+                        message.sortBy[keys[i]] = 0;
+                        break;
+                    case "Desc":
+                    case 1:
+                        message.sortBy[keys[i]] = 1;
+                        break;
+                    }
+            }
+            if (object.deleted != null)
+                message.deleted = Boolean(object.deleted);
+            if (object.name != null)
+                message.name = String(object.name);
+            if (object.alias != null)
+                message.alias = String(object.alias);
+            if (object.createdBy != null)
+                message.createdBy = String(object.createdBy);
+            if (object.createdAtBegin != null)
+                if ($util.Long)
+                    (message.createdAtBegin = $util.Long.fromValue(object.createdAtBegin)).unsigned = false;
+                else if (typeof object.createdAtBegin === "string")
+                    message.createdAtBegin = parseInt(object.createdAtBegin, 10);
+                else if (typeof object.createdAtBegin === "number")
+                    message.createdAtBegin = object.createdAtBegin;
+                else if (typeof object.createdAtBegin === "object")
+                    message.createdAtBegin = new $util.LongBits(object.createdAtBegin.low >>> 0, object.createdAtBegin.high >>> 0).toNumber();
+            if (object.createdAtEnd != null)
+                if ($util.Long)
+                    (message.createdAtEnd = $util.Long.fromValue(object.createdAtEnd)).unsigned = false;
+                else if (typeof object.createdAtEnd === "string")
+                    message.createdAtEnd = parseInt(object.createdAtEnd, 10);
+                else if (typeof object.createdAtEnd === "number")
+                    message.createdAtEnd = object.createdAtEnd;
+                else if (typeof object.createdAtEnd === "object")
+                    message.createdAtEnd = new $util.LongBits(object.createdAtEnd.low >>> 0, object.createdAtEnd.high >>> 0).toNumber();
+            if (object.domainId != null)
+                message.domainId = String(object.domainId);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a ListRoleReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.ListRoleReq
+         * @static
+         * @param {dto.ListRoleReq} message ListRoleReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ListRoleReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.objects || options.defaults)
+                object.sortBy = {};
+            if (options.defaults) {
+                object.name = "";
+                object.alias = "";
+                object.createdBy = "";
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.createdAtBegin = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.createdAtBegin = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.createdAtEnd = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.createdAtEnd = options.longs === String ? "0" : 0;
+                object.domainId = "";
+                object.noPaging = false;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.page = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.page = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.perPage = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.perPage = options.longs === String ? "0" : 0;
+                object.deleted = false;
+            }
+            if (message.name != null && message.hasOwnProperty("name"))
+                object.name = message.name;
+            if (message.alias != null && message.hasOwnProperty("alias"))
+                object.alias = message.alias;
+            if (message.createdBy != null && message.hasOwnProperty("createdBy"))
+                object.createdBy = message.createdBy;
+            if (message.createdAtBegin != null && message.hasOwnProperty("createdAtBegin"))
+                if (typeof message.createdAtBegin === "number")
+                    object.createdAtBegin = options.longs === String ? String(message.createdAtBegin) : message.createdAtBegin;
+                else
+                    object.createdAtBegin = options.longs === String ? $util.Long.prototype.toString.call(message.createdAtBegin) : options.longs === Number ? new $util.LongBits(message.createdAtBegin.low >>> 0, message.createdAtBegin.high >>> 0).toNumber() : message.createdAtBegin;
+            if (message.createdAtEnd != null && message.hasOwnProperty("createdAtEnd"))
+                if (typeof message.createdAtEnd === "number")
+                    object.createdAtEnd = options.longs === String ? String(message.createdAtEnd) : message.createdAtEnd;
+                else
+                    object.createdAtEnd = options.longs === String ? $util.Long.prototype.toString.call(message.createdAtEnd) : options.longs === Number ? new $util.LongBits(message.createdAtEnd.low >>> 0, message.createdAtEnd.high >>> 0).toNumber() : message.createdAtEnd;
+            if (message.domainId != null && message.hasOwnProperty("domainId"))
+                object.domainId = message.domainId;
+            if (message.noPaging != null && message.hasOwnProperty("noPaging"))
+                object.noPaging = message.noPaging;
+            if (message.page != null && message.hasOwnProperty("page"))
+                if (typeof message.page === "number")
+                    object.page = options.longs === String ? String(message.page) : message.page;
+                else
+                    object.page = options.longs === String ? $util.Long.prototype.toString.call(message.page) : options.longs === Number ? new $util.LongBits(message.page.low >>> 0, message.page.high >>> 0).toNumber() : message.page;
+            if (message.perPage != null && message.hasOwnProperty("perPage"))
+                if (typeof message.perPage === "number")
+                    object.perPage = options.longs === String ? String(message.perPage) : message.perPage;
+                else
+                    object.perPage = options.longs === String ? $util.Long.prototype.toString.call(message.perPage) : options.longs === Number ? new $util.LongBits(message.perPage.low >>> 0, message.perPage.high >>> 0).toNumber() : message.perPage;
+            var keys2;
+            if (message.sortBy && (keys2 = Object.keys(message.sortBy)).length) {
+                object.sortBy = {};
+                for (var j = 0; j < keys2.length; ++j)
+                    object.sortBy[keys2[j]] = options.enums === String ? $root.dto.SortDirection[message.sortBy[keys2[j]]] === undefined ? message.sortBy[keys2[j]] : $root.dto.SortDirection[message.sortBy[keys2[j]]] : message.sortBy[keys2[j]];
+            }
+            if (message.deleted != null && message.hasOwnProperty("deleted"))
+                object.deleted = message.deleted;
+            return object;
+        };
+
+        /**
+         * Converts this ListRoleReq to JSON.
+         * @function toJSON
+         * @memberof dto.ListRoleReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ListRoleReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for ListRoleReq
+         * @function getTypeUrl
+         * @memberof dto.ListRoleReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        ListRoleReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.ListRoleReq";
+        };
+
+        return ListRoleReq;
+    })();
+
     dto.RoleListElem = (function() {
 
         /**
@@ -10393,44 +11772,19 @@ $root.dto = (function() {
 
         /**
          * RoleListElem deletedBy.
-         * @member {string|null|undefined} deletedBy
+         * @member {string} deletedBy
          * @memberof dto.RoleListElem
          * @instance
          */
-        RoleListElem.prototype.deletedBy = null;
+        RoleListElem.prototype.deletedBy = "";
 
         /**
          * RoleListElem deletedAt.
-         * @member {string|null|undefined} deletedAt
+         * @member {string} deletedAt
          * @memberof dto.RoleListElem
          * @instance
          */
-        RoleListElem.prototype.deletedAt = null;
-
-        // OneOf field names bound to virtual getters and setters
-        var $oneOfFields;
-
-        /**
-         * RoleListElem _deletedBy.
-         * @member {"deletedBy"|undefined} _deletedBy
-         * @memberof dto.RoleListElem
-         * @instance
-         */
-        Object.defineProperty(RoleListElem.prototype, "_deletedBy", {
-            get: $util.oneOfGetter($oneOfFields = ["deletedBy"]),
-            set: $util.oneOfSetter($oneOfFields)
-        });
-
-        /**
-         * RoleListElem _deletedAt.
-         * @member {"deletedAt"|undefined} _deletedAt
-         * @memberof dto.RoleListElem
-         * @instance
-         */
-        Object.defineProperty(RoleListElem.prototype, "_deletedAt", {
-            get: $util.oneOfGetter($oneOfFields = ["deletedAt"]),
-            set: $util.oneOfSetter($oneOfFields)
-        });
+        RoleListElem.prototype.deletedAt = "";
 
         /**
          * Creates a new RoleListElem instance using the specified properties.
@@ -10618,7 +11972,6 @@ $root.dto = (function() {
         RoleListElem.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            var properties = {};
             if (message.id != null && message.hasOwnProperty("id"))
                 if (!$util.isString(message.id))
                     return "id: string expected";
@@ -10667,16 +12020,12 @@ $root.dto = (function() {
             if (message.updatedAt != null && message.hasOwnProperty("updatedAt"))
                 if (!$util.isString(message.updatedAt))
                     return "updatedAt: string expected";
-            if (message.deletedBy != null && message.hasOwnProperty("deletedBy")) {
-                properties._deletedBy = 1;
+            if (message.deletedBy != null && message.hasOwnProperty("deletedBy"))
                 if (!$util.isString(message.deletedBy))
                     return "deletedBy: string expected";
-            }
-            if (message.deletedAt != null && message.hasOwnProperty("deletedAt")) {
-                properties._deletedAt = 1;
+            if (message.deletedAt != null && message.hasOwnProperty("deletedAt"))
                 if (!$util.isString(message.deletedAt))
                     return "deletedAt: string expected";
-            }
             return null;
         };
 
@@ -10766,6 +12115,8 @@ $root.dto = (function() {
                 object.createdAt = "";
                 object.updatedBy = "";
                 object.updatedAt = "";
+                object.deletedBy = "";
+                object.deletedAt = "";
             }
             if (message.id != null && message.hasOwnProperty("id"))
                 object.id = message.id;
@@ -10800,16 +12151,10 @@ $root.dto = (function() {
                 object.updatedBy = message.updatedBy;
             if (message.updatedAt != null && message.hasOwnProperty("updatedAt"))
                 object.updatedAt = message.updatedAt;
-            if (message.deletedBy != null && message.hasOwnProperty("deletedBy")) {
+            if (message.deletedBy != null && message.hasOwnProperty("deletedBy"))
                 object.deletedBy = message.deletedBy;
-                if (options.oneofs)
-                    object._deletedBy = "deletedBy";
-            }
-            if (message.deletedAt != null && message.hasOwnProperty("deletedAt")) {
+            if (message.deletedAt != null && message.hasOwnProperty("deletedAt"))
                 object.deletedAt = message.deletedAt;
-                if (options.oneofs)
-                    object._deletedAt = "deletedAt";
-            }
             return object;
         };
 
@@ -11222,44 +12567,19 @@ $root.dto = (function() {
 
         /**
          * ProfileRoleRet deletedBy.
-         * @member {string|null|undefined} deletedBy
+         * @member {string} deletedBy
          * @memberof dto.ProfileRoleRet
          * @instance
          */
-        ProfileRoleRet.prototype.deletedBy = null;
+        ProfileRoleRet.prototype.deletedBy = "";
 
         /**
          * ProfileRoleRet deletedAt.
-         * @member {string|null|undefined} deletedAt
+         * @member {string} deletedAt
          * @memberof dto.ProfileRoleRet
          * @instance
          */
-        ProfileRoleRet.prototype.deletedAt = null;
-
-        // OneOf field names bound to virtual getters and setters
-        var $oneOfFields;
-
-        /**
-         * ProfileRoleRet _deletedBy.
-         * @member {"deletedBy"|undefined} _deletedBy
-         * @memberof dto.ProfileRoleRet
-         * @instance
-         */
-        Object.defineProperty(ProfileRoleRet.prototype, "_deletedBy", {
-            get: $util.oneOfGetter($oneOfFields = ["deletedBy"]),
-            set: $util.oneOfSetter($oneOfFields)
-        });
-
-        /**
-         * ProfileRoleRet _deletedAt.
-         * @member {"deletedAt"|undefined} _deletedAt
-         * @memberof dto.ProfileRoleRet
-         * @instance
-         */
-        Object.defineProperty(ProfileRoleRet.prototype, "_deletedAt", {
-            get: $util.oneOfGetter($oneOfFields = ["deletedAt"]),
-            set: $util.oneOfSetter($oneOfFields)
-        });
+        ProfileRoleRet.prototype.deletedAt = "";
 
         /**
          * Creates a new ProfileRoleRet instance using the specified properties.
@@ -11429,7 +12749,6 @@ $root.dto = (function() {
         ProfileRoleRet.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            var properties = {};
             if (message.id != null && message.hasOwnProperty("id"))
                 if (!$util.isString(message.id))
                     return "id: string expected";
@@ -11464,16 +12783,12 @@ $root.dto = (function() {
             if (message.updatedAt != null && message.hasOwnProperty("updatedAt"))
                 if (!$util.isString(message.updatedAt))
                     return "updatedAt: string expected";
-            if (message.deletedBy != null && message.hasOwnProperty("deletedBy")) {
-                properties._deletedBy = 1;
+            if (message.deletedBy != null && message.hasOwnProperty("deletedBy"))
                 if (!$util.isString(message.deletedBy))
                     return "deletedBy: string expected";
-            }
-            if (message.deletedAt != null && message.hasOwnProperty("deletedAt")) {
-                properties._deletedAt = 1;
+            if (message.deletedAt != null && message.hasOwnProperty("deletedAt"))
                 if (!$util.isString(message.deletedAt))
                     return "deletedAt: string expected";
-            }
             return null;
         };
 
@@ -11546,6 +12861,8 @@ $root.dto = (function() {
                 object.createdAt = "";
                 object.updatedBy = "";
                 object.updatedAt = "";
+                object.deletedBy = "";
+                object.deletedAt = "";
             }
             if (message.id != null && message.hasOwnProperty("id"))
                 object.id = message.id;
@@ -11570,16 +12887,10 @@ $root.dto = (function() {
                 object.updatedBy = message.updatedBy;
             if (message.updatedAt != null && message.hasOwnProperty("updatedAt"))
                 object.updatedAt = message.updatedAt;
-            if (message.deletedBy != null && message.hasOwnProperty("deletedBy")) {
+            if (message.deletedBy != null && message.hasOwnProperty("deletedBy"))
                 object.deletedBy = message.deletedBy;
-                if (options.oneofs)
-                    object._deletedBy = "deletedBy";
-            }
-            if (message.deletedAt != null && message.hasOwnProperty("deletedAt")) {
+            if (message.deletedAt != null && message.hasOwnProperty("deletedAt"))
                 object.deletedAt = message.deletedAt;
-                if (options.oneofs)
-                    object._deletedAt = "deletedAt";
-            }
             return object;
         };
 
@@ -14309,6 +15620,644 @@ $root.dto = (function() {
         return AddStaffRet;
     })();
 
+    dto.ListStaffReq = (function() {
+
+        /**
+         * Properties of a ListStaffReq.
+         * @memberof dto
+         * @interface IListStaffReq
+         * @property {boolean|null} [noPaging] ListStaffReq noPaging
+         * @property {number|Long|null} [page] ListStaffReq page
+         * @property {number|Long|null} [perPage] ListStaffReq perPage
+         * @property {Object.<string,dto.SortDirection>|null} [sortBy] ListStaffReq sortBy
+         * @property {boolean|null} [deleted] ListStaffReq deleted
+         * @property {string|null} [account] ListStaffReq account
+         * @property {boolean|null} [signIn] ListStaffReq signIn
+         * @property {string|null} [nickName] ListStaffReq nickName
+         * @property {string|null} [realName] ListStaffReq realName
+         * @property {string|null} [email] ListStaffReq email
+         * @property {string|null} [phone] ListStaffReq phone
+         * @property {string|null} [gender] ListStaffReq gender
+         * @property {string|null} [lastSignInIp] ListStaffReq lastSignInIp
+         * @property {number|Long|null} [lastSignInTimeBegin] ListStaffReq lastSignInTimeBegin
+         * @property {number|Long|null} [lastSignInTimeEnd] ListStaffReq lastSignInTimeEnd
+         */
+
+        /**
+         * Constructs a new ListStaffReq.
+         * @memberof dto
+         * @classdesc Represents a ListStaffReq.
+         * @implements IListStaffReq
+         * @constructor
+         * @param {dto.IListStaffReq=} [properties] Properties to set
+         */
+        function ListStaffReq(properties) {
+            this.sortBy = {};
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * ListStaffReq noPaging.
+         * @member {boolean} noPaging
+         * @memberof dto.ListStaffReq
+         * @instance
+         */
+        ListStaffReq.prototype.noPaging = false;
+
+        /**
+         * ListStaffReq page.
+         * @member {number|Long} page
+         * @memberof dto.ListStaffReq
+         * @instance
+         */
+        ListStaffReq.prototype.page = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * ListStaffReq perPage.
+         * @member {number|Long} perPage
+         * @memberof dto.ListStaffReq
+         * @instance
+         */
+        ListStaffReq.prototype.perPage = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * ListStaffReq sortBy.
+         * @member {Object.<string,dto.SortDirection>} sortBy
+         * @memberof dto.ListStaffReq
+         * @instance
+         */
+        ListStaffReq.prototype.sortBy = $util.emptyObject;
+
+        /**
+         * ListStaffReq deleted.
+         * @member {boolean} deleted
+         * @memberof dto.ListStaffReq
+         * @instance
+         */
+        ListStaffReq.prototype.deleted = false;
+
+        /**
+         * ListStaffReq account.
+         * @member {string} account
+         * @memberof dto.ListStaffReq
+         * @instance
+         */
+        ListStaffReq.prototype.account = "";
+
+        /**
+         * ListStaffReq signIn.
+         * @member {boolean} signIn
+         * @memberof dto.ListStaffReq
+         * @instance
+         */
+        ListStaffReq.prototype.signIn = false;
+
+        /**
+         * ListStaffReq nickName.
+         * @member {string} nickName
+         * @memberof dto.ListStaffReq
+         * @instance
+         */
+        ListStaffReq.prototype.nickName = "";
+
+        /**
+         * ListStaffReq realName.
+         * @member {string} realName
+         * @memberof dto.ListStaffReq
+         * @instance
+         */
+        ListStaffReq.prototype.realName = "";
+
+        /**
+         * ListStaffReq email.
+         * @member {string} email
+         * @memberof dto.ListStaffReq
+         * @instance
+         */
+        ListStaffReq.prototype.email = "";
+
+        /**
+         * ListStaffReq phone.
+         * @member {string} phone
+         * @memberof dto.ListStaffReq
+         * @instance
+         */
+        ListStaffReq.prototype.phone = "";
+
+        /**
+         * ListStaffReq gender.
+         * @member {string} gender
+         * @memberof dto.ListStaffReq
+         * @instance
+         */
+        ListStaffReq.prototype.gender = "";
+
+        /**
+         * ListStaffReq lastSignInIp.
+         * @member {string} lastSignInIp
+         * @memberof dto.ListStaffReq
+         * @instance
+         */
+        ListStaffReq.prototype.lastSignInIp = "";
+
+        /**
+         * ListStaffReq lastSignInTimeBegin.
+         * @member {number|Long} lastSignInTimeBegin
+         * @memberof dto.ListStaffReq
+         * @instance
+         */
+        ListStaffReq.prototype.lastSignInTimeBegin = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * ListStaffReq lastSignInTimeEnd.
+         * @member {number|Long} lastSignInTimeEnd
+         * @memberof dto.ListStaffReq
+         * @instance
+         */
+        ListStaffReq.prototype.lastSignInTimeEnd = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * Creates a new ListStaffReq instance using the specified properties.
+         * @function create
+         * @memberof dto.ListStaffReq
+         * @static
+         * @param {dto.IListStaffReq=} [properties] Properties to set
+         * @returns {dto.ListStaffReq} ListStaffReq instance
+         */
+        ListStaffReq.create = function create(properties) {
+            return new ListStaffReq(properties);
+        };
+
+        /**
+         * Encodes the specified ListStaffReq message. Does not implicitly {@link dto.ListStaffReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.ListStaffReq
+         * @static
+         * @param {dto.IListStaffReq} message ListStaffReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListStaffReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.account != null && Object.hasOwnProperty.call(message, "account"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.account);
+            if (message.signIn != null && Object.hasOwnProperty.call(message, "signIn"))
+                writer.uint32(/* id 2, wireType 0 =*/16).bool(message.signIn);
+            if (message.nickName != null && Object.hasOwnProperty.call(message, "nickName"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.nickName);
+            if (message.realName != null && Object.hasOwnProperty.call(message, "realName"))
+                writer.uint32(/* id 4, wireType 2 =*/34).string(message.realName);
+            if (message.email != null && Object.hasOwnProperty.call(message, "email"))
+                writer.uint32(/* id 5, wireType 2 =*/42).string(message.email);
+            if (message.phone != null && Object.hasOwnProperty.call(message, "phone"))
+                writer.uint32(/* id 6, wireType 2 =*/50).string(message.phone);
+            if (message.gender != null && Object.hasOwnProperty.call(message, "gender"))
+                writer.uint32(/* id 7, wireType 2 =*/58).string(message.gender);
+            if (message.lastSignInIp != null && Object.hasOwnProperty.call(message, "lastSignInIp"))
+                writer.uint32(/* id 8, wireType 2 =*/66).string(message.lastSignInIp);
+            if (message.lastSignInTimeBegin != null && Object.hasOwnProperty.call(message, "lastSignInTimeBegin"))
+                writer.uint32(/* id 9, wireType 0 =*/72).sint64(message.lastSignInTimeBegin);
+            if (message.lastSignInTimeEnd != null && Object.hasOwnProperty.call(message, "lastSignInTimeEnd"))
+                writer.uint32(/* id 10, wireType 0 =*/80).sint64(message.lastSignInTimeEnd);
+            if (message.noPaging != null && Object.hasOwnProperty.call(message, "noPaging"))
+                writer.uint32(/* id 20001, wireType 0 =*/160008).bool(message.noPaging);
+            if (message.page != null && Object.hasOwnProperty.call(message, "page"))
+                writer.uint32(/* id 20002, wireType 0 =*/160016).sint64(message.page);
+            if (message.perPage != null && Object.hasOwnProperty.call(message, "perPage"))
+                writer.uint32(/* id 20003, wireType 0 =*/160024).sint64(message.perPage);
+            if (message.sortBy != null && Object.hasOwnProperty.call(message, "sortBy"))
+                for (var keys = Object.keys(message.sortBy), i = 0; i < keys.length; ++i)
+                    writer.uint32(/* id 20004, wireType 2 =*/160034).fork().uint32(/* id 1, wireType 2 =*/10).string(keys[i]).uint32(/* id 2, wireType 0 =*/16).int32(message.sortBy[keys[i]]).ldelim();
+            if (message.deleted != null && Object.hasOwnProperty.call(message, "deleted"))
+                writer.uint32(/* id 20005, wireType 0 =*/160040).bool(message.deleted);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ListStaffReq message, length delimited. Does not implicitly {@link dto.ListStaffReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.ListStaffReq
+         * @static
+         * @param {dto.IListStaffReq} message ListStaffReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListStaffReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ListStaffReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.ListStaffReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.ListStaffReq} ListStaffReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListStaffReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListStaffReq(), key, value;
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 20001: {
+                        message.noPaging = reader.bool();
+                        break;
+                    }
+                case 20002: {
+                        message.page = reader.sint64();
+                        break;
+                    }
+                case 20003: {
+                        message.perPage = reader.sint64();
+                        break;
+                    }
+                case 20004: {
+                        if (message.sortBy === $util.emptyObject)
+                            message.sortBy = {};
+                        var end2 = reader.uint32() + reader.pos;
+                        key = "";
+                        value = 0;
+                        while (reader.pos < end2) {
+                            var tag2 = reader.uint32();
+                            switch (tag2 >>> 3) {
+                            case 1:
+                                key = reader.string();
+                                break;
+                            case 2:
+                                value = reader.int32();
+                                break;
+                            default:
+                                reader.skipType(tag2 & 7);
+                                break;
+                            }
+                        }
+                        message.sortBy[key] = value;
+                        break;
+                    }
+                case 20005: {
+                        message.deleted = reader.bool();
+                        break;
+                    }
+                case 1: {
+                        message.account = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.signIn = reader.bool();
+                        break;
+                    }
+                case 3: {
+                        message.nickName = reader.string();
+                        break;
+                    }
+                case 4: {
+                        message.realName = reader.string();
+                        break;
+                    }
+                case 5: {
+                        message.email = reader.string();
+                        break;
+                    }
+                case 6: {
+                        message.phone = reader.string();
+                        break;
+                    }
+                case 7: {
+                        message.gender = reader.string();
+                        break;
+                    }
+                case 8: {
+                        message.lastSignInIp = reader.string();
+                        break;
+                    }
+                case 9: {
+                        message.lastSignInTimeBegin = reader.sint64();
+                        break;
+                    }
+                case 10: {
+                        message.lastSignInTimeEnd = reader.sint64();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ListStaffReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.ListStaffReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.ListStaffReq} ListStaffReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListStaffReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ListStaffReq message.
+         * @function verify
+         * @memberof dto.ListStaffReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ListStaffReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.noPaging != null && message.hasOwnProperty("noPaging"))
+                if (typeof message.noPaging !== "boolean")
+                    return "noPaging: boolean expected";
+            if (message.page != null && message.hasOwnProperty("page"))
+                if (!$util.isInteger(message.page) && !(message.page && $util.isInteger(message.page.low) && $util.isInteger(message.page.high)))
+                    return "page: integer|Long expected";
+            if (message.perPage != null && message.hasOwnProperty("perPage"))
+                if (!$util.isInteger(message.perPage) && !(message.perPage && $util.isInteger(message.perPage.low) && $util.isInteger(message.perPage.high)))
+                    return "perPage: integer|Long expected";
+            if (message.sortBy != null && message.hasOwnProperty("sortBy")) {
+                if (!$util.isObject(message.sortBy))
+                    return "sortBy: object expected";
+                var key = Object.keys(message.sortBy);
+                for (var i = 0; i < key.length; ++i)
+                    switch (message.sortBy[key[i]]) {
+                    default:
+                        return "sortBy: enum value{k:string} expected";
+                    case 0:
+                    case 1:
+                        break;
+                    }
+            }
+            if (message.deleted != null && message.hasOwnProperty("deleted"))
+                if (typeof message.deleted !== "boolean")
+                    return "deleted: boolean expected";
+            if (message.account != null && message.hasOwnProperty("account"))
+                if (!$util.isString(message.account))
+                    return "account: string expected";
+            if (message.signIn != null && message.hasOwnProperty("signIn"))
+                if (typeof message.signIn !== "boolean")
+                    return "signIn: boolean expected";
+            if (message.nickName != null && message.hasOwnProperty("nickName"))
+                if (!$util.isString(message.nickName))
+                    return "nickName: string expected";
+            if (message.realName != null && message.hasOwnProperty("realName"))
+                if (!$util.isString(message.realName))
+                    return "realName: string expected";
+            if (message.email != null && message.hasOwnProperty("email"))
+                if (!$util.isString(message.email))
+                    return "email: string expected";
+            if (message.phone != null && message.hasOwnProperty("phone"))
+                if (!$util.isString(message.phone))
+                    return "phone: string expected";
+            if (message.gender != null && message.hasOwnProperty("gender"))
+                if (!$util.isString(message.gender))
+                    return "gender: string expected";
+            if (message.lastSignInIp != null && message.hasOwnProperty("lastSignInIp"))
+                if (!$util.isString(message.lastSignInIp))
+                    return "lastSignInIp: string expected";
+            if (message.lastSignInTimeBegin != null && message.hasOwnProperty("lastSignInTimeBegin"))
+                if (!$util.isInteger(message.lastSignInTimeBegin) && !(message.lastSignInTimeBegin && $util.isInteger(message.lastSignInTimeBegin.low) && $util.isInteger(message.lastSignInTimeBegin.high)))
+                    return "lastSignInTimeBegin: integer|Long expected";
+            if (message.lastSignInTimeEnd != null && message.hasOwnProperty("lastSignInTimeEnd"))
+                if (!$util.isInteger(message.lastSignInTimeEnd) && !(message.lastSignInTimeEnd && $util.isInteger(message.lastSignInTimeEnd.low) && $util.isInteger(message.lastSignInTimeEnd.high)))
+                    return "lastSignInTimeEnd: integer|Long expected";
+            return null;
+        };
+
+        /**
+         * Creates a ListStaffReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.ListStaffReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.ListStaffReq} ListStaffReq
+         */
+        ListStaffReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.ListStaffReq)
+                return object;
+            var message = new $root.dto.ListStaffReq();
+            if (object.noPaging != null)
+                message.noPaging = Boolean(object.noPaging);
+            if (object.page != null)
+                if ($util.Long)
+                    (message.page = $util.Long.fromValue(object.page)).unsigned = false;
+                else if (typeof object.page === "string")
+                    message.page = parseInt(object.page, 10);
+                else if (typeof object.page === "number")
+                    message.page = object.page;
+                else if (typeof object.page === "object")
+                    message.page = new $util.LongBits(object.page.low >>> 0, object.page.high >>> 0).toNumber();
+            if (object.perPage != null)
+                if ($util.Long)
+                    (message.perPage = $util.Long.fromValue(object.perPage)).unsigned = false;
+                else if (typeof object.perPage === "string")
+                    message.perPage = parseInt(object.perPage, 10);
+                else if (typeof object.perPage === "number")
+                    message.perPage = object.perPage;
+                else if (typeof object.perPage === "object")
+                    message.perPage = new $util.LongBits(object.perPage.low >>> 0, object.perPage.high >>> 0).toNumber();
+            if (object.sortBy) {
+                if (typeof object.sortBy !== "object")
+                    throw TypeError(".dto.ListStaffReq.sortBy: object expected");
+                message.sortBy = {};
+                for (var keys = Object.keys(object.sortBy), i = 0; i < keys.length; ++i)
+                    switch (object.sortBy[keys[i]]) {
+                    default:
+                        if (typeof object.sortBy[keys[i]] === "number") {
+                            message.sortBy[keys[i]] = object.sortBy[keys[i]];
+                            break;
+                        }
+                        break;
+                    case "Asc":
+                    case 0:
+                        message.sortBy[keys[i]] = 0;
+                        break;
+                    case "Desc":
+                    case 1:
+                        message.sortBy[keys[i]] = 1;
+                        break;
+                    }
+            }
+            if (object.deleted != null)
+                message.deleted = Boolean(object.deleted);
+            if (object.account != null)
+                message.account = String(object.account);
+            if (object.signIn != null)
+                message.signIn = Boolean(object.signIn);
+            if (object.nickName != null)
+                message.nickName = String(object.nickName);
+            if (object.realName != null)
+                message.realName = String(object.realName);
+            if (object.email != null)
+                message.email = String(object.email);
+            if (object.phone != null)
+                message.phone = String(object.phone);
+            if (object.gender != null)
+                message.gender = String(object.gender);
+            if (object.lastSignInIp != null)
+                message.lastSignInIp = String(object.lastSignInIp);
+            if (object.lastSignInTimeBegin != null)
+                if ($util.Long)
+                    (message.lastSignInTimeBegin = $util.Long.fromValue(object.lastSignInTimeBegin)).unsigned = false;
+                else if (typeof object.lastSignInTimeBegin === "string")
+                    message.lastSignInTimeBegin = parseInt(object.lastSignInTimeBegin, 10);
+                else if (typeof object.lastSignInTimeBegin === "number")
+                    message.lastSignInTimeBegin = object.lastSignInTimeBegin;
+                else if (typeof object.lastSignInTimeBegin === "object")
+                    message.lastSignInTimeBegin = new $util.LongBits(object.lastSignInTimeBegin.low >>> 0, object.lastSignInTimeBegin.high >>> 0).toNumber();
+            if (object.lastSignInTimeEnd != null)
+                if ($util.Long)
+                    (message.lastSignInTimeEnd = $util.Long.fromValue(object.lastSignInTimeEnd)).unsigned = false;
+                else if (typeof object.lastSignInTimeEnd === "string")
+                    message.lastSignInTimeEnd = parseInt(object.lastSignInTimeEnd, 10);
+                else if (typeof object.lastSignInTimeEnd === "number")
+                    message.lastSignInTimeEnd = object.lastSignInTimeEnd;
+                else if (typeof object.lastSignInTimeEnd === "object")
+                    message.lastSignInTimeEnd = new $util.LongBits(object.lastSignInTimeEnd.low >>> 0, object.lastSignInTimeEnd.high >>> 0).toNumber();
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a ListStaffReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.ListStaffReq
+         * @static
+         * @param {dto.ListStaffReq} message ListStaffReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ListStaffReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.objects || options.defaults)
+                object.sortBy = {};
+            if (options.defaults) {
+                object.account = "";
+                object.signIn = false;
+                object.nickName = "";
+                object.realName = "";
+                object.email = "";
+                object.phone = "";
+                object.gender = "";
+                object.lastSignInIp = "";
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.lastSignInTimeBegin = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.lastSignInTimeBegin = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.lastSignInTimeEnd = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.lastSignInTimeEnd = options.longs === String ? "0" : 0;
+                object.noPaging = false;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.page = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.page = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.perPage = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.perPage = options.longs === String ? "0" : 0;
+                object.deleted = false;
+            }
+            if (message.account != null && message.hasOwnProperty("account"))
+                object.account = message.account;
+            if (message.signIn != null && message.hasOwnProperty("signIn"))
+                object.signIn = message.signIn;
+            if (message.nickName != null && message.hasOwnProperty("nickName"))
+                object.nickName = message.nickName;
+            if (message.realName != null && message.hasOwnProperty("realName"))
+                object.realName = message.realName;
+            if (message.email != null && message.hasOwnProperty("email"))
+                object.email = message.email;
+            if (message.phone != null && message.hasOwnProperty("phone"))
+                object.phone = message.phone;
+            if (message.gender != null && message.hasOwnProperty("gender"))
+                object.gender = message.gender;
+            if (message.lastSignInIp != null && message.hasOwnProperty("lastSignInIp"))
+                object.lastSignInIp = message.lastSignInIp;
+            if (message.lastSignInTimeBegin != null && message.hasOwnProperty("lastSignInTimeBegin"))
+                if (typeof message.lastSignInTimeBegin === "number")
+                    object.lastSignInTimeBegin = options.longs === String ? String(message.lastSignInTimeBegin) : message.lastSignInTimeBegin;
+                else
+                    object.lastSignInTimeBegin = options.longs === String ? $util.Long.prototype.toString.call(message.lastSignInTimeBegin) : options.longs === Number ? new $util.LongBits(message.lastSignInTimeBegin.low >>> 0, message.lastSignInTimeBegin.high >>> 0).toNumber() : message.lastSignInTimeBegin;
+            if (message.lastSignInTimeEnd != null && message.hasOwnProperty("lastSignInTimeEnd"))
+                if (typeof message.lastSignInTimeEnd === "number")
+                    object.lastSignInTimeEnd = options.longs === String ? String(message.lastSignInTimeEnd) : message.lastSignInTimeEnd;
+                else
+                    object.lastSignInTimeEnd = options.longs === String ? $util.Long.prototype.toString.call(message.lastSignInTimeEnd) : options.longs === Number ? new $util.LongBits(message.lastSignInTimeEnd.low >>> 0, message.lastSignInTimeEnd.high >>> 0).toNumber() : message.lastSignInTimeEnd;
+            if (message.noPaging != null && message.hasOwnProperty("noPaging"))
+                object.noPaging = message.noPaging;
+            if (message.page != null && message.hasOwnProperty("page"))
+                if (typeof message.page === "number")
+                    object.page = options.longs === String ? String(message.page) : message.page;
+                else
+                    object.page = options.longs === String ? $util.Long.prototype.toString.call(message.page) : options.longs === Number ? new $util.LongBits(message.page.low >>> 0, message.page.high >>> 0).toNumber() : message.page;
+            if (message.perPage != null && message.hasOwnProperty("perPage"))
+                if (typeof message.perPage === "number")
+                    object.perPage = options.longs === String ? String(message.perPage) : message.perPage;
+                else
+                    object.perPage = options.longs === String ? $util.Long.prototype.toString.call(message.perPage) : options.longs === Number ? new $util.LongBits(message.perPage.low >>> 0, message.perPage.high >>> 0).toNumber() : message.perPage;
+            var keys2;
+            if (message.sortBy && (keys2 = Object.keys(message.sortBy)).length) {
+                object.sortBy = {};
+                for (var j = 0; j < keys2.length; ++j)
+                    object.sortBy[keys2[j]] = options.enums === String ? $root.dto.SortDirection[message.sortBy[keys2[j]]] === undefined ? message.sortBy[keys2[j]] : $root.dto.SortDirection[message.sortBy[keys2[j]]] : message.sortBy[keys2[j]];
+            }
+            if (message.deleted != null && message.hasOwnProperty("deleted"))
+                object.deleted = message.deleted;
+            return object;
+        };
+
+        /**
+         * Converts this ListStaffReq to JSON.
+         * @function toJSON
+         * @memberof dto.ListStaffReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ListStaffReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for ListStaffReq
+         * @function getTypeUrl
+         * @memberof dto.ListStaffReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        ListStaffReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.ListStaffReq";
+        };
+
+        return ListStaffReq;
+    })();
+
     dto.StaffListElem = (function() {
 
         /**
@@ -14489,44 +16438,19 @@ $root.dto = (function() {
 
         /**
          * StaffListElem deletedBy.
-         * @member {string|null|undefined} deletedBy
+         * @member {string} deletedBy
          * @memberof dto.StaffListElem
          * @instance
          */
-        StaffListElem.prototype.deletedBy = null;
+        StaffListElem.prototype.deletedBy = "";
 
         /**
          * StaffListElem deletedAt.
-         * @member {string|null|undefined} deletedAt
+         * @member {string} deletedAt
          * @memberof dto.StaffListElem
          * @instance
          */
-        StaffListElem.prototype.deletedAt = null;
-
-        // OneOf field names bound to virtual getters and setters
-        var $oneOfFields;
-
-        /**
-         * StaffListElem _deletedBy.
-         * @member {"deletedBy"|undefined} _deletedBy
-         * @memberof dto.StaffListElem
-         * @instance
-         */
-        Object.defineProperty(StaffListElem.prototype, "_deletedBy", {
-            get: $util.oneOfGetter($oneOfFields = ["deletedBy"]),
-            set: $util.oneOfSetter($oneOfFields)
-        });
-
-        /**
-         * StaffListElem _deletedAt.
-         * @member {"deletedAt"|undefined} _deletedAt
-         * @memberof dto.StaffListElem
-         * @instance
-         */
-        Object.defineProperty(StaffListElem.prototype, "_deletedAt", {
-            get: $util.oneOfGetter($oneOfFields = ["deletedAt"]),
-            set: $util.oneOfSetter($oneOfFields)
-        });
+        StaffListElem.prototype.deletedAt = "";
 
         /**
          * Creates a new StaffListElem instance using the specified properties.
@@ -14735,7 +16659,6 @@ $root.dto = (function() {
         StaffListElem.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            var properties = {};
             if (message.id != null && message.hasOwnProperty("id"))
                 if (!$util.isString(message.id))
                     return "id: string expected";
@@ -14787,16 +16710,12 @@ $root.dto = (function() {
             if (message.updatedAt != null && message.hasOwnProperty("updatedAt"))
                 if (!$util.isString(message.updatedAt))
                     return "updatedAt: string expected";
-            if (message.deletedBy != null && message.hasOwnProperty("deletedBy")) {
-                properties._deletedBy = 1;
+            if (message.deletedBy != null && message.hasOwnProperty("deletedBy"))
                 if (!$util.isString(message.deletedBy))
                     return "deletedBy: string expected";
-            }
-            if (message.deletedAt != null && message.hasOwnProperty("deletedAt")) {
-                properties._deletedAt = 1;
+            if (message.deletedAt != null && message.hasOwnProperty("deletedAt"))
                 if (!$util.isString(message.deletedAt))
                     return "deletedAt: string expected";
-            }
             return null;
         };
 
@@ -14895,6 +16814,8 @@ $root.dto = (function() {
                 object.createdAt = "";
                 object.updatedBy = "";
                 object.updatedAt = "";
+                object.deletedBy = "";
+                object.deletedAt = "";
             }
             if (message.id != null && message.hasOwnProperty("id"))
                 object.id = message.id;
@@ -14933,16 +16854,10 @@ $root.dto = (function() {
                 object.updatedBy = message.updatedBy;
             if (message.updatedAt != null && message.hasOwnProperty("updatedAt"))
                 object.updatedAt = message.updatedAt;
-            if (message.deletedBy != null && message.hasOwnProperty("deletedBy")) {
+            if (message.deletedBy != null && message.hasOwnProperty("deletedBy"))
                 object.deletedBy = message.deletedBy;
-                if (options.oneofs)
-                    object._deletedBy = "deletedBy";
-            }
-            if (message.deletedAt != null && message.hasOwnProperty("deletedAt")) {
+            if (message.deletedAt != null && message.hasOwnProperty("deletedAt"))
                 object.deletedAt = message.deletedAt;
-                if (options.oneofs)
-                    object._deletedAt = "deletedAt";
-            }
             return object;
         };
 
@@ -15418,44 +17333,19 @@ $root.dto = (function() {
 
         /**
          * ProfileStaffRet deletedBy.
-         * @member {string|null|undefined} deletedBy
+         * @member {string} deletedBy
          * @memberof dto.ProfileStaffRet
          * @instance
          */
-        ProfileStaffRet.prototype.deletedBy = null;
+        ProfileStaffRet.prototype.deletedBy = "";
 
         /**
          * ProfileStaffRet deletedAt.
-         * @member {string|null|undefined} deletedAt
+         * @member {string} deletedAt
          * @memberof dto.ProfileStaffRet
          * @instance
          */
-        ProfileStaffRet.prototype.deletedAt = null;
-
-        // OneOf field names bound to virtual getters and setters
-        var $oneOfFields;
-
-        /**
-         * ProfileStaffRet _deletedBy.
-         * @member {"deletedBy"|undefined} _deletedBy
-         * @memberof dto.ProfileStaffRet
-         * @instance
-         */
-        Object.defineProperty(ProfileStaffRet.prototype, "_deletedBy", {
-            get: $util.oneOfGetter($oneOfFields = ["deletedBy"]),
-            set: $util.oneOfSetter($oneOfFields)
-        });
-
-        /**
-         * ProfileStaffRet _deletedAt.
-         * @member {"deletedAt"|undefined} _deletedAt
-         * @memberof dto.ProfileStaffRet
-         * @instance
-         */
-        Object.defineProperty(ProfileStaffRet.prototype, "_deletedAt", {
-            get: $util.oneOfGetter($oneOfFields = ["deletedAt"]),
-            set: $util.oneOfSetter($oneOfFields)
-        });
+        ProfileStaffRet.prototype.deletedAt = "";
 
         /**
          * Creates a new ProfileStaffRet instance using the specified properties.
@@ -15667,7 +17557,6 @@ $root.dto = (function() {
         ProfileStaffRet.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            var properties = {};
             if (message.id != null && message.hasOwnProperty("id"))
                 if (!$util.isString(message.id))
                     return "id: string expected";
@@ -15723,16 +17612,12 @@ $root.dto = (function() {
             if (message.updatedAt != null && message.hasOwnProperty("updatedAt"))
                 if (!$util.isString(message.updatedAt))
                     return "updatedAt: string expected";
-            if (message.deletedBy != null && message.hasOwnProperty("deletedBy")) {
-                properties._deletedBy = 1;
+            if (message.deletedBy != null && message.hasOwnProperty("deletedBy"))
                 if (!$util.isString(message.deletedBy))
                     return "deletedBy: string expected";
-            }
-            if (message.deletedAt != null && message.hasOwnProperty("deletedAt")) {
-                properties._deletedAt = 1;
+            if (message.deletedAt != null && message.hasOwnProperty("deletedAt"))
                 if (!$util.isString(message.deletedAt))
                     return "deletedAt: string expected";
-            }
             return null;
         };
 
@@ -15837,6 +17722,8 @@ $root.dto = (function() {
                 object.createdAt = "";
                 object.updatedBy = "";
                 object.updatedAt = "";
+                object.deletedBy = "";
+                object.deletedAt = "";
             }
             if (message.id != null && message.hasOwnProperty("id"))
                 object.id = message.id;
@@ -15878,16 +17765,10 @@ $root.dto = (function() {
                 object.updatedBy = message.updatedBy;
             if (message.updatedAt != null && message.hasOwnProperty("updatedAt"))
                 object.updatedAt = message.updatedAt;
-            if (message.deletedBy != null && message.hasOwnProperty("deletedBy")) {
+            if (message.deletedBy != null && message.hasOwnProperty("deletedBy"))
                 object.deletedBy = message.deletedBy;
-                if (options.oneofs)
-                    object._deletedBy = "deletedBy";
-            }
-            if (message.deletedAt != null && message.hasOwnProperty("deletedAt")) {
+            if (message.deletedAt != null && message.hasOwnProperty("deletedAt"))
                 object.deletedAt = message.deletedAt;
-                if (options.oneofs)
-                    object._deletedAt = "deletedAt";
-            }
             return object;
         };
 
@@ -18404,6 +20285,483 @@ $root.dto = (function() {
         return RemoveStaffRet;
     })();
 
+    dto.ListChangeLogReq = (function() {
+
+        /**
+         * Properties of a ListChangeLogReq.
+         * @memberof dto
+         * @interface IListChangeLogReq
+         * @property {boolean|null} [noPaging] ListChangeLogReq noPaging
+         * @property {number|Long|null} [page] ListChangeLogReq page
+         * @property {number|Long|null} [perPage] ListChangeLogReq perPage
+         * @property {Object.<string,dto.SortDirection>|null} [sortBy] ListChangeLogReq sortBy
+         * @property {string|null} [collName] ListChangeLogReq collName
+         * @property {string|null} [recordId] ListChangeLogReq recordId
+         * @property {number|Long|null} [opTimeBegin] ListChangeLogReq opTimeBegin
+         * @property {number|Long|null} [opTimeEnd] ListChangeLogReq opTimeEnd
+         */
+
+        /**
+         * Constructs a new ListChangeLogReq.
+         * @memberof dto
+         * @classdesc Represents a ListChangeLogReq.
+         * @implements IListChangeLogReq
+         * @constructor
+         * @param {dto.IListChangeLogReq=} [properties] Properties to set
+         */
+        function ListChangeLogReq(properties) {
+            this.sortBy = {};
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * ListChangeLogReq noPaging.
+         * @member {boolean} noPaging
+         * @memberof dto.ListChangeLogReq
+         * @instance
+         */
+        ListChangeLogReq.prototype.noPaging = false;
+
+        /**
+         * ListChangeLogReq page.
+         * @member {number|Long} page
+         * @memberof dto.ListChangeLogReq
+         * @instance
+         */
+        ListChangeLogReq.prototype.page = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * ListChangeLogReq perPage.
+         * @member {number|Long} perPage
+         * @memberof dto.ListChangeLogReq
+         * @instance
+         */
+        ListChangeLogReq.prototype.perPage = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * ListChangeLogReq sortBy.
+         * @member {Object.<string,dto.SortDirection>} sortBy
+         * @memberof dto.ListChangeLogReq
+         * @instance
+         */
+        ListChangeLogReq.prototype.sortBy = $util.emptyObject;
+
+        /**
+         * ListChangeLogReq collName.
+         * @member {string} collName
+         * @memberof dto.ListChangeLogReq
+         * @instance
+         */
+        ListChangeLogReq.prototype.collName = "";
+
+        /**
+         * ListChangeLogReq recordId.
+         * @member {string} recordId
+         * @memberof dto.ListChangeLogReq
+         * @instance
+         */
+        ListChangeLogReq.prototype.recordId = "";
+
+        /**
+         * ListChangeLogReq opTimeBegin.
+         * @member {number|Long} opTimeBegin
+         * @memberof dto.ListChangeLogReq
+         * @instance
+         */
+        ListChangeLogReq.prototype.opTimeBegin = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * ListChangeLogReq opTimeEnd.
+         * @member {number|Long} opTimeEnd
+         * @memberof dto.ListChangeLogReq
+         * @instance
+         */
+        ListChangeLogReq.prototype.opTimeEnd = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * Creates a new ListChangeLogReq instance using the specified properties.
+         * @function create
+         * @memberof dto.ListChangeLogReq
+         * @static
+         * @param {dto.IListChangeLogReq=} [properties] Properties to set
+         * @returns {dto.ListChangeLogReq} ListChangeLogReq instance
+         */
+        ListChangeLogReq.create = function create(properties) {
+            return new ListChangeLogReq(properties);
+        };
+
+        /**
+         * Encodes the specified ListChangeLogReq message. Does not implicitly {@link dto.ListChangeLogReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.ListChangeLogReq
+         * @static
+         * @param {dto.IListChangeLogReq} message ListChangeLogReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListChangeLogReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.collName != null && Object.hasOwnProperty.call(message, "collName"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.collName);
+            if (message.recordId != null && Object.hasOwnProperty.call(message, "recordId"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.recordId);
+            if (message.opTimeBegin != null && Object.hasOwnProperty.call(message, "opTimeBegin"))
+                writer.uint32(/* id 3, wireType 0 =*/24).sint64(message.opTimeBegin);
+            if (message.opTimeEnd != null && Object.hasOwnProperty.call(message, "opTimeEnd"))
+                writer.uint32(/* id 4, wireType 0 =*/32).sint64(message.opTimeEnd);
+            if (message.noPaging != null && Object.hasOwnProperty.call(message, "noPaging"))
+                writer.uint32(/* id 20001, wireType 0 =*/160008).bool(message.noPaging);
+            if (message.page != null && Object.hasOwnProperty.call(message, "page"))
+                writer.uint32(/* id 20002, wireType 0 =*/160016).sint64(message.page);
+            if (message.perPage != null && Object.hasOwnProperty.call(message, "perPage"))
+                writer.uint32(/* id 20003, wireType 0 =*/160024).sint64(message.perPage);
+            if (message.sortBy != null && Object.hasOwnProperty.call(message, "sortBy"))
+                for (var keys = Object.keys(message.sortBy), i = 0; i < keys.length; ++i)
+                    writer.uint32(/* id 20004, wireType 2 =*/160034).fork().uint32(/* id 1, wireType 2 =*/10).string(keys[i]).uint32(/* id 2, wireType 0 =*/16).int32(message.sortBy[keys[i]]).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ListChangeLogReq message, length delimited. Does not implicitly {@link dto.ListChangeLogReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.ListChangeLogReq
+         * @static
+         * @param {dto.IListChangeLogReq} message ListChangeLogReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListChangeLogReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ListChangeLogReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.ListChangeLogReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.ListChangeLogReq} ListChangeLogReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListChangeLogReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListChangeLogReq(), key, value;
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 20001: {
+                        message.noPaging = reader.bool();
+                        break;
+                    }
+                case 20002: {
+                        message.page = reader.sint64();
+                        break;
+                    }
+                case 20003: {
+                        message.perPage = reader.sint64();
+                        break;
+                    }
+                case 20004: {
+                        if (message.sortBy === $util.emptyObject)
+                            message.sortBy = {};
+                        var end2 = reader.uint32() + reader.pos;
+                        key = "";
+                        value = 0;
+                        while (reader.pos < end2) {
+                            var tag2 = reader.uint32();
+                            switch (tag2 >>> 3) {
+                            case 1:
+                                key = reader.string();
+                                break;
+                            case 2:
+                                value = reader.int32();
+                                break;
+                            default:
+                                reader.skipType(tag2 & 7);
+                                break;
+                            }
+                        }
+                        message.sortBy[key] = value;
+                        break;
+                    }
+                case 1: {
+                        message.collName = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.recordId = reader.string();
+                        break;
+                    }
+                case 3: {
+                        message.opTimeBegin = reader.sint64();
+                        break;
+                    }
+                case 4: {
+                        message.opTimeEnd = reader.sint64();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ListChangeLogReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.ListChangeLogReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.ListChangeLogReq} ListChangeLogReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListChangeLogReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ListChangeLogReq message.
+         * @function verify
+         * @memberof dto.ListChangeLogReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ListChangeLogReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.noPaging != null && message.hasOwnProperty("noPaging"))
+                if (typeof message.noPaging !== "boolean")
+                    return "noPaging: boolean expected";
+            if (message.page != null && message.hasOwnProperty("page"))
+                if (!$util.isInteger(message.page) && !(message.page && $util.isInteger(message.page.low) && $util.isInteger(message.page.high)))
+                    return "page: integer|Long expected";
+            if (message.perPage != null && message.hasOwnProperty("perPage"))
+                if (!$util.isInteger(message.perPage) && !(message.perPage && $util.isInteger(message.perPage.low) && $util.isInteger(message.perPage.high)))
+                    return "perPage: integer|Long expected";
+            if (message.sortBy != null && message.hasOwnProperty("sortBy")) {
+                if (!$util.isObject(message.sortBy))
+                    return "sortBy: object expected";
+                var key = Object.keys(message.sortBy);
+                for (var i = 0; i < key.length; ++i)
+                    switch (message.sortBy[key[i]]) {
+                    default:
+                        return "sortBy: enum value{k:string} expected";
+                    case 0:
+                    case 1:
+                        break;
+                    }
+            }
+            if (message.collName != null && message.hasOwnProperty("collName"))
+                if (!$util.isString(message.collName))
+                    return "collName: string expected";
+            if (message.recordId != null && message.hasOwnProperty("recordId"))
+                if (!$util.isString(message.recordId))
+                    return "recordId: string expected";
+            if (message.opTimeBegin != null && message.hasOwnProperty("opTimeBegin"))
+                if (!$util.isInteger(message.opTimeBegin) && !(message.opTimeBegin && $util.isInteger(message.opTimeBegin.low) && $util.isInteger(message.opTimeBegin.high)))
+                    return "opTimeBegin: integer|Long expected";
+            if (message.opTimeEnd != null && message.hasOwnProperty("opTimeEnd"))
+                if (!$util.isInteger(message.opTimeEnd) && !(message.opTimeEnd && $util.isInteger(message.opTimeEnd.low) && $util.isInteger(message.opTimeEnd.high)))
+                    return "opTimeEnd: integer|Long expected";
+            return null;
+        };
+
+        /**
+         * Creates a ListChangeLogReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.ListChangeLogReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.ListChangeLogReq} ListChangeLogReq
+         */
+        ListChangeLogReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.ListChangeLogReq)
+                return object;
+            var message = new $root.dto.ListChangeLogReq();
+            if (object.noPaging != null)
+                message.noPaging = Boolean(object.noPaging);
+            if (object.page != null)
+                if ($util.Long)
+                    (message.page = $util.Long.fromValue(object.page)).unsigned = false;
+                else if (typeof object.page === "string")
+                    message.page = parseInt(object.page, 10);
+                else if (typeof object.page === "number")
+                    message.page = object.page;
+                else if (typeof object.page === "object")
+                    message.page = new $util.LongBits(object.page.low >>> 0, object.page.high >>> 0).toNumber();
+            if (object.perPage != null)
+                if ($util.Long)
+                    (message.perPage = $util.Long.fromValue(object.perPage)).unsigned = false;
+                else if (typeof object.perPage === "string")
+                    message.perPage = parseInt(object.perPage, 10);
+                else if (typeof object.perPage === "number")
+                    message.perPage = object.perPage;
+                else if (typeof object.perPage === "object")
+                    message.perPage = new $util.LongBits(object.perPage.low >>> 0, object.perPage.high >>> 0).toNumber();
+            if (object.sortBy) {
+                if (typeof object.sortBy !== "object")
+                    throw TypeError(".dto.ListChangeLogReq.sortBy: object expected");
+                message.sortBy = {};
+                for (var keys = Object.keys(object.sortBy), i = 0; i < keys.length; ++i)
+                    switch (object.sortBy[keys[i]]) {
+                    default:
+                        if (typeof object.sortBy[keys[i]] === "number") {
+                            message.sortBy[keys[i]] = object.sortBy[keys[i]];
+                            break;
+                        }
+                        break;
+                    case "Asc":
+                    case 0:
+                        message.sortBy[keys[i]] = 0;
+                        break;
+                    case "Desc":
+                    case 1:
+                        message.sortBy[keys[i]] = 1;
+                        break;
+                    }
+            }
+            if (object.collName != null)
+                message.collName = String(object.collName);
+            if (object.recordId != null)
+                message.recordId = String(object.recordId);
+            if (object.opTimeBegin != null)
+                if ($util.Long)
+                    (message.opTimeBegin = $util.Long.fromValue(object.opTimeBegin)).unsigned = false;
+                else if (typeof object.opTimeBegin === "string")
+                    message.opTimeBegin = parseInt(object.opTimeBegin, 10);
+                else if (typeof object.opTimeBegin === "number")
+                    message.opTimeBegin = object.opTimeBegin;
+                else if (typeof object.opTimeBegin === "object")
+                    message.opTimeBegin = new $util.LongBits(object.opTimeBegin.low >>> 0, object.opTimeBegin.high >>> 0).toNumber();
+            if (object.opTimeEnd != null)
+                if ($util.Long)
+                    (message.opTimeEnd = $util.Long.fromValue(object.opTimeEnd)).unsigned = false;
+                else if (typeof object.opTimeEnd === "string")
+                    message.opTimeEnd = parseInt(object.opTimeEnd, 10);
+                else if (typeof object.opTimeEnd === "number")
+                    message.opTimeEnd = object.opTimeEnd;
+                else if (typeof object.opTimeEnd === "object")
+                    message.opTimeEnd = new $util.LongBits(object.opTimeEnd.low >>> 0, object.opTimeEnd.high >>> 0).toNumber();
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a ListChangeLogReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.ListChangeLogReq
+         * @static
+         * @param {dto.ListChangeLogReq} message ListChangeLogReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ListChangeLogReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.objects || options.defaults)
+                object.sortBy = {};
+            if (options.defaults) {
+                object.collName = "";
+                object.recordId = "";
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.opTimeBegin = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.opTimeBegin = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.opTimeEnd = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.opTimeEnd = options.longs === String ? "0" : 0;
+                object.noPaging = false;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.page = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.page = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.perPage = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.perPage = options.longs === String ? "0" : 0;
+            }
+            if (message.collName != null && message.hasOwnProperty("collName"))
+                object.collName = message.collName;
+            if (message.recordId != null && message.hasOwnProperty("recordId"))
+                object.recordId = message.recordId;
+            if (message.opTimeBegin != null && message.hasOwnProperty("opTimeBegin"))
+                if (typeof message.opTimeBegin === "number")
+                    object.opTimeBegin = options.longs === String ? String(message.opTimeBegin) : message.opTimeBegin;
+                else
+                    object.opTimeBegin = options.longs === String ? $util.Long.prototype.toString.call(message.opTimeBegin) : options.longs === Number ? new $util.LongBits(message.opTimeBegin.low >>> 0, message.opTimeBegin.high >>> 0).toNumber() : message.opTimeBegin;
+            if (message.opTimeEnd != null && message.hasOwnProperty("opTimeEnd"))
+                if (typeof message.opTimeEnd === "number")
+                    object.opTimeEnd = options.longs === String ? String(message.opTimeEnd) : message.opTimeEnd;
+                else
+                    object.opTimeEnd = options.longs === String ? $util.Long.prototype.toString.call(message.opTimeEnd) : options.longs === Number ? new $util.LongBits(message.opTimeEnd.low >>> 0, message.opTimeEnd.high >>> 0).toNumber() : message.opTimeEnd;
+            if (message.noPaging != null && message.hasOwnProperty("noPaging"))
+                object.noPaging = message.noPaging;
+            if (message.page != null && message.hasOwnProperty("page"))
+                if (typeof message.page === "number")
+                    object.page = options.longs === String ? String(message.page) : message.page;
+                else
+                    object.page = options.longs === String ? $util.Long.prototype.toString.call(message.page) : options.longs === Number ? new $util.LongBits(message.page.low >>> 0, message.page.high >>> 0).toNumber() : message.page;
+            if (message.perPage != null && message.hasOwnProperty("perPage"))
+                if (typeof message.perPage === "number")
+                    object.perPage = options.longs === String ? String(message.perPage) : message.perPage;
+                else
+                    object.perPage = options.longs === String ? $util.Long.prototype.toString.call(message.perPage) : options.longs === Number ? new $util.LongBits(message.perPage.low >>> 0, message.perPage.high >>> 0).toNumber() : message.perPage;
+            var keys2;
+            if (message.sortBy && (keys2 = Object.keys(message.sortBy)).length) {
+                object.sortBy = {};
+                for (var j = 0; j < keys2.length; ++j)
+                    object.sortBy[keys2[j]] = options.enums === String ? $root.dto.SortDirection[message.sortBy[keys2[j]]] === undefined ? message.sortBy[keys2[j]] : $root.dto.SortDirection[message.sortBy[keys2[j]]] : message.sortBy[keys2[j]];
+            }
+            return object;
+        };
+
+        /**
+         * Converts this ListChangeLogReq to JSON.
+         * @function toJSON
+         * @memberof dto.ListChangeLogReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ListChangeLogReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for ListChangeLogReq
+         * @function getTypeUrl
+         * @memberof dto.ListChangeLogReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        ListChangeLogReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.ListChangeLogReq";
+        };
+
+        return ListChangeLogReq;
+    })();
+
     dto.ListChangeLogElem = (function() {
 
         /**
@@ -19072,6 +21430,575 @@ $root.dto = (function() {
         };
 
         return ListChangeLogRet;
+    })();
+
+    dto.ListAccessLogReq = (function() {
+
+        /**
+         * Properties of a ListAccessLogReq.
+         * @memberof dto
+         * @interface IListAccessLogReq
+         * @property {boolean|null} [noPaging] ListAccessLogReq noPaging
+         * @property {number|Long|null} [page] ListAccessLogReq page
+         * @property {number|Long|null} [perPage] ListAccessLogReq perPage
+         * @property {Object.<string,dto.SortDirection>|null} [sortBy] ListAccessLogReq sortBy
+         * @property {string|null} [level] ListAccessLogReq level
+         * @property {number|Long|null} [timeBegin] ListAccessLogReq timeBegin
+         * @property {number|Long|null} [timeEnd] ListAccessLogReq timeEnd
+         * @property {string|null} [clientIp] ListAccessLogReq clientIp
+         * @property {string|null} [path] ListAccessLogReq path
+         * @property {string|null} [traceId] ListAccessLogReq traceId
+         * @property {string|null} [sessionId] ListAccessLogReq sessionId
+         * @property {string|null} [tag] ListAccessLogReq tag
+         */
+
+        /**
+         * Constructs a new ListAccessLogReq.
+         * @memberof dto
+         * @classdesc Represents a ListAccessLogReq.
+         * @implements IListAccessLogReq
+         * @constructor
+         * @param {dto.IListAccessLogReq=} [properties] Properties to set
+         */
+        function ListAccessLogReq(properties) {
+            this.sortBy = {};
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * ListAccessLogReq noPaging.
+         * @member {boolean} noPaging
+         * @memberof dto.ListAccessLogReq
+         * @instance
+         */
+        ListAccessLogReq.prototype.noPaging = false;
+
+        /**
+         * ListAccessLogReq page.
+         * @member {number|Long} page
+         * @memberof dto.ListAccessLogReq
+         * @instance
+         */
+        ListAccessLogReq.prototype.page = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * ListAccessLogReq perPage.
+         * @member {number|Long} perPage
+         * @memberof dto.ListAccessLogReq
+         * @instance
+         */
+        ListAccessLogReq.prototype.perPage = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * ListAccessLogReq sortBy.
+         * @member {Object.<string,dto.SortDirection>} sortBy
+         * @memberof dto.ListAccessLogReq
+         * @instance
+         */
+        ListAccessLogReq.prototype.sortBy = $util.emptyObject;
+
+        /**
+         * ListAccessLogReq level.
+         * @member {string} level
+         * @memberof dto.ListAccessLogReq
+         * @instance
+         */
+        ListAccessLogReq.prototype.level = "";
+
+        /**
+         * ListAccessLogReq timeBegin.
+         * @member {number|Long} timeBegin
+         * @memberof dto.ListAccessLogReq
+         * @instance
+         */
+        ListAccessLogReq.prototype.timeBegin = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * ListAccessLogReq timeEnd.
+         * @member {number|Long} timeEnd
+         * @memberof dto.ListAccessLogReq
+         * @instance
+         */
+        ListAccessLogReq.prototype.timeEnd = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * ListAccessLogReq clientIp.
+         * @member {string} clientIp
+         * @memberof dto.ListAccessLogReq
+         * @instance
+         */
+        ListAccessLogReq.prototype.clientIp = "";
+
+        /**
+         * ListAccessLogReq path.
+         * @member {string} path
+         * @memberof dto.ListAccessLogReq
+         * @instance
+         */
+        ListAccessLogReq.prototype.path = "";
+
+        /**
+         * ListAccessLogReq traceId.
+         * @member {string} traceId
+         * @memberof dto.ListAccessLogReq
+         * @instance
+         */
+        ListAccessLogReq.prototype.traceId = "";
+
+        /**
+         * ListAccessLogReq sessionId.
+         * @member {string} sessionId
+         * @memberof dto.ListAccessLogReq
+         * @instance
+         */
+        ListAccessLogReq.prototype.sessionId = "";
+
+        /**
+         * ListAccessLogReq tag.
+         * @member {string} tag
+         * @memberof dto.ListAccessLogReq
+         * @instance
+         */
+        ListAccessLogReq.prototype.tag = "";
+
+        /**
+         * Creates a new ListAccessLogReq instance using the specified properties.
+         * @function create
+         * @memberof dto.ListAccessLogReq
+         * @static
+         * @param {dto.IListAccessLogReq=} [properties] Properties to set
+         * @returns {dto.ListAccessLogReq} ListAccessLogReq instance
+         */
+        ListAccessLogReq.create = function create(properties) {
+            return new ListAccessLogReq(properties);
+        };
+
+        /**
+         * Encodes the specified ListAccessLogReq message. Does not implicitly {@link dto.ListAccessLogReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.ListAccessLogReq
+         * @static
+         * @param {dto.IListAccessLogReq} message ListAccessLogReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListAccessLogReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.level != null && Object.hasOwnProperty.call(message, "level"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.level);
+            if (message.timeBegin != null && Object.hasOwnProperty.call(message, "timeBegin"))
+                writer.uint32(/* id 2, wireType 0 =*/16).sint64(message.timeBegin);
+            if (message.timeEnd != null && Object.hasOwnProperty.call(message, "timeEnd"))
+                writer.uint32(/* id 3, wireType 0 =*/24).sint64(message.timeEnd);
+            if (message.clientIp != null && Object.hasOwnProperty.call(message, "clientIp"))
+                writer.uint32(/* id 4, wireType 2 =*/34).string(message.clientIp);
+            if (message.path != null && Object.hasOwnProperty.call(message, "path"))
+                writer.uint32(/* id 5, wireType 2 =*/42).string(message.path);
+            if (message.traceId != null && Object.hasOwnProperty.call(message, "traceId"))
+                writer.uint32(/* id 6, wireType 2 =*/50).string(message.traceId);
+            if (message.sessionId != null && Object.hasOwnProperty.call(message, "sessionId"))
+                writer.uint32(/* id 7, wireType 2 =*/58).string(message.sessionId);
+            if (message.tag != null && Object.hasOwnProperty.call(message, "tag"))
+                writer.uint32(/* id 8, wireType 2 =*/66).string(message.tag);
+            if (message.noPaging != null && Object.hasOwnProperty.call(message, "noPaging"))
+                writer.uint32(/* id 20001, wireType 0 =*/160008).bool(message.noPaging);
+            if (message.page != null && Object.hasOwnProperty.call(message, "page"))
+                writer.uint32(/* id 20002, wireType 0 =*/160016).sint64(message.page);
+            if (message.perPage != null && Object.hasOwnProperty.call(message, "perPage"))
+                writer.uint32(/* id 20003, wireType 0 =*/160024).sint64(message.perPage);
+            if (message.sortBy != null && Object.hasOwnProperty.call(message, "sortBy"))
+                for (var keys = Object.keys(message.sortBy), i = 0; i < keys.length; ++i)
+                    writer.uint32(/* id 20004, wireType 2 =*/160034).fork().uint32(/* id 1, wireType 2 =*/10).string(keys[i]).uint32(/* id 2, wireType 0 =*/16).int32(message.sortBy[keys[i]]).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ListAccessLogReq message, length delimited. Does not implicitly {@link dto.ListAccessLogReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.ListAccessLogReq
+         * @static
+         * @param {dto.IListAccessLogReq} message ListAccessLogReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListAccessLogReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ListAccessLogReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.ListAccessLogReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.ListAccessLogReq} ListAccessLogReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListAccessLogReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListAccessLogReq(), key, value;
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 20001: {
+                        message.noPaging = reader.bool();
+                        break;
+                    }
+                case 20002: {
+                        message.page = reader.sint64();
+                        break;
+                    }
+                case 20003: {
+                        message.perPage = reader.sint64();
+                        break;
+                    }
+                case 20004: {
+                        if (message.sortBy === $util.emptyObject)
+                            message.sortBy = {};
+                        var end2 = reader.uint32() + reader.pos;
+                        key = "";
+                        value = 0;
+                        while (reader.pos < end2) {
+                            var tag2 = reader.uint32();
+                            switch (tag2 >>> 3) {
+                            case 1:
+                                key = reader.string();
+                                break;
+                            case 2:
+                                value = reader.int32();
+                                break;
+                            default:
+                                reader.skipType(tag2 & 7);
+                                break;
+                            }
+                        }
+                        message.sortBy[key] = value;
+                        break;
+                    }
+                case 1: {
+                        message.level = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.timeBegin = reader.sint64();
+                        break;
+                    }
+                case 3: {
+                        message.timeEnd = reader.sint64();
+                        break;
+                    }
+                case 4: {
+                        message.clientIp = reader.string();
+                        break;
+                    }
+                case 5: {
+                        message.path = reader.string();
+                        break;
+                    }
+                case 6: {
+                        message.traceId = reader.string();
+                        break;
+                    }
+                case 7: {
+                        message.sessionId = reader.string();
+                        break;
+                    }
+                case 8: {
+                        message.tag = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ListAccessLogReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.ListAccessLogReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.ListAccessLogReq} ListAccessLogReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListAccessLogReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ListAccessLogReq message.
+         * @function verify
+         * @memberof dto.ListAccessLogReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ListAccessLogReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.noPaging != null && message.hasOwnProperty("noPaging"))
+                if (typeof message.noPaging !== "boolean")
+                    return "noPaging: boolean expected";
+            if (message.page != null && message.hasOwnProperty("page"))
+                if (!$util.isInteger(message.page) && !(message.page && $util.isInteger(message.page.low) && $util.isInteger(message.page.high)))
+                    return "page: integer|Long expected";
+            if (message.perPage != null && message.hasOwnProperty("perPage"))
+                if (!$util.isInteger(message.perPage) && !(message.perPage && $util.isInteger(message.perPage.low) && $util.isInteger(message.perPage.high)))
+                    return "perPage: integer|Long expected";
+            if (message.sortBy != null && message.hasOwnProperty("sortBy")) {
+                if (!$util.isObject(message.sortBy))
+                    return "sortBy: object expected";
+                var key = Object.keys(message.sortBy);
+                for (var i = 0; i < key.length; ++i)
+                    switch (message.sortBy[key[i]]) {
+                    default:
+                        return "sortBy: enum value{k:string} expected";
+                    case 0:
+                    case 1:
+                        break;
+                    }
+            }
+            if (message.level != null && message.hasOwnProperty("level"))
+                if (!$util.isString(message.level))
+                    return "level: string expected";
+            if (message.timeBegin != null && message.hasOwnProperty("timeBegin"))
+                if (!$util.isInteger(message.timeBegin) && !(message.timeBegin && $util.isInteger(message.timeBegin.low) && $util.isInteger(message.timeBegin.high)))
+                    return "timeBegin: integer|Long expected";
+            if (message.timeEnd != null && message.hasOwnProperty("timeEnd"))
+                if (!$util.isInteger(message.timeEnd) && !(message.timeEnd && $util.isInteger(message.timeEnd.low) && $util.isInteger(message.timeEnd.high)))
+                    return "timeEnd: integer|Long expected";
+            if (message.clientIp != null && message.hasOwnProperty("clientIp"))
+                if (!$util.isString(message.clientIp))
+                    return "clientIp: string expected";
+            if (message.path != null && message.hasOwnProperty("path"))
+                if (!$util.isString(message.path))
+                    return "path: string expected";
+            if (message.traceId != null && message.hasOwnProperty("traceId"))
+                if (!$util.isString(message.traceId))
+                    return "traceId: string expected";
+            if (message.sessionId != null && message.hasOwnProperty("sessionId"))
+                if (!$util.isString(message.sessionId))
+                    return "sessionId: string expected";
+            if (message.tag != null && message.hasOwnProperty("tag"))
+                if (!$util.isString(message.tag))
+                    return "tag: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a ListAccessLogReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.ListAccessLogReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.ListAccessLogReq} ListAccessLogReq
+         */
+        ListAccessLogReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.ListAccessLogReq)
+                return object;
+            var message = new $root.dto.ListAccessLogReq();
+            if (object.noPaging != null)
+                message.noPaging = Boolean(object.noPaging);
+            if (object.page != null)
+                if ($util.Long)
+                    (message.page = $util.Long.fromValue(object.page)).unsigned = false;
+                else if (typeof object.page === "string")
+                    message.page = parseInt(object.page, 10);
+                else if (typeof object.page === "number")
+                    message.page = object.page;
+                else if (typeof object.page === "object")
+                    message.page = new $util.LongBits(object.page.low >>> 0, object.page.high >>> 0).toNumber();
+            if (object.perPage != null)
+                if ($util.Long)
+                    (message.perPage = $util.Long.fromValue(object.perPage)).unsigned = false;
+                else if (typeof object.perPage === "string")
+                    message.perPage = parseInt(object.perPage, 10);
+                else if (typeof object.perPage === "number")
+                    message.perPage = object.perPage;
+                else if (typeof object.perPage === "object")
+                    message.perPage = new $util.LongBits(object.perPage.low >>> 0, object.perPage.high >>> 0).toNumber();
+            if (object.sortBy) {
+                if (typeof object.sortBy !== "object")
+                    throw TypeError(".dto.ListAccessLogReq.sortBy: object expected");
+                message.sortBy = {};
+                for (var keys = Object.keys(object.sortBy), i = 0; i < keys.length; ++i)
+                    switch (object.sortBy[keys[i]]) {
+                    default:
+                        if (typeof object.sortBy[keys[i]] === "number") {
+                            message.sortBy[keys[i]] = object.sortBy[keys[i]];
+                            break;
+                        }
+                        break;
+                    case "Asc":
+                    case 0:
+                        message.sortBy[keys[i]] = 0;
+                        break;
+                    case "Desc":
+                    case 1:
+                        message.sortBy[keys[i]] = 1;
+                        break;
+                    }
+            }
+            if (object.level != null)
+                message.level = String(object.level);
+            if (object.timeBegin != null)
+                if ($util.Long)
+                    (message.timeBegin = $util.Long.fromValue(object.timeBegin)).unsigned = false;
+                else if (typeof object.timeBegin === "string")
+                    message.timeBegin = parseInt(object.timeBegin, 10);
+                else if (typeof object.timeBegin === "number")
+                    message.timeBegin = object.timeBegin;
+                else if (typeof object.timeBegin === "object")
+                    message.timeBegin = new $util.LongBits(object.timeBegin.low >>> 0, object.timeBegin.high >>> 0).toNumber();
+            if (object.timeEnd != null)
+                if ($util.Long)
+                    (message.timeEnd = $util.Long.fromValue(object.timeEnd)).unsigned = false;
+                else if (typeof object.timeEnd === "string")
+                    message.timeEnd = parseInt(object.timeEnd, 10);
+                else if (typeof object.timeEnd === "number")
+                    message.timeEnd = object.timeEnd;
+                else if (typeof object.timeEnd === "object")
+                    message.timeEnd = new $util.LongBits(object.timeEnd.low >>> 0, object.timeEnd.high >>> 0).toNumber();
+            if (object.clientIp != null)
+                message.clientIp = String(object.clientIp);
+            if (object.path != null)
+                message.path = String(object.path);
+            if (object.traceId != null)
+                message.traceId = String(object.traceId);
+            if (object.sessionId != null)
+                message.sessionId = String(object.sessionId);
+            if (object.tag != null)
+                message.tag = String(object.tag);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a ListAccessLogReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.ListAccessLogReq
+         * @static
+         * @param {dto.ListAccessLogReq} message ListAccessLogReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ListAccessLogReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.objects || options.defaults)
+                object.sortBy = {};
+            if (options.defaults) {
+                object.level = "";
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.timeBegin = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.timeBegin = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.timeEnd = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.timeEnd = options.longs === String ? "0" : 0;
+                object.clientIp = "";
+                object.path = "";
+                object.traceId = "";
+                object.sessionId = "";
+                object.tag = "";
+                object.noPaging = false;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.page = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.page = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.perPage = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.perPage = options.longs === String ? "0" : 0;
+            }
+            if (message.level != null && message.hasOwnProperty("level"))
+                object.level = message.level;
+            if (message.timeBegin != null && message.hasOwnProperty("timeBegin"))
+                if (typeof message.timeBegin === "number")
+                    object.timeBegin = options.longs === String ? String(message.timeBegin) : message.timeBegin;
+                else
+                    object.timeBegin = options.longs === String ? $util.Long.prototype.toString.call(message.timeBegin) : options.longs === Number ? new $util.LongBits(message.timeBegin.low >>> 0, message.timeBegin.high >>> 0).toNumber() : message.timeBegin;
+            if (message.timeEnd != null && message.hasOwnProperty("timeEnd"))
+                if (typeof message.timeEnd === "number")
+                    object.timeEnd = options.longs === String ? String(message.timeEnd) : message.timeEnd;
+                else
+                    object.timeEnd = options.longs === String ? $util.Long.prototype.toString.call(message.timeEnd) : options.longs === Number ? new $util.LongBits(message.timeEnd.low >>> 0, message.timeEnd.high >>> 0).toNumber() : message.timeEnd;
+            if (message.clientIp != null && message.hasOwnProperty("clientIp"))
+                object.clientIp = message.clientIp;
+            if (message.path != null && message.hasOwnProperty("path"))
+                object.path = message.path;
+            if (message.traceId != null && message.hasOwnProperty("traceId"))
+                object.traceId = message.traceId;
+            if (message.sessionId != null && message.hasOwnProperty("sessionId"))
+                object.sessionId = message.sessionId;
+            if (message.tag != null && message.hasOwnProperty("tag"))
+                object.tag = message.tag;
+            if (message.noPaging != null && message.hasOwnProperty("noPaging"))
+                object.noPaging = message.noPaging;
+            if (message.page != null && message.hasOwnProperty("page"))
+                if (typeof message.page === "number")
+                    object.page = options.longs === String ? String(message.page) : message.page;
+                else
+                    object.page = options.longs === String ? $util.Long.prototype.toString.call(message.page) : options.longs === Number ? new $util.LongBits(message.page.low >>> 0, message.page.high >>> 0).toNumber() : message.page;
+            if (message.perPage != null && message.hasOwnProperty("perPage"))
+                if (typeof message.perPage === "number")
+                    object.perPage = options.longs === String ? String(message.perPage) : message.perPage;
+                else
+                    object.perPage = options.longs === String ? $util.Long.prototype.toString.call(message.perPage) : options.longs === Number ? new $util.LongBits(message.perPage.low >>> 0, message.perPage.high >>> 0).toNumber() : message.perPage;
+            var keys2;
+            if (message.sortBy && (keys2 = Object.keys(message.sortBy)).length) {
+                object.sortBy = {};
+                for (var j = 0; j < keys2.length; ++j)
+                    object.sortBy[keys2[j]] = options.enums === String ? $root.dto.SortDirection[message.sortBy[keys2[j]]] === undefined ? message.sortBy[keys2[j]] : $root.dto.SortDirection[message.sortBy[keys2[j]]] : message.sortBy[keys2[j]];
+            }
+            return object;
+        };
+
+        /**
+         * Converts this ListAccessLogReq to JSON.
+         * @function toJSON
+         * @memberof dto.ListAccessLogReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ListAccessLogReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for ListAccessLogReq
+         * @function getTypeUrl
+         * @memberof dto.ListAccessLogReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        ListAccessLogReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.ListAccessLogReq";
+        };
+
+        return ListAccessLogReq;
     })();
 
     dto.ListAccessLogElem = (function() {
@@ -21823,6 +24750,209 @@ $root.dto = (function() {
         return GetOwnRolesElem;
     })();
 
+    dto.GetOwnRolesReq = (function() {
+
+        /**
+         * Properties of a GetOwnRolesReq.
+         * @memberof dto
+         * @interface IGetOwnRolesReq
+         * @property {string|null} [domainId] GetOwnRolesReq domainId
+         */
+
+        /**
+         * Constructs a new GetOwnRolesReq.
+         * @memberof dto
+         * @classdesc Represents a GetOwnRolesReq.
+         * @implements IGetOwnRolesReq
+         * @constructor
+         * @param {dto.IGetOwnRolesReq=} [properties] Properties to set
+         */
+        function GetOwnRolesReq(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GetOwnRolesReq domainId.
+         * @member {string} domainId
+         * @memberof dto.GetOwnRolesReq
+         * @instance
+         */
+        GetOwnRolesReq.prototype.domainId = "";
+
+        /**
+         * Creates a new GetOwnRolesReq instance using the specified properties.
+         * @function create
+         * @memberof dto.GetOwnRolesReq
+         * @static
+         * @param {dto.IGetOwnRolesReq=} [properties] Properties to set
+         * @returns {dto.GetOwnRolesReq} GetOwnRolesReq instance
+         */
+        GetOwnRolesReq.create = function create(properties) {
+            return new GetOwnRolesReq(properties);
+        };
+
+        /**
+         * Encodes the specified GetOwnRolesReq message. Does not implicitly {@link dto.GetOwnRolesReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.GetOwnRolesReq
+         * @static
+         * @param {dto.IGetOwnRolesReq} message GetOwnRolesReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GetOwnRolesReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.domainId != null && Object.hasOwnProperty.call(message, "domainId"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.domainId);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GetOwnRolesReq message, length delimited. Does not implicitly {@link dto.GetOwnRolesReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.GetOwnRolesReq
+         * @static
+         * @param {dto.IGetOwnRolesReq} message GetOwnRolesReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GetOwnRolesReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GetOwnRolesReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.GetOwnRolesReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.GetOwnRolesReq} GetOwnRolesReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GetOwnRolesReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.GetOwnRolesReq();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.domainId = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GetOwnRolesReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.GetOwnRolesReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.GetOwnRolesReq} GetOwnRolesReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GetOwnRolesReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GetOwnRolesReq message.
+         * @function verify
+         * @memberof dto.GetOwnRolesReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GetOwnRolesReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.domainId != null && message.hasOwnProperty("domainId"))
+                if (!$util.isString(message.domainId))
+                    return "domainId: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a GetOwnRolesReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.GetOwnRolesReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.GetOwnRolesReq} GetOwnRolesReq
+         */
+        GetOwnRolesReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.GetOwnRolesReq)
+                return object;
+            var message = new $root.dto.GetOwnRolesReq();
+            if (object.domainId != null)
+                message.domainId = String(object.domainId);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GetOwnRolesReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.GetOwnRolesReq
+         * @static
+         * @param {dto.GetOwnRolesReq} message GetOwnRolesReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GetOwnRolesReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.domainId = "";
+            if (message.domainId != null && message.hasOwnProperty("domainId"))
+                object.domainId = message.domainId;
+            return object;
+        };
+
+        /**
+         * Converts this GetOwnRolesReq to JSON.
+         * @function toJSON
+         * @memberof dto.GetOwnRolesReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GetOwnRolesReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for GetOwnRolesReq
+         * @function getTypeUrl
+         * @memberof dto.GetOwnRolesReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        GetOwnRolesReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.GetOwnRolesReq";
+        };
+
+        return GetOwnRolesReq;
+    })();
+
     dto.GetOwnRolesRet = (function() {
 
         /**
@@ -22083,6 +25213,209 @@ $root.dto = (function() {
         };
 
         return GetOwnRolesRet;
+    })();
+
+    dto.SignOutRet = (function() {
+
+        /**
+         * Properties of a SignOutRet.
+         * @memberof dto
+         * @interface ISignOutRet
+         * @property {string|null} [id] SignOutRet id
+         */
+
+        /**
+         * Constructs a new SignOutRet.
+         * @memberof dto
+         * @classdesc Represents a SignOutRet.
+         * @implements ISignOutRet
+         * @constructor
+         * @param {dto.ISignOutRet=} [properties] Properties to set
+         */
+        function SignOutRet(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * SignOutRet id.
+         * @member {string} id
+         * @memberof dto.SignOutRet
+         * @instance
+         */
+        SignOutRet.prototype.id = "";
+
+        /**
+         * Creates a new SignOutRet instance using the specified properties.
+         * @function create
+         * @memberof dto.SignOutRet
+         * @static
+         * @param {dto.ISignOutRet=} [properties] Properties to set
+         * @returns {dto.SignOutRet} SignOutRet instance
+         */
+        SignOutRet.create = function create(properties) {
+            return new SignOutRet(properties);
+        };
+
+        /**
+         * Encodes the specified SignOutRet message. Does not implicitly {@link dto.SignOutRet.verify|verify} messages.
+         * @function encode
+         * @memberof dto.SignOutRet
+         * @static
+         * @param {dto.ISignOutRet} message SignOutRet message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        SignOutRet.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified SignOutRet message, length delimited. Does not implicitly {@link dto.SignOutRet.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.SignOutRet
+         * @static
+         * @param {dto.ISignOutRet} message SignOutRet message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        SignOutRet.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a SignOutRet message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.SignOutRet
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.SignOutRet} SignOutRet
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        SignOutRet.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.SignOutRet();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a SignOutRet message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.SignOutRet
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.SignOutRet} SignOutRet
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        SignOutRet.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a SignOutRet message.
+         * @function verify
+         * @memberof dto.SignOutRet
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        SignOutRet.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a SignOutRet message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.SignOutRet
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.SignOutRet} SignOutRet
+         */
+        SignOutRet.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.SignOutRet)
+                return object;
+            var message = new $root.dto.SignOutRet();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a SignOutRet message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.SignOutRet
+         * @static
+         * @param {dto.SignOutRet} message SignOutRet
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        SignOutRet.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this SignOutRet to JSON.
+         * @function toJSON
+         * @memberof dto.SignOutRet
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        SignOutRet.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for SignOutRet
+         * @function getTypeUrl
+         * @memberof dto.SignOutRet
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        SignOutRet.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.SignOutRet";
+        };
+
+        return SignOutRet;
     })();
 
     dto.MenuView = (function() {
@@ -22903,6 +26236,233 @@ $root.dto = (function() {
         };
 
         return MenuWidgetView;
+    })();
+
+    dto.GetOwnMenusReq = (function() {
+
+        /**
+         * Properties of a GetOwnMenusReq.
+         * @memberof dto
+         * @interface IGetOwnMenusReq
+         * @property {string|null} [domainId] GetOwnMenusReq domainId
+         * @property {string|null} [roleId] GetOwnMenusReq roleId
+         */
+
+        /**
+         * Constructs a new GetOwnMenusReq.
+         * @memberof dto
+         * @classdesc Represents a GetOwnMenusReq.
+         * @implements IGetOwnMenusReq
+         * @constructor
+         * @param {dto.IGetOwnMenusReq=} [properties] Properties to set
+         */
+        function GetOwnMenusReq(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GetOwnMenusReq domainId.
+         * @member {string} domainId
+         * @memberof dto.GetOwnMenusReq
+         * @instance
+         */
+        GetOwnMenusReq.prototype.domainId = "";
+
+        /**
+         * GetOwnMenusReq roleId.
+         * @member {string} roleId
+         * @memberof dto.GetOwnMenusReq
+         * @instance
+         */
+        GetOwnMenusReq.prototype.roleId = "";
+
+        /**
+         * Creates a new GetOwnMenusReq instance using the specified properties.
+         * @function create
+         * @memberof dto.GetOwnMenusReq
+         * @static
+         * @param {dto.IGetOwnMenusReq=} [properties] Properties to set
+         * @returns {dto.GetOwnMenusReq} GetOwnMenusReq instance
+         */
+        GetOwnMenusReq.create = function create(properties) {
+            return new GetOwnMenusReq(properties);
+        };
+
+        /**
+         * Encodes the specified GetOwnMenusReq message. Does not implicitly {@link dto.GetOwnMenusReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.GetOwnMenusReq
+         * @static
+         * @param {dto.IGetOwnMenusReq} message GetOwnMenusReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GetOwnMenusReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.domainId != null && Object.hasOwnProperty.call(message, "domainId"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.domainId);
+            if (message.roleId != null && Object.hasOwnProperty.call(message, "roleId"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.roleId);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GetOwnMenusReq message, length delimited. Does not implicitly {@link dto.GetOwnMenusReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.GetOwnMenusReq
+         * @static
+         * @param {dto.IGetOwnMenusReq} message GetOwnMenusReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GetOwnMenusReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GetOwnMenusReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.GetOwnMenusReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.GetOwnMenusReq} GetOwnMenusReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GetOwnMenusReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.GetOwnMenusReq();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.domainId = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.roleId = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GetOwnMenusReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.GetOwnMenusReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.GetOwnMenusReq} GetOwnMenusReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GetOwnMenusReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GetOwnMenusReq message.
+         * @function verify
+         * @memberof dto.GetOwnMenusReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GetOwnMenusReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.domainId != null && message.hasOwnProperty("domainId"))
+                if (!$util.isString(message.domainId))
+                    return "domainId: string expected";
+            if (message.roleId != null && message.hasOwnProperty("roleId"))
+                if (!$util.isString(message.roleId))
+                    return "roleId: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a GetOwnMenusReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.GetOwnMenusReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.GetOwnMenusReq} GetOwnMenusReq
+         */
+        GetOwnMenusReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.GetOwnMenusReq)
+                return object;
+            var message = new $root.dto.GetOwnMenusReq();
+            if (object.domainId != null)
+                message.domainId = String(object.domainId);
+            if (object.roleId != null)
+                message.roleId = String(object.roleId);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GetOwnMenusReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.GetOwnMenusReq
+         * @static
+         * @param {dto.GetOwnMenusReq} message GetOwnMenusReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GetOwnMenusReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.domainId = "";
+                object.roleId = "";
+            }
+            if (message.domainId != null && message.hasOwnProperty("domainId"))
+                object.domainId = message.domainId;
+            if (message.roleId != null && message.hasOwnProperty("roleId"))
+                object.roleId = message.roleId;
+            return object;
+        };
+
+        /**
+         * Converts this GetOwnMenusReq to JSON.
+         * @function toJSON
+         * @memberof dto.GetOwnMenusReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GetOwnMenusReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for GetOwnMenusReq
+         * @function getTypeUrl
+         * @memberof dto.GetOwnMenusReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        GetOwnMenusReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.GetOwnMenusReq";
+        };
+
+        return GetOwnMenusReq;
     })();
 
     dto.GetOwnMenusRet = (function() {

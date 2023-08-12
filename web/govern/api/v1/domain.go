@@ -55,15 +55,6 @@ func AddDomain(c *gin.Context) {
 	return
 }
 
-// ListDomainReq search arguments to list domains.
-type ListDomainReq struct {
-	Name     *string `form:"name" json:"name" binding:"" label:"名称"`                 // 名称
-	NeedTree bool    `form:"needTree" json:"needTree" binding:"" label:"数据是否要转为树结构"` // 数据是否要转为树结构
-	SortBy   SortBy  `form:"sortBy" json:"sortBy" binding:"" label:"字段排序条件"`         // 字段排序条件
-	Deleted  *bool   `form:"deleted" json:"deleted" binging:"" label:"是否被软删除"`       // 是否被软删除
-	PaginationArg
-}
-
 // ListDomain
 // @description Get a list of domain.
 // @id domain-list
@@ -79,17 +70,18 @@ type ListDomainReq struct {
 // @router /domains [GET]
 func ListDomain(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
-	var req ListDomainReq
+	var req dto.ListDomainReq
 	if err := c.ShouldBindQuery(&req); err != nil {
+		log.Println(err)
 		ProtoBufWithBadRequest(c, err)
 		return
 	}
 	var and bson.D
-	if req.Name != nil {
+	if req.Name != "" {
 		and = append(and, bson.E{Key: "name", Value: req.Name})
 	}
-	if req.Deleted != nil {
-		and = append(and, bson.E{Key: "deletedAt", Value: bson.E{Key: "$exists", Value: *req.Deleted}})
+	if req.Deleted {
+		and = append(and, bson.E{Key: "deletedAt", Value: bson.E{Key: "$exists", Value: req.Deleted}})
 	}
 	filter := make(bson.D, 0)
 	if len(and) > 0 {
@@ -97,24 +89,23 @@ func ListDomain(c *gin.Context) {
 	}
 	total, err := repo.Collection(model.Domain{}).CountDocuments(ctx, filter, options.Count().SetMaxTime(time.Minute))
 	if err != nil {
+		log.Println(err)
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
 	opt := options.Find().
 		SetSort(OrderByToBsonD(req.SortBy)).
-		SetSkip(req.PaginationArg.PerPage * (req.PaginationArg.Page - 1)).
-		SetLimit(req.PaginationArg.PerPage)
+		SetSkip(req.PerPage * (req.Page - 1)).
+		SetLimit(req.PerPage)
 	res, err := repo.FindMany[model.Domain](ctx, filter, opt)
 	if err != nil {
+		log.Println(err)
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
 	ret := make([]*dto.DomainListElem, 0, len(res))
 	if err = model.Copy(&ret, res); err != nil {
-		ProtoBufWithImplicitError(c, err)
-		return
-	}
-	if err != nil {
+		log.Println(err)
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
@@ -228,7 +219,7 @@ func EditDomain(c *gin.Context) {
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
-	ProtoBufWithOK(c, nil)
+	ProtoBufWithOK(c, &dto.EditDomainRet{Id: id.Hex()})
 	return
 }
 

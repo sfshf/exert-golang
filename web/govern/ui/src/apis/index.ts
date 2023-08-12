@@ -11,27 +11,42 @@ export const signIn = (data:object) => {
   return axios({
     method: 'post',
     url: '/signIn',
-    data: data
+    data: data,
+    transformRequest: [(data, headers) => {
+      return EncodeToBuffer(dto.SignInReq, data)
+    }],
+    transformResponse: [(data) => {
+      return DecodeToObject(dto.SignInRet, data)
+    }]
   })
 }
 export const getOwnDomains = () => {
   return axios({
     method: 'get',
-    url: '/getOwnDomains'
+    url: '/getOwnDomains',
+    transformResponse: [(data) => {
+      return DecodeToObject(dto.GetOwnDomainsRet, data)
+    }]
   })
 }
 export const getOwnRoles = (params?:any) => {
   return axios({
     method: 'get',
     url: '/getOwnRoles',
-    params: params
+    params: params,
+    transformResponse: [(data) => {
+      return DecodeToObject(dto.GetOwnRolesRet, data)
+    }]
   })
 }
 export const getOwnMenus = (params?:any) => {
   return axios({
     method: 'get',
     url: '/getOwnMenus',
-    params: params
+    params: params,
+    transformResponse: [(data) => {
+      return DecodeToObject(dto.GetOwnMenusRet, data)
+    }]
   })
 }
 export const signOut = () => {
@@ -48,7 +63,7 @@ export const listMenu = (params?:any) => {
     url: '/menus',
     params: params,
     transformResponse: [(data) => {
-      return DecodeToObject(dto.ListMenuRet, data);
+      return DecodeToObject(dto.ListMenuRet, data)
     }]
   })
 }
@@ -301,7 +316,7 @@ export const listDomain = (params?:any) => {
     url: '/domains',
     params: params,
     transformResponse: [(data) => {
-      return DecodeToObject(dto.ListDomainRet, data);
+      return DecodeToObject(dto.ListDomainRet, data)
     }]
   })
 }

@@ -24,7 +24,7 @@ el-container
         row-key="id"
         default-expand-all
       )
-        el-table-column(fixed prop="id" label="ID" width="250")
+        el-table-column(fixed prop="id" label="Id" width="250")
         el-table-column(fixed prop="name" label="Name" width="150")
         el-table-column(show-overflow-tooltip prop="alias" label="Alias" width="200")
         el-table-column(prop="seq" label="Seq" width="50")
@@ -81,7 +81,6 @@ const domainOpts = ref([])
 onMounted(async () => {
   try {
     const listDomainResp = await listDomain({ needTree: true })
-    console.log(listDomainResp.data.list)
     domainTableData.value = listDomainResp.data.list
     domainOpts.value = listDomainResp.data.list
   } catch (err:any) {

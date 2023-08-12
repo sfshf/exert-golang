@@ -24,7 +24,7 @@ el-container
         row-key="id"
         default-expand-all
       )
-        el-table-column(fixed prop="id" label="ID" width="250")
+        el-table-column(fixed prop="id" label="Id" width="250")
         el-table-column(fixed prop="name" label="Name" width="80")
         el-table-column(prop="seq" label="Seq" width="80")
         el-table-column(prop="icon" label="Icon" width="150")

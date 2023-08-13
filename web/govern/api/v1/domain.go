@@ -19,20 +19,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// AddDomain
-// @description Add a new domain.
-// @id domain-add
-// @tags domain
-// @summary Add a new domain.
-// @accept protobuf
-// @produce protobuf
-// @param body body AddDomainReq true "required attributes to add a new domain."
-// @security ApiKeyAuth
-// @success 201 {string} string "created successfully."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /domains [POST]
+// AddDomain Add a new domain.
 func AddDomain(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	var req dto.AddDomainReq
@@ -55,19 +42,7 @@ func AddDomain(c *gin.Context) {
 	return
 }
 
-// ListDomain
-// @description Get a list of domain.
-// @id domain-list
-// @tags domain
-// @summary Get a list of domain.
-// @produce protobuf
-// @param query query ListDomainReq false "search criteria."
-// @security ApiKeyAuth
-// @success 200 {object} DomainListElem "domain list."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /domains [GET]
+// ListDomain Get a list of domain.
 func ListDomain(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	var req dto.ListDomainReq
@@ -149,19 +124,7 @@ func domainListConvertedToTree(menuList []*dto.DomainListElem, parentId string) 
 	return siblinDomains, nil
 }
 
-// ProfileDomain
-// @description Get the profile of a domain.
-// @id domain-profile
-// @tags domain
-// @summary Get infos of a domain.
-// @produce protobuf
-// @param id path string true "id of the domain."
-// @security ApiKeyAuth
-// @success 200 {object} ProfileDomainRet "profile of the domain."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /domains/:id [GET]
+// ProfileDomain Get the profile of a domain.
 func ProfileDomain(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -183,21 +146,7 @@ func ProfileDomain(c *gin.Context) {
 	return
 }
 
-// EditDomain
-// @description Update a specific domain.
-// @id domain-update
-// @tags domain
-// @summary Update a specific domain.
-// @accept protobuf
-// @produce protobuf
-// @param id path string true "id of the domain to update."
-// @param body body EditDomainReq true "attributes need to update."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /domains/:id [PUT]
+// EditDomain Update a specific domain.
 func EditDomain(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -223,20 +172,7 @@ func EditDomain(c *gin.Context) {
 	return
 }
 
-// EnableDomain
-// @description Enable a domain.
-// @id domain-enable
-// @tags domain
-// @summary Enable a domain.
-// @accept protobuf
-// @produce protobuf
-// @param id path string true "id of the domain."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /domains/:id/enable [PATCH]
+// EnableDomain Enable a domain.
 func EnableDomain(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -296,20 +232,7 @@ func EnableDomain(c *gin.Context) {
 	return
 }
 
-// DisableDomain
-// @description Disable a domain.
-// @id domain-disable
-// @tags domain
-// @summary Disable a domain.
-// @accept protobuf
-// @produce protobuf
-// @param id path string true "id of the domain."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /domains/:id/disable [PATCH]
+// DisableDomain Disable a domain.
 func DisableDomain(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -381,20 +304,7 @@ func DisableDomain(c *gin.Context) {
 	return
 }
 
-// RemoveDomain
-// @description remove the domain forever, not soft-deletion.
-// @id domain-remove
-// @tags domain
-// @summary remove the domain forever.
-// @produce protobuf
-// @param id path string true "id of the domain to remove."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 403 {error} error "forbidden."
-// @failure 500 {error} error "internal server error."
-// @router /domains/:id [DELETE]
+// RemoveDomain remove the domain forever, not soft-deletion.
 func RemoveDomain(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))

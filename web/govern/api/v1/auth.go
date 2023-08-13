@@ -17,18 +17,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// GetPicCaptcha
-// @description Get a new picture captcha id and base64 string of the picture, and delete the obsolete captcha of the `obsoleteId`, if has.
-// @id get-pic-captcha
-// @tags auth
-// @summary Get a picture captcha.
-// @produce protobuf
-// @param obsoleteId query string false "an obsolete captcha id."
-// @success 200 {object} GetPicCaptchaRet "captcha id and picture."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /picCaptcha [GET]
+// GetPicCaptcha Get a new picture captcha id and base64 string of the picture, and delete the obsolete captcha of the `obsoleteId`, if has.
 func GetPicCaptcha(c *gin.Context) {
 	if !captcha.PicCaptchaEnabled() {
 		ProtoBufWithOK(c, &dto.GetPicCaptchaRet{})
@@ -47,19 +36,7 @@ func GetPicCaptcha(c *gin.Context) {
 	return
 }
 
-// GetPicCaptchaAnswer
-// @description Get the answer code of a picture captcha with the captcha id.
-// @id get-pic-captcha-answer
-// @tags auth
-// @summary Get the answer code of a picture captcha.
-// @produce protobuf
-// @param id query string true "a captcha id."
-// @security ApiKeyAuth
-// @success 200 {string} string "captcha answer code"
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /picCaptchaAnswer [GET]
+// GetPicCaptchaAnswer Get the answer code of a picture captcha with the captcha id.
 func GetPicCaptchaAnswer(c *gin.Context) {
 	if !captcha.PicCaptchaEnabled() {
 		ProtoBufWithOK(c, &dto.GetPicCaptchaAnswerRet{})
@@ -78,19 +55,7 @@ func GetPicCaptchaAnswer(c *gin.Context) {
 	return
 }
 
-// SignIn
-// @description Sign in with account and password, supporting picture captcha authentication.
-// @id sign-in
-// @tags auth
-// @summary Sign in.
-// @accept protobuf
-// @produce protobuf
-// @param body body SignInReq true "required attributes to sign in."
-// @success 200 {object} SignInRet "sign in token and expiry time."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /signIn [POST]
+// SignIn Sign in with account and password, supporting picture captcha authentication.
 func SignIn(conf Config) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ctx := c.Request.Context()
@@ -160,19 +125,7 @@ func SignIn(conf Config) gin.HandlerFunc {
 	}
 }
 
-// GetOwnDomains
-// @description Get own domains of the session account.
-// @id get-own-domains
-// @tags auth
-// @summary Get own domains.
-// @accept protobuf
-// @produce protobuf
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /getOwnDomains [GET]
+// GetOwnDomains Get own domains of the session account.
 func GetOwnDomains(c *gin.Context) {
 	sessionID := SessionIdFromGinX(c)
 	if model_service.IsRoot(sessionID) {
@@ -212,20 +165,7 @@ func GetOwnDomains(c *gin.Context) {
 	return
 }
 
-// GetOwnRoles
-// @description Get own roles of the session account.
-// @id get-own-roles
-// @tags auth
-// @summary Get own roles.
-// @accept protobuf
-// @produce protobuf
-// @param body body GetOwnRolesReq true "required attributes to get own roles."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /getOwnRoles [GET]
+// GetOwnRoles Get own roles of the session account.
 func GetOwnRoles(c *gin.Context) {
 	sessionID := SessionIdFromGinX(c)
 	if model_service.IsRoot(sessionID) {
@@ -282,20 +222,7 @@ func GetOwnRoles(c *gin.Context) {
 	return
 }
 
-// GetOwnMenus
-// @description Get own menus of the session account.
-// @id get-own-menus
-// @tags auth
-// @summary Get own menus.
-// @accept protobuf
-// @produce protobuf
-// @param query query GetOwnMenusReq false "search criteria."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /getOwnMenus [GET]
+// GetOwnMenus Get own menus of the session account.
 func GetOwnMenus(conf Config) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		sessionID := SessionIdFromGinX(c)
@@ -367,18 +294,7 @@ func GetOwnMenus(conf Config) gin.HandlerFunc {
 	}
 }
 
-// SignOut
-// @description Sign out the session account.
-// @id sign-out
-// @tags auth
-// @summary Sign out.
-// @produce protobuf
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /signOut [POST]
+// SignOut Sign out the session account.
 func SignOut(c *gin.Context) {
 	sessionID := SessionIdFromGinX(c)
 	if err := model_service.SignOut(

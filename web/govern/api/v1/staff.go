@@ -19,19 +19,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// AddStaff
-// @description add a new staff account.
-// @id staff-add
-// @tags staff
-// @summary add a new staff account.
-// @accept protobuf
-// @produce protobuf
-// @param body body AddStaffReq true "required attributes to add a staff."
-// @success 201 {string} string "created successfully."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /staffs [POST]
+// AddStaff add a new staff account.
 func AddStaff(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	var req dto.AddStaffReq
@@ -57,19 +45,7 @@ func AddStaff(c *gin.Context) {
 	return
 }
 
-// ListStaff
-// @description get a list of staff accounts.
-// @id staff-list
-// @tags staff
-// @summary get a list of staff accounts.
-// @produce protobuf
-// @param query query ListStaffReq false "search criteria."
-// @security ApiKeyAuth
-// @success 200 {object} StaffListElem "staff list."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /staffs [GET]
+// ListStaff get a list of staff accounts.
 func ListStaff(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	var req dto.ListStaffReq
@@ -146,19 +122,7 @@ func ListStaff(c *gin.Context) {
 	return
 }
 
-// ProfileStaff
-// @description get the profile of a staff account.
-// @id staff-profile
-// @tags staff
-// @summary get infos of a staff account.
-// @produce protobuf
-// @param id path string true "id of the staff account."
-// @security ApiKeyAuth
-// @success 200 {object} ProfileStaffRet "profile of the staff."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /staffs/:id [GET]
+// ProfileStaff get the profile of a staff account.
 func ProfileStaff(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -184,21 +148,7 @@ func ProfileStaff(c *gin.Context) {
 	return
 }
 
-// EditStaff
-// @description update a staff.
-// @id staff-update
-// @tags staff
-// @summary update a staff.
-// @accept protobuf
-// @produce protobuf
-// @param id path string true "id of the staff account to update."
-// @param body body EditStaffReq true "attributes need to update a staff."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /staffs/:id [PUT]
+// EditStaff update a staff.
 func EditStaff(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -224,21 +174,7 @@ func EditStaff(c *gin.Context) {
 	return
 }
 
-// PatchStaffPassword
-// @description update the password of a staff account.
-// @id staff-update-password
-// @tags staff
-// @summary update the password of a staff account.
-// @accept protobuf
-// @produce protobuf
-// @param id path string true "id of the staff account to update."
-// @param body body PatchPasswordReq true "attributes need to update the password."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /staffs/:id/password [PATCH]
+// PatchStaffPassword update the password of a staff account.
 func PatchStaffPassword(c *gin.Context) {
 	sessionID := SessionIdFromGinX(c)
 	sessionDT := model.NewDatetime(time.Now())
@@ -287,22 +223,7 @@ func PatchStaffPassword(c *gin.Context) {
 	return
 }
 
-// AuthorizeStaffRolesInDomain
-// @description update the roles of a staff account in some domain.
-// @id staff-update-roles
-// @tags staff
-// @summary update the roles of a staff account in some domain.
-// @accept protobuf
-// @produce protobuf
-// @param id path string true "id of the staff account to update."
-// @param domainId path string true "id of some domain."
-// @param body body PatchStaffRolesReq true "attributes need to update the roles."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /staffs/:id/domains/:domainId/roles [POST]
+// AuthorizeStaffRolesInDomain update the roles of a staff account in some domain.
 func AuthorizeStaffRolesInDomain(c *gin.Context) {
 	sessionID := SessionIdFromGinX(c)
 	sessionDT := model.NewDatetime(time.Now())
@@ -414,20 +335,7 @@ func AuthorizeStaffRolesInDomain(c *gin.Context) {
 	return
 }
 
-// StaffDomains
-// @description get domains of a staff.
-// @id staff-domains
-// @tags staff
-// @summary get domains of a staff.
-// @accept protobuf
-// @produce protobuf
-// @param id path string true "id of the staff."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /staffs/:id/domains [GET]
+// StaffDomains get domains of a staff.
 func StaffDomains(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -446,21 +354,7 @@ func StaffDomains(c *gin.Context) {
 	return
 }
 
-// StaffRolesInDomain
-// @description get roles of a staff in some domain.
-// @id staff-roles
-// @tags staff
-// @summary get roles of a staff in some domain.
-// @accept protobuf
-// @produce protobuf
-// @param id path string true "id of the staff."
-// @param domainId path string true "id of some domain."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /staffs/:id/domains/:domainId/roles [GET]
+// StaffRolesInDomain get roles of a staff in some domain.
 func StaffRolesInDomain(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -482,20 +376,7 @@ func StaffRolesInDomain(c *gin.Context) {
 	return
 }
 
-// EnableStaff
-// @description enable a staff account.
-// @id staff-enable
-// @tags staff
-// @summary enable a staff account.
-// @accept protobuf
-// @produce protobuf
-// @param id path string true "id of the staff account."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /staffs/:id/enable [PATCH]
+// EnableStaff enable a staff account.
 func EnableStaff(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -511,20 +392,7 @@ func EnableStaff(c *gin.Context) {
 	return
 }
 
-// DisableStaff
-// @description disable a staff account.
-// @id staff-disable
-// @tags staff
-// @summary disable a staff account.
-// @accept protobuf
-// @produce protobuf
-// @param id path string true "id of the staff account."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /staffs/:id/disable [PATCH]
+// DisableStaff disable a staff account.
 func DisableStaff(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -571,20 +439,7 @@ func DisableStaff(c *gin.Context) {
 	return
 }
 
-// RemoveStaff
-// @description remove the account forever, not soft-deletion.
-// @id staff-remove
-// @tags staff
-// @summary remove the account forever.
-// @produce protobuf
-// @param id path string true "id of the account to be removed."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 403 {error} error "forbidden."
-// @failure 500 {error} error "internal server error."
-// @router /staffs/:id [DELETE]
+// RemoveStaff remove the account forever, not soft-deletion.
 func RemoveStaff(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))

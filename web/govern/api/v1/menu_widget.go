@@ -17,21 +17,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// AddMenuWidget
-// @description Add a widget for a specific menu.
-// @id menu-widget-add
-// @tags menu
-// @summary Add a widget for a specific menu.
-// @accept protobuf
-// @produce protobuf
-// @param id path string true "id of the menu."
-// @param body body AddMenuWidgetReq true "necessary attributes to add a widget."
-// @security ApiKeyAuth
-// @success 201 {string} string "created successfully."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /menus/:id/widgets [POST]
+// AddMenuWidget Add a widget for a specific menu.
 func AddMenuWidget(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	menuID, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -60,19 +46,7 @@ func AddMenuWidget(c *gin.Context) {
 	return
 }
 
-// ListMenuWidget
-// @description Get a widget list of a specific menu.
-// @id menu-widget-list
-// @tags menu
-// @summary Get a widget list of a specific menu.
-// @produce protobuf
-// @param id path string true "id of the menu."
-// @security ApiKeyAuth
-// @success 200 {object} MenuWidgetListElem "role list."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /menus/:id/widgets [GET]
+// ListMenuWidget Get a widget list of a specific menu.
 func ListMenuWidget(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	menuID, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -120,20 +94,7 @@ func ListMenuWidget(c *gin.Context) {
 	return
 }
 
-// ProfileMenuWidget
-// @description Get the profile of a widget.
-// @id menu-widget-profile
-// @tags menu
-// @summary Get infos of a widget.
-// @produce protobuf
-// @param id path string true "id of the menu."
-// @param widgetId path string true "id the a widget."
-// @security ApiKeyAuth
-// @success 200 {object} ProfileMenuWidgetRet "profile of the role."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /menus/:id/widgets/:widgetId [GET]
+// ProfileMenuWidget Get the profile of a widget.
 func ProfileMenuWidget(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	menuID, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -169,22 +130,7 @@ func ProfileMenuWidget(c *gin.Context) {
 	return
 }
 
-// EditMenuWidget
-// @description Update infos of a widget.
-// @id menu-update-widget-update
-// @tags menu
-// @summary Update infos of a widget.
-// @accept protobuf
-// @produce protobuf
-// @param id path string true "id of the menu."
-// @param widgetId path string true "id the a widget."
-// @param body body EditMenuWidgetReq true "some attributes to update."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /menus/:id/widgets/:widgetId [PUT]
+// EditMenuWidget Update infos of a widget.
 func EditMenuWidget(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	menuID, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -266,20 +212,7 @@ func EditMenuWidget(c *gin.Context) {
 	return
 }
 
-// EnableMenuWidget
-// @description Enable a menu-widget.
-// @id menu-widget-enable
-// @tags menu
-// @summary Enable a menu-widget.
-// @produce protobuf
-// @param id path string true "id of the menu."
-// @param widgetId path string true "id the a menu-widget."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /menus/:id/widgets/:widgetId/enable [PATCH]
+// EnableMenuWidget Enable a menu-widget.
 func EnableMenuWidget(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	menuID, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -306,20 +239,7 @@ func EnableMenuWidget(c *gin.Context) {
 	return
 }
 
-// DisableMenuWidget
-// @description Disable a menu-widget.
-// @id menu-widget-disable
-// @tags menu
-// @summary Disable a menu-widget.
-// @produce protobuf
-// @param id path string true "id of the menu."
-// @param widgetId path string true "id the a menu-widget."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /menus/:id/widgets/:widgetId/disable [PATCH]
+// DisableMenuWidget Disable a menu-widget.
 func DisableMenuWidget(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	menuID, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -399,22 +319,7 @@ func DisableMenuWidget(c *gin.Context) {
 	return
 }
 
-// RemoveMenuWidget
-// @description Remove the menu-widget forever, not soft-deletion.
-// @id menu-widget-remove
-// @tags menu
-// @summary remove the menu-widget forever.
-// @accept protobuf
-// @produce protobuf
-// @param id path string true "id of the menu."
-// @param widgetId path string true "id of the menu-widget."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 403 {error} error "forbidden."
-// @failure 500 {error} error "internal server error."
-// @router /menus/:id/widgets/:widgetId [DELETE]
+// RemoveMenuWidget Remove the menu-widget forever, not soft-deletion.
 func RemoveMenuWidget(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	menuID, err := model.ObjectIDPtrFromHex(c.Param("id"))

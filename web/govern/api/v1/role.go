@@ -19,20 +19,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// AddRole
-// @description Add a new role.
-// @id role-add
-// @tags role
-// @summary Add a new role.
-// @accept protobuf
-// @produce protobuf
-// @param body body AddRoleReq true "required attributes to add a new role."
-// @security ApiKeyAuth
-// @success 201 {string} string "created successfully."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /roles [POST]
+// AddRole Add a new role.
 func AddRole(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	var req dto.AddRoleReq
@@ -54,19 +41,7 @@ func AddRole(c *gin.Context) {
 	return
 }
 
-// ListRole
-// @description Get a list of role.
-// @id role-list
-// @tags role
-// @summary Get a list of role.
-// @produce protobuf
-// @param query query ListRoleReq false "search criteria."
-// @security ApiKeyAuth
-// @success 200 {object} RoleListElem "role list."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /roles [GET]
+// ListRole Get a list of role.
 func ListRole(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	var req dto.ListRoleReq
@@ -169,19 +144,7 @@ func ListRole(c *gin.Context) {
 	return
 }
 
-// ProfileRole
-// @description Get the profile of a role.
-// @id role-profile
-// @tags role
-// @summary Get infos of a role.
-// @produce protobuf
-// @param id path string true "id of the role."
-// @security ApiKeyAuth
-// @success 200 {object} ProfileRoleRet "profile of the role."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /roles/:id [GET]
+// ProfileRole Get the profile of a role.
 func ProfileRole(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -203,21 +166,7 @@ func ProfileRole(c *gin.Context) {
 	return
 }
 
-// EditRole
-// @description Update a specific role.
-// @id role-update
-// @tags role
-// @summary Update a specific role.
-// @accept protobuf
-// @produce protobuf
-// @param id path string true "id of the role to edit."
-// @param body body EditRoleReq true "attributes need to update."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /roles/:id [PUT]
+// EditRole Update a specific role.
 func EditRole(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -243,20 +192,7 @@ func EditRole(c *gin.Context) {
 	return
 }
 
-// RoleDomains
-// @description Get domains of a specific role.
-// @id role-domains
-// @tags role
-// @summary Get domains of a specific role.
-// @accept protobuf
-// @produce protobuf
-// @param id path string true "id of the role."
-// @security ApiKeyAuth
-// @success 200 {object} RoleDomainsRet "domains of the role."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /roles/:id/domains [GET]
+// RoleDomains Get domains of a specific role.
 func RoleDomains(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	domainIds, err := model_service.GetDomainIDsOfRole(ctx, c.Param("id"))
@@ -268,21 +204,7 @@ func RoleDomains(c *gin.Context) {
 	return
 }
 
-// RoleAuthorities
-// @description Get authorities of a specific role.
-// @id role-authorities
-// @tags role
-// @summary Get authorities of a specific role.
-// @accept protobuf
-// @produce protobuf
-// @param id path string true "id of the role."
-// @param domainId path string true "id of a domain which the role belongs to."
-// @security ApiKeyAuth
-// @success 200 {object} RoleAuthoritiesRet "authorities of the role."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /roles/:id/authorities/:domainId [GET]
+// RoleAuthorities Get authorities of a specific role.
 func RoleAuthorities(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -342,22 +264,7 @@ func RoleAuthorities(c *gin.Context) {
 	return
 }
 
-// AuthorizeRole
-// @description Allocate authorities to a specific role using menu-widgets pairs.
-// @id role-authorize
-// @tags role
-// @summary Allocate authorities to a specific role.
-// @accept protobuf
-// @produce protobuf
-// @param id path string true "id of the role to be allocated authorities."
-// @param domainId path string true "id of a domain which the role belongs to."
-// @param body body AuthorizeRoleReq true "menu-widgets pairs."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /roles/:id/authorize/:domainId [POST]
+// AuthorizeRole Allocate authorities to a specific role using menu-widgets pairs.
 func AuthorizeRole(c *gin.Context) {
 	sessionID := SessionIdFromGinX(c)
 	sessionDT := model.NewDatetime(time.Now())
@@ -553,20 +460,7 @@ func AuthorizeRole(c *gin.Context) {
 	return
 }
 
-// EnableRole
-// @description Enable a role.
-// @id role-enable
-// @tags role
-// @summary Enable a role.
-// @accept protobuf
-// @produce protobuf
-// @param id path string true "id of the role."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /roles/:id/enable [PATCH]
+// EnableRole Enable a role.
 func EnableRole(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -594,20 +488,7 @@ func EnableRole(c *gin.Context) {
 	return
 }
 
-// DisableRole
-// @description Disable a role.
-// @id role-disable
-// @tags role
-// @summary Disable a role.
-// @accept protobuf
-// @produce protobuf
-// @param id path string true "id of the role."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /roles/:id/disable [PATCH]
+// DisableRole Disable a role.
 func DisableRole(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -664,19 +545,7 @@ func DisableRole(c *gin.Context) {
 	return
 }
 
-// RemoveRole
-// @description Remove the role forever, not soft-deletion.
-// @id role-remove
-// @tags role
-// @summary Remove a specific role.
-// @produce protobuf
-// @param id path string true "id of the role to remove."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /roles/:id [DELETE]
+// RemoveRole Remove the role forever, not soft-deletion.
 func RemoveRole(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))

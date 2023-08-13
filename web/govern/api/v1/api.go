@@ -21,8 +21,6 @@ import (
 	"github.com/sfshf/exert-golang/util/jwt"
 	logWrapper "github.com/sfshf/exert-golang/util/log"
 	"github.com/sfshf/exert-golang/util/uuid"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -30,7 +28,6 @@ import (
 
 type (
 	Config struct {
-		Swagger bool
 		CORS    CORSConfig
 		GZIP    GZIPConfig
 		JWTAuth JWTAuthConfig
@@ -82,9 +79,6 @@ func RegisterAPIs(ctx context.Context, router *gin.Engine, conf Config) {
 	router.NoRoute(NoRoute())
 	router.Use(TraceId())
 	router.Use(GZIP())
-	if conf.Swagger {
-		router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	}
 	// https://www.restapitutorial.com/lessons/restquicktips.html
 	v1 := router.Group("/api/v1")
 	{

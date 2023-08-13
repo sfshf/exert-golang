@@ -12,19 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// ListChangeLog
-// @description get a list of change logs.
-// @id change-log-list
-// @tags change-log
-// @summary get a list of change logs.
-// @produce protobuf
-// @param query query ChangeLogListReq false "search criteria."
-// @security ApiKeyAuth
-// @success 200 {object} ChangeLogListElem "change logs list."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /changeLogs [GET]
+// ListChangeLog get a list of change logs.
 func ListChangeLog(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	var req dto.ListChangeLogReq

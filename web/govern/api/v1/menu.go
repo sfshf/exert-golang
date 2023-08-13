@@ -18,20 +18,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// AddMenu
-// @description Add a new menu.
-// @id menu-add
-// @tags menu
-// @summary Add a new menu.
-// @accept protobuf
-// @produce protobuf
-// @param body body AddMenuReq true "required attributes to add a new menu."
-// @security ApiKeyAuth
-// @success 201 {string} string "created successfully."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /menus [POST]
+// AddMenu Add a new menu.
 func AddMenu(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	var req dto.AddMenuReq
@@ -82,19 +69,7 @@ func menuListConvertedToTree(menuList []*dto.MenuListElem, parentId string) ([]*
 	return siblingMenus, nil
 }
 
-// ListMenu
-// @description Get a list of menu.
-// @id menu-list
-// @tags menu
-// @summary Get a list of menu.
-// @produce protobuf
-// @param query query ListMenuReq false "search criteria."
-// @security ApiKeyAuth
-// @success 200 {object} MenuListElem "menu list."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /menus [GET]
+// ListMenu Get a list of menu.
 func ListMenu(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	var req dto.ListMenuReq
@@ -149,19 +124,7 @@ func ListMenu(c *gin.Context) {
 	return
 }
 
-// ProfileMenu
-// @description Get the profile of a menu.
-// @id menu-profile
-// @tags menu
-// @summary Get infos of a menu.
-// @produce protobuf
-// @param id path string true "id of the menu."
-// @security ApiKeyAuth
-// @success 200 {object} ProfileMenuRet "profile of the menu."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /menus/:id [GET]
+// ProfileMenu Get the profile of a menu.
 func ProfileMenu(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -183,21 +146,7 @@ func ProfileMenu(c *gin.Context) {
 	return
 }
 
-// EditMenu
-// @description Update a specific menu.
-// @id menu-update
-// @tags menu
-// @summary Update a specific menu.
-// @accept protobuf
-// @produce protobuf
-// @param id path string true "id of the menu to update."
-// @param body body EditMenuReq true "attributes need to update."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /menus/:id [PUT]
+// EditMenu Update a specific menu.
 func EditMenu(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -223,20 +172,7 @@ func EditMenu(c *gin.Context) {
 	return
 }
 
-// EnableMenu
-// @description Enable a menu.
-// @id menu-enable
-// @tags menu
-// @summary Enable a menu.
-// @accept protobuf
-// @produce protobuf
-// @param id path string true "id of the menu."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /menus/:id/enable [PATCH]
+// EnableMenu Enable a menu.
 func EnableMenu(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -294,20 +230,7 @@ func EnableMenu(c *gin.Context) {
 	return
 }
 
-// DisableMenu
-// @description Disable a menu.
-// @id menu-disable
-// @tags menu
-// @summary Disable a menu.
-// @accept protobuf
-// @produce protobuf
-// @param id path string true "id of the menu."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /menus/:id/disable [PATCH]
+// DisableMenu Disable a menu.
 func DisableMenu(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))
@@ -399,20 +322,7 @@ func DisableMenu(c *gin.Context) {
 	return
 }
 
-// RemoveMenu
-// @description remove the menu forever, not soft-deletion.
-// @id menu-remove
-// @tags menu
-// @summary remove the menu forever.
-// @produce protobuf
-// @param id path string true "id of the menu to remove."
-// @security ApiKeyAuth
-// @success 200 {null} null "successful action."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 403 {error} error "forbidden."
-// @failure 500 {error} error "internal server error."
-// @router /menus/:id [DELETE]
+// RemoveMenu remove the menu forever, not soft-deletion.
 func RemoveMenu(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	id, err := model.ObjectIDPtrFromHex(c.Param("id"))

@@ -12,19 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// ListAccessLog
-// @description get a list of access logs.
-// @id access-log-list
-// @tags access-log
-// @summary get a list of access logs.
-// @produce protobuf
-// @param query query AccessLogListReq false "search criteria."
-// @security ApiKeyAuth
-// @success 200 {object} AccessLogListElem "access logs list."
-// @failure 400 {error} error "bad request."
-// @failure 401 {error} error "unauthorized."
-// @failure 500 {error} error "internal server error."
-// @router /accessLogs [GET]
+// ListAccessLog get a list of access logs.
 func ListAccessLog(c *gin.Context) {
 	ctx := model.WithSession(c.Request.Context(), SessionIdFromGinX(c), model.NewDatetime(time.Now()))
 	var req dto.ListAccessLogReq

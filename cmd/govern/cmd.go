@@ -410,7 +410,6 @@ func RunHTTPServer(ctx context.Context, cmd *WebSrvCmd) func() {
 	webHandler, err := govern.NewHandler(ctx, govern.Config{
 		RunMode: cmd.Global.RunMode,
 		ApiConfig: api.Config{
-			Swagger: cmd.Global.RunMode == gin.DebugMode,
 			CORS: api.CORSConfig{
 				Enable:           cmd.CORS.Enable,
 				AllowOrigins:     cmd.CORS.AllowOrigins,

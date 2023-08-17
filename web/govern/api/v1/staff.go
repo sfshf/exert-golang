@@ -184,7 +184,7 @@ func PatchStaffPassword(c *gin.Context) {
 		ProtoBufWithBadRequest(c, err)
 		return
 	}
-	var req dto.PatchPasswordReq
+	var req dto.PatchStaffPasswordReq
 	if err = c.ShouldBindBodyWith(&req, binding.ProtoBuf); err != nil {
 		ProtoBufWithBadRequest(c, err)
 		return
@@ -219,7 +219,7 @@ func PatchStaffPassword(c *gin.Context) {
 		ProtoBufWithImplicitError(c, err)
 		return
 	}
-	ProtoBufWithOK(c, &dto.PatchPasswordRet{Id: id.Hex()})
+	ProtoBufWithOK(c, &dto.PatchStaffPasswordRet{Id: id.Hex()})
 	return
 }
 

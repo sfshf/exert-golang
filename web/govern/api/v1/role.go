@@ -130,7 +130,7 @@ func ListRole(c *gin.Context) {
 		var ret2 []*dto.RoleListElem
 		for _, role := range ret {
 			if len(role.DomainIds) > 0 {
-				if slices.ContainsFunc[string](role.DomainIds, func(e string) bool {
+				if slices.ContainsFunc(role.DomainIds, func(e string) bool {
 					return e == req.DomainId
 				}) {
 					ret2 = append(ret2, role)

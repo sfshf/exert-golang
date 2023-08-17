@@ -59,7 +59,7 @@ el-container
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps, defineEmits, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { profileStaff, editStaff } from '@/apis'
 import RBAC from '@/components/staff/RBAC.vue'

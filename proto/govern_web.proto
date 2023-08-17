@@ -88,6 +88,12 @@ message ListDomainRet {
   sint64 total = 2; // 总量
 }
 
+// ProfileDomainReq arguments to profile a domain.
+message ProfileDomainReq {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
 // ProfileDomainRet return of profiling a domain.
 message ProfileDomainRet {
   // @gotags: copier:"ID"
@@ -109,23 +115,31 @@ message ProfileDomainRet {
 
 // EditDomainReq arguments to edit a domain.
 message EditDomainReq {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
   // @gotags: binding:"required" label:"名称"
-  string name = 1; // 名称
+  string name = 2; // 名称
   // @gotags: binding:"" label:"别名"
-  repeated string alias = 2; // 别名
+  repeated string alias = 3; // 别名
   // @gotags: binding:"" label:"序号"
-  sint32 seq = 3; // 序号
+  sint32 seq = 4; // 序号
   // @gotags: binding:"" label:"图标"
-  string icon = 4; // 图标
+  string icon = 5; // 图标
   // @gotags: binding:"" label:"备注"
-  string memo = 5; // 备注
+  string memo = 6; // 备注
   // @gotags: copier:"ParentID" binding:"" label:"父级Id"
-  string parentId = 6; // 父级Id
+  string parentId = 7; // 父级Id
 }
 
 // EditDomainRet return of editing a domain.
 message EditDomainRet {
   // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// EnableDomainReq arguments to enable a domain.
+message EnableDomainReq {
+  // @gotags: binding:"required" label:"Id"
   string id = 1; // Id
 }
 
@@ -135,9 +149,21 @@ message EnableDomainRet {
   string id = 1; // Id
 }
 
+// DisableDomainReq arguments to disable a domain.
+message DisableDomainReq {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
 // DisableDomainRet return of disabling a domain.
 message DisableDomainRet {
   // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// RemoveDomainReq arguments to remove a domain.
+message RemoveDomainReq {
+  // @gotags: binding:"required" label:"Id"
   string id = 1; // Id
 }
 
@@ -225,6 +251,12 @@ message ListMenuRet {
   sint64 total = 2; // 总量
 }
 
+// ProfileMenuReq arguments to profile a menu.
+message ProfileMenuReq {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
 // ProfileMenuRet return of profiling a menu.
 message ProfileMenuRet {
   // @gotags: copier:"ID"
@@ -272,15 +304,33 @@ message EditMenuRet {
   string id = 1; // Id
 }
 
+// EnableMenuReq arguments to enable a menu.
+message EnableMenuReq {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
 // EnableMenuRet return of enabling a menu.
 message EnableMenuRet {
   // @gotags: copier:"ID"
   string id = 1; // Id
 }
 
+// DisableMenuReq arguments to disable a menu.
+message DisableMenuReq {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
 // DisableMenuRet return of disabling a menu.
 message DisableMenuRet {
   // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// RemoveMenuReq arguments to remove a menu.
+message RemoveMenuReq {
+  // @gotags: binding:"required" label:"Id"
   string id = 1; // Id
 }
 
@@ -356,6 +406,12 @@ message ListMenuWidgetRet {
   sint64 total = 2; // 总量
 }
 
+// ProfileMenuWidgetReq arguments to profile a menu-widget.
+message ProfileMenuWidgetReq {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
 // ProfileMenuWidgetRet return of profiling a menu-widget.
 message ProfileMenuWidgetRet {
   // @gotags: copier:"ID"
@@ -399,15 +455,33 @@ message EditMenuWidgetRet {
   string id = 1; // Id
 }
 
+// EnableMenuWidgetReq arguments to enable a menu-widget.
+message EnableMenuWidgetReq {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
 // EnableMenuWidgetRet return of enabling a menu-widget.
 message EnableMenuWidgetRet {
   // @gotags: copier:"ID"
   string id = 1; // Id
 }
 
+// DisableMenuWidgetReq arguments to disable a menu-widget.
+message DisableMenuWidgetReq {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
 // DisableMenuWidgetRet return of disabling a menu-widget.
 message DisableMenuWidgetRet {
   // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// RemoveMenuWidgetReq arguments to remove a menu-widget.
+message RemoveMenuWidgetReq {
+  // @gotags: binding:"required" label:"Id"
   string id = 1; // Id
 }
 
@@ -490,6 +564,12 @@ message ListRoleRet {
   sint64 total = 2; // 总量
 }
 
+// ProfileRoleReq arguments to profile a role.
+message ProfileRoleReq {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
 // ProfileRoleRet return of profiling a role.
 message ProfileRoleRet {
   // @gotags: copier:"ID"
@@ -527,9 +607,24 @@ message EditRoleRet {
   string id = 1; // Id
 }
 
+// RoleDomainsReq arguments to get domains of a role.
+message RoleDomainsReq {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
+
 // RoleDomainsRet return of getting domains of a role.
 message RoleDomainsRet {
   repeated string domainIds = 1; // 域Ids
+}
+
+// RoleAuthoritiesReq arguments to get authorities of a role.
+message RoleAuthoritiesReq {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+  // @gotags: binding:"required" label:"DomainId"
+  string domainId = 2; // DomainId
 }
 
 // RoleAuthoritiesRet return of getting authorities of a role.
@@ -552,15 +647,33 @@ message AuthorizeRoleRet {
   string domainId = 2; // DomainId
 }
 
+// EnableRoleReq arguments to enable a role.
+message EnableRoleReq {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
 // EnableRoleRet return of enabling a role.
 message EnableRoleRet {
   // @gotags: copier:"ID"
   string id = 1; // Id
 }
 
+// DisableRoleReq arguments to disable a role.
+message DisableRoleReq {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
 // DisableRoleRet return of disabling a role.
 message DisableRoleRet {
   // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// RemoveRoleReq arguments to remove a role.
+message RemoveRoleReq {
+  // @gotags: binding:"required" label:"Id"
   string id = 1; // Id
 }
 
@@ -664,6 +777,12 @@ message ListStaffRet {
   sint64 total = 2; // 总量
 }
 
+// ProfileStaffReq arguments to profile a staff.
+message ProfileStaffReq {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
 // ProfileStaffRet return of profiling a staff.
 message ProfileStaffRet {
   // @gotags: copier:"ID"
@@ -714,16 +833,16 @@ message EditStaffRet {
   string id = 1; // Id
 }
 
-// PatchPasswordReq request parameter to update the password of a specific staff.
-message PatchPasswordReq {
+// PatchStaffPasswordReq request parameter to update the password of a specific staff.
+message PatchStaffPasswordReq {
   // @gotags: binding:"gte=8,lte=32" label:"旧密码"
   string oldPassword = 1; // 旧密码
   // @gotags: binding:"gte=8,lte=32" label:"新密码"
   string newPassword = 2; // 新密码
 }
 
-// PatchPasswordRet return of updating the password of a specific staff.
-message PatchPasswordRet {
+// PatchStaffPasswordRet return of updating the password of a specific staff.
+message PatchStaffPasswordRet {
   // @gotags: copier:"ID"
   string id = 1; // StaffId
 }
@@ -740,14 +859,34 @@ message AuthorizeStaffRolesInDomainRet {
   string id = 1; // StaffId
 }
 
+// StaffDomainsReq arguments to get domains of a staff.
+message StaffDomainsReq {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
 // StaffDomainsRet return of getting domains of a staff.
 message StaffDomainsRet {
   repeated string domainIds = 1; // 域Ids
 }
 
+// StaffRolesInDomainReq arguments to get roles of a staff in some domain.
+message StaffRolesInDomainReq {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+  // @gotags: binding:"required" label:"DomainId"
+  string domainId = 2; // DomainId
+}
+
 // StaffRolesInDomainRet return of getting roles of a staff in some domain.
 message StaffRolesInDomainRet {
   repeated string roleIds = 1; // 角色Ids
+}
+
+// EnableStaffReq arguments to enable a staff.
+message EnableStaffReq {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
 }
 
 // EnableStaffRet return of enabling a staff.
@@ -756,9 +895,21 @@ message EnableStaffRet {
   string id = 1; // Id
 }
 
+// DisableStaffReq arguments to disable a staff.
+message DisableStaffReq {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
 // DisableStaffRet return of disabling a staff.
 message DisableStaffRet {
   // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// RemoveStaffReq arguments to remove a staff.
+message RemoveStaffReq {
+  // @gotags: binding:"required" label:"Id"
   string id = 1; // Id
 }
 
@@ -874,10 +1025,22 @@ message ListAccessLogRet {
 
 // auth dtos.
 
+// GetPicCaptchaReq arguments to get picture captcha.
+message GetPicCaptchaReq {
+  // @gotags: binging:"" label:"ObsoleteId"
+  string obsoleteId = 1; // ObsoleteId
+}
+
 // GetPicCaptchaRet return of getting picture captcha.
 message GetPicCaptchaRet {
   string picCaptchaId = 1; // 验证码Id
   string picCaptchaB64s = 2; // 验证码图片
+}
+
+// GetPicCaptchaAnswerReq arguments to get picture captcha answer.
+message GetPicCaptchaAnswerReq {
+  // @gotags: binging:"" label:"Id"
+  string id = 1; // Id
 }
 
 // GetPicCaptchaAnswerRet return of getting picture captcha answer.
@@ -902,6 +1065,9 @@ message SignInRet {
   string token = 1; // 登录token
   sint64 expiresAt = 2; // token有效期
 }
+
+// GetOwnDomainsReq arguments to get own domains.
+message GetOwnDomainsReq {}
 
 // GetOwnDomainsElem domain element.
 message GetOwnDomainsElem {
@@ -938,6 +1104,9 @@ message GetOwnRolesRet {
   repeated GetOwnRolesElem list = 1; // 列表
   sint64 total = 2; // 总量
 }
+
+// SignOutReq arguments to sign out.
+message SignOutReq {}
 
 // SignOutRet return of signing out.
 message SignOutRet {

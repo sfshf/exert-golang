@@ -453,7 +453,7 @@ export const patchStaffPassword = (id:string, data:object) => {
     url: '/staffs/' + id + '/password',
     data: data,
     transformResponse: [(data) => {
-      return DecodeToObject(dto.PatchPasswordRet, data)
+      return DecodeToObject(dto.PatchStaffPasswordRet, data)
     }]
   })
 }

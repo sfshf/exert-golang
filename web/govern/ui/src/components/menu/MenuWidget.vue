@@ -38,7 +38,7 @@ el-container
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps, defineEmits, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import { listMenu, listMenuWidget, authorizeRole, getAuthoritiesOfRole } from '@/apis'
 

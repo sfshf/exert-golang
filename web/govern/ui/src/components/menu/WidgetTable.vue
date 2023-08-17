@@ -59,7 +59,7 @@ el-drawer(
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps, defineEmits, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { listMenuWidget, disableMenuWidget, enableMenuWidget, removeMenuWidget } from '@/apis'
 import WidgetDetail from '@/components/menu/WidgetDetail.vue'

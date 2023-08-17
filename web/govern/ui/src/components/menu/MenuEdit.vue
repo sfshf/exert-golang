@@ -43,7 +43,7 @@ el-container
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps, defineEmits, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { profileMenu, editMenu } from '@/apis'
 import WidgetTable from '@/components/menu/WidgetTable.vue'

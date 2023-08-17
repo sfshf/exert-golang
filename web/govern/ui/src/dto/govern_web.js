@@ -1,22 +1,20 @@
 /*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
-"use strict";
-
-var $protobuf = require("protobufjs/minimal");
+import * as $protobuf from "protobufjs/minimal";
 
 // Common aliases
-var $Reader = $protobuf.Reader, $Writer = $protobuf.Writer, $util = $protobuf.util;
+const $Reader = $protobuf.Reader, $Writer = $protobuf.Writer, $util = $protobuf.util;
 
 // Exported root namespace
-var $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});
+const $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});
 
-$root.dto = (function() {
+export const dto = $root.dto = (() => {
 
     /**
      * Namespace dto.
      * @exports dto
      * @namespace
      */
-    var dto = {};
+    const dto = {};
 
     /**
      * SortDirection enum.
@@ -26,7 +24,7 @@ $root.dto = (function() {
      * @property {number} Desc=1 Desc value
      */
     dto.SortDirection = (function() {
-        var valuesById = {}, values = Object.create(valuesById);
+        const valuesById = {}, values = Object.create(valuesById);
         values[valuesById[0] = "Asc"] = 0;
         values[valuesById[1] = "Desc"] = 1;
         return values;
@@ -51,7 +49,7 @@ $root.dto = (function() {
          */
         function Error(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -120,9 +118,9 @@ $root.dto = (function() {
         Error.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.Error();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.Error();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.msg = reader.string();
@@ -180,7 +178,7 @@ $root.dto = (function() {
         Error.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.Error)
                 return object;
-            var message = new $root.dto.Error();
+            let message = new $root.dto.Error();
             if (object.msg != null)
                 message.msg = String(object.msg);
             return message;
@@ -198,7 +196,7 @@ $root.dto = (function() {
         Error.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.msg = "";
             if (message.msg != null && message.hasOwnProperty("msg"))
@@ -260,7 +258,7 @@ $root.dto = (function() {
         function AddDomainReq(properties) {
             this.alias = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -340,7 +338,7 @@ $root.dto = (function() {
             if (message.name != null && Object.hasOwnProperty.call(message, "name"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
             if (message.alias != null && message.alias.length)
-                for (var i = 0; i < message.alias.length; ++i)
+                for (let i = 0; i < message.alias.length; ++i)
                     writer.uint32(/* id 2, wireType 2 =*/18).string(message.alias[i]);
             if (message.seq != null && Object.hasOwnProperty.call(message, "seq"))
                 writer.uint32(/* id 3, wireType 0 =*/24).sint32(message.seq);
@@ -380,9 +378,9 @@ $root.dto = (function() {
         AddDomainReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AddDomainReq();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AddDomainReq();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.name = reader.string();
@@ -451,7 +449,7 @@ $root.dto = (function() {
             if (message.alias != null && message.hasOwnProperty("alias")) {
                 if (!Array.isArray(message.alias))
                     return "alias: array expected";
-                for (var i = 0; i < message.alias.length; ++i)
+                for (let i = 0; i < message.alias.length; ++i)
                     if (!$util.isString(message.alias[i]))
                         return "alias: string[] expected";
             }
@@ -481,14 +479,14 @@ $root.dto = (function() {
         AddDomainReq.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.AddDomainReq)
                 return object;
-            var message = new $root.dto.AddDomainReq();
+            let message = new $root.dto.AddDomainReq();
             if (object.name != null)
                 message.name = String(object.name);
             if (object.alias) {
                 if (!Array.isArray(object.alias))
                     throw TypeError(".dto.AddDomainReq.alias: array expected");
                 message.alias = [];
-                for (var i = 0; i < object.alias.length; ++i)
+                for (let i = 0; i < object.alias.length; ++i)
                     message.alias[i] = String(object.alias[i]);
             }
             if (object.seq != null)
@@ -514,7 +512,7 @@ $root.dto = (function() {
         AddDomainReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.alias = [];
             if (options.defaults) {
@@ -528,7 +526,7 @@ $root.dto = (function() {
                 object.name = message.name;
             if (message.alias && message.alias.length) {
                 object.alias = [];
-                for (var j = 0; j < message.alias.length; ++j)
+                for (let j = 0; j < message.alias.length; ++j)
                     object.alias[j] = message.alias[j];
             }
             if (message.seq != null && message.hasOwnProperty("seq"))
@@ -590,7 +588,7 @@ $root.dto = (function() {
          */
         function AddDomainRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -659,9 +657,9 @@ $root.dto = (function() {
         AddDomainRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AddDomainRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AddDomainRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -719,7 +717,7 @@ $root.dto = (function() {
         AddDomainRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.AddDomainRet)
                 return object;
-            var message = new $root.dto.AddDomainRet();
+            let message = new $root.dto.AddDomainRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -737,7 +735,7 @@ $root.dto = (function() {
         AddDomainRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -800,7 +798,7 @@ $root.dto = (function() {
         function ListDomainReq(properties) {
             this.sortBy = {};
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -896,7 +894,7 @@ $root.dto = (function() {
             if (message.perPage != null && Object.hasOwnProperty.call(message, "perPage"))
                 writer.uint32(/* id 20003, wireType 0 =*/160024).sint64(message.perPage);
             if (message.sortBy != null && Object.hasOwnProperty.call(message, "sortBy"))
-                for (var keys = Object.keys(message.sortBy), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(message.sortBy), i = 0; i < keys.length; ++i)
                     writer.uint32(/* id 20004, wireType 2 =*/160034).fork().uint32(/* id 1, wireType 2 =*/10).string(keys[i]).uint32(/* id 2, wireType 0 =*/16).int32(message.sortBy[keys[i]]).ldelim();
             if (message.deleted != null && Object.hasOwnProperty.call(message, "deleted"))
                 writer.uint32(/* id 20005, wireType 0 =*/160040).bool(message.deleted);
@@ -930,9 +928,9 @@ $root.dto = (function() {
         ListDomainReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListDomainReq(), key, value;
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListDomainReq(), key, value;
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 20001: {
                         message.noPaging = reader.bool();
@@ -949,11 +947,11 @@ $root.dto = (function() {
                 case 20004: {
                         if (message.sortBy === $util.emptyObject)
                             message.sortBy = {};
-                        var end2 = reader.uint32() + reader.pos;
+                        let end2 = reader.uint32() + reader.pos;
                         key = "";
                         value = 0;
                         while (reader.pos < end2) {
-                            var tag2 = reader.uint32();
+                            let tag2 = reader.uint32();
                             switch (tag2 >>> 3) {
                             case 1:
                                 key = reader.string();
@@ -1028,8 +1026,8 @@ $root.dto = (function() {
             if (message.sortBy != null && message.hasOwnProperty("sortBy")) {
                 if (!$util.isObject(message.sortBy))
                     return "sortBy: object expected";
-                var key = Object.keys(message.sortBy);
-                for (var i = 0; i < key.length; ++i)
+                let key = Object.keys(message.sortBy);
+                for (let i = 0; i < key.length; ++i)
                     switch (message.sortBy[key[i]]) {
                     default:
                         return "sortBy: enum value{k:string} expected";
@@ -1061,7 +1059,7 @@ $root.dto = (function() {
         ListDomainReq.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.ListDomainReq)
                 return object;
-            var message = new $root.dto.ListDomainReq();
+            let message = new $root.dto.ListDomainReq();
             if (object.noPaging != null)
                 message.noPaging = Boolean(object.noPaging);
             if (object.page != null)
@@ -1086,7 +1084,7 @@ $root.dto = (function() {
                 if (typeof object.sortBy !== "object")
                     throw TypeError(".dto.ListDomainReq.sortBy: object expected");
                 message.sortBy = {};
-                for (var keys = Object.keys(object.sortBy), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(object.sortBy), i = 0; i < keys.length; ++i)
                     switch (object.sortBy[keys[i]]) {
                     default:
                         if (typeof object.sortBy[keys[i]] === "number") {
@@ -1125,7 +1123,7 @@ $root.dto = (function() {
         ListDomainReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.objects || options.defaults)
                 object.sortBy = {};
             if (options.defaults) {
@@ -1133,12 +1131,12 @@ $root.dto = (function() {
                 object.needTree = false;
                 object.noPaging = false;
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.page = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.page = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.perPage = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.perPage = options.longs === String ? "0" : 0;
@@ -1160,10 +1158,10 @@ $root.dto = (function() {
                     object.perPage = options.longs === String ? String(message.perPage) : message.perPage;
                 else
                     object.perPage = options.longs === String ? $util.Long.prototype.toString.call(message.perPage) : options.longs === Number ? new $util.LongBits(message.perPage.low >>> 0, message.perPage.high >>> 0).toNumber() : message.perPage;
-            var keys2;
+            let keys2;
             if (message.sortBy && (keys2 = Object.keys(message.sortBy)).length) {
                 object.sortBy = {};
-                for (var j = 0; j < keys2.length; ++j)
+                for (let j = 0; j < keys2.length; ++j)
                     object.sortBy[keys2[j]] = options.enums === String ? $root.dto.SortDirection[message.sortBy[keys2[j]]] === undefined ? message.sortBy[keys2[j]] : $root.dto.SortDirection[message.sortBy[keys2[j]]] : message.sortBy[keys2[j]];
             }
             if (message.deleted != null && message.hasOwnProperty("deleted"))
@@ -1234,7 +1232,7 @@ $root.dto = (function() {
             this.alias = [];
             this.children = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -1380,7 +1378,7 @@ $root.dto = (function() {
             if (message.name != null && Object.hasOwnProperty.call(message, "name"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.name);
             if (message.alias != null && message.alias.length)
-                for (var i = 0; i < message.alias.length; ++i)
+                for (let i = 0; i < message.alias.length; ++i)
                     writer.uint32(/* id 3, wireType 2 =*/26).string(message.alias[i]);
             if (message.seq != null && Object.hasOwnProperty.call(message, "seq"))
                 writer.uint32(/* id 4, wireType 0 =*/32).sint32(message.seq);
@@ -1403,7 +1401,7 @@ $root.dto = (function() {
             if (message.deletedAt != null && Object.hasOwnProperty.call(message, "deletedAt"))
                 writer.uint32(/* id 20005, wireType 2 =*/160042).string(message.deletedAt);
             if (message.children != null && message.children.length)
-                for (var i = 0; i < message.children.length; ++i)
+                for (let i = 0; i < message.children.length; ++i)
                     $root.dto.DomainListElem.encode(message.children[i], writer.uint32(/* id 20006, wireType 2 =*/160050).fork()).ldelim();
             return writer;
         };
@@ -1435,9 +1433,9 @@ $root.dto = (function() {
         DomainListElem.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.DomainListElem();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.DomainListElem();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -1543,7 +1541,7 @@ $root.dto = (function() {
             if (message.alias != null && message.hasOwnProperty("alias")) {
                 if (!Array.isArray(message.alias))
                     return "alias: array expected";
-                for (var i = 0; i < message.alias.length; ++i)
+                for (let i = 0; i < message.alias.length; ++i)
                     if (!$util.isString(message.alias[i]))
                         return "alias: string[] expected";
             }
@@ -1580,8 +1578,8 @@ $root.dto = (function() {
             if (message.children != null && message.hasOwnProperty("children")) {
                 if (!Array.isArray(message.children))
                     return "children: array expected";
-                for (var i = 0; i < message.children.length; ++i) {
-                    var error = $root.dto.DomainListElem.verify(message.children[i]);
+                for (let i = 0; i < message.children.length; ++i) {
+                    let error = $root.dto.DomainListElem.verify(message.children[i]);
                     if (error)
                         return "children." + error;
                 }
@@ -1600,7 +1598,7 @@ $root.dto = (function() {
         DomainListElem.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.DomainListElem)
                 return object;
-            var message = new $root.dto.DomainListElem();
+            let message = new $root.dto.DomainListElem();
             if (object.id != null)
                 message.id = String(object.id);
             if (object.name != null)
@@ -1609,7 +1607,7 @@ $root.dto = (function() {
                 if (!Array.isArray(object.alias))
                     throw TypeError(".dto.DomainListElem.alias: array expected");
                 message.alias = [];
-                for (var i = 0; i < object.alias.length; ++i)
+                for (let i = 0; i < object.alias.length; ++i)
                     message.alias[i] = String(object.alias[i]);
             }
             if (object.seq != null)
@@ -1636,7 +1634,7 @@ $root.dto = (function() {
                 if (!Array.isArray(object.children))
                     throw TypeError(".dto.DomainListElem.children: array expected");
                 message.children = [];
-                for (var i = 0; i < object.children.length; ++i) {
+                for (let i = 0; i < object.children.length; ++i) {
                     if (typeof object.children[i] !== "object")
                         throw TypeError(".dto.DomainListElem.children: object expected");
                     message.children[i] = $root.dto.DomainListElem.fromObject(object.children[i]);
@@ -1657,7 +1655,7 @@ $root.dto = (function() {
         DomainListElem.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults) {
                 object.alias = [];
                 object.children = [];
@@ -1682,7 +1680,7 @@ $root.dto = (function() {
                 object.name = message.name;
             if (message.alias && message.alias.length) {
                 object.alias = [];
-                for (var j = 0; j < message.alias.length; ++j)
+                for (let j = 0; j < message.alias.length; ++j)
                     object.alias[j] = message.alias[j];
             }
             if (message.seq != null && message.hasOwnProperty("seq"))
@@ -1707,7 +1705,7 @@ $root.dto = (function() {
                 object.deletedAt = message.deletedAt;
             if (message.children && message.children.length) {
                 object.children = [];
-                for (var j = 0; j < message.children.length; ++j)
+                for (let j = 0; j < message.children.length; ++j)
                     object.children[j] = $root.dto.DomainListElem.toObject(message.children[j], options);
             }
             return object;
@@ -1763,7 +1761,7 @@ $root.dto = (function() {
         function ListDomainRet(properties) {
             this.list = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -1809,7 +1807,7 @@ $root.dto = (function() {
             if (!writer)
                 writer = $Writer.create();
             if (message.list != null && message.list.length)
-                for (var i = 0; i < message.list.length; ++i)
+                for (let i = 0; i < message.list.length; ++i)
                     $root.dto.DomainListElem.encode(message.list[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
             if (message.total != null && Object.hasOwnProperty.call(message, "total"))
                 writer.uint32(/* id 2, wireType 0 =*/16).sint64(message.total);
@@ -1843,9 +1841,9 @@ $root.dto = (function() {
         ListDomainRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListDomainRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListDomainRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         if (!(message.list && message.list.length))
@@ -1895,8 +1893,8 @@ $root.dto = (function() {
             if (message.list != null && message.hasOwnProperty("list")) {
                 if (!Array.isArray(message.list))
                     return "list: array expected";
-                for (var i = 0; i < message.list.length; ++i) {
-                    var error = $root.dto.DomainListElem.verify(message.list[i]);
+                for (let i = 0; i < message.list.length; ++i) {
+                    let error = $root.dto.DomainListElem.verify(message.list[i]);
                     if (error)
                         return "list." + error;
                 }
@@ -1918,12 +1916,12 @@ $root.dto = (function() {
         ListDomainRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.ListDomainRet)
                 return object;
-            var message = new $root.dto.ListDomainRet();
+            let message = new $root.dto.ListDomainRet();
             if (object.list) {
                 if (!Array.isArray(object.list))
                     throw TypeError(".dto.ListDomainRet.list: array expected");
                 message.list = [];
-                for (var i = 0; i < object.list.length; ++i) {
+                for (let i = 0; i < object.list.length; ++i) {
                     if (typeof object.list[i] !== "object")
                         throw TypeError(".dto.ListDomainRet.list: object expected");
                     message.list[i] = $root.dto.DomainListElem.fromObject(object.list[i]);
@@ -1953,18 +1951,18 @@ $root.dto = (function() {
         ListDomainRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.list = [];
             if (options.defaults)
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.total = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.total = options.longs === String ? "0" : 0;
             if (message.list && message.list.length) {
                 object.list = [];
-                for (var j = 0; j < message.list.length; ++j)
+                for (let j = 0; j < message.list.length; ++j)
                     object.list[j] = $root.dto.DomainListElem.toObject(message.list[j], options);
             }
             if (message.total != null && message.hasOwnProperty("total"))
@@ -2004,6 +2002,209 @@ $root.dto = (function() {
         return ListDomainRet;
     })();
 
+    dto.ProfileDomainReq = (function() {
+
+        /**
+         * Properties of a ProfileDomainReq.
+         * @memberof dto
+         * @interface IProfileDomainReq
+         * @property {string|null} [id] ProfileDomainReq id
+         */
+
+        /**
+         * Constructs a new ProfileDomainReq.
+         * @memberof dto
+         * @classdesc Represents a ProfileDomainReq.
+         * @implements IProfileDomainReq
+         * @constructor
+         * @param {dto.IProfileDomainReq=} [properties] Properties to set
+         */
+        function ProfileDomainReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * ProfileDomainReq id.
+         * @member {string} id
+         * @memberof dto.ProfileDomainReq
+         * @instance
+         */
+        ProfileDomainReq.prototype.id = "";
+
+        /**
+         * Creates a new ProfileDomainReq instance using the specified properties.
+         * @function create
+         * @memberof dto.ProfileDomainReq
+         * @static
+         * @param {dto.IProfileDomainReq=} [properties] Properties to set
+         * @returns {dto.ProfileDomainReq} ProfileDomainReq instance
+         */
+        ProfileDomainReq.create = function create(properties) {
+            return new ProfileDomainReq(properties);
+        };
+
+        /**
+         * Encodes the specified ProfileDomainReq message. Does not implicitly {@link dto.ProfileDomainReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.ProfileDomainReq
+         * @static
+         * @param {dto.IProfileDomainReq} message ProfileDomainReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ProfileDomainReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ProfileDomainReq message, length delimited. Does not implicitly {@link dto.ProfileDomainReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.ProfileDomainReq
+         * @static
+         * @param {dto.IProfileDomainReq} message ProfileDomainReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ProfileDomainReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ProfileDomainReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.ProfileDomainReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.ProfileDomainReq} ProfileDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ProfileDomainReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ProfileDomainReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ProfileDomainReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.ProfileDomainReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.ProfileDomainReq} ProfileDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ProfileDomainReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ProfileDomainReq message.
+         * @function verify
+         * @memberof dto.ProfileDomainReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ProfileDomainReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a ProfileDomainReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.ProfileDomainReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.ProfileDomainReq} ProfileDomainReq
+         */
+        ProfileDomainReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.ProfileDomainReq)
+                return object;
+            let message = new $root.dto.ProfileDomainReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a ProfileDomainReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.ProfileDomainReq
+         * @static
+         * @param {dto.ProfileDomainReq} message ProfileDomainReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ProfileDomainReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this ProfileDomainReq to JSON.
+         * @function toJSON
+         * @memberof dto.ProfileDomainReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ProfileDomainReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for ProfileDomainReq
+         * @function getTypeUrl
+         * @memberof dto.ProfileDomainReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        ProfileDomainReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.ProfileDomainReq";
+        };
+
+        return ProfileDomainReq;
+    })();
+
     dto.ProfileDomainRet = (function() {
 
         /**
@@ -2036,7 +2237,7 @@ $root.dto = (function() {
         function ProfileDomainRet(properties) {
             this.alias = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -2174,7 +2375,7 @@ $root.dto = (function() {
             if (message.name != null && Object.hasOwnProperty.call(message, "name"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.name);
             if (message.alias != null && message.alias.length)
-                for (var i = 0; i < message.alias.length; ++i)
+                for (let i = 0; i < message.alias.length; ++i)
                     writer.uint32(/* id 3, wireType 2 =*/26).string(message.alias[i]);
             if (message.seq != null && Object.hasOwnProperty.call(message, "seq"))
                 writer.uint32(/* id 4, wireType 0 =*/32).sint32(message.seq);
@@ -2226,9 +2427,9 @@ $root.dto = (function() {
         ProfileDomainRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ProfileDomainRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ProfileDomainRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -2328,7 +2529,7 @@ $root.dto = (function() {
             if (message.alias != null && message.hasOwnProperty("alias")) {
                 if (!Array.isArray(message.alias))
                     return "alias: array expected";
-                for (var i = 0; i < message.alias.length; ++i)
+                for (let i = 0; i < message.alias.length; ++i)
                     if (!$util.isString(message.alias[i]))
                         return "alias: string[] expected";
             }
@@ -2376,7 +2577,7 @@ $root.dto = (function() {
         ProfileDomainRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.ProfileDomainRet)
                 return object;
-            var message = new $root.dto.ProfileDomainRet();
+            let message = new $root.dto.ProfileDomainRet();
             if (object.id != null)
                 message.id = String(object.id);
             if (object.name != null)
@@ -2385,7 +2586,7 @@ $root.dto = (function() {
                 if (!Array.isArray(object.alias))
                     throw TypeError(".dto.ProfileDomainRet.alias: array expected");
                 message.alias = [];
-                for (var i = 0; i < object.alias.length; ++i)
+                for (let i = 0; i < object.alias.length; ++i)
                     message.alias[i] = String(object.alias[i]);
             }
             if (object.seq != null)
@@ -2423,7 +2624,7 @@ $root.dto = (function() {
         ProfileDomainRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.alias = [];
             if (options.defaults) {
@@ -2446,7 +2647,7 @@ $root.dto = (function() {
                 object.name = message.name;
             if (message.alias && message.alias.length) {
                 object.alias = [];
-                for (var j = 0; j < message.alias.length; ++j)
+                for (let j = 0; j < message.alias.length; ++j)
                     object.alias[j] = message.alias[j];
             }
             if (message.seq != null && message.hasOwnProperty("seq"))
@@ -2507,6 +2708,7 @@ $root.dto = (function() {
          * Properties of an EditDomainReq.
          * @memberof dto
          * @interface IEditDomainReq
+         * @property {string|null} [id] EditDomainReq id
          * @property {string|null} [name] EditDomainReq name
          * @property {Array.<string>|null} [alias] EditDomainReq alias
          * @property {number|null} [seq] EditDomainReq seq
@@ -2526,10 +2728,18 @@ $root.dto = (function() {
         function EditDomainReq(properties) {
             this.alias = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
+
+        /**
+         * EditDomainReq id.
+         * @member {string} id
+         * @memberof dto.EditDomainReq
+         * @instance
+         */
+        EditDomainReq.prototype.id = "";
 
         /**
          * EditDomainReq name.
@@ -2603,19 +2813,21 @@ $root.dto = (function() {
         EditDomainReq.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
             if (message.name != null && Object.hasOwnProperty.call(message, "name"))
-                writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.name);
             if (message.alias != null && message.alias.length)
-                for (var i = 0; i < message.alias.length; ++i)
-                    writer.uint32(/* id 2, wireType 2 =*/18).string(message.alias[i]);
+                for (let i = 0; i < message.alias.length; ++i)
+                    writer.uint32(/* id 3, wireType 2 =*/26).string(message.alias[i]);
             if (message.seq != null && Object.hasOwnProperty.call(message, "seq"))
-                writer.uint32(/* id 3, wireType 0 =*/24).sint32(message.seq);
+                writer.uint32(/* id 4, wireType 0 =*/32).sint32(message.seq);
             if (message.icon != null && Object.hasOwnProperty.call(message, "icon"))
-                writer.uint32(/* id 4, wireType 2 =*/34).string(message.icon);
+                writer.uint32(/* id 5, wireType 2 =*/42).string(message.icon);
             if (message.memo != null && Object.hasOwnProperty.call(message, "memo"))
-                writer.uint32(/* id 5, wireType 2 =*/42).string(message.memo);
+                writer.uint32(/* id 6, wireType 2 =*/50).string(message.memo);
             if (message.parentId != null && Object.hasOwnProperty.call(message, "parentId"))
-                writer.uint32(/* id 6, wireType 2 =*/50).string(message.parentId);
+                writer.uint32(/* id 7, wireType 2 =*/58).string(message.parentId);
             return writer;
         };
 
@@ -2646,33 +2858,37 @@ $root.dto = (function() {
         EditDomainReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EditDomainReq();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EditDomainReq();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
-                        message.name = reader.string();
+                        message.id = reader.string();
                         break;
                     }
                 case 2: {
+                        message.name = reader.string();
+                        break;
+                    }
+                case 3: {
                         if (!(message.alias && message.alias.length))
                             message.alias = [];
                         message.alias.push(reader.string());
                         break;
                     }
-                case 3: {
+                case 4: {
                         message.seq = reader.sint32();
                         break;
                     }
-                case 4: {
+                case 5: {
                         message.icon = reader.string();
                         break;
                     }
-                case 5: {
+                case 6: {
                         message.memo = reader.string();
                         break;
                     }
-                case 6: {
+                case 7: {
                         message.parentId = reader.string();
                         break;
                     }
@@ -2711,13 +2927,16 @@ $root.dto = (function() {
         EditDomainReq.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
             if (message.name != null && message.hasOwnProperty("name"))
                 if (!$util.isString(message.name))
                     return "name: string expected";
             if (message.alias != null && message.hasOwnProperty("alias")) {
                 if (!Array.isArray(message.alias))
                     return "alias: array expected";
-                for (var i = 0; i < message.alias.length; ++i)
+                for (let i = 0; i < message.alias.length; ++i)
                     if (!$util.isString(message.alias[i]))
                         return "alias: string[] expected";
             }
@@ -2747,14 +2966,16 @@ $root.dto = (function() {
         EditDomainReq.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.EditDomainReq)
                 return object;
-            var message = new $root.dto.EditDomainReq();
+            let message = new $root.dto.EditDomainReq();
+            if (object.id != null)
+                message.id = String(object.id);
             if (object.name != null)
                 message.name = String(object.name);
             if (object.alias) {
                 if (!Array.isArray(object.alias))
                     throw TypeError(".dto.EditDomainReq.alias: array expected");
                 message.alias = [];
-                for (var i = 0; i < object.alias.length; ++i)
+                for (let i = 0; i < object.alias.length; ++i)
                     message.alias[i] = String(object.alias[i]);
             }
             if (object.seq != null)
@@ -2780,21 +3001,24 @@ $root.dto = (function() {
         EditDomainReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.alias = [];
             if (options.defaults) {
+                object.id = "";
                 object.name = "";
                 object.seq = 0;
                 object.icon = "";
                 object.memo = "";
                 object.parentId = "";
             }
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
             if (message.name != null && message.hasOwnProperty("name"))
                 object.name = message.name;
             if (message.alias && message.alias.length) {
                 object.alias = [];
-                for (var j = 0; j < message.alias.length; ++j)
+                for (let j = 0; j < message.alias.length; ++j)
                     object.alias[j] = message.alias[j];
             }
             if (message.seq != null && message.hasOwnProperty("seq"))
@@ -2856,7 +3080,7 @@ $root.dto = (function() {
          */
         function EditDomainRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -2925,9 +3149,9 @@ $root.dto = (function() {
         EditDomainRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EditDomainRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EditDomainRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -2985,7 +3209,7 @@ $root.dto = (function() {
         EditDomainRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.EditDomainRet)
                 return object;
-            var message = new $root.dto.EditDomainRet();
+            let message = new $root.dto.EditDomainRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -3003,7 +3227,7 @@ $root.dto = (function() {
         EditDomainRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -3040,6 +3264,209 @@ $root.dto = (function() {
         return EditDomainRet;
     })();
 
+    dto.EnableDomainReq = (function() {
+
+        /**
+         * Properties of an EnableDomainReq.
+         * @memberof dto
+         * @interface IEnableDomainReq
+         * @property {string|null} [id] EnableDomainReq id
+         */
+
+        /**
+         * Constructs a new EnableDomainReq.
+         * @memberof dto
+         * @classdesc Represents an EnableDomainReq.
+         * @implements IEnableDomainReq
+         * @constructor
+         * @param {dto.IEnableDomainReq=} [properties] Properties to set
+         */
+        function EnableDomainReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * EnableDomainReq id.
+         * @member {string} id
+         * @memberof dto.EnableDomainReq
+         * @instance
+         */
+        EnableDomainReq.prototype.id = "";
+
+        /**
+         * Creates a new EnableDomainReq instance using the specified properties.
+         * @function create
+         * @memberof dto.EnableDomainReq
+         * @static
+         * @param {dto.IEnableDomainReq=} [properties] Properties to set
+         * @returns {dto.EnableDomainReq} EnableDomainReq instance
+         */
+        EnableDomainReq.create = function create(properties) {
+            return new EnableDomainReq(properties);
+        };
+
+        /**
+         * Encodes the specified EnableDomainReq message. Does not implicitly {@link dto.EnableDomainReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.EnableDomainReq
+         * @static
+         * @param {dto.IEnableDomainReq} message EnableDomainReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        EnableDomainReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified EnableDomainReq message, length delimited. Does not implicitly {@link dto.EnableDomainReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.EnableDomainReq
+         * @static
+         * @param {dto.IEnableDomainReq} message EnableDomainReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        EnableDomainReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes an EnableDomainReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.EnableDomainReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.EnableDomainReq} EnableDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        EnableDomainReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EnableDomainReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes an EnableDomainReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.EnableDomainReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.EnableDomainReq} EnableDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        EnableDomainReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies an EnableDomainReq message.
+         * @function verify
+         * @memberof dto.EnableDomainReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        EnableDomainReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates an EnableDomainReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.EnableDomainReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.EnableDomainReq} EnableDomainReq
+         */
+        EnableDomainReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.EnableDomainReq)
+                return object;
+            let message = new $root.dto.EnableDomainReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from an EnableDomainReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.EnableDomainReq
+         * @static
+         * @param {dto.EnableDomainReq} message EnableDomainReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        EnableDomainReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this EnableDomainReq to JSON.
+         * @function toJSON
+         * @memberof dto.EnableDomainReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        EnableDomainReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for EnableDomainReq
+         * @function getTypeUrl
+         * @memberof dto.EnableDomainReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        EnableDomainReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.EnableDomainReq";
+        };
+
+        return EnableDomainReq;
+    })();
+
     dto.EnableDomainRet = (function() {
 
         /**
@@ -3059,7 +3486,7 @@ $root.dto = (function() {
          */
         function EnableDomainRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -3128,9 +3555,9 @@ $root.dto = (function() {
         EnableDomainRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EnableDomainRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EnableDomainRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -3188,7 +3615,7 @@ $root.dto = (function() {
         EnableDomainRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.EnableDomainRet)
                 return object;
-            var message = new $root.dto.EnableDomainRet();
+            let message = new $root.dto.EnableDomainRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -3206,7 +3633,7 @@ $root.dto = (function() {
         EnableDomainRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -3243,6 +3670,209 @@ $root.dto = (function() {
         return EnableDomainRet;
     })();
 
+    dto.DisableDomainReq = (function() {
+
+        /**
+         * Properties of a DisableDomainReq.
+         * @memberof dto
+         * @interface IDisableDomainReq
+         * @property {string|null} [id] DisableDomainReq id
+         */
+
+        /**
+         * Constructs a new DisableDomainReq.
+         * @memberof dto
+         * @classdesc Represents a DisableDomainReq.
+         * @implements IDisableDomainReq
+         * @constructor
+         * @param {dto.IDisableDomainReq=} [properties] Properties to set
+         */
+        function DisableDomainReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * DisableDomainReq id.
+         * @member {string} id
+         * @memberof dto.DisableDomainReq
+         * @instance
+         */
+        DisableDomainReq.prototype.id = "";
+
+        /**
+         * Creates a new DisableDomainReq instance using the specified properties.
+         * @function create
+         * @memberof dto.DisableDomainReq
+         * @static
+         * @param {dto.IDisableDomainReq=} [properties] Properties to set
+         * @returns {dto.DisableDomainReq} DisableDomainReq instance
+         */
+        DisableDomainReq.create = function create(properties) {
+            return new DisableDomainReq(properties);
+        };
+
+        /**
+         * Encodes the specified DisableDomainReq message. Does not implicitly {@link dto.DisableDomainReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.DisableDomainReq
+         * @static
+         * @param {dto.IDisableDomainReq} message DisableDomainReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DisableDomainReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified DisableDomainReq message, length delimited. Does not implicitly {@link dto.DisableDomainReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.DisableDomainReq
+         * @static
+         * @param {dto.IDisableDomainReq} message DisableDomainReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DisableDomainReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a DisableDomainReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.DisableDomainReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.DisableDomainReq} DisableDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DisableDomainReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.DisableDomainReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a DisableDomainReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.DisableDomainReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.DisableDomainReq} DisableDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DisableDomainReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a DisableDomainReq message.
+         * @function verify
+         * @memberof dto.DisableDomainReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        DisableDomainReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a DisableDomainReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.DisableDomainReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.DisableDomainReq} DisableDomainReq
+         */
+        DisableDomainReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.DisableDomainReq)
+                return object;
+            let message = new $root.dto.DisableDomainReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a DisableDomainReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.DisableDomainReq
+         * @static
+         * @param {dto.DisableDomainReq} message DisableDomainReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        DisableDomainReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this DisableDomainReq to JSON.
+         * @function toJSON
+         * @memberof dto.DisableDomainReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        DisableDomainReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for DisableDomainReq
+         * @function getTypeUrl
+         * @memberof dto.DisableDomainReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        DisableDomainReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.DisableDomainReq";
+        };
+
+        return DisableDomainReq;
+    })();
+
     dto.DisableDomainRet = (function() {
 
         /**
@@ -3262,7 +3892,7 @@ $root.dto = (function() {
          */
         function DisableDomainRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -3331,9 +3961,9 @@ $root.dto = (function() {
         DisableDomainRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.DisableDomainRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.DisableDomainRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -3391,7 +4021,7 @@ $root.dto = (function() {
         DisableDomainRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.DisableDomainRet)
                 return object;
-            var message = new $root.dto.DisableDomainRet();
+            let message = new $root.dto.DisableDomainRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -3409,7 +4039,7 @@ $root.dto = (function() {
         DisableDomainRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -3446,6 +4076,209 @@ $root.dto = (function() {
         return DisableDomainRet;
     })();
 
+    dto.RemoveDomainReq = (function() {
+
+        /**
+         * Properties of a RemoveDomainReq.
+         * @memberof dto
+         * @interface IRemoveDomainReq
+         * @property {string|null} [id] RemoveDomainReq id
+         */
+
+        /**
+         * Constructs a new RemoveDomainReq.
+         * @memberof dto
+         * @classdesc Represents a RemoveDomainReq.
+         * @implements IRemoveDomainReq
+         * @constructor
+         * @param {dto.IRemoveDomainReq=} [properties] Properties to set
+         */
+        function RemoveDomainReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * RemoveDomainReq id.
+         * @member {string} id
+         * @memberof dto.RemoveDomainReq
+         * @instance
+         */
+        RemoveDomainReq.prototype.id = "";
+
+        /**
+         * Creates a new RemoveDomainReq instance using the specified properties.
+         * @function create
+         * @memberof dto.RemoveDomainReq
+         * @static
+         * @param {dto.IRemoveDomainReq=} [properties] Properties to set
+         * @returns {dto.RemoveDomainReq} RemoveDomainReq instance
+         */
+        RemoveDomainReq.create = function create(properties) {
+            return new RemoveDomainReq(properties);
+        };
+
+        /**
+         * Encodes the specified RemoveDomainReq message. Does not implicitly {@link dto.RemoveDomainReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.RemoveDomainReq
+         * @static
+         * @param {dto.IRemoveDomainReq} message RemoveDomainReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RemoveDomainReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified RemoveDomainReq message, length delimited. Does not implicitly {@link dto.RemoveDomainReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.RemoveDomainReq
+         * @static
+         * @param {dto.IRemoveDomainReq} message RemoveDomainReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RemoveDomainReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a RemoveDomainReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.RemoveDomainReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.RemoveDomainReq} RemoveDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RemoveDomainReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.RemoveDomainReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a RemoveDomainReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.RemoveDomainReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.RemoveDomainReq} RemoveDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RemoveDomainReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a RemoveDomainReq message.
+         * @function verify
+         * @memberof dto.RemoveDomainReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        RemoveDomainReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a RemoveDomainReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.RemoveDomainReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.RemoveDomainReq} RemoveDomainReq
+         */
+        RemoveDomainReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.RemoveDomainReq)
+                return object;
+            let message = new $root.dto.RemoveDomainReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a RemoveDomainReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.RemoveDomainReq
+         * @static
+         * @param {dto.RemoveDomainReq} message RemoveDomainReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        RemoveDomainReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this RemoveDomainReq to JSON.
+         * @function toJSON
+         * @memberof dto.RemoveDomainReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        RemoveDomainReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for RemoveDomainReq
+         * @function getTypeUrl
+         * @memberof dto.RemoveDomainReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        RemoveDomainReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.RemoveDomainReq";
+        };
+
+        return RemoveDomainReq;
+    })();
+
     dto.RemoveDomainRet = (function() {
 
         /**
@@ -3465,7 +4298,7 @@ $root.dto = (function() {
          */
         function RemoveDomainRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -3534,9 +4367,9 @@ $root.dto = (function() {
         RemoveDomainRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.RemoveDomainRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.RemoveDomainRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -3594,7 +4427,7 @@ $root.dto = (function() {
         RemoveDomainRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.RemoveDomainRet)
                 return object;
-            var message = new $root.dto.RemoveDomainRet();
+            let message = new $root.dto.RemoveDomainRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -3612,7 +4445,7 @@ $root.dto = (function() {
         RemoveDomainRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -3675,7 +4508,7 @@ $root.dto = (function() {
          */
         function AddMenuReq(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -3814,9 +4647,9 @@ $root.dto = (function() {
         AddMenuReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AddMenuReq();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AddMenuReq();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.name = reader.string();
@@ -3923,7 +4756,7 @@ $root.dto = (function() {
         AddMenuReq.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.AddMenuReq)
                 return object;
-            var message = new $root.dto.AddMenuReq();
+            let message = new $root.dto.AddMenuReq();
             if (object.name != null)
                 message.name = String(object.name);
             if (object.seq != null)
@@ -3955,7 +4788,7 @@ $root.dto = (function() {
         AddMenuReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults) {
                 object.name = "";
                 object.seq = 0;
@@ -4033,7 +4866,7 @@ $root.dto = (function() {
          */
         function AddMenuRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -4102,9 +4935,9 @@ $root.dto = (function() {
         AddMenuRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AddMenuRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AddMenuRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -4162,7 +4995,7 @@ $root.dto = (function() {
         AddMenuRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.AddMenuRet)
                 return object;
-            var message = new $root.dto.AddMenuRet();
+            let message = new $root.dto.AddMenuRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -4180,7 +5013,7 @@ $root.dto = (function() {
         AddMenuRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -4245,7 +5078,7 @@ $root.dto = (function() {
         function ListMenuReq(properties) {
             this.sortBy = {};
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -4361,7 +5194,7 @@ $root.dto = (function() {
             if (message.perPage != null && Object.hasOwnProperty.call(message, "perPage"))
                 writer.uint32(/* id 20003, wireType 0 =*/160024).sint64(message.perPage);
             if (message.sortBy != null && Object.hasOwnProperty.call(message, "sortBy"))
-                for (var keys = Object.keys(message.sortBy), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(message.sortBy), i = 0; i < keys.length; ++i)
                     writer.uint32(/* id 20004, wireType 2 =*/160034).fork().uint32(/* id 1, wireType 2 =*/10).string(keys[i]).uint32(/* id 2, wireType 0 =*/16).int32(message.sortBy[keys[i]]).ldelim();
             if (message.deleted != null && Object.hasOwnProperty.call(message, "deleted"))
                 writer.uint32(/* id 20005, wireType 0 =*/160040).bool(message.deleted);
@@ -4395,9 +5228,9 @@ $root.dto = (function() {
         ListMenuReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListMenuReq(), key, value;
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListMenuReq(), key, value;
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 20001: {
                         message.noPaging = reader.bool();
@@ -4414,11 +5247,11 @@ $root.dto = (function() {
                 case 20004: {
                         if (message.sortBy === $util.emptyObject)
                             message.sortBy = {};
-                        var end2 = reader.uint32() + reader.pos;
+                        let end2 = reader.uint32() + reader.pos;
                         key = "";
                         value = 0;
                         while (reader.pos < end2) {
-                            var tag2 = reader.uint32();
+                            let tag2 = reader.uint32();
                             switch (tag2 >>> 3) {
                             case 1:
                                 key = reader.string();
@@ -4501,8 +5334,8 @@ $root.dto = (function() {
             if (message.sortBy != null && message.hasOwnProperty("sortBy")) {
                 if (!$util.isObject(message.sortBy))
                     return "sortBy: object expected";
-                var key = Object.keys(message.sortBy);
-                for (var i = 0; i < key.length; ++i)
+                let key = Object.keys(message.sortBy);
+                for (let i = 0; i < key.length; ++i)
                     switch (message.sortBy[key[i]]) {
                     default:
                         return "sortBy: enum value{k:string} expected";
@@ -4540,7 +5373,7 @@ $root.dto = (function() {
         ListMenuReq.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.ListMenuReq)
                 return object;
-            var message = new $root.dto.ListMenuReq();
+            let message = new $root.dto.ListMenuReq();
             if (object.noPaging != null)
                 message.noPaging = Boolean(object.noPaging);
             if (object.page != null)
@@ -4565,7 +5398,7 @@ $root.dto = (function() {
                 if (typeof object.sortBy !== "object")
                     throw TypeError(".dto.ListMenuReq.sortBy: object expected");
                 message.sortBy = {};
-                for (var keys = Object.keys(object.sortBy), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(object.sortBy), i = 0; i < keys.length; ++i)
                     switch (object.sortBy[keys[i]]) {
                     default:
                         if (typeof object.sortBy[keys[i]] === "number") {
@@ -4608,7 +5441,7 @@ $root.dto = (function() {
         ListMenuReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.objects || options.defaults)
                 object.sortBy = {};
             if (options.defaults) {
@@ -4618,12 +5451,12 @@ $root.dto = (function() {
                 object.show = false;
                 object.noPaging = false;
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.page = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.page = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.perPage = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.perPage = options.longs === String ? "0" : 0;
@@ -4649,10 +5482,10 @@ $root.dto = (function() {
                     object.perPage = options.longs === String ? String(message.perPage) : message.perPage;
                 else
                     object.perPage = options.longs === String ? $util.Long.prototype.toString.call(message.perPage) : options.longs === Number ? new $util.LongBits(message.perPage.low >>> 0, message.perPage.high >>> 0).toNumber() : message.perPage;
-            var keys2;
+            let keys2;
             if (message.sortBy && (keys2 = Object.keys(message.sortBy)).length) {
                 object.sortBy = {};
-                for (var j = 0; j < keys2.length; ++j)
+                for (let j = 0; j < keys2.length; ++j)
                     object.sortBy[keys2[j]] = options.enums === String ? $root.dto.SortDirection[message.sortBy[keys2[j]]] === undefined ? message.sortBy[keys2[j]] : $root.dto.SortDirection[message.sortBy[keys2[j]]] : message.sortBy[keys2[j]];
             }
             if (message.deleted != null && message.hasOwnProperty("deleted"))
@@ -4724,7 +5557,7 @@ $root.dto = (function() {
         function MenuListElem(properties) {
             this.children = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -4912,7 +5745,7 @@ $root.dto = (function() {
             if (message.deletedAt != null && Object.hasOwnProperty.call(message, "deletedAt"))
                 writer.uint32(/* id 20005, wireType 2 =*/160042).string(message.deletedAt);
             if (message.children != null && message.children.length)
-                for (var i = 0; i < message.children.length; ++i)
+                for (let i = 0; i < message.children.length; ++i)
                     $root.dto.MenuListElem.encode(message.children[i], writer.uint32(/* id 20006, wireType 2 =*/160050).fork()).ldelim();
             return writer;
         };
@@ -4944,9 +5777,9 @@ $root.dto = (function() {
         MenuListElem.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.MenuListElem();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.MenuListElem();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -5097,8 +5930,8 @@ $root.dto = (function() {
             if (message.children != null && message.hasOwnProperty("children")) {
                 if (!Array.isArray(message.children))
                     return "children: array expected";
-                for (var i = 0; i < message.children.length; ++i) {
-                    var error = $root.dto.MenuListElem.verify(message.children[i]);
+                for (let i = 0; i < message.children.length; ++i) {
+                    let error = $root.dto.MenuListElem.verify(message.children[i]);
                     if (error)
                         return "children." + error;
                 }
@@ -5117,7 +5950,7 @@ $root.dto = (function() {
         MenuListElem.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.MenuListElem)
                 return object;
-            var message = new $root.dto.MenuListElem();
+            let message = new $root.dto.MenuListElem();
             if (object.id != null)
                 message.id = String(object.id);
             if (object.name != null)
@@ -5152,7 +5985,7 @@ $root.dto = (function() {
                 if (!Array.isArray(object.children))
                     throw TypeError(".dto.MenuListElem.children: array expected");
                 message.children = [];
-                for (var i = 0; i < object.children.length; ++i) {
+                for (let i = 0; i < object.children.length; ++i) {
                     if (typeof object.children[i] !== "object")
                         throw TypeError(".dto.MenuListElem.children: object expected");
                     message.children[i] = $root.dto.MenuListElem.fromObject(object.children[i]);
@@ -5173,7 +6006,7 @@ $root.dto = (function() {
         MenuListElem.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.children = [];
             if (options.defaults) {
@@ -5225,7 +6058,7 @@ $root.dto = (function() {
                 object.deletedAt = message.deletedAt;
             if (message.children && message.children.length) {
                 object.children = [];
-                for (var j = 0; j < message.children.length; ++j)
+                for (let j = 0; j < message.children.length; ++j)
                     object.children[j] = $root.dto.MenuListElem.toObject(message.children[j], options);
             }
             return object;
@@ -5281,7 +6114,7 @@ $root.dto = (function() {
         function ListMenuRet(properties) {
             this.list = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -5327,7 +6160,7 @@ $root.dto = (function() {
             if (!writer)
                 writer = $Writer.create();
             if (message.list != null && message.list.length)
-                for (var i = 0; i < message.list.length; ++i)
+                for (let i = 0; i < message.list.length; ++i)
                     $root.dto.MenuListElem.encode(message.list[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
             if (message.total != null && Object.hasOwnProperty.call(message, "total"))
                 writer.uint32(/* id 2, wireType 0 =*/16).sint64(message.total);
@@ -5361,9 +6194,9 @@ $root.dto = (function() {
         ListMenuRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListMenuRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListMenuRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         if (!(message.list && message.list.length))
@@ -5413,8 +6246,8 @@ $root.dto = (function() {
             if (message.list != null && message.hasOwnProperty("list")) {
                 if (!Array.isArray(message.list))
                     return "list: array expected";
-                for (var i = 0; i < message.list.length; ++i) {
-                    var error = $root.dto.MenuListElem.verify(message.list[i]);
+                for (let i = 0; i < message.list.length; ++i) {
+                    let error = $root.dto.MenuListElem.verify(message.list[i]);
                     if (error)
                         return "list." + error;
                 }
@@ -5436,12 +6269,12 @@ $root.dto = (function() {
         ListMenuRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.ListMenuRet)
                 return object;
-            var message = new $root.dto.ListMenuRet();
+            let message = new $root.dto.ListMenuRet();
             if (object.list) {
                 if (!Array.isArray(object.list))
                     throw TypeError(".dto.ListMenuRet.list: array expected");
                 message.list = [];
-                for (var i = 0; i < object.list.length; ++i) {
+                for (let i = 0; i < object.list.length; ++i) {
                     if (typeof object.list[i] !== "object")
                         throw TypeError(".dto.ListMenuRet.list: object expected");
                     message.list[i] = $root.dto.MenuListElem.fromObject(object.list[i]);
@@ -5471,18 +6304,18 @@ $root.dto = (function() {
         ListMenuRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.list = [];
             if (options.defaults)
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.total = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.total = options.longs === String ? "0" : 0;
             if (message.list && message.list.length) {
                 object.list = [];
-                for (var j = 0; j < message.list.length; ++j)
+                for (let j = 0; j < message.list.length; ++j)
                     object.list[j] = $root.dto.MenuListElem.toObject(message.list[j], options);
             }
             if (message.total != null && message.hasOwnProperty("total"))
@@ -5522,6 +6355,209 @@ $root.dto = (function() {
         return ListMenuRet;
     })();
 
+    dto.ProfileMenuReq = (function() {
+
+        /**
+         * Properties of a ProfileMenuReq.
+         * @memberof dto
+         * @interface IProfileMenuReq
+         * @property {string|null} [id] ProfileMenuReq id
+         */
+
+        /**
+         * Constructs a new ProfileMenuReq.
+         * @memberof dto
+         * @classdesc Represents a ProfileMenuReq.
+         * @implements IProfileMenuReq
+         * @constructor
+         * @param {dto.IProfileMenuReq=} [properties] Properties to set
+         */
+        function ProfileMenuReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * ProfileMenuReq id.
+         * @member {string} id
+         * @memberof dto.ProfileMenuReq
+         * @instance
+         */
+        ProfileMenuReq.prototype.id = "";
+
+        /**
+         * Creates a new ProfileMenuReq instance using the specified properties.
+         * @function create
+         * @memberof dto.ProfileMenuReq
+         * @static
+         * @param {dto.IProfileMenuReq=} [properties] Properties to set
+         * @returns {dto.ProfileMenuReq} ProfileMenuReq instance
+         */
+        ProfileMenuReq.create = function create(properties) {
+            return new ProfileMenuReq(properties);
+        };
+
+        /**
+         * Encodes the specified ProfileMenuReq message. Does not implicitly {@link dto.ProfileMenuReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.ProfileMenuReq
+         * @static
+         * @param {dto.IProfileMenuReq} message ProfileMenuReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ProfileMenuReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ProfileMenuReq message, length delimited. Does not implicitly {@link dto.ProfileMenuReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.ProfileMenuReq
+         * @static
+         * @param {dto.IProfileMenuReq} message ProfileMenuReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ProfileMenuReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ProfileMenuReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.ProfileMenuReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.ProfileMenuReq} ProfileMenuReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ProfileMenuReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ProfileMenuReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ProfileMenuReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.ProfileMenuReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.ProfileMenuReq} ProfileMenuReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ProfileMenuReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ProfileMenuReq message.
+         * @function verify
+         * @memberof dto.ProfileMenuReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ProfileMenuReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a ProfileMenuReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.ProfileMenuReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.ProfileMenuReq} ProfileMenuReq
+         */
+        ProfileMenuReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.ProfileMenuReq)
+                return object;
+            let message = new $root.dto.ProfileMenuReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a ProfileMenuReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.ProfileMenuReq
+         * @static
+         * @param {dto.ProfileMenuReq} message ProfileMenuReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ProfileMenuReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this ProfileMenuReq to JSON.
+         * @function toJSON
+         * @memberof dto.ProfileMenuReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ProfileMenuReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for ProfileMenuReq
+         * @function getTypeUrl
+         * @memberof dto.ProfileMenuReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        ProfileMenuReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.ProfileMenuReq";
+        };
+
+        return ProfileMenuReq;
+    })();
+
     dto.ProfileMenuRet = (function() {
 
         /**
@@ -5555,7 +6591,7 @@ $root.dto = (function() {
          */
         function ProfileMenuRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -5764,9 +6800,9 @@ $root.dto = (function() {
         ProfileMenuRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ProfileMenuRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ProfileMenuRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -5922,7 +6958,7 @@ $root.dto = (function() {
         ProfileMenuRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.ProfileMenuRet)
                 return object;
-            var message = new $root.dto.ProfileMenuRet();
+            let message = new $root.dto.ProfileMenuRet();
             if (object.id != null)
                 message.id = String(object.id);
             if (object.name != null)
@@ -5968,7 +7004,7 @@ $root.dto = (function() {
         ProfileMenuRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults) {
                 object.id = "";
                 object.name = "";
@@ -6074,7 +7110,7 @@ $root.dto = (function() {
          */
         function EditMenuReq(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -6213,9 +7249,9 @@ $root.dto = (function() {
         EditMenuReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EditMenuReq();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EditMenuReq();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.name = reader.string();
@@ -6322,7 +7358,7 @@ $root.dto = (function() {
         EditMenuReq.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.EditMenuReq)
                 return object;
-            var message = new $root.dto.EditMenuReq();
+            let message = new $root.dto.EditMenuReq();
             if (object.name != null)
                 message.name = String(object.name);
             if (object.seq != null)
@@ -6354,7 +7390,7 @@ $root.dto = (function() {
         EditMenuReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults) {
                 object.name = "";
                 object.seq = 0;
@@ -6432,7 +7468,7 @@ $root.dto = (function() {
          */
         function EditMenuRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -6501,9 +7537,9 @@ $root.dto = (function() {
         EditMenuRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EditMenuRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EditMenuRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -6561,7 +7597,7 @@ $root.dto = (function() {
         EditMenuRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.EditMenuRet)
                 return object;
-            var message = new $root.dto.EditMenuRet();
+            let message = new $root.dto.EditMenuRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -6579,7 +7615,7 @@ $root.dto = (function() {
         EditMenuRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -6616,6 +7652,209 @@ $root.dto = (function() {
         return EditMenuRet;
     })();
 
+    dto.EnableMenuReq = (function() {
+
+        /**
+         * Properties of an EnableMenuReq.
+         * @memberof dto
+         * @interface IEnableMenuReq
+         * @property {string|null} [id] EnableMenuReq id
+         */
+
+        /**
+         * Constructs a new EnableMenuReq.
+         * @memberof dto
+         * @classdesc Represents an EnableMenuReq.
+         * @implements IEnableMenuReq
+         * @constructor
+         * @param {dto.IEnableMenuReq=} [properties] Properties to set
+         */
+        function EnableMenuReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * EnableMenuReq id.
+         * @member {string} id
+         * @memberof dto.EnableMenuReq
+         * @instance
+         */
+        EnableMenuReq.prototype.id = "";
+
+        /**
+         * Creates a new EnableMenuReq instance using the specified properties.
+         * @function create
+         * @memberof dto.EnableMenuReq
+         * @static
+         * @param {dto.IEnableMenuReq=} [properties] Properties to set
+         * @returns {dto.EnableMenuReq} EnableMenuReq instance
+         */
+        EnableMenuReq.create = function create(properties) {
+            return new EnableMenuReq(properties);
+        };
+
+        /**
+         * Encodes the specified EnableMenuReq message. Does not implicitly {@link dto.EnableMenuReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.EnableMenuReq
+         * @static
+         * @param {dto.IEnableMenuReq} message EnableMenuReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        EnableMenuReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified EnableMenuReq message, length delimited. Does not implicitly {@link dto.EnableMenuReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.EnableMenuReq
+         * @static
+         * @param {dto.IEnableMenuReq} message EnableMenuReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        EnableMenuReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes an EnableMenuReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.EnableMenuReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.EnableMenuReq} EnableMenuReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        EnableMenuReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EnableMenuReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes an EnableMenuReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.EnableMenuReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.EnableMenuReq} EnableMenuReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        EnableMenuReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies an EnableMenuReq message.
+         * @function verify
+         * @memberof dto.EnableMenuReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        EnableMenuReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates an EnableMenuReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.EnableMenuReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.EnableMenuReq} EnableMenuReq
+         */
+        EnableMenuReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.EnableMenuReq)
+                return object;
+            let message = new $root.dto.EnableMenuReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from an EnableMenuReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.EnableMenuReq
+         * @static
+         * @param {dto.EnableMenuReq} message EnableMenuReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        EnableMenuReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this EnableMenuReq to JSON.
+         * @function toJSON
+         * @memberof dto.EnableMenuReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        EnableMenuReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for EnableMenuReq
+         * @function getTypeUrl
+         * @memberof dto.EnableMenuReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        EnableMenuReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.EnableMenuReq";
+        };
+
+        return EnableMenuReq;
+    })();
+
     dto.EnableMenuRet = (function() {
 
         /**
@@ -6635,7 +7874,7 @@ $root.dto = (function() {
          */
         function EnableMenuRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -6704,9 +7943,9 @@ $root.dto = (function() {
         EnableMenuRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EnableMenuRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EnableMenuRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -6764,7 +8003,7 @@ $root.dto = (function() {
         EnableMenuRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.EnableMenuRet)
                 return object;
-            var message = new $root.dto.EnableMenuRet();
+            let message = new $root.dto.EnableMenuRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -6782,7 +8021,7 @@ $root.dto = (function() {
         EnableMenuRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -6819,6 +8058,209 @@ $root.dto = (function() {
         return EnableMenuRet;
     })();
 
+    dto.DisableMenuReq = (function() {
+
+        /**
+         * Properties of a DisableMenuReq.
+         * @memberof dto
+         * @interface IDisableMenuReq
+         * @property {string|null} [id] DisableMenuReq id
+         */
+
+        /**
+         * Constructs a new DisableMenuReq.
+         * @memberof dto
+         * @classdesc Represents a DisableMenuReq.
+         * @implements IDisableMenuReq
+         * @constructor
+         * @param {dto.IDisableMenuReq=} [properties] Properties to set
+         */
+        function DisableMenuReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * DisableMenuReq id.
+         * @member {string} id
+         * @memberof dto.DisableMenuReq
+         * @instance
+         */
+        DisableMenuReq.prototype.id = "";
+
+        /**
+         * Creates a new DisableMenuReq instance using the specified properties.
+         * @function create
+         * @memberof dto.DisableMenuReq
+         * @static
+         * @param {dto.IDisableMenuReq=} [properties] Properties to set
+         * @returns {dto.DisableMenuReq} DisableMenuReq instance
+         */
+        DisableMenuReq.create = function create(properties) {
+            return new DisableMenuReq(properties);
+        };
+
+        /**
+         * Encodes the specified DisableMenuReq message. Does not implicitly {@link dto.DisableMenuReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.DisableMenuReq
+         * @static
+         * @param {dto.IDisableMenuReq} message DisableMenuReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DisableMenuReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified DisableMenuReq message, length delimited. Does not implicitly {@link dto.DisableMenuReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.DisableMenuReq
+         * @static
+         * @param {dto.IDisableMenuReq} message DisableMenuReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DisableMenuReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a DisableMenuReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.DisableMenuReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.DisableMenuReq} DisableMenuReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DisableMenuReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.DisableMenuReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a DisableMenuReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.DisableMenuReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.DisableMenuReq} DisableMenuReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DisableMenuReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a DisableMenuReq message.
+         * @function verify
+         * @memberof dto.DisableMenuReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        DisableMenuReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a DisableMenuReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.DisableMenuReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.DisableMenuReq} DisableMenuReq
+         */
+        DisableMenuReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.DisableMenuReq)
+                return object;
+            let message = new $root.dto.DisableMenuReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a DisableMenuReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.DisableMenuReq
+         * @static
+         * @param {dto.DisableMenuReq} message DisableMenuReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        DisableMenuReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this DisableMenuReq to JSON.
+         * @function toJSON
+         * @memberof dto.DisableMenuReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        DisableMenuReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for DisableMenuReq
+         * @function getTypeUrl
+         * @memberof dto.DisableMenuReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        DisableMenuReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.DisableMenuReq";
+        };
+
+        return DisableMenuReq;
+    })();
+
     dto.DisableMenuRet = (function() {
 
         /**
@@ -6838,7 +8280,7 @@ $root.dto = (function() {
          */
         function DisableMenuRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -6907,9 +8349,9 @@ $root.dto = (function() {
         DisableMenuRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.DisableMenuRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.DisableMenuRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -6967,7 +8409,7 @@ $root.dto = (function() {
         DisableMenuRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.DisableMenuRet)
                 return object;
-            var message = new $root.dto.DisableMenuRet();
+            let message = new $root.dto.DisableMenuRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -6985,7 +8427,7 @@ $root.dto = (function() {
         DisableMenuRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -7022,6 +8464,209 @@ $root.dto = (function() {
         return DisableMenuRet;
     })();
 
+    dto.RemoveMenuReq = (function() {
+
+        /**
+         * Properties of a RemoveMenuReq.
+         * @memberof dto
+         * @interface IRemoveMenuReq
+         * @property {string|null} [id] RemoveMenuReq id
+         */
+
+        /**
+         * Constructs a new RemoveMenuReq.
+         * @memberof dto
+         * @classdesc Represents a RemoveMenuReq.
+         * @implements IRemoveMenuReq
+         * @constructor
+         * @param {dto.IRemoveMenuReq=} [properties] Properties to set
+         */
+        function RemoveMenuReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * RemoveMenuReq id.
+         * @member {string} id
+         * @memberof dto.RemoveMenuReq
+         * @instance
+         */
+        RemoveMenuReq.prototype.id = "";
+
+        /**
+         * Creates a new RemoveMenuReq instance using the specified properties.
+         * @function create
+         * @memberof dto.RemoveMenuReq
+         * @static
+         * @param {dto.IRemoveMenuReq=} [properties] Properties to set
+         * @returns {dto.RemoveMenuReq} RemoveMenuReq instance
+         */
+        RemoveMenuReq.create = function create(properties) {
+            return new RemoveMenuReq(properties);
+        };
+
+        /**
+         * Encodes the specified RemoveMenuReq message. Does not implicitly {@link dto.RemoveMenuReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.RemoveMenuReq
+         * @static
+         * @param {dto.IRemoveMenuReq} message RemoveMenuReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RemoveMenuReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified RemoveMenuReq message, length delimited. Does not implicitly {@link dto.RemoveMenuReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.RemoveMenuReq
+         * @static
+         * @param {dto.IRemoveMenuReq} message RemoveMenuReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RemoveMenuReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a RemoveMenuReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.RemoveMenuReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.RemoveMenuReq} RemoveMenuReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RemoveMenuReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.RemoveMenuReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a RemoveMenuReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.RemoveMenuReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.RemoveMenuReq} RemoveMenuReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RemoveMenuReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a RemoveMenuReq message.
+         * @function verify
+         * @memberof dto.RemoveMenuReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        RemoveMenuReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a RemoveMenuReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.RemoveMenuReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.RemoveMenuReq} RemoveMenuReq
+         */
+        RemoveMenuReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.RemoveMenuReq)
+                return object;
+            let message = new $root.dto.RemoveMenuReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a RemoveMenuReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.RemoveMenuReq
+         * @static
+         * @param {dto.RemoveMenuReq} message RemoveMenuReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        RemoveMenuReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this RemoveMenuReq to JSON.
+         * @function toJSON
+         * @memberof dto.RemoveMenuReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        RemoveMenuReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for RemoveMenuReq
+         * @function getTypeUrl
+         * @memberof dto.RemoveMenuReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        RemoveMenuReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.RemoveMenuReq";
+        };
+
+        return RemoveMenuReq;
+    })();
+
     dto.RemoveMenuRet = (function() {
 
         /**
@@ -7041,7 +8686,7 @@ $root.dto = (function() {
          */
         function RemoveMenuRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -7110,9 +8755,9 @@ $root.dto = (function() {
         RemoveMenuRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.RemoveMenuRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.RemoveMenuRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -7170,7 +8815,7 @@ $root.dto = (function() {
         RemoveMenuRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.RemoveMenuRet)
                 return object;
-            var message = new $root.dto.RemoveMenuRet();
+            let message = new $root.dto.RemoveMenuRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -7188,7 +8833,7 @@ $root.dto = (function() {
         RemoveMenuRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -7250,7 +8895,7 @@ $root.dto = (function() {
          */
         function AddMenuWidgetReq(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -7379,9 +9024,9 @@ $root.dto = (function() {
         AddMenuWidgetReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AddMenuWidgetReq();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AddMenuWidgetReq();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.name = reader.string();
@@ -7481,7 +9126,7 @@ $root.dto = (function() {
         AddMenuWidgetReq.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.AddMenuWidgetReq)
                 return object;
-            var message = new $root.dto.AddMenuWidgetReq();
+            let message = new $root.dto.AddMenuWidgetReq();
             if (object.name != null)
                 message.name = String(object.name);
             if (object.seq != null)
@@ -7511,7 +9156,7 @@ $root.dto = (function() {
         AddMenuWidgetReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults) {
                 object.name = "";
                 object.seq = 0;
@@ -7586,7 +9231,7 @@ $root.dto = (function() {
          */
         function AddMenuWidgetRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -7655,9 +9300,9 @@ $root.dto = (function() {
         AddMenuWidgetRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AddMenuWidgetRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AddMenuWidgetRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -7715,7 +9360,7 @@ $root.dto = (function() {
         AddMenuWidgetRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.AddMenuWidgetRet)
                 return object;
-            var message = new $root.dto.AddMenuWidgetRet();
+            let message = new $root.dto.AddMenuWidgetRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -7733,7 +9378,7 @@ $root.dto = (function() {
         AddMenuWidgetRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -7795,7 +9440,7 @@ $root.dto = (function() {
         function ListMenuWidgetReq(properties) {
             this.sortBy = {};
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -7881,7 +9526,7 @@ $root.dto = (function() {
             if (message.perPage != null && Object.hasOwnProperty.call(message, "perPage"))
                 writer.uint32(/* id 20003, wireType 0 =*/160024).sint64(message.perPage);
             if (message.sortBy != null && Object.hasOwnProperty.call(message, "sortBy"))
-                for (var keys = Object.keys(message.sortBy), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(message.sortBy), i = 0; i < keys.length; ++i)
                     writer.uint32(/* id 20004, wireType 2 =*/160034).fork().uint32(/* id 1, wireType 2 =*/10).string(keys[i]).uint32(/* id 2, wireType 0 =*/16).int32(message.sortBy[keys[i]]).ldelim();
             if (message.deleted != null && Object.hasOwnProperty.call(message, "deleted"))
                 writer.uint32(/* id 20005, wireType 0 =*/160040).bool(message.deleted);
@@ -7915,9 +9560,9 @@ $root.dto = (function() {
         ListMenuWidgetReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListMenuWidgetReq(), key, value;
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListMenuWidgetReq(), key, value;
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 20001: {
                         message.noPaging = reader.bool();
@@ -7934,11 +9579,11 @@ $root.dto = (function() {
                 case 20004: {
                         if (message.sortBy === $util.emptyObject)
                             message.sortBy = {};
-                        var end2 = reader.uint32() + reader.pos;
+                        let end2 = reader.uint32() + reader.pos;
                         key = "";
                         value = 0;
                         while (reader.pos < end2) {
-                            var tag2 = reader.uint32();
+                            let tag2 = reader.uint32();
                             switch (tag2 >>> 3) {
                             case 1:
                                 key = reader.string();
@@ -8009,8 +9654,8 @@ $root.dto = (function() {
             if (message.sortBy != null && message.hasOwnProperty("sortBy")) {
                 if (!$util.isObject(message.sortBy))
                     return "sortBy: object expected";
-                var key = Object.keys(message.sortBy);
-                for (var i = 0; i < key.length; ++i)
+                let key = Object.keys(message.sortBy);
+                for (let i = 0; i < key.length; ++i)
                     switch (message.sortBy[key[i]]) {
                     default:
                         return "sortBy: enum value{k:string} expected";
@@ -8039,7 +9684,7 @@ $root.dto = (function() {
         ListMenuWidgetReq.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.ListMenuWidgetReq)
                 return object;
-            var message = new $root.dto.ListMenuWidgetReq();
+            let message = new $root.dto.ListMenuWidgetReq();
             if (object.noPaging != null)
                 message.noPaging = Boolean(object.noPaging);
             if (object.page != null)
@@ -8064,7 +9709,7 @@ $root.dto = (function() {
                 if (typeof object.sortBy !== "object")
                     throw TypeError(".dto.ListMenuWidgetReq.sortBy: object expected");
                 message.sortBy = {};
-                for (var keys = Object.keys(object.sortBy), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(object.sortBy), i = 0; i < keys.length; ++i)
                     switch (object.sortBy[keys[i]]) {
                     default:
                         if (typeof object.sortBy[keys[i]] === "number") {
@@ -8101,19 +9746,19 @@ $root.dto = (function() {
         ListMenuWidgetReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.objects || options.defaults)
                 object.sortBy = {};
             if (options.defaults) {
                 object.name = "";
                 object.noPaging = false;
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.page = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.page = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.perPage = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.perPage = options.longs === String ? "0" : 0;
@@ -8133,10 +9778,10 @@ $root.dto = (function() {
                     object.perPage = options.longs === String ? String(message.perPage) : message.perPage;
                 else
                     object.perPage = options.longs === String ? $util.Long.prototype.toString.call(message.perPage) : options.longs === Number ? new $util.LongBits(message.perPage.low >>> 0, message.perPage.high >>> 0).toNumber() : message.perPage;
-            var keys2;
+            let keys2;
             if (message.sortBy && (keys2 = Object.keys(message.sortBy)).length) {
                 object.sortBy = {};
-                for (var j = 0; j < keys2.length; ++j)
+                for (let j = 0; j < keys2.length; ++j)
                     object.sortBy[keys2[j]] = options.enums === String ? $root.dto.SortDirection[message.sortBy[keys2[j]]] === undefined ? message.sortBy[keys2[j]] : $root.dto.SortDirection[message.sortBy[keys2[j]]] : message.sortBy[keys2[j]];
             }
             if (message.deleted != null && message.hasOwnProperty("deleted"))
@@ -8204,7 +9849,7 @@ $root.dto = (function() {
          */
         function MenuWidgetListElem(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -8393,9 +10038,9 @@ $root.dto = (function() {
         MenuWidgetListElem.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.MenuWidgetListElem();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.MenuWidgetListElem();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -8537,7 +10182,7 @@ $root.dto = (function() {
         MenuWidgetListElem.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.MenuWidgetListElem)
                 return object;
-            var message = new $root.dto.MenuWidgetListElem();
+            let message = new $root.dto.MenuWidgetListElem();
             if (object.id != null)
                 message.id = String(object.id);
             if (object.name != null)
@@ -8579,7 +10224,7 @@ $root.dto = (function() {
         MenuWidgetListElem.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults) {
                 object.id = "";
                 object.name = "";
@@ -8674,7 +10319,7 @@ $root.dto = (function() {
         function ListMenuWidgetRet(properties) {
             this.list = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -8720,7 +10365,7 @@ $root.dto = (function() {
             if (!writer)
                 writer = $Writer.create();
             if (message.list != null && message.list.length)
-                for (var i = 0; i < message.list.length; ++i)
+                for (let i = 0; i < message.list.length; ++i)
                     $root.dto.MenuWidgetListElem.encode(message.list[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
             if (message.total != null && Object.hasOwnProperty.call(message, "total"))
                 writer.uint32(/* id 2, wireType 0 =*/16).sint64(message.total);
@@ -8754,9 +10399,9 @@ $root.dto = (function() {
         ListMenuWidgetRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListMenuWidgetRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListMenuWidgetRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         if (!(message.list && message.list.length))
@@ -8806,8 +10451,8 @@ $root.dto = (function() {
             if (message.list != null && message.hasOwnProperty("list")) {
                 if (!Array.isArray(message.list))
                     return "list: array expected";
-                for (var i = 0; i < message.list.length; ++i) {
-                    var error = $root.dto.MenuWidgetListElem.verify(message.list[i]);
+                for (let i = 0; i < message.list.length; ++i) {
+                    let error = $root.dto.MenuWidgetListElem.verify(message.list[i]);
                     if (error)
                         return "list." + error;
                 }
@@ -8829,12 +10474,12 @@ $root.dto = (function() {
         ListMenuWidgetRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.ListMenuWidgetRet)
                 return object;
-            var message = new $root.dto.ListMenuWidgetRet();
+            let message = new $root.dto.ListMenuWidgetRet();
             if (object.list) {
                 if (!Array.isArray(object.list))
                     throw TypeError(".dto.ListMenuWidgetRet.list: array expected");
                 message.list = [];
-                for (var i = 0; i < object.list.length; ++i) {
+                for (let i = 0; i < object.list.length; ++i) {
                     if (typeof object.list[i] !== "object")
                         throw TypeError(".dto.ListMenuWidgetRet.list: object expected");
                     message.list[i] = $root.dto.MenuWidgetListElem.fromObject(object.list[i]);
@@ -8864,18 +10509,18 @@ $root.dto = (function() {
         ListMenuWidgetRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.list = [];
             if (options.defaults)
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.total = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.total = options.longs === String ? "0" : 0;
             if (message.list && message.list.length) {
                 object.list = [];
-                for (var j = 0; j < message.list.length; ++j)
+                for (let j = 0; j < message.list.length; ++j)
                     object.list[j] = $root.dto.MenuWidgetListElem.toObject(message.list[j], options);
             }
             if (message.total != null && message.hasOwnProperty("total"))
@@ -8915,6 +10560,209 @@ $root.dto = (function() {
         return ListMenuWidgetRet;
     })();
 
+    dto.ProfileMenuWidgetReq = (function() {
+
+        /**
+         * Properties of a ProfileMenuWidgetReq.
+         * @memberof dto
+         * @interface IProfileMenuWidgetReq
+         * @property {string|null} [id] ProfileMenuWidgetReq id
+         */
+
+        /**
+         * Constructs a new ProfileMenuWidgetReq.
+         * @memberof dto
+         * @classdesc Represents a ProfileMenuWidgetReq.
+         * @implements IProfileMenuWidgetReq
+         * @constructor
+         * @param {dto.IProfileMenuWidgetReq=} [properties] Properties to set
+         */
+        function ProfileMenuWidgetReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * ProfileMenuWidgetReq id.
+         * @member {string} id
+         * @memberof dto.ProfileMenuWidgetReq
+         * @instance
+         */
+        ProfileMenuWidgetReq.prototype.id = "";
+
+        /**
+         * Creates a new ProfileMenuWidgetReq instance using the specified properties.
+         * @function create
+         * @memberof dto.ProfileMenuWidgetReq
+         * @static
+         * @param {dto.IProfileMenuWidgetReq=} [properties] Properties to set
+         * @returns {dto.ProfileMenuWidgetReq} ProfileMenuWidgetReq instance
+         */
+        ProfileMenuWidgetReq.create = function create(properties) {
+            return new ProfileMenuWidgetReq(properties);
+        };
+
+        /**
+         * Encodes the specified ProfileMenuWidgetReq message. Does not implicitly {@link dto.ProfileMenuWidgetReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.ProfileMenuWidgetReq
+         * @static
+         * @param {dto.IProfileMenuWidgetReq} message ProfileMenuWidgetReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ProfileMenuWidgetReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ProfileMenuWidgetReq message, length delimited. Does not implicitly {@link dto.ProfileMenuWidgetReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.ProfileMenuWidgetReq
+         * @static
+         * @param {dto.IProfileMenuWidgetReq} message ProfileMenuWidgetReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ProfileMenuWidgetReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ProfileMenuWidgetReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.ProfileMenuWidgetReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.ProfileMenuWidgetReq} ProfileMenuWidgetReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ProfileMenuWidgetReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ProfileMenuWidgetReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ProfileMenuWidgetReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.ProfileMenuWidgetReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.ProfileMenuWidgetReq} ProfileMenuWidgetReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ProfileMenuWidgetReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ProfileMenuWidgetReq message.
+         * @function verify
+         * @memberof dto.ProfileMenuWidgetReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ProfileMenuWidgetReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a ProfileMenuWidgetReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.ProfileMenuWidgetReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.ProfileMenuWidgetReq} ProfileMenuWidgetReq
+         */
+        ProfileMenuWidgetReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.ProfileMenuWidgetReq)
+                return object;
+            let message = new $root.dto.ProfileMenuWidgetReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a ProfileMenuWidgetReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.ProfileMenuWidgetReq
+         * @static
+         * @param {dto.ProfileMenuWidgetReq} message ProfileMenuWidgetReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ProfileMenuWidgetReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this ProfileMenuWidgetReq to JSON.
+         * @function toJSON
+         * @memberof dto.ProfileMenuWidgetReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ProfileMenuWidgetReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for ProfileMenuWidgetReq
+         * @function getTypeUrl
+         * @memberof dto.ProfileMenuWidgetReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        ProfileMenuWidgetReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.ProfileMenuWidgetReq";
+        };
+
+        return ProfileMenuWidgetReq;
+    })();
+
     dto.ProfileMenuWidgetRet = (function() {
 
         /**
@@ -8947,7 +10795,7 @@ $root.dto = (function() {
          */
         function ProfileMenuWidgetRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -9146,9 +10994,9 @@ $root.dto = (function() {
         ProfileMenuWidgetRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ProfileMenuWidgetRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ProfileMenuWidgetRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -9297,7 +11145,7 @@ $root.dto = (function() {
         ProfileMenuWidgetRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.ProfileMenuWidgetRet)
                 return object;
-            var message = new $root.dto.ProfileMenuWidgetRet();
+            let message = new $root.dto.ProfileMenuWidgetRet();
             if (object.id != null)
                 message.id = String(object.id);
             if (object.name != null)
@@ -9341,7 +11189,7 @@ $root.dto = (function() {
         ProfileMenuWidgetRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults) {
                 object.id = "";
                 object.name = "";
@@ -9443,7 +11291,7 @@ $root.dto = (function() {
          */
         function EditMenuWidgetReq(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -9572,9 +11420,9 @@ $root.dto = (function() {
         EditMenuWidgetReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EditMenuWidgetReq();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EditMenuWidgetReq();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.name = reader.string();
@@ -9674,7 +11522,7 @@ $root.dto = (function() {
         EditMenuWidgetReq.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.EditMenuWidgetReq)
                 return object;
-            var message = new $root.dto.EditMenuWidgetReq();
+            let message = new $root.dto.EditMenuWidgetReq();
             if (object.name != null)
                 message.name = String(object.name);
             if (object.seq != null)
@@ -9704,7 +11552,7 @@ $root.dto = (function() {
         EditMenuWidgetReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults) {
                 object.name = "";
                 object.seq = 0;
@@ -9779,7 +11627,7 @@ $root.dto = (function() {
          */
         function EditMenuWidgetRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -9848,9 +11696,9 @@ $root.dto = (function() {
         EditMenuWidgetRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EditMenuWidgetRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EditMenuWidgetRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -9908,7 +11756,7 @@ $root.dto = (function() {
         EditMenuWidgetRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.EditMenuWidgetRet)
                 return object;
-            var message = new $root.dto.EditMenuWidgetRet();
+            let message = new $root.dto.EditMenuWidgetRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -9926,7 +11774,7 @@ $root.dto = (function() {
         EditMenuWidgetRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -9963,6 +11811,209 @@ $root.dto = (function() {
         return EditMenuWidgetRet;
     })();
 
+    dto.EnableMenuWidgetReq = (function() {
+
+        /**
+         * Properties of an EnableMenuWidgetReq.
+         * @memberof dto
+         * @interface IEnableMenuWidgetReq
+         * @property {string|null} [id] EnableMenuWidgetReq id
+         */
+
+        /**
+         * Constructs a new EnableMenuWidgetReq.
+         * @memberof dto
+         * @classdesc Represents an EnableMenuWidgetReq.
+         * @implements IEnableMenuWidgetReq
+         * @constructor
+         * @param {dto.IEnableMenuWidgetReq=} [properties] Properties to set
+         */
+        function EnableMenuWidgetReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * EnableMenuWidgetReq id.
+         * @member {string} id
+         * @memberof dto.EnableMenuWidgetReq
+         * @instance
+         */
+        EnableMenuWidgetReq.prototype.id = "";
+
+        /**
+         * Creates a new EnableMenuWidgetReq instance using the specified properties.
+         * @function create
+         * @memberof dto.EnableMenuWidgetReq
+         * @static
+         * @param {dto.IEnableMenuWidgetReq=} [properties] Properties to set
+         * @returns {dto.EnableMenuWidgetReq} EnableMenuWidgetReq instance
+         */
+        EnableMenuWidgetReq.create = function create(properties) {
+            return new EnableMenuWidgetReq(properties);
+        };
+
+        /**
+         * Encodes the specified EnableMenuWidgetReq message. Does not implicitly {@link dto.EnableMenuWidgetReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.EnableMenuWidgetReq
+         * @static
+         * @param {dto.IEnableMenuWidgetReq} message EnableMenuWidgetReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        EnableMenuWidgetReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified EnableMenuWidgetReq message, length delimited. Does not implicitly {@link dto.EnableMenuWidgetReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.EnableMenuWidgetReq
+         * @static
+         * @param {dto.IEnableMenuWidgetReq} message EnableMenuWidgetReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        EnableMenuWidgetReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes an EnableMenuWidgetReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.EnableMenuWidgetReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.EnableMenuWidgetReq} EnableMenuWidgetReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        EnableMenuWidgetReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EnableMenuWidgetReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes an EnableMenuWidgetReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.EnableMenuWidgetReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.EnableMenuWidgetReq} EnableMenuWidgetReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        EnableMenuWidgetReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies an EnableMenuWidgetReq message.
+         * @function verify
+         * @memberof dto.EnableMenuWidgetReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        EnableMenuWidgetReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates an EnableMenuWidgetReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.EnableMenuWidgetReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.EnableMenuWidgetReq} EnableMenuWidgetReq
+         */
+        EnableMenuWidgetReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.EnableMenuWidgetReq)
+                return object;
+            let message = new $root.dto.EnableMenuWidgetReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from an EnableMenuWidgetReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.EnableMenuWidgetReq
+         * @static
+         * @param {dto.EnableMenuWidgetReq} message EnableMenuWidgetReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        EnableMenuWidgetReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this EnableMenuWidgetReq to JSON.
+         * @function toJSON
+         * @memberof dto.EnableMenuWidgetReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        EnableMenuWidgetReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for EnableMenuWidgetReq
+         * @function getTypeUrl
+         * @memberof dto.EnableMenuWidgetReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        EnableMenuWidgetReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.EnableMenuWidgetReq";
+        };
+
+        return EnableMenuWidgetReq;
+    })();
+
     dto.EnableMenuWidgetRet = (function() {
 
         /**
@@ -9982,7 +12033,7 @@ $root.dto = (function() {
          */
         function EnableMenuWidgetRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -10051,9 +12102,9 @@ $root.dto = (function() {
         EnableMenuWidgetRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EnableMenuWidgetRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EnableMenuWidgetRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -10111,7 +12162,7 @@ $root.dto = (function() {
         EnableMenuWidgetRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.EnableMenuWidgetRet)
                 return object;
-            var message = new $root.dto.EnableMenuWidgetRet();
+            let message = new $root.dto.EnableMenuWidgetRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -10129,7 +12180,7 @@ $root.dto = (function() {
         EnableMenuWidgetRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -10166,6 +12217,209 @@ $root.dto = (function() {
         return EnableMenuWidgetRet;
     })();
 
+    dto.DisableMenuWidgetReq = (function() {
+
+        /**
+         * Properties of a DisableMenuWidgetReq.
+         * @memberof dto
+         * @interface IDisableMenuWidgetReq
+         * @property {string|null} [id] DisableMenuWidgetReq id
+         */
+
+        /**
+         * Constructs a new DisableMenuWidgetReq.
+         * @memberof dto
+         * @classdesc Represents a DisableMenuWidgetReq.
+         * @implements IDisableMenuWidgetReq
+         * @constructor
+         * @param {dto.IDisableMenuWidgetReq=} [properties] Properties to set
+         */
+        function DisableMenuWidgetReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * DisableMenuWidgetReq id.
+         * @member {string} id
+         * @memberof dto.DisableMenuWidgetReq
+         * @instance
+         */
+        DisableMenuWidgetReq.prototype.id = "";
+
+        /**
+         * Creates a new DisableMenuWidgetReq instance using the specified properties.
+         * @function create
+         * @memberof dto.DisableMenuWidgetReq
+         * @static
+         * @param {dto.IDisableMenuWidgetReq=} [properties] Properties to set
+         * @returns {dto.DisableMenuWidgetReq} DisableMenuWidgetReq instance
+         */
+        DisableMenuWidgetReq.create = function create(properties) {
+            return new DisableMenuWidgetReq(properties);
+        };
+
+        /**
+         * Encodes the specified DisableMenuWidgetReq message. Does not implicitly {@link dto.DisableMenuWidgetReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.DisableMenuWidgetReq
+         * @static
+         * @param {dto.IDisableMenuWidgetReq} message DisableMenuWidgetReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DisableMenuWidgetReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified DisableMenuWidgetReq message, length delimited. Does not implicitly {@link dto.DisableMenuWidgetReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.DisableMenuWidgetReq
+         * @static
+         * @param {dto.IDisableMenuWidgetReq} message DisableMenuWidgetReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DisableMenuWidgetReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a DisableMenuWidgetReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.DisableMenuWidgetReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.DisableMenuWidgetReq} DisableMenuWidgetReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DisableMenuWidgetReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.DisableMenuWidgetReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a DisableMenuWidgetReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.DisableMenuWidgetReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.DisableMenuWidgetReq} DisableMenuWidgetReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DisableMenuWidgetReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a DisableMenuWidgetReq message.
+         * @function verify
+         * @memberof dto.DisableMenuWidgetReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        DisableMenuWidgetReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a DisableMenuWidgetReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.DisableMenuWidgetReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.DisableMenuWidgetReq} DisableMenuWidgetReq
+         */
+        DisableMenuWidgetReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.DisableMenuWidgetReq)
+                return object;
+            let message = new $root.dto.DisableMenuWidgetReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a DisableMenuWidgetReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.DisableMenuWidgetReq
+         * @static
+         * @param {dto.DisableMenuWidgetReq} message DisableMenuWidgetReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        DisableMenuWidgetReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this DisableMenuWidgetReq to JSON.
+         * @function toJSON
+         * @memberof dto.DisableMenuWidgetReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        DisableMenuWidgetReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for DisableMenuWidgetReq
+         * @function getTypeUrl
+         * @memberof dto.DisableMenuWidgetReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        DisableMenuWidgetReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.DisableMenuWidgetReq";
+        };
+
+        return DisableMenuWidgetReq;
+    })();
+
     dto.DisableMenuWidgetRet = (function() {
 
         /**
@@ -10185,7 +12439,7 @@ $root.dto = (function() {
          */
         function DisableMenuWidgetRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -10254,9 +12508,9 @@ $root.dto = (function() {
         DisableMenuWidgetRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.DisableMenuWidgetRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.DisableMenuWidgetRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -10314,7 +12568,7 @@ $root.dto = (function() {
         DisableMenuWidgetRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.DisableMenuWidgetRet)
                 return object;
-            var message = new $root.dto.DisableMenuWidgetRet();
+            let message = new $root.dto.DisableMenuWidgetRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -10332,7 +12586,7 @@ $root.dto = (function() {
         DisableMenuWidgetRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -10369,6 +12623,209 @@ $root.dto = (function() {
         return DisableMenuWidgetRet;
     })();
 
+    dto.RemoveMenuWidgetReq = (function() {
+
+        /**
+         * Properties of a RemoveMenuWidgetReq.
+         * @memberof dto
+         * @interface IRemoveMenuWidgetReq
+         * @property {string|null} [id] RemoveMenuWidgetReq id
+         */
+
+        /**
+         * Constructs a new RemoveMenuWidgetReq.
+         * @memberof dto
+         * @classdesc Represents a RemoveMenuWidgetReq.
+         * @implements IRemoveMenuWidgetReq
+         * @constructor
+         * @param {dto.IRemoveMenuWidgetReq=} [properties] Properties to set
+         */
+        function RemoveMenuWidgetReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * RemoveMenuWidgetReq id.
+         * @member {string} id
+         * @memberof dto.RemoveMenuWidgetReq
+         * @instance
+         */
+        RemoveMenuWidgetReq.prototype.id = "";
+
+        /**
+         * Creates a new RemoveMenuWidgetReq instance using the specified properties.
+         * @function create
+         * @memberof dto.RemoveMenuWidgetReq
+         * @static
+         * @param {dto.IRemoveMenuWidgetReq=} [properties] Properties to set
+         * @returns {dto.RemoveMenuWidgetReq} RemoveMenuWidgetReq instance
+         */
+        RemoveMenuWidgetReq.create = function create(properties) {
+            return new RemoveMenuWidgetReq(properties);
+        };
+
+        /**
+         * Encodes the specified RemoveMenuWidgetReq message. Does not implicitly {@link dto.RemoveMenuWidgetReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.RemoveMenuWidgetReq
+         * @static
+         * @param {dto.IRemoveMenuWidgetReq} message RemoveMenuWidgetReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RemoveMenuWidgetReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified RemoveMenuWidgetReq message, length delimited. Does not implicitly {@link dto.RemoveMenuWidgetReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.RemoveMenuWidgetReq
+         * @static
+         * @param {dto.IRemoveMenuWidgetReq} message RemoveMenuWidgetReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RemoveMenuWidgetReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a RemoveMenuWidgetReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.RemoveMenuWidgetReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.RemoveMenuWidgetReq} RemoveMenuWidgetReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RemoveMenuWidgetReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.RemoveMenuWidgetReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a RemoveMenuWidgetReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.RemoveMenuWidgetReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.RemoveMenuWidgetReq} RemoveMenuWidgetReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RemoveMenuWidgetReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a RemoveMenuWidgetReq message.
+         * @function verify
+         * @memberof dto.RemoveMenuWidgetReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        RemoveMenuWidgetReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a RemoveMenuWidgetReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.RemoveMenuWidgetReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.RemoveMenuWidgetReq} RemoveMenuWidgetReq
+         */
+        RemoveMenuWidgetReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.RemoveMenuWidgetReq)
+                return object;
+            let message = new $root.dto.RemoveMenuWidgetReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a RemoveMenuWidgetReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.RemoveMenuWidgetReq
+         * @static
+         * @param {dto.RemoveMenuWidgetReq} message RemoveMenuWidgetReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        RemoveMenuWidgetReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this RemoveMenuWidgetReq to JSON.
+         * @function toJSON
+         * @memberof dto.RemoveMenuWidgetReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        RemoveMenuWidgetReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for RemoveMenuWidgetReq
+         * @function getTypeUrl
+         * @memberof dto.RemoveMenuWidgetReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        RemoveMenuWidgetReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.RemoveMenuWidgetReq";
+        };
+
+        return RemoveMenuWidgetReq;
+    })();
+
     dto.RemoveMenuWidgetRet = (function() {
 
         /**
@@ -10388,7 +12845,7 @@ $root.dto = (function() {
          */
         function RemoveMenuWidgetRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -10457,9 +12914,9 @@ $root.dto = (function() {
         RemoveMenuWidgetRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.RemoveMenuWidgetRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.RemoveMenuWidgetRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -10517,7 +12974,7 @@ $root.dto = (function() {
         RemoveMenuWidgetRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.RemoveMenuWidgetRet)
                 return object;
-            var message = new $root.dto.RemoveMenuWidgetRet();
+            let message = new $root.dto.RemoveMenuWidgetRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -10535,7 +12992,7 @@ $root.dto = (function() {
         RemoveMenuWidgetRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -10596,7 +13053,7 @@ $root.dto = (function() {
         function AddRoleReq(properties) {
             this.alias = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -10668,7 +13125,7 @@ $root.dto = (function() {
             if (message.name != null && Object.hasOwnProperty.call(message, "name"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
             if (message.alias != null && message.alias.length)
-                for (var i = 0; i < message.alias.length; ++i)
+                for (let i = 0; i < message.alias.length; ++i)
                     writer.uint32(/* id 2, wireType 2 =*/18).string(message.alias[i]);
             if (message.seq != null && Object.hasOwnProperty.call(message, "seq"))
                 writer.uint32(/* id 3, wireType 0 =*/24).sint32(message.seq);
@@ -10706,9 +13163,9 @@ $root.dto = (function() {
         AddRoleReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AddRoleReq();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AddRoleReq();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.name = reader.string();
@@ -10773,7 +13230,7 @@ $root.dto = (function() {
             if (message.alias != null && message.hasOwnProperty("alias")) {
                 if (!Array.isArray(message.alias))
                     return "alias: array expected";
-                for (var i = 0; i < message.alias.length; ++i)
+                for (let i = 0; i < message.alias.length; ++i)
                     if (!$util.isString(message.alias[i]))
                         return "alias: string[] expected";
             }
@@ -10800,14 +13257,14 @@ $root.dto = (function() {
         AddRoleReq.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.AddRoleReq)
                 return object;
-            var message = new $root.dto.AddRoleReq();
+            let message = new $root.dto.AddRoleReq();
             if (object.name != null)
                 message.name = String(object.name);
             if (object.alias) {
                 if (!Array.isArray(object.alias))
                     throw TypeError(".dto.AddRoleReq.alias: array expected");
                 message.alias = [];
-                for (var i = 0; i < object.alias.length; ++i)
+                for (let i = 0; i < object.alias.length; ++i)
                     message.alias[i] = String(object.alias[i]);
             }
             if (object.seq != null)
@@ -10831,7 +13288,7 @@ $root.dto = (function() {
         AddRoleReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.alias = [];
             if (options.defaults) {
@@ -10844,7 +13301,7 @@ $root.dto = (function() {
                 object.name = message.name;
             if (message.alias && message.alias.length) {
                 object.alias = [];
-                for (var j = 0; j < message.alias.length; ++j)
+                for (let j = 0; j < message.alias.length; ++j)
                     object.alias[j] = message.alias[j];
             }
             if (message.seq != null && message.hasOwnProperty("seq"))
@@ -10904,7 +13361,7 @@ $root.dto = (function() {
          */
         function AddRoleRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -10973,9 +13430,9 @@ $root.dto = (function() {
         AddRoleRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AddRoleRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AddRoleRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -11033,7 +13490,7 @@ $root.dto = (function() {
         AddRoleRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.AddRoleRet)
                 return object;
-            var message = new $root.dto.AddRoleRet();
+            let message = new $root.dto.AddRoleRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -11051,7 +13508,7 @@ $root.dto = (function() {
         AddRoleRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -11118,7 +13575,7 @@ $root.dto = (function() {
         function ListRoleReq(properties) {
             this.sortBy = {};
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -11254,7 +13711,7 @@ $root.dto = (function() {
             if (message.perPage != null && Object.hasOwnProperty.call(message, "perPage"))
                 writer.uint32(/* id 20003, wireType 0 =*/160024).sint64(message.perPage);
             if (message.sortBy != null && Object.hasOwnProperty.call(message, "sortBy"))
-                for (var keys = Object.keys(message.sortBy), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(message.sortBy), i = 0; i < keys.length; ++i)
                     writer.uint32(/* id 20004, wireType 2 =*/160034).fork().uint32(/* id 1, wireType 2 =*/10).string(keys[i]).uint32(/* id 2, wireType 0 =*/16).int32(message.sortBy[keys[i]]).ldelim();
             if (message.deleted != null && Object.hasOwnProperty.call(message, "deleted"))
                 writer.uint32(/* id 20005, wireType 0 =*/160040).bool(message.deleted);
@@ -11288,9 +13745,9 @@ $root.dto = (function() {
         ListRoleReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListRoleReq(), key, value;
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListRoleReq(), key, value;
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 20001: {
                         message.noPaging = reader.bool();
@@ -11307,11 +13764,11 @@ $root.dto = (function() {
                 case 20004: {
                         if (message.sortBy === $util.emptyObject)
                             message.sortBy = {};
-                        var end2 = reader.uint32() + reader.pos;
+                        let end2 = reader.uint32() + reader.pos;
                         key = "";
                         value = 0;
                         while (reader.pos < end2) {
-                            var tag2 = reader.uint32();
+                            let tag2 = reader.uint32();
                             switch (tag2 >>> 3) {
                             case 1:
                                 key = reader.string();
@@ -11402,8 +13859,8 @@ $root.dto = (function() {
             if (message.sortBy != null && message.hasOwnProperty("sortBy")) {
                 if (!$util.isObject(message.sortBy))
                     return "sortBy: object expected";
-                var key = Object.keys(message.sortBy);
-                for (var i = 0; i < key.length; ++i)
+                let key = Object.keys(message.sortBy);
+                for (let i = 0; i < key.length; ++i)
                     switch (message.sortBy[key[i]]) {
                     default:
                         return "sortBy: enum value{k:string} expected";
@@ -11447,7 +13904,7 @@ $root.dto = (function() {
         ListRoleReq.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.ListRoleReq)
                 return object;
-            var message = new $root.dto.ListRoleReq();
+            let message = new $root.dto.ListRoleReq();
             if (object.noPaging != null)
                 message.noPaging = Boolean(object.noPaging);
             if (object.page != null)
@@ -11472,7 +13929,7 @@ $root.dto = (function() {
                 if (typeof object.sortBy !== "object")
                     throw TypeError(".dto.ListRoleReq.sortBy: object expected");
                 message.sortBy = {};
-                for (var keys = Object.keys(object.sortBy), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(object.sortBy), i = 0; i < keys.length; ++i)
                     switch (object.sortBy[keys[i]]) {
                     default:
                         if (typeof object.sortBy[keys[i]] === "number") {
@@ -11533,7 +13990,7 @@ $root.dto = (function() {
         ListRoleReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.objects || options.defaults)
                 object.sortBy = {};
             if (options.defaults) {
@@ -11541,24 +13998,24 @@ $root.dto = (function() {
                 object.alias = "";
                 object.createdBy = "";
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.createdAtBegin = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.createdAtBegin = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.createdAtEnd = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.createdAtEnd = options.longs === String ? "0" : 0;
                 object.domainId = "";
                 object.noPaging = false;
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.page = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.page = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.perPage = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.perPage = options.longs === String ? "0" : 0;
@@ -11594,10 +14051,10 @@ $root.dto = (function() {
                     object.perPage = options.longs === String ? String(message.perPage) : message.perPage;
                 else
                     object.perPage = options.longs === String ? $util.Long.prototype.toString.call(message.perPage) : options.longs === Number ? new $util.LongBits(message.perPage.low >>> 0, message.perPage.high >>> 0).toNumber() : message.perPage;
-            var keys2;
+            let keys2;
             if (message.sortBy && (keys2 = Object.keys(message.sortBy)).length) {
                 object.sortBy = {};
-                for (var j = 0; j < keys2.length; ++j)
+                for (let j = 0; j < keys2.length; ++j)
                     object.sortBy[keys2[j]] = options.enums === String ? $root.dto.SortDirection[message.sortBy[keys2[j]]] === undefined ? message.sortBy[keys2[j]] : $root.dto.SortDirection[message.sortBy[keys2[j]]] : message.sortBy[keys2[j]];
             }
             if (message.deleted != null && message.hasOwnProperty("deleted"))
@@ -11669,7 +14126,7 @@ $root.dto = (function() {
             this.domainIds = [];
             this.domainNames = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -11815,7 +14272,7 @@ $root.dto = (function() {
             if (message.name != null && Object.hasOwnProperty.call(message, "name"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.name);
             if (message.alias != null && message.alias.length)
-                for (var i = 0; i < message.alias.length; ++i)
+                for (let i = 0; i < message.alias.length; ++i)
                     writer.uint32(/* id 3, wireType 2 =*/26).string(message.alias[i]);
             if (message.seq != null && Object.hasOwnProperty.call(message, "seq"))
                 writer.uint32(/* id 4, wireType 0 =*/32).sint32(message.seq);
@@ -11824,10 +14281,10 @@ $root.dto = (function() {
             if (message.memo != null && Object.hasOwnProperty.call(message, "memo"))
                 writer.uint32(/* id 6, wireType 2 =*/50).string(message.memo);
             if (message.domainIds != null && message.domainIds.length)
-                for (var i = 0; i < message.domainIds.length; ++i)
+                for (let i = 0; i < message.domainIds.length; ++i)
                     writer.uint32(/* id 7, wireType 2 =*/58).string(message.domainIds[i]);
             if (message.domainNames != null && message.domainNames.length)
-                for (var i = 0; i < message.domainNames.length; ++i)
+                for (let i = 0; i < message.domainNames.length; ++i)
                     writer.uint32(/* id 8, wireType 2 =*/66).string(message.domainNames[i]);
             if (message.createdBy != null && Object.hasOwnProperty.call(message, "createdBy"))
                 writer.uint32(/* id 20000, wireType 2 =*/160002).string(message.createdBy);
@@ -11871,9 +14328,9 @@ $root.dto = (function() {
         RoleListElem.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.RoleListElem();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.RoleListElem();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -11981,7 +14438,7 @@ $root.dto = (function() {
             if (message.alias != null && message.hasOwnProperty("alias")) {
                 if (!Array.isArray(message.alias))
                     return "alias: array expected";
-                for (var i = 0; i < message.alias.length; ++i)
+                for (let i = 0; i < message.alias.length; ++i)
                     if (!$util.isString(message.alias[i]))
                         return "alias: string[] expected";
             }
@@ -11997,14 +14454,14 @@ $root.dto = (function() {
             if (message.domainIds != null && message.hasOwnProperty("domainIds")) {
                 if (!Array.isArray(message.domainIds))
                     return "domainIds: array expected";
-                for (var i = 0; i < message.domainIds.length; ++i)
+                for (let i = 0; i < message.domainIds.length; ++i)
                     if (!$util.isString(message.domainIds[i]))
                         return "domainIds: string[] expected";
             }
             if (message.domainNames != null && message.hasOwnProperty("domainNames")) {
                 if (!Array.isArray(message.domainNames))
                     return "domainNames: array expected";
-                for (var i = 0; i < message.domainNames.length; ++i)
+                for (let i = 0; i < message.domainNames.length; ++i)
                     if (!$util.isString(message.domainNames[i]))
                         return "domainNames: string[] expected";
             }
@@ -12040,7 +14497,7 @@ $root.dto = (function() {
         RoleListElem.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.RoleListElem)
                 return object;
-            var message = new $root.dto.RoleListElem();
+            let message = new $root.dto.RoleListElem();
             if (object.id != null)
                 message.id = String(object.id);
             if (object.name != null)
@@ -12049,7 +14506,7 @@ $root.dto = (function() {
                 if (!Array.isArray(object.alias))
                     throw TypeError(".dto.RoleListElem.alias: array expected");
                 message.alias = [];
-                for (var i = 0; i < object.alias.length; ++i)
+                for (let i = 0; i < object.alias.length; ++i)
                     message.alias[i] = String(object.alias[i]);
             }
             if (object.seq != null)
@@ -12062,14 +14519,14 @@ $root.dto = (function() {
                 if (!Array.isArray(object.domainIds))
                     throw TypeError(".dto.RoleListElem.domainIds: array expected");
                 message.domainIds = [];
-                for (var i = 0; i < object.domainIds.length; ++i)
+                for (let i = 0; i < object.domainIds.length; ++i)
                     message.domainIds[i] = String(object.domainIds[i]);
             }
             if (object.domainNames) {
                 if (!Array.isArray(object.domainNames))
                     throw TypeError(".dto.RoleListElem.domainNames: array expected");
                 message.domainNames = [];
-                for (var i = 0; i < object.domainNames.length; ++i)
+                for (let i = 0; i < object.domainNames.length; ++i)
                     message.domainNames[i] = String(object.domainNames[i]);
             }
             if (object.createdBy != null)
@@ -12099,7 +14556,7 @@ $root.dto = (function() {
         RoleListElem.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults) {
                 object.alias = [];
                 object.domainIds = [];
@@ -12124,7 +14581,7 @@ $root.dto = (function() {
                 object.name = message.name;
             if (message.alias && message.alias.length) {
                 object.alias = [];
-                for (var j = 0; j < message.alias.length; ++j)
+                for (let j = 0; j < message.alias.length; ++j)
                     object.alias[j] = message.alias[j];
             }
             if (message.seq != null && message.hasOwnProperty("seq"))
@@ -12135,12 +14592,12 @@ $root.dto = (function() {
                 object.memo = message.memo;
             if (message.domainIds && message.domainIds.length) {
                 object.domainIds = [];
-                for (var j = 0; j < message.domainIds.length; ++j)
+                for (let j = 0; j < message.domainIds.length; ++j)
                     object.domainIds[j] = message.domainIds[j];
             }
             if (message.domainNames && message.domainNames.length) {
                 object.domainNames = [];
-                for (var j = 0; j < message.domainNames.length; ++j)
+                for (let j = 0; j < message.domainNames.length; ++j)
                     object.domainNames[j] = message.domainNames[j];
             }
             if (message.createdBy != null && message.hasOwnProperty("createdBy"))
@@ -12208,7 +14665,7 @@ $root.dto = (function() {
         function ListRoleRet(properties) {
             this.list = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -12254,7 +14711,7 @@ $root.dto = (function() {
             if (!writer)
                 writer = $Writer.create();
             if (message.list != null && message.list.length)
-                for (var i = 0; i < message.list.length; ++i)
+                for (let i = 0; i < message.list.length; ++i)
                     $root.dto.RoleListElem.encode(message.list[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
             if (message.total != null && Object.hasOwnProperty.call(message, "total"))
                 writer.uint32(/* id 2, wireType 0 =*/16).sint64(message.total);
@@ -12288,9 +14745,9 @@ $root.dto = (function() {
         ListRoleRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListRoleRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListRoleRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         if (!(message.list && message.list.length))
@@ -12340,8 +14797,8 @@ $root.dto = (function() {
             if (message.list != null && message.hasOwnProperty("list")) {
                 if (!Array.isArray(message.list))
                     return "list: array expected";
-                for (var i = 0; i < message.list.length; ++i) {
-                    var error = $root.dto.RoleListElem.verify(message.list[i]);
+                for (let i = 0; i < message.list.length; ++i) {
+                    let error = $root.dto.RoleListElem.verify(message.list[i]);
                     if (error)
                         return "list." + error;
                 }
@@ -12363,12 +14820,12 @@ $root.dto = (function() {
         ListRoleRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.ListRoleRet)
                 return object;
-            var message = new $root.dto.ListRoleRet();
+            let message = new $root.dto.ListRoleRet();
             if (object.list) {
                 if (!Array.isArray(object.list))
                     throw TypeError(".dto.ListRoleRet.list: array expected");
                 message.list = [];
-                for (var i = 0; i < object.list.length; ++i) {
+                for (let i = 0; i < object.list.length; ++i) {
                     if (typeof object.list[i] !== "object")
                         throw TypeError(".dto.ListRoleRet.list: object expected");
                     message.list[i] = $root.dto.RoleListElem.fromObject(object.list[i]);
@@ -12398,18 +14855,18 @@ $root.dto = (function() {
         ListRoleRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.list = [];
             if (options.defaults)
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.total = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.total = options.longs === String ? "0" : 0;
             if (message.list && message.list.length) {
                 object.list = [];
-                for (var j = 0; j < message.list.length; ++j)
+                for (let j = 0; j < message.list.length; ++j)
                     object.list[j] = $root.dto.RoleListElem.toObject(message.list[j], options);
             }
             if (message.total != null && message.hasOwnProperty("total"))
@@ -12449,6 +14906,209 @@ $root.dto = (function() {
         return ListRoleRet;
     })();
 
+    dto.ProfileRoleReq = (function() {
+
+        /**
+         * Properties of a ProfileRoleReq.
+         * @memberof dto
+         * @interface IProfileRoleReq
+         * @property {string|null} [id] ProfileRoleReq id
+         */
+
+        /**
+         * Constructs a new ProfileRoleReq.
+         * @memberof dto
+         * @classdesc Represents a ProfileRoleReq.
+         * @implements IProfileRoleReq
+         * @constructor
+         * @param {dto.IProfileRoleReq=} [properties] Properties to set
+         */
+        function ProfileRoleReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * ProfileRoleReq id.
+         * @member {string} id
+         * @memberof dto.ProfileRoleReq
+         * @instance
+         */
+        ProfileRoleReq.prototype.id = "";
+
+        /**
+         * Creates a new ProfileRoleReq instance using the specified properties.
+         * @function create
+         * @memberof dto.ProfileRoleReq
+         * @static
+         * @param {dto.IProfileRoleReq=} [properties] Properties to set
+         * @returns {dto.ProfileRoleReq} ProfileRoleReq instance
+         */
+        ProfileRoleReq.create = function create(properties) {
+            return new ProfileRoleReq(properties);
+        };
+
+        /**
+         * Encodes the specified ProfileRoleReq message. Does not implicitly {@link dto.ProfileRoleReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.ProfileRoleReq
+         * @static
+         * @param {dto.IProfileRoleReq} message ProfileRoleReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ProfileRoleReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ProfileRoleReq message, length delimited. Does not implicitly {@link dto.ProfileRoleReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.ProfileRoleReq
+         * @static
+         * @param {dto.IProfileRoleReq} message ProfileRoleReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ProfileRoleReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ProfileRoleReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.ProfileRoleReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.ProfileRoleReq} ProfileRoleReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ProfileRoleReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ProfileRoleReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ProfileRoleReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.ProfileRoleReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.ProfileRoleReq} ProfileRoleReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ProfileRoleReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ProfileRoleReq message.
+         * @function verify
+         * @memberof dto.ProfileRoleReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ProfileRoleReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a ProfileRoleReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.ProfileRoleReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.ProfileRoleReq} ProfileRoleReq
+         */
+        ProfileRoleReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.ProfileRoleReq)
+                return object;
+            let message = new $root.dto.ProfileRoleReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a ProfileRoleReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.ProfileRoleReq
+         * @static
+         * @param {dto.ProfileRoleReq} message ProfileRoleReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ProfileRoleReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this ProfileRoleReq to JSON.
+         * @function toJSON
+         * @memberof dto.ProfileRoleReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ProfileRoleReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for ProfileRoleReq
+         * @function getTypeUrl
+         * @memberof dto.ProfileRoleReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        ProfileRoleReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.ProfileRoleReq";
+        };
+
+        return ProfileRoleReq;
+    })();
+
     dto.ProfileRoleRet = (function() {
 
         /**
@@ -12480,7 +15140,7 @@ $root.dto = (function() {
         function ProfileRoleRet(properties) {
             this.alias = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -12610,7 +15270,7 @@ $root.dto = (function() {
             if (message.name != null && Object.hasOwnProperty.call(message, "name"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.name);
             if (message.alias != null && message.alias.length)
-                for (var i = 0; i < message.alias.length; ++i)
+                for (let i = 0; i < message.alias.length; ++i)
                     writer.uint32(/* id 3, wireType 2 =*/26).string(message.alias[i]);
             if (message.seq != null && Object.hasOwnProperty.call(message, "seq"))
                 writer.uint32(/* id 4, wireType 0 =*/32).sint32(message.seq);
@@ -12660,9 +15320,9 @@ $root.dto = (function() {
         ProfileRoleRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ProfileRoleRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ProfileRoleRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -12758,7 +15418,7 @@ $root.dto = (function() {
             if (message.alias != null && message.hasOwnProperty("alias")) {
                 if (!Array.isArray(message.alias))
                     return "alias: array expected";
-                for (var i = 0; i < message.alias.length; ++i)
+                for (let i = 0; i < message.alias.length; ++i)
                     if (!$util.isString(message.alias[i]))
                         return "alias: string[] expected";
             }
@@ -12803,7 +15463,7 @@ $root.dto = (function() {
         ProfileRoleRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.ProfileRoleRet)
                 return object;
-            var message = new $root.dto.ProfileRoleRet();
+            let message = new $root.dto.ProfileRoleRet();
             if (object.id != null)
                 message.id = String(object.id);
             if (object.name != null)
@@ -12812,7 +15472,7 @@ $root.dto = (function() {
                 if (!Array.isArray(object.alias))
                     throw TypeError(".dto.ProfileRoleRet.alias: array expected");
                 message.alias = [];
-                for (var i = 0; i < object.alias.length; ++i)
+                for (let i = 0; i < object.alias.length; ++i)
                     message.alias[i] = String(object.alias[i]);
             }
             if (object.seq != null)
@@ -12848,7 +15508,7 @@ $root.dto = (function() {
         ProfileRoleRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.alias = [];
             if (options.defaults) {
@@ -12870,7 +15530,7 @@ $root.dto = (function() {
                 object.name = message.name;
             if (message.alias && message.alias.length) {
                 object.alias = [];
-                for (var j = 0; j < message.alias.length; ++j)
+                for (let j = 0; j < message.alias.length; ++j)
                     object.alias[j] = message.alias[j];
             }
             if (message.seq != null && message.hasOwnProperty("seq"))
@@ -12947,7 +15607,7 @@ $root.dto = (function() {
         function EditRoleReq(properties) {
             this.alias = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -13019,7 +15679,7 @@ $root.dto = (function() {
             if (message.name != null && Object.hasOwnProperty.call(message, "name"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
             if (message.alias != null && message.alias.length)
-                for (var i = 0; i < message.alias.length; ++i)
+                for (let i = 0; i < message.alias.length; ++i)
                     writer.uint32(/* id 2, wireType 2 =*/18).string(message.alias[i]);
             if (message.seq != null && Object.hasOwnProperty.call(message, "seq"))
                 writer.uint32(/* id 3, wireType 0 =*/24).sint32(message.seq);
@@ -13057,9 +15717,9 @@ $root.dto = (function() {
         EditRoleReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EditRoleReq();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EditRoleReq();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.name = reader.string();
@@ -13124,7 +15784,7 @@ $root.dto = (function() {
             if (message.alias != null && message.hasOwnProperty("alias")) {
                 if (!Array.isArray(message.alias))
                     return "alias: array expected";
-                for (var i = 0; i < message.alias.length; ++i)
+                for (let i = 0; i < message.alias.length; ++i)
                     if (!$util.isString(message.alias[i]))
                         return "alias: string[] expected";
             }
@@ -13151,14 +15811,14 @@ $root.dto = (function() {
         EditRoleReq.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.EditRoleReq)
                 return object;
-            var message = new $root.dto.EditRoleReq();
+            let message = new $root.dto.EditRoleReq();
             if (object.name != null)
                 message.name = String(object.name);
             if (object.alias) {
                 if (!Array.isArray(object.alias))
                     throw TypeError(".dto.EditRoleReq.alias: array expected");
                 message.alias = [];
-                for (var i = 0; i < object.alias.length; ++i)
+                for (let i = 0; i < object.alias.length; ++i)
                     message.alias[i] = String(object.alias[i]);
             }
             if (object.seq != null)
@@ -13182,7 +15842,7 @@ $root.dto = (function() {
         EditRoleReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.alias = [];
             if (options.defaults) {
@@ -13195,7 +15855,7 @@ $root.dto = (function() {
                 object.name = message.name;
             if (message.alias && message.alias.length) {
                 object.alias = [];
-                for (var j = 0; j < message.alias.length; ++j)
+                for (let j = 0; j < message.alias.length; ++j)
                     object.alias[j] = message.alias[j];
             }
             if (message.seq != null && message.hasOwnProperty("seq"))
@@ -13255,7 +15915,7 @@ $root.dto = (function() {
          */
         function EditRoleRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -13324,9 +15984,9 @@ $root.dto = (function() {
         EditRoleRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EditRoleRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EditRoleRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -13384,7 +16044,7 @@ $root.dto = (function() {
         EditRoleRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.EditRoleRet)
                 return object;
-            var message = new $root.dto.EditRoleRet();
+            let message = new $root.dto.EditRoleRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -13402,7 +16062,7 @@ $root.dto = (function() {
         EditRoleRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -13439,6 +16099,209 @@ $root.dto = (function() {
         return EditRoleRet;
     })();
 
+    dto.RoleDomainsReq = (function() {
+
+        /**
+         * Properties of a RoleDomainsReq.
+         * @memberof dto
+         * @interface IRoleDomainsReq
+         * @property {string|null} [id] RoleDomainsReq id
+         */
+
+        /**
+         * Constructs a new RoleDomainsReq.
+         * @memberof dto
+         * @classdesc Represents a RoleDomainsReq.
+         * @implements IRoleDomainsReq
+         * @constructor
+         * @param {dto.IRoleDomainsReq=} [properties] Properties to set
+         */
+        function RoleDomainsReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * RoleDomainsReq id.
+         * @member {string} id
+         * @memberof dto.RoleDomainsReq
+         * @instance
+         */
+        RoleDomainsReq.prototype.id = "";
+
+        /**
+         * Creates a new RoleDomainsReq instance using the specified properties.
+         * @function create
+         * @memberof dto.RoleDomainsReq
+         * @static
+         * @param {dto.IRoleDomainsReq=} [properties] Properties to set
+         * @returns {dto.RoleDomainsReq} RoleDomainsReq instance
+         */
+        RoleDomainsReq.create = function create(properties) {
+            return new RoleDomainsReq(properties);
+        };
+
+        /**
+         * Encodes the specified RoleDomainsReq message. Does not implicitly {@link dto.RoleDomainsReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.RoleDomainsReq
+         * @static
+         * @param {dto.IRoleDomainsReq} message RoleDomainsReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RoleDomainsReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified RoleDomainsReq message, length delimited. Does not implicitly {@link dto.RoleDomainsReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.RoleDomainsReq
+         * @static
+         * @param {dto.IRoleDomainsReq} message RoleDomainsReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RoleDomainsReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a RoleDomainsReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.RoleDomainsReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.RoleDomainsReq} RoleDomainsReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RoleDomainsReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.RoleDomainsReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a RoleDomainsReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.RoleDomainsReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.RoleDomainsReq} RoleDomainsReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RoleDomainsReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a RoleDomainsReq message.
+         * @function verify
+         * @memberof dto.RoleDomainsReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        RoleDomainsReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a RoleDomainsReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.RoleDomainsReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.RoleDomainsReq} RoleDomainsReq
+         */
+        RoleDomainsReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.RoleDomainsReq)
+                return object;
+            let message = new $root.dto.RoleDomainsReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a RoleDomainsReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.RoleDomainsReq
+         * @static
+         * @param {dto.RoleDomainsReq} message RoleDomainsReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        RoleDomainsReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this RoleDomainsReq to JSON.
+         * @function toJSON
+         * @memberof dto.RoleDomainsReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        RoleDomainsReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for RoleDomainsReq
+         * @function getTypeUrl
+         * @memberof dto.RoleDomainsReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        RoleDomainsReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.RoleDomainsReq";
+        };
+
+        return RoleDomainsReq;
+    })();
+
     dto.RoleDomainsRet = (function() {
 
         /**
@@ -13459,7 +16322,7 @@ $root.dto = (function() {
         function RoleDomainsRet(properties) {
             this.domainIds = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -13497,7 +16360,7 @@ $root.dto = (function() {
             if (!writer)
                 writer = $Writer.create();
             if (message.domainIds != null && message.domainIds.length)
-                for (var i = 0; i < message.domainIds.length; ++i)
+                for (let i = 0; i < message.domainIds.length; ++i)
                     writer.uint32(/* id 1, wireType 2 =*/10).string(message.domainIds[i]);
             return writer;
         };
@@ -13529,9 +16392,9 @@ $root.dto = (function() {
         RoleDomainsRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.RoleDomainsRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.RoleDomainsRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         if (!(message.domainIds && message.domainIds.length))
@@ -13577,7 +16440,7 @@ $root.dto = (function() {
             if (message.domainIds != null && message.hasOwnProperty("domainIds")) {
                 if (!Array.isArray(message.domainIds))
                     return "domainIds: array expected";
-                for (var i = 0; i < message.domainIds.length; ++i)
+                for (let i = 0; i < message.domainIds.length; ++i)
                     if (!$util.isString(message.domainIds[i]))
                         return "domainIds: string[] expected";
             }
@@ -13595,12 +16458,12 @@ $root.dto = (function() {
         RoleDomainsRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.RoleDomainsRet)
                 return object;
-            var message = new $root.dto.RoleDomainsRet();
+            let message = new $root.dto.RoleDomainsRet();
             if (object.domainIds) {
                 if (!Array.isArray(object.domainIds))
                     throw TypeError(".dto.RoleDomainsRet.domainIds: array expected");
                 message.domainIds = [];
-                for (var i = 0; i < object.domainIds.length; ++i)
+                for (let i = 0; i < object.domainIds.length; ++i)
                     message.domainIds[i] = String(object.domainIds[i]);
             }
             return message;
@@ -13618,12 +16481,12 @@ $root.dto = (function() {
         RoleDomainsRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.domainIds = [];
             if (message.domainIds && message.domainIds.length) {
                 object.domainIds = [];
-                for (var j = 0; j < message.domainIds.length; ++j)
+                for (let j = 0; j < message.domainIds.length; ++j)
                     object.domainIds[j] = message.domainIds[j];
             }
             return object;
@@ -13658,6 +16521,233 @@ $root.dto = (function() {
         return RoleDomainsRet;
     })();
 
+    dto.RoleAuthoritiesReq = (function() {
+
+        /**
+         * Properties of a RoleAuthoritiesReq.
+         * @memberof dto
+         * @interface IRoleAuthoritiesReq
+         * @property {string|null} [id] RoleAuthoritiesReq id
+         * @property {string|null} [domainId] RoleAuthoritiesReq domainId
+         */
+
+        /**
+         * Constructs a new RoleAuthoritiesReq.
+         * @memberof dto
+         * @classdesc Represents a RoleAuthoritiesReq.
+         * @implements IRoleAuthoritiesReq
+         * @constructor
+         * @param {dto.IRoleAuthoritiesReq=} [properties] Properties to set
+         */
+        function RoleAuthoritiesReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * RoleAuthoritiesReq id.
+         * @member {string} id
+         * @memberof dto.RoleAuthoritiesReq
+         * @instance
+         */
+        RoleAuthoritiesReq.prototype.id = "";
+
+        /**
+         * RoleAuthoritiesReq domainId.
+         * @member {string} domainId
+         * @memberof dto.RoleAuthoritiesReq
+         * @instance
+         */
+        RoleAuthoritiesReq.prototype.domainId = "";
+
+        /**
+         * Creates a new RoleAuthoritiesReq instance using the specified properties.
+         * @function create
+         * @memberof dto.RoleAuthoritiesReq
+         * @static
+         * @param {dto.IRoleAuthoritiesReq=} [properties] Properties to set
+         * @returns {dto.RoleAuthoritiesReq} RoleAuthoritiesReq instance
+         */
+        RoleAuthoritiesReq.create = function create(properties) {
+            return new RoleAuthoritiesReq(properties);
+        };
+
+        /**
+         * Encodes the specified RoleAuthoritiesReq message. Does not implicitly {@link dto.RoleAuthoritiesReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.RoleAuthoritiesReq
+         * @static
+         * @param {dto.IRoleAuthoritiesReq} message RoleAuthoritiesReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RoleAuthoritiesReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            if (message.domainId != null && Object.hasOwnProperty.call(message, "domainId"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.domainId);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified RoleAuthoritiesReq message, length delimited. Does not implicitly {@link dto.RoleAuthoritiesReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.RoleAuthoritiesReq
+         * @static
+         * @param {dto.IRoleAuthoritiesReq} message RoleAuthoritiesReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RoleAuthoritiesReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a RoleAuthoritiesReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.RoleAuthoritiesReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.RoleAuthoritiesReq} RoleAuthoritiesReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RoleAuthoritiesReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.RoleAuthoritiesReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.domainId = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a RoleAuthoritiesReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.RoleAuthoritiesReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.RoleAuthoritiesReq} RoleAuthoritiesReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RoleAuthoritiesReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a RoleAuthoritiesReq message.
+         * @function verify
+         * @memberof dto.RoleAuthoritiesReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        RoleAuthoritiesReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            if (message.domainId != null && message.hasOwnProperty("domainId"))
+                if (!$util.isString(message.domainId))
+                    return "domainId: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a RoleAuthoritiesReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.RoleAuthoritiesReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.RoleAuthoritiesReq} RoleAuthoritiesReq
+         */
+        RoleAuthoritiesReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.RoleAuthoritiesReq)
+                return object;
+            let message = new $root.dto.RoleAuthoritiesReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            if (object.domainId != null)
+                message.domainId = String(object.domainId);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a RoleAuthoritiesReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.RoleAuthoritiesReq
+         * @static
+         * @param {dto.RoleAuthoritiesReq} message RoleAuthoritiesReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        RoleAuthoritiesReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults) {
+                object.id = "";
+                object.domainId = "";
+            }
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            if (message.domainId != null && message.hasOwnProperty("domainId"))
+                object.domainId = message.domainId;
+            return object;
+        };
+
+        /**
+         * Converts this RoleAuthoritiesReq to JSON.
+         * @function toJSON
+         * @memberof dto.RoleAuthoritiesReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        RoleAuthoritiesReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for RoleAuthoritiesReq
+         * @function getTypeUrl
+         * @memberof dto.RoleAuthoritiesReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        RoleAuthoritiesReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.RoleAuthoritiesReq";
+        };
+
+        return RoleAuthoritiesReq;
+    })();
+
     dto.RoleAuthoritiesRet = (function() {
 
         /**
@@ -13680,7 +16770,7 @@ $root.dto = (function() {
             this.menuIds = [];
             this.widgetIds = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -13726,10 +16816,10 @@ $root.dto = (function() {
             if (!writer)
                 writer = $Writer.create();
             if (message.menuIds != null && message.menuIds.length)
-                for (var i = 0; i < message.menuIds.length; ++i)
+                for (let i = 0; i < message.menuIds.length; ++i)
                     writer.uint32(/* id 1, wireType 2 =*/10).string(message.menuIds[i]);
             if (message.widgetIds != null && message.widgetIds.length)
-                for (var i = 0; i < message.widgetIds.length; ++i)
+                for (let i = 0; i < message.widgetIds.length; ++i)
                     writer.uint32(/* id 2, wireType 2 =*/18).string(message.widgetIds[i]);
             return writer;
         };
@@ -13761,9 +16851,9 @@ $root.dto = (function() {
         RoleAuthoritiesRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.RoleAuthoritiesRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.RoleAuthoritiesRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         if (!(message.menuIds && message.menuIds.length))
@@ -13815,14 +16905,14 @@ $root.dto = (function() {
             if (message.menuIds != null && message.hasOwnProperty("menuIds")) {
                 if (!Array.isArray(message.menuIds))
                     return "menuIds: array expected";
-                for (var i = 0; i < message.menuIds.length; ++i)
+                for (let i = 0; i < message.menuIds.length; ++i)
                     if (!$util.isString(message.menuIds[i]))
                         return "menuIds: string[] expected";
             }
             if (message.widgetIds != null && message.hasOwnProperty("widgetIds")) {
                 if (!Array.isArray(message.widgetIds))
                     return "widgetIds: array expected";
-                for (var i = 0; i < message.widgetIds.length; ++i)
+                for (let i = 0; i < message.widgetIds.length; ++i)
                     if (!$util.isString(message.widgetIds[i]))
                         return "widgetIds: string[] expected";
             }
@@ -13840,19 +16930,19 @@ $root.dto = (function() {
         RoleAuthoritiesRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.RoleAuthoritiesRet)
                 return object;
-            var message = new $root.dto.RoleAuthoritiesRet();
+            let message = new $root.dto.RoleAuthoritiesRet();
             if (object.menuIds) {
                 if (!Array.isArray(object.menuIds))
                     throw TypeError(".dto.RoleAuthoritiesRet.menuIds: array expected");
                 message.menuIds = [];
-                for (var i = 0; i < object.menuIds.length; ++i)
+                for (let i = 0; i < object.menuIds.length; ++i)
                     message.menuIds[i] = String(object.menuIds[i]);
             }
             if (object.widgetIds) {
                 if (!Array.isArray(object.widgetIds))
                     throw TypeError(".dto.RoleAuthoritiesRet.widgetIds: array expected");
                 message.widgetIds = [];
-                for (var i = 0; i < object.widgetIds.length; ++i)
+                for (let i = 0; i < object.widgetIds.length; ++i)
                     message.widgetIds[i] = String(object.widgetIds[i]);
             }
             return message;
@@ -13870,19 +16960,19 @@ $root.dto = (function() {
         RoleAuthoritiesRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults) {
                 object.menuIds = [];
                 object.widgetIds = [];
             }
             if (message.menuIds && message.menuIds.length) {
                 object.menuIds = [];
-                for (var j = 0; j < message.menuIds.length; ++j)
+                for (let j = 0; j < message.menuIds.length; ++j)
                     object.menuIds[j] = message.menuIds[j];
             }
             if (message.widgetIds && message.widgetIds.length) {
                 object.widgetIds = [];
-                for (var j = 0; j < message.widgetIds.length; ++j)
+                for (let j = 0; j < message.widgetIds.length; ++j)
                     object.widgetIds[j] = message.widgetIds[j];
             }
             return object;
@@ -13939,7 +17029,7 @@ $root.dto = (function() {
             this.menuIds = [];
             this.widgetIds = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -13985,10 +17075,10 @@ $root.dto = (function() {
             if (!writer)
                 writer = $Writer.create();
             if (message.menuIds != null && message.menuIds.length)
-                for (var i = 0; i < message.menuIds.length; ++i)
+                for (let i = 0; i < message.menuIds.length; ++i)
                     writer.uint32(/* id 1, wireType 2 =*/10).string(message.menuIds[i]);
             if (message.widgetIds != null && message.widgetIds.length)
-                for (var i = 0; i < message.widgetIds.length; ++i)
+                for (let i = 0; i < message.widgetIds.length; ++i)
                     writer.uint32(/* id 2, wireType 2 =*/18).string(message.widgetIds[i]);
             return writer;
         };
@@ -14020,9 +17110,9 @@ $root.dto = (function() {
         AuthorizeRoleReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AuthorizeRoleReq();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AuthorizeRoleReq();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         if (!(message.menuIds && message.menuIds.length))
@@ -14074,14 +17164,14 @@ $root.dto = (function() {
             if (message.menuIds != null && message.hasOwnProperty("menuIds")) {
                 if (!Array.isArray(message.menuIds))
                     return "menuIds: array expected";
-                for (var i = 0; i < message.menuIds.length; ++i)
+                for (let i = 0; i < message.menuIds.length; ++i)
                     if (!$util.isString(message.menuIds[i]))
                         return "menuIds: string[] expected";
             }
             if (message.widgetIds != null && message.hasOwnProperty("widgetIds")) {
                 if (!Array.isArray(message.widgetIds))
                     return "widgetIds: array expected";
-                for (var i = 0; i < message.widgetIds.length; ++i)
+                for (let i = 0; i < message.widgetIds.length; ++i)
                     if (!$util.isString(message.widgetIds[i]))
                         return "widgetIds: string[] expected";
             }
@@ -14099,19 +17189,19 @@ $root.dto = (function() {
         AuthorizeRoleReq.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.AuthorizeRoleReq)
                 return object;
-            var message = new $root.dto.AuthorizeRoleReq();
+            let message = new $root.dto.AuthorizeRoleReq();
             if (object.menuIds) {
                 if (!Array.isArray(object.menuIds))
                     throw TypeError(".dto.AuthorizeRoleReq.menuIds: array expected");
                 message.menuIds = [];
-                for (var i = 0; i < object.menuIds.length; ++i)
+                for (let i = 0; i < object.menuIds.length; ++i)
                     message.menuIds[i] = String(object.menuIds[i]);
             }
             if (object.widgetIds) {
                 if (!Array.isArray(object.widgetIds))
                     throw TypeError(".dto.AuthorizeRoleReq.widgetIds: array expected");
                 message.widgetIds = [];
-                for (var i = 0; i < object.widgetIds.length; ++i)
+                for (let i = 0; i < object.widgetIds.length; ++i)
                     message.widgetIds[i] = String(object.widgetIds[i]);
             }
             return message;
@@ -14129,19 +17219,19 @@ $root.dto = (function() {
         AuthorizeRoleReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults) {
                 object.menuIds = [];
                 object.widgetIds = [];
             }
             if (message.menuIds && message.menuIds.length) {
                 object.menuIds = [];
-                for (var j = 0; j < message.menuIds.length; ++j)
+                for (let j = 0; j < message.menuIds.length; ++j)
                     object.menuIds[j] = message.menuIds[j];
             }
             if (message.widgetIds && message.widgetIds.length) {
                 object.widgetIds = [];
-                for (var j = 0; j < message.widgetIds.length; ++j)
+                for (let j = 0; j < message.widgetIds.length; ++j)
                     object.widgetIds[j] = message.widgetIds[j];
             }
             return object;
@@ -14196,7 +17286,7 @@ $root.dto = (function() {
          */
         function AuthorizeRoleRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -14275,9 +17365,9 @@ $root.dto = (function() {
         AuthorizeRoleRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AuthorizeRoleRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AuthorizeRoleRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -14342,7 +17432,7 @@ $root.dto = (function() {
         AuthorizeRoleRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.AuthorizeRoleRet)
                 return object;
-            var message = new $root.dto.AuthorizeRoleRet();
+            let message = new $root.dto.AuthorizeRoleRet();
             if (object.id != null)
                 message.id = String(object.id);
             if (object.domainId != null)
@@ -14362,7 +17452,7 @@ $root.dto = (function() {
         AuthorizeRoleRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults) {
                 object.id = "";
                 object.domainId = "";
@@ -14403,6 +17493,209 @@ $root.dto = (function() {
         return AuthorizeRoleRet;
     })();
 
+    dto.EnableRoleReq = (function() {
+
+        /**
+         * Properties of an EnableRoleReq.
+         * @memberof dto
+         * @interface IEnableRoleReq
+         * @property {string|null} [id] EnableRoleReq id
+         */
+
+        /**
+         * Constructs a new EnableRoleReq.
+         * @memberof dto
+         * @classdesc Represents an EnableRoleReq.
+         * @implements IEnableRoleReq
+         * @constructor
+         * @param {dto.IEnableRoleReq=} [properties] Properties to set
+         */
+        function EnableRoleReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * EnableRoleReq id.
+         * @member {string} id
+         * @memberof dto.EnableRoleReq
+         * @instance
+         */
+        EnableRoleReq.prototype.id = "";
+
+        /**
+         * Creates a new EnableRoleReq instance using the specified properties.
+         * @function create
+         * @memberof dto.EnableRoleReq
+         * @static
+         * @param {dto.IEnableRoleReq=} [properties] Properties to set
+         * @returns {dto.EnableRoleReq} EnableRoleReq instance
+         */
+        EnableRoleReq.create = function create(properties) {
+            return new EnableRoleReq(properties);
+        };
+
+        /**
+         * Encodes the specified EnableRoleReq message. Does not implicitly {@link dto.EnableRoleReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.EnableRoleReq
+         * @static
+         * @param {dto.IEnableRoleReq} message EnableRoleReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        EnableRoleReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified EnableRoleReq message, length delimited. Does not implicitly {@link dto.EnableRoleReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.EnableRoleReq
+         * @static
+         * @param {dto.IEnableRoleReq} message EnableRoleReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        EnableRoleReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes an EnableRoleReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.EnableRoleReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.EnableRoleReq} EnableRoleReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        EnableRoleReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EnableRoleReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes an EnableRoleReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.EnableRoleReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.EnableRoleReq} EnableRoleReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        EnableRoleReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies an EnableRoleReq message.
+         * @function verify
+         * @memberof dto.EnableRoleReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        EnableRoleReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates an EnableRoleReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.EnableRoleReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.EnableRoleReq} EnableRoleReq
+         */
+        EnableRoleReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.EnableRoleReq)
+                return object;
+            let message = new $root.dto.EnableRoleReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from an EnableRoleReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.EnableRoleReq
+         * @static
+         * @param {dto.EnableRoleReq} message EnableRoleReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        EnableRoleReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this EnableRoleReq to JSON.
+         * @function toJSON
+         * @memberof dto.EnableRoleReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        EnableRoleReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for EnableRoleReq
+         * @function getTypeUrl
+         * @memberof dto.EnableRoleReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        EnableRoleReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.EnableRoleReq";
+        };
+
+        return EnableRoleReq;
+    })();
+
     dto.EnableRoleRet = (function() {
 
         /**
@@ -14422,7 +17715,7 @@ $root.dto = (function() {
          */
         function EnableRoleRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -14491,9 +17784,9 @@ $root.dto = (function() {
         EnableRoleRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EnableRoleRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EnableRoleRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -14551,7 +17844,7 @@ $root.dto = (function() {
         EnableRoleRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.EnableRoleRet)
                 return object;
-            var message = new $root.dto.EnableRoleRet();
+            let message = new $root.dto.EnableRoleRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -14569,7 +17862,7 @@ $root.dto = (function() {
         EnableRoleRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -14606,6 +17899,209 @@ $root.dto = (function() {
         return EnableRoleRet;
     })();
 
+    dto.DisableRoleReq = (function() {
+
+        /**
+         * Properties of a DisableRoleReq.
+         * @memberof dto
+         * @interface IDisableRoleReq
+         * @property {string|null} [id] DisableRoleReq id
+         */
+
+        /**
+         * Constructs a new DisableRoleReq.
+         * @memberof dto
+         * @classdesc Represents a DisableRoleReq.
+         * @implements IDisableRoleReq
+         * @constructor
+         * @param {dto.IDisableRoleReq=} [properties] Properties to set
+         */
+        function DisableRoleReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * DisableRoleReq id.
+         * @member {string} id
+         * @memberof dto.DisableRoleReq
+         * @instance
+         */
+        DisableRoleReq.prototype.id = "";
+
+        /**
+         * Creates a new DisableRoleReq instance using the specified properties.
+         * @function create
+         * @memberof dto.DisableRoleReq
+         * @static
+         * @param {dto.IDisableRoleReq=} [properties] Properties to set
+         * @returns {dto.DisableRoleReq} DisableRoleReq instance
+         */
+        DisableRoleReq.create = function create(properties) {
+            return new DisableRoleReq(properties);
+        };
+
+        /**
+         * Encodes the specified DisableRoleReq message. Does not implicitly {@link dto.DisableRoleReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.DisableRoleReq
+         * @static
+         * @param {dto.IDisableRoleReq} message DisableRoleReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DisableRoleReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified DisableRoleReq message, length delimited. Does not implicitly {@link dto.DisableRoleReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.DisableRoleReq
+         * @static
+         * @param {dto.IDisableRoleReq} message DisableRoleReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DisableRoleReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a DisableRoleReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.DisableRoleReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.DisableRoleReq} DisableRoleReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DisableRoleReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.DisableRoleReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a DisableRoleReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.DisableRoleReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.DisableRoleReq} DisableRoleReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DisableRoleReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a DisableRoleReq message.
+         * @function verify
+         * @memberof dto.DisableRoleReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        DisableRoleReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a DisableRoleReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.DisableRoleReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.DisableRoleReq} DisableRoleReq
+         */
+        DisableRoleReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.DisableRoleReq)
+                return object;
+            let message = new $root.dto.DisableRoleReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a DisableRoleReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.DisableRoleReq
+         * @static
+         * @param {dto.DisableRoleReq} message DisableRoleReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        DisableRoleReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this DisableRoleReq to JSON.
+         * @function toJSON
+         * @memberof dto.DisableRoleReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        DisableRoleReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for DisableRoleReq
+         * @function getTypeUrl
+         * @memberof dto.DisableRoleReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        DisableRoleReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.DisableRoleReq";
+        };
+
+        return DisableRoleReq;
+    })();
+
     dto.DisableRoleRet = (function() {
 
         /**
@@ -14625,7 +18121,7 @@ $root.dto = (function() {
          */
         function DisableRoleRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -14694,9 +18190,9 @@ $root.dto = (function() {
         DisableRoleRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.DisableRoleRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.DisableRoleRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -14754,7 +18250,7 @@ $root.dto = (function() {
         DisableRoleRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.DisableRoleRet)
                 return object;
-            var message = new $root.dto.DisableRoleRet();
+            let message = new $root.dto.DisableRoleRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -14772,7 +18268,7 @@ $root.dto = (function() {
         DisableRoleRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -14809,6 +18305,209 @@ $root.dto = (function() {
         return DisableRoleRet;
     })();
 
+    dto.RemoveRoleReq = (function() {
+
+        /**
+         * Properties of a RemoveRoleReq.
+         * @memberof dto
+         * @interface IRemoveRoleReq
+         * @property {string|null} [id] RemoveRoleReq id
+         */
+
+        /**
+         * Constructs a new RemoveRoleReq.
+         * @memberof dto
+         * @classdesc Represents a RemoveRoleReq.
+         * @implements IRemoveRoleReq
+         * @constructor
+         * @param {dto.IRemoveRoleReq=} [properties] Properties to set
+         */
+        function RemoveRoleReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * RemoveRoleReq id.
+         * @member {string} id
+         * @memberof dto.RemoveRoleReq
+         * @instance
+         */
+        RemoveRoleReq.prototype.id = "";
+
+        /**
+         * Creates a new RemoveRoleReq instance using the specified properties.
+         * @function create
+         * @memberof dto.RemoveRoleReq
+         * @static
+         * @param {dto.IRemoveRoleReq=} [properties] Properties to set
+         * @returns {dto.RemoveRoleReq} RemoveRoleReq instance
+         */
+        RemoveRoleReq.create = function create(properties) {
+            return new RemoveRoleReq(properties);
+        };
+
+        /**
+         * Encodes the specified RemoveRoleReq message. Does not implicitly {@link dto.RemoveRoleReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.RemoveRoleReq
+         * @static
+         * @param {dto.IRemoveRoleReq} message RemoveRoleReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RemoveRoleReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified RemoveRoleReq message, length delimited. Does not implicitly {@link dto.RemoveRoleReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.RemoveRoleReq
+         * @static
+         * @param {dto.IRemoveRoleReq} message RemoveRoleReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RemoveRoleReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a RemoveRoleReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.RemoveRoleReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.RemoveRoleReq} RemoveRoleReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RemoveRoleReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.RemoveRoleReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a RemoveRoleReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.RemoveRoleReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.RemoveRoleReq} RemoveRoleReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RemoveRoleReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a RemoveRoleReq message.
+         * @function verify
+         * @memberof dto.RemoveRoleReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        RemoveRoleReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a RemoveRoleReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.RemoveRoleReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.RemoveRoleReq} RemoveRoleReq
+         */
+        RemoveRoleReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.RemoveRoleReq)
+                return object;
+            let message = new $root.dto.RemoveRoleReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a RemoveRoleReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.RemoveRoleReq
+         * @static
+         * @param {dto.RemoveRoleReq} message RemoveRoleReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        RemoveRoleReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this RemoveRoleReq to JSON.
+         * @function toJSON
+         * @memberof dto.RemoveRoleReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        RemoveRoleReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for RemoveRoleReq
+         * @function getTypeUrl
+         * @memberof dto.RemoveRoleReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        RemoveRoleReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.RemoveRoleReq";
+        };
+
+        return RemoveRoleReq;
+    })();
+
     dto.RemoveRoleRet = (function() {
 
         /**
@@ -14828,7 +18527,7 @@ $root.dto = (function() {
          */
         function RemoveRoleRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -14897,9 +18596,9 @@ $root.dto = (function() {
         RemoveRoleRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.RemoveRoleRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.RemoveRoleRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -14957,7 +18656,7 @@ $root.dto = (function() {
         RemoveRoleRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.RemoveRoleRet)
                 return object;
-            var message = new $root.dto.RemoveRoleRet();
+            let message = new $root.dto.RemoveRoleRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -14975,7 +18674,7 @@ $root.dto = (function() {
         RemoveRoleRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -15040,7 +18739,7 @@ $root.dto = (function() {
         function AddStaffReq(properties) {
             this.signInIpWhitelist = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -15158,7 +18857,7 @@ $root.dto = (function() {
             if (message.avatar != null && Object.hasOwnProperty.call(message, "avatar"))
                 writer.uint32(/* id 9, wireType 2 =*/74).string(message.avatar);
             if (message.signInIpWhitelist != null && message.signInIpWhitelist.length)
-                for (var i = 0; i < message.signInIpWhitelist.length; ++i)
+                for (let i = 0; i < message.signInIpWhitelist.length; ++i)
                     writer.uint32(/* id 10, wireType 2 =*/82).string(message.signInIpWhitelist[i]);
             return writer;
         };
@@ -15190,9 +18889,9 @@ $root.dto = (function() {
         AddStaffReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AddStaffReq();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AddStaffReq();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.account = reader.string();
@@ -15294,7 +18993,7 @@ $root.dto = (function() {
             if (message.signInIpWhitelist != null && message.hasOwnProperty("signInIpWhitelist")) {
                 if (!Array.isArray(message.signInIpWhitelist))
                     return "signInIpWhitelist: array expected";
-                for (var i = 0; i < message.signInIpWhitelist.length; ++i)
+                for (let i = 0; i < message.signInIpWhitelist.length; ++i)
                     if (!$util.isString(message.signInIpWhitelist[i]))
                         return "signInIpWhitelist: string[] expected";
             }
@@ -15312,7 +19011,7 @@ $root.dto = (function() {
         AddStaffReq.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.AddStaffReq)
                 return object;
-            var message = new $root.dto.AddStaffReq();
+            let message = new $root.dto.AddStaffReq();
             if (object.account != null)
                 message.account = String(object.account);
             if (object.password != null)
@@ -15333,7 +19032,7 @@ $root.dto = (function() {
                 if (!Array.isArray(object.signInIpWhitelist))
                     throw TypeError(".dto.AddStaffReq.signInIpWhitelist: array expected");
                 message.signInIpWhitelist = [];
-                for (var i = 0; i < object.signInIpWhitelist.length; ++i)
+                for (let i = 0; i < object.signInIpWhitelist.length; ++i)
                     message.signInIpWhitelist[i] = String(object.signInIpWhitelist[i]);
             }
             return message;
@@ -15351,7 +19050,7 @@ $root.dto = (function() {
         AddStaffReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.signInIpWhitelist = [];
             if (options.defaults) {
@@ -15382,7 +19081,7 @@ $root.dto = (function() {
                 object.avatar = message.avatar;
             if (message.signInIpWhitelist && message.signInIpWhitelist.length) {
                 object.signInIpWhitelist = [];
-                for (var j = 0; j < message.signInIpWhitelist.length; ++j)
+                for (let j = 0; j < message.signInIpWhitelist.length; ++j)
                     object.signInIpWhitelist[j] = message.signInIpWhitelist[j];
             }
             return object;
@@ -15436,7 +19135,7 @@ $root.dto = (function() {
          */
         function AddStaffRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -15505,9 +19204,9 @@ $root.dto = (function() {
         AddStaffRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AddStaffRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AddStaffRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -15565,7 +19264,7 @@ $root.dto = (function() {
         AddStaffRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.AddStaffRet)
                 return object;
-            var message = new $root.dto.AddStaffRet();
+            let message = new $root.dto.AddStaffRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -15583,7 +19282,7 @@ $root.dto = (function() {
         AddStaffRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -15654,7 +19353,7 @@ $root.dto = (function() {
         function ListStaffReq(properties) {
             this.sortBy = {};
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -15830,7 +19529,7 @@ $root.dto = (function() {
             if (message.perPage != null && Object.hasOwnProperty.call(message, "perPage"))
                 writer.uint32(/* id 20003, wireType 0 =*/160024).sint64(message.perPage);
             if (message.sortBy != null && Object.hasOwnProperty.call(message, "sortBy"))
-                for (var keys = Object.keys(message.sortBy), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(message.sortBy), i = 0; i < keys.length; ++i)
                     writer.uint32(/* id 20004, wireType 2 =*/160034).fork().uint32(/* id 1, wireType 2 =*/10).string(keys[i]).uint32(/* id 2, wireType 0 =*/16).int32(message.sortBy[keys[i]]).ldelim();
             if (message.deleted != null && Object.hasOwnProperty.call(message, "deleted"))
                 writer.uint32(/* id 20005, wireType 0 =*/160040).bool(message.deleted);
@@ -15864,9 +19563,9 @@ $root.dto = (function() {
         ListStaffReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListStaffReq(), key, value;
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListStaffReq(), key, value;
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 20001: {
                         message.noPaging = reader.bool();
@@ -15883,11 +19582,11 @@ $root.dto = (function() {
                 case 20004: {
                         if (message.sortBy === $util.emptyObject)
                             message.sortBy = {};
-                        var end2 = reader.uint32() + reader.pos;
+                        let end2 = reader.uint32() + reader.pos;
                         key = "";
                         value = 0;
                         while (reader.pos < end2) {
-                            var tag2 = reader.uint32();
+                            let tag2 = reader.uint32();
                             switch (tag2 >>> 3) {
                             case 1:
                                 key = reader.string();
@@ -15994,8 +19693,8 @@ $root.dto = (function() {
             if (message.sortBy != null && message.hasOwnProperty("sortBy")) {
                 if (!$util.isObject(message.sortBy))
                     return "sortBy: object expected";
-                var key = Object.keys(message.sortBy);
-                for (var i = 0; i < key.length; ++i)
+                let key = Object.keys(message.sortBy);
+                for (let i = 0; i < key.length; ++i)
                     switch (message.sortBy[key[i]]) {
                     default:
                         return "sortBy: enum value{k:string} expected";
@@ -16051,7 +19750,7 @@ $root.dto = (function() {
         ListStaffReq.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.ListStaffReq)
                 return object;
-            var message = new $root.dto.ListStaffReq();
+            let message = new $root.dto.ListStaffReq();
             if (object.noPaging != null)
                 message.noPaging = Boolean(object.noPaging);
             if (object.page != null)
@@ -16076,7 +19775,7 @@ $root.dto = (function() {
                 if (typeof object.sortBy !== "object")
                     throw TypeError(".dto.ListStaffReq.sortBy: object expected");
                 message.sortBy = {};
-                for (var keys = Object.keys(object.sortBy), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(object.sortBy), i = 0; i < keys.length; ++i)
                     switch (object.sortBy[keys[i]]) {
                     default:
                         if (typeof object.sortBy[keys[i]] === "number") {
@@ -16145,7 +19844,7 @@ $root.dto = (function() {
         ListStaffReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.objects || options.defaults)
                 object.sortBy = {};
             if (options.defaults) {
@@ -16158,23 +19857,23 @@ $root.dto = (function() {
                 object.gender = "";
                 object.lastSignInIp = "";
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.lastSignInTimeBegin = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.lastSignInTimeBegin = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.lastSignInTimeEnd = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.lastSignInTimeEnd = options.longs === String ? "0" : 0;
                 object.noPaging = false;
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.page = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.page = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.perPage = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.perPage = options.longs === String ? "0" : 0;
@@ -16218,10 +19917,10 @@ $root.dto = (function() {
                     object.perPage = options.longs === String ? String(message.perPage) : message.perPage;
                 else
                     object.perPage = options.longs === String ? $util.Long.prototype.toString.call(message.perPage) : options.longs === Number ? new $util.LongBits(message.perPage.low >>> 0, message.perPage.high >>> 0).toNumber() : message.perPage;
-            var keys2;
+            let keys2;
             if (message.sortBy && (keys2 = Object.keys(message.sortBy)).length) {
                 object.sortBy = {};
-                for (var j = 0; j < keys2.length; ++j)
+                for (let j = 0; j < keys2.length; ++j)
                     object.sortBy[keys2[j]] = options.enums === String ? $root.dto.SortDirection[message.sortBy[keys2[j]]] === undefined ? message.sortBy[keys2[j]] : $root.dto.SortDirection[message.sortBy[keys2[j]]] : message.sortBy[keys2[j]];
             }
             if (message.deleted != null && message.hasOwnProperty("deleted"))
@@ -16295,7 +19994,7 @@ $root.dto = (function() {
          */
         function StaffListElem(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -16544,9 +20243,9 @@ $root.dto = (function() {
         StaffListElem.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.StaffListElem();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.StaffListElem();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -16730,7 +20429,7 @@ $root.dto = (function() {
         StaffListElem.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.StaffListElem)
                 return object;
-            var message = new $root.dto.StaffListElem();
+            let message = new $root.dto.StaffListElem();
             if (object.id != null)
                 message.id = String(object.id);
             if (object.account != null)
@@ -16791,7 +20490,7 @@ $root.dto = (function() {
         StaffListElem.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults) {
                 object.id = "";
                 object.account = "";
@@ -16806,7 +20505,7 @@ $root.dto = (function() {
                 object.signInToken = "";
                 object.lastSignInIp = "";
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.lastSignInTime = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.lastSignInTime = options.longs === String ? "0" : 0;
@@ -16911,7 +20610,7 @@ $root.dto = (function() {
         function ListStaffRet(properties) {
             this.list = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -16957,7 +20656,7 @@ $root.dto = (function() {
             if (!writer)
                 writer = $Writer.create();
             if (message.list != null && message.list.length)
-                for (var i = 0; i < message.list.length; ++i)
+                for (let i = 0; i < message.list.length; ++i)
                     $root.dto.StaffListElem.encode(message.list[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
             if (message.total != null && Object.hasOwnProperty.call(message, "total"))
                 writer.uint32(/* id 2, wireType 0 =*/16).sint64(message.total);
@@ -16991,9 +20690,9 @@ $root.dto = (function() {
         ListStaffRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListStaffRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListStaffRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         if (!(message.list && message.list.length))
@@ -17043,8 +20742,8 @@ $root.dto = (function() {
             if (message.list != null && message.hasOwnProperty("list")) {
                 if (!Array.isArray(message.list))
                     return "list: array expected";
-                for (var i = 0; i < message.list.length; ++i) {
-                    var error = $root.dto.StaffListElem.verify(message.list[i]);
+                for (let i = 0; i < message.list.length; ++i) {
+                    let error = $root.dto.StaffListElem.verify(message.list[i]);
                     if (error)
                         return "list." + error;
                 }
@@ -17066,12 +20765,12 @@ $root.dto = (function() {
         ListStaffRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.ListStaffRet)
                 return object;
-            var message = new $root.dto.ListStaffRet();
+            let message = new $root.dto.ListStaffRet();
             if (object.list) {
                 if (!Array.isArray(object.list))
                     throw TypeError(".dto.ListStaffRet.list: array expected");
                 message.list = [];
-                for (var i = 0; i < object.list.length; ++i) {
+                for (let i = 0; i < object.list.length; ++i) {
                     if (typeof object.list[i] !== "object")
                         throw TypeError(".dto.ListStaffRet.list: object expected");
                     message.list[i] = $root.dto.StaffListElem.fromObject(object.list[i]);
@@ -17101,18 +20800,18 @@ $root.dto = (function() {
         ListStaffRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.list = [];
             if (options.defaults)
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.total = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.total = options.longs === String ? "0" : 0;
             if (message.list && message.list.length) {
                 object.list = [];
-                for (var j = 0; j < message.list.length; ++j)
+                for (let j = 0; j < message.list.length; ++j)
                     object.list[j] = $root.dto.StaffListElem.toObject(message.list[j], options);
             }
             if (message.total != null && message.hasOwnProperty("total"))
@@ -17150,6 +20849,209 @@ $root.dto = (function() {
         };
 
         return ListStaffRet;
+    })();
+
+    dto.ProfileStaffReq = (function() {
+
+        /**
+         * Properties of a ProfileStaffReq.
+         * @memberof dto
+         * @interface IProfileStaffReq
+         * @property {string|null} [id] ProfileStaffReq id
+         */
+
+        /**
+         * Constructs a new ProfileStaffReq.
+         * @memberof dto
+         * @classdesc Represents a ProfileStaffReq.
+         * @implements IProfileStaffReq
+         * @constructor
+         * @param {dto.IProfileStaffReq=} [properties] Properties to set
+         */
+        function ProfileStaffReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * ProfileStaffReq id.
+         * @member {string} id
+         * @memberof dto.ProfileStaffReq
+         * @instance
+         */
+        ProfileStaffReq.prototype.id = "";
+
+        /**
+         * Creates a new ProfileStaffReq instance using the specified properties.
+         * @function create
+         * @memberof dto.ProfileStaffReq
+         * @static
+         * @param {dto.IProfileStaffReq=} [properties] Properties to set
+         * @returns {dto.ProfileStaffReq} ProfileStaffReq instance
+         */
+        ProfileStaffReq.create = function create(properties) {
+            return new ProfileStaffReq(properties);
+        };
+
+        /**
+         * Encodes the specified ProfileStaffReq message. Does not implicitly {@link dto.ProfileStaffReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.ProfileStaffReq
+         * @static
+         * @param {dto.IProfileStaffReq} message ProfileStaffReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ProfileStaffReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ProfileStaffReq message, length delimited. Does not implicitly {@link dto.ProfileStaffReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.ProfileStaffReq
+         * @static
+         * @param {dto.IProfileStaffReq} message ProfileStaffReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ProfileStaffReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ProfileStaffReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.ProfileStaffReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.ProfileStaffReq} ProfileStaffReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ProfileStaffReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ProfileStaffReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ProfileStaffReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.ProfileStaffReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.ProfileStaffReq} ProfileStaffReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ProfileStaffReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ProfileStaffReq message.
+         * @function verify
+         * @memberof dto.ProfileStaffReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ProfileStaffReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a ProfileStaffReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.ProfileStaffReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.ProfileStaffReq} ProfileStaffReq
+         */
+        ProfileStaffReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.ProfileStaffReq)
+                return object;
+            let message = new $root.dto.ProfileStaffReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a ProfileStaffReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.ProfileStaffReq
+         * @static
+         * @param {dto.ProfileStaffReq} message ProfileStaffReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ProfileStaffReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this ProfileStaffReq to JSON.
+         * @function toJSON
+         * @memberof dto.ProfileStaffReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ProfileStaffReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for ProfileStaffReq
+         * @function getTypeUrl
+         * @memberof dto.ProfileStaffReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        ProfileStaffReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.ProfileStaffReq";
+        };
+
+        return ProfileStaffReq;
     })();
 
     dto.ProfileStaffRet = (function() {
@@ -17190,7 +21092,7 @@ $root.dto = (function() {
         function ProfileStaffRet(properties) {
             this.signInIpWhitelist = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -17388,7 +21290,7 @@ $root.dto = (function() {
             if (message.avatar != null && Object.hasOwnProperty.call(message, "avatar"))
                 writer.uint32(/* id 8, wireType 2 =*/66).string(message.avatar);
             if (message.signInIpWhitelist != null && message.signInIpWhitelist.length)
-                for (var i = 0; i < message.signInIpWhitelist.length; ++i)
+                for (let i = 0; i < message.signInIpWhitelist.length; ++i)
                     writer.uint32(/* id 9, wireType 2 =*/74).string(message.signInIpWhitelist[i]);
             if (message.signIn != null && Object.hasOwnProperty.call(message, "signIn"))
                 writer.uint32(/* id 10, wireType 0 =*/80).bool(message.signIn);
@@ -17440,9 +21342,9 @@ $root.dto = (function() {
         ProfileStaffRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ProfileStaffRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ProfileStaffRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -17584,7 +21486,7 @@ $root.dto = (function() {
             if (message.signInIpWhitelist != null && message.hasOwnProperty("signInIpWhitelist")) {
                 if (!Array.isArray(message.signInIpWhitelist))
                     return "signInIpWhitelist: array expected";
-                for (var i = 0; i < message.signInIpWhitelist.length; ++i)
+                for (let i = 0; i < message.signInIpWhitelist.length; ++i)
                     if (!$util.isString(message.signInIpWhitelist[i]))
                         return "signInIpWhitelist: string[] expected";
             }
@@ -17632,7 +21534,7 @@ $root.dto = (function() {
         ProfileStaffRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.ProfileStaffRet)
                 return object;
-            var message = new $root.dto.ProfileStaffRet();
+            let message = new $root.dto.ProfileStaffRet();
             if (object.id != null)
                 message.id = String(object.id);
             if (object.account != null)
@@ -17653,7 +21555,7 @@ $root.dto = (function() {
                 if (!Array.isArray(object.signInIpWhitelist))
                     throw TypeError(".dto.ProfileStaffRet.signInIpWhitelist: array expected");
                 message.signInIpWhitelist = [];
-                for (var i = 0; i < object.signInIpWhitelist.length; ++i)
+                for (let i = 0; i < object.signInIpWhitelist.length; ++i)
                     message.signInIpWhitelist[i] = String(object.signInIpWhitelist[i]);
             }
             if (object.signIn != null)
@@ -17698,7 +21600,7 @@ $root.dto = (function() {
         ProfileStaffRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.signInIpWhitelist = [];
             if (options.defaults) {
@@ -17714,7 +21616,7 @@ $root.dto = (function() {
                 object.signInToken = "";
                 object.lastSignInIp = "";
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.lastSignInTime = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.lastSignInTime = options.longs === String ? "0" : 0;
@@ -17743,7 +21645,7 @@ $root.dto = (function() {
                 object.avatar = message.avatar;
             if (message.signInIpWhitelist && message.signInIpWhitelist.length) {
                 object.signInIpWhitelist = [];
-                for (var j = 0; j < message.signInIpWhitelist.length; ++j)
+                for (let j = 0; j < message.signInIpWhitelist.length; ++j)
                     object.signInIpWhitelist[j] = message.signInIpWhitelist[j];
             }
             if (message.signIn != null && message.hasOwnProperty("signIn"))
@@ -17828,7 +21730,7 @@ $root.dto = (function() {
         function EditStaffReq(properties) {
             this.signInIpWhitelist = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -17936,7 +21838,7 @@ $root.dto = (function() {
             if (message.avatar != null && Object.hasOwnProperty.call(message, "avatar"))
                 writer.uint32(/* id 7, wireType 2 =*/58).string(message.avatar);
             if (message.signInIpWhitelist != null && message.signInIpWhitelist.length)
-                for (var i = 0; i < message.signInIpWhitelist.length; ++i)
+                for (let i = 0; i < message.signInIpWhitelist.length; ++i)
                     writer.uint32(/* id 8, wireType 2 =*/66).string(message.signInIpWhitelist[i]);
             return writer;
         };
@@ -17968,9 +21870,9 @@ $root.dto = (function() {
         EditStaffReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EditStaffReq();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EditStaffReq();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.account = reader.string();
@@ -18065,7 +21967,7 @@ $root.dto = (function() {
             if (message.signInIpWhitelist != null && message.hasOwnProperty("signInIpWhitelist")) {
                 if (!Array.isArray(message.signInIpWhitelist))
                     return "signInIpWhitelist: array expected";
-                for (var i = 0; i < message.signInIpWhitelist.length; ++i)
+                for (let i = 0; i < message.signInIpWhitelist.length; ++i)
                     if (!$util.isString(message.signInIpWhitelist[i]))
                         return "signInIpWhitelist: string[] expected";
             }
@@ -18083,7 +21985,7 @@ $root.dto = (function() {
         EditStaffReq.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.EditStaffReq)
                 return object;
-            var message = new $root.dto.EditStaffReq();
+            let message = new $root.dto.EditStaffReq();
             if (object.account != null)
                 message.account = String(object.account);
             if (object.nickName != null)
@@ -18102,7 +22004,7 @@ $root.dto = (function() {
                 if (!Array.isArray(object.signInIpWhitelist))
                     throw TypeError(".dto.EditStaffReq.signInIpWhitelist: array expected");
                 message.signInIpWhitelist = [];
-                for (var i = 0; i < object.signInIpWhitelist.length; ++i)
+                for (let i = 0; i < object.signInIpWhitelist.length; ++i)
                     message.signInIpWhitelist[i] = String(object.signInIpWhitelist[i]);
             }
             return message;
@@ -18120,7 +22022,7 @@ $root.dto = (function() {
         EditStaffReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.signInIpWhitelist = [];
             if (options.defaults) {
@@ -18148,7 +22050,7 @@ $root.dto = (function() {
                 object.avatar = message.avatar;
             if (message.signInIpWhitelist && message.signInIpWhitelist.length) {
                 object.signInIpWhitelist = [];
-                for (var j = 0; j < message.signInIpWhitelist.length; ++j)
+                for (let j = 0; j < message.signInIpWhitelist.length; ++j)
                     object.signInIpWhitelist[j] = message.signInIpWhitelist[j];
             }
             return object;
@@ -18202,7 +22104,7 @@ $root.dto = (function() {
          */
         function EditStaffRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -18271,9 +22173,9 @@ $root.dto = (function() {
         EditStaffRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EditStaffRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EditStaffRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -18331,7 +22233,7 @@ $root.dto = (function() {
         EditStaffRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.EditStaffRet)
                 return object;
-            var message = new $root.dto.EditStaffRet();
+            let message = new $root.dto.EditStaffRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -18349,7 +22251,7 @@ $root.dto = (function() {
         EditStaffRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -18386,69 +22288,69 @@ $root.dto = (function() {
         return EditStaffRet;
     })();
 
-    dto.PatchPasswordReq = (function() {
+    dto.PatchStaffPasswordReq = (function() {
 
         /**
-         * Properties of a PatchPasswordReq.
+         * Properties of a PatchStaffPasswordReq.
          * @memberof dto
-         * @interface IPatchPasswordReq
-         * @property {string|null} [oldPassword] PatchPasswordReq oldPassword
-         * @property {string|null} [newPassword] PatchPasswordReq newPassword
+         * @interface IPatchStaffPasswordReq
+         * @property {string|null} [oldPassword] PatchStaffPasswordReq oldPassword
+         * @property {string|null} [newPassword] PatchStaffPasswordReq newPassword
          */
 
         /**
-         * Constructs a new PatchPasswordReq.
+         * Constructs a new PatchStaffPasswordReq.
          * @memberof dto
-         * @classdesc Represents a PatchPasswordReq.
-         * @implements IPatchPasswordReq
+         * @classdesc Represents a PatchStaffPasswordReq.
+         * @implements IPatchStaffPasswordReq
          * @constructor
-         * @param {dto.IPatchPasswordReq=} [properties] Properties to set
+         * @param {dto.IPatchStaffPasswordReq=} [properties] Properties to set
          */
-        function PatchPasswordReq(properties) {
+        function PatchStaffPasswordReq(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
 
         /**
-         * PatchPasswordReq oldPassword.
+         * PatchStaffPasswordReq oldPassword.
          * @member {string} oldPassword
-         * @memberof dto.PatchPasswordReq
+         * @memberof dto.PatchStaffPasswordReq
          * @instance
          */
-        PatchPasswordReq.prototype.oldPassword = "";
+        PatchStaffPasswordReq.prototype.oldPassword = "";
 
         /**
-         * PatchPasswordReq newPassword.
+         * PatchStaffPasswordReq newPassword.
          * @member {string} newPassword
-         * @memberof dto.PatchPasswordReq
+         * @memberof dto.PatchStaffPasswordReq
          * @instance
          */
-        PatchPasswordReq.prototype.newPassword = "";
+        PatchStaffPasswordReq.prototype.newPassword = "";
 
         /**
-         * Creates a new PatchPasswordReq instance using the specified properties.
+         * Creates a new PatchStaffPasswordReq instance using the specified properties.
          * @function create
-         * @memberof dto.PatchPasswordReq
+         * @memberof dto.PatchStaffPasswordReq
          * @static
-         * @param {dto.IPatchPasswordReq=} [properties] Properties to set
-         * @returns {dto.PatchPasswordReq} PatchPasswordReq instance
+         * @param {dto.IPatchStaffPasswordReq=} [properties] Properties to set
+         * @returns {dto.PatchStaffPasswordReq} PatchStaffPasswordReq instance
          */
-        PatchPasswordReq.create = function create(properties) {
-            return new PatchPasswordReq(properties);
+        PatchStaffPasswordReq.create = function create(properties) {
+            return new PatchStaffPasswordReq(properties);
         };
 
         /**
-         * Encodes the specified PatchPasswordReq message. Does not implicitly {@link dto.PatchPasswordReq.verify|verify} messages.
+         * Encodes the specified PatchStaffPasswordReq message. Does not implicitly {@link dto.PatchStaffPasswordReq.verify|verify} messages.
          * @function encode
-         * @memberof dto.PatchPasswordReq
+         * @memberof dto.PatchStaffPasswordReq
          * @static
-         * @param {dto.IPatchPasswordReq} message PatchPasswordReq message or plain object to encode
+         * @param {dto.IPatchStaffPasswordReq} message PatchStaffPasswordReq message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        PatchPasswordReq.encode = function encode(message, writer) {
+        PatchStaffPasswordReq.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
             if (message.oldPassword != null && Object.hasOwnProperty.call(message, "oldPassword"))
@@ -18459,35 +22361,35 @@ $root.dto = (function() {
         };
 
         /**
-         * Encodes the specified PatchPasswordReq message, length delimited. Does not implicitly {@link dto.PatchPasswordReq.verify|verify} messages.
+         * Encodes the specified PatchStaffPasswordReq message, length delimited. Does not implicitly {@link dto.PatchStaffPasswordReq.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof dto.PatchPasswordReq
+         * @memberof dto.PatchStaffPasswordReq
          * @static
-         * @param {dto.IPatchPasswordReq} message PatchPasswordReq message or plain object to encode
+         * @param {dto.IPatchStaffPasswordReq} message PatchStaffPasswordReq message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        PatchPasswordReq.encodeDelimited = function encodeDelimited(message, writer) {
+        PatchStaffPasswordReq.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a PatchPasswordReq message from the specified reader or buffer.
+         * Decodes a PatchStaffPasswordReq message from the specified reader or buffer.
          * @function decode
-         * @memberof dto.PatchPasswordReq
+         * @memberof dto.PatchStaffPasswordReq
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {dto.PatchPasswordReq} PatchPasswordReq
+         * @returns {dto.PatchStaffPasswordReq} PatchStaffPasswordReq
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        PatchPasswordReq.decode = function decode(reader, length) {
+        PatchStaffPasswordReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.PatchPasswordReq();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.PatchStaffPasswordReq();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.oldPassword = reader.string();
@@ -18506,30 +22408,30 @@ $root.dto = (function() {
         };
 
         /**
-         * Decodes a PatchPasswordReq message from the specified reader or buffer, length delimited.
+         * Decodes a PatchStaffPasswordReq message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof dto.PatchPasswordReq
+         * @memberof dto.PatchStaffPasswordReq
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {dto.PatchPasswordReq} PatchPasswordReq
+         * @returns {dto.PatchStaffPasswordReq} PatchStaffPasswordReq
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        PatchPasswordReq.decodeDelimited = function decodeDelimited(reader) {
+        PatchStaffPasswordReq.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a PatchPasswordReq message.
+         * Verifies a PatchStaffPasswordReq message.
          * @function verify
-         * @memberof dto.PatchPasswordReq
+         * @memberof dto.PatchStaffPasswordReq
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        PatchPasswordReq.verify = function verify(message) {
+        PatchStaffPasswordReq.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
             if (message.oldPassword != null && message.hasOwnProperty("oldPassword"))
@@ -18542,17 +22444,17 @@ $root.dto = (function() {
         };
 
         /**
-         * Creates a PatchPasswordReq message from a plain object. Also converts values to their respective internal types.
+         * Creates a PatchStaffPasswordReq message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof dto.PatchPasswordReq
+         * @memberof dto.PatchStaffPasswordReq
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {dto.PatchPasswordReq} PatchPasswordReq
+         * @returns {dto.PatchStaffPasswordReq} PatchStaffPasswordReq
          */
-        PatchPasswordReq.fromObject = function fromObject(object) {
-            if (object instanceof $root.dto.PatchPasswordReq)
+        PatchStaffPasswordReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.PatchStaffPasswordReq)
                 return object;
-            var message = new $root.dto.PatchPasswordReq();
+            let message = new $root.dto.PatchStaffPasswordReq();
             if (object.oldPassword != null)
                 message.oldPassword = String(object.oldPassword);
             if (object.newPassword != null)
@@ -18561,18 +22463,18 @@ $root.dto = (function() {
         };
 
         /**
-         * Creates a plain object from a PatchPasswordReq message. Also converts values to other types if specified.
+         * Creates a plain object from a PatchStaffPasswordReq message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof dto.PatchPasswordReq
+         * @memberof dto.PatchStaffPasswordReq
          * @static
-         * @param {dto.PatchPasswordReq} message PatchPasswordReq
+         * @param {dto.PatchStaffPasswordReq} message PatchStaffPasswordReq
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        PatchPasswordReq.toObject = function toObject(message, options) {
+        PatchStaffPasswordReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults) {
                 object.oldPassword = "";
                 object.newPassword = "";
@@ -18585,88 +22487,88 @@ $root.dto = (function() {
         };
 
         /**
-         * Converts this PatchPasswordReq to JSON.
+         * Converts this PatchStaffPasswordReq to JSON.
          * @function toJSON
-         * @memberof dto.PatchPasswordReq
+         * @memberof dto.PatchStaffPasswordReq
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        PatchPasswordReq.prototype.toJSON = function toJSON() {
+        PatchStaffPasswordReq.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
         /**
-         * Gets the default type url for PatchPasswordReq
+         * Gets the default type url for PatchStaffPasswordReq
          * @function getTypeUrl
-         * @memberof dto.PatchPasswordReq
+         * @memberof dto.PatchStaffPasswordReq
          * @static
          * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns {string} The default type url
          */
-        PatchPasswordReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        PatchStaffPasswordReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
             if (typeUrlPrefix === undefined) {
                 typeUrlPrefix = "type.googleapis.com";
             }
-            return typeUrlPrefix + "/dto.PatchPasswordReq";
+            return typeUrlPrefix + "/dto.PatchStaffPasswordReq";
         };
 
-        return PatchPasswordReq;
+        return PatchStaffPasswordReq;
     })();
 
-    dto.PatchPasswordRet = (function() {
+    dto.PatchStaffPasswordRet = (function() {
 
         /**
-         * Properties of a PatchPasswordRet.
+         * Properties of a PatchStaffPasswordRet.
          * @memberof dto
-         * @interface IPatchPasswordRet
-         * @property {string|null} [id] PatchPasswordRet id
+         * @interface IPatchStaffPasswordRet
+         * @property {string|null} [id] PatchStaffPasswordRet id
          */
 
         /**
-         * Constructs a new PatchPasswordRet.
+         * Constructs a new PatchStaffPasswordRet.
          * @memberof dto
-         * @classdesc Represents a PatchPasswordRet.
-         * @implements IPatchPasswordRet
+         * @classdesc Represents a PatchStaffPasswordRet.
+         * @implements IPatchStaffPasswordRet
          * @constructor
-         * @param {dto.IPatchPasswordRet=} [properties] Properties to set
+         * @param {dto.IPatchStaffPasswordRet=} [properties] Properties to set
          */
-        function PatchPasswordRet(properties) {
+        function PatchStaffPasswordRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
 
         /**
-         * PatchPasswordRet id.
+         * PatchStaffPasswordRet id.
          * @member {string} id
-         * @memberof dto.PatchPasswordRet
+         * @memberof dto.PatchStaffPasswordRet
          * @instance
          */
-        PatchPasswordRet.prototype.id = "";
+        PatchStaffPasswordRet.prototype.id = "";
 
         /**
-         * Creates a new PatchPasswordRet instance using the specified properties.
+         * Creates a new PatchStaffPasswordRet instance using the specified properties.
          * @function create
-         * @memberof dto.PatchPasswordRet
+         * @memberof dto.PatchStaffPasswordRet
          * @static
-         * @param {dto.IPatchPasswordRet=} [properties] Properties to set
-         * @returns {dto.PatchPasswordRet} PatchPasswordRet instance
+         * @param {dto.IPatchStaffPasswordRet=} [properties] Properties to set
+         * @returns {dto.PatchStaffPasswordRet} PatchStaffPasswordRet instance
          */
-        PatchPasswordRet.create = function create(properties) {
-            return new PatchPasswordRet(properties);
+        PatchStaffPasswordRet.create = function create(properties) {
+            return new PatchStaffPasswordRet(properties);
         };
 
         /**
-         * Encodes the specified PatchPasswordRet message. Does not implicitly {@link dto.PatchPasswordRet.verify|verify} messages.
+         * Encodes the specified PatchStaffPasswordRet message. Does not implicitly {@link dto.PatchStaffPasswordRet.verify|verify} messages.
          * @function encode
-         * @memberof dto.PatchPasswordRet
+         * @memberof dto.PatchStaffPasswordRet
          * @static
-         * @param {dto.IPatchPasswordRet} message PatchPasswordRet message or plain object to encode
+         * @param {dto.IPatchStaffPasswordRet} message PatchStaffPasswordRet message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        PatchPasswordRet.encode = function encode(message, writer) {
+        PatchStaffPasswordRet.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
             if (message.id != null && Object.hasOwnProperty.call(message, "id"))
@@ -18675,35 +22577,35 @@ $root.dto = (function() {
         };
 
         /**
-         * Encodes the specified PatchPasswordRet message, length delimited. Does not implicitly {@link dto.PatchPasswordRet.verify|verify} messages.
+         * Encodes the specified PatchStaffPasswordRet message, length delimited. Does not implicitly {@link dto.PatchStaffPasswordRet.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof dto.PatchPasswordRet
+         * @memberof dto.PatchStaffPasswordRet
          * @static
-         * @param {dto.IPatchPasswordRet} message PatchPasswordRet message or plain object to encode
+         * @param {dto.IPatchStaffPasswordRet} message PatchStaffPasswordRet message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        PatchPasswordRet.encodeDelimited = function encodeDelimited(message, writer) {
+        PatchStaffPasswordRet.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a PatchPasswordRet message from the specified reader or buffer.
+         * Decodes a PatchStaffPasswordRet message from the specified reader or buffer.
          * @function decode
-         * @memberof dto.PatchPasswordRet
+         * @memberof dto.PatchStaffPasswordRet
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {dto.PatchPasswordRet} PatchPasswordRet
+         * @returns {dto.PatchStaffPasswordRet} PatchStaffPasswordRet
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        PatchPasswordRet.decode = function decode(reader, length) {
+        PatchStaffPasswordRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.PatchPasswordRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.PatchStaffPasswordRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -18718,30 +22620,30 @@ $root.dto = (function() {
         };
 
         /**
-         * Decodes a PatchPasswordRet message from the specified reader or buffer, length delimited.
+         * Decodes a PatchStaffPasswordRet message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof dto.PatchPasswordRet
+         * @memberof dto.PatchStaffPasswordRet
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {dto.PatchPasswordRet} PatchPasswordRet
+         * @returns {dto.PatchStaffPasswordRet} PatchStaffPasswordRet
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        PatchPasswordRet.decodeDelimited = function decodeDelimited(reader) {
+        PatchStaffPasswordRet.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a PatchPasswordRet message.
+         * Verifies a PatchStaffPasswordRet message.
          * @function verify
-         * @memberof dto.PatchPasswordRet
+         * @memberof dto.PatchStaffPasswordRet
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        PatchPasswordRet.verify = function verify(message) {
+        PatchStaffPasswordRet.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -18751,35 +22653,35 @@ $root.dto = (function() {
         };
 
         /**
-         * Creates a PatchPasswordRet message from a plain object. Also converts values to their respective internal types.
+         * Creates a PatchStaffPasswordRet message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof dto.PatchPasswordRet
+         * @memberof dto.PatchStaffPasswordRet
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {dto.PatchPasswordRet} PatchPasswordRet
+         * @returns {dto.PatchStaffPasswordRet} PatchStaffPasswordRet
          */
-        PatchPasswordRet.fromObject = function fromObject(object) {
-            if (object instanceof $root.dto.PatchPasswordRet)
+        PatchStaffPasswordRet.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.PatchStaffPasswordRet)
                 return object;
-            var message = new $root.dto.PatchPasswordRet();
+            let message = new $root.dto.PatchStaffPasswordRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
         };
 
         /**
-         * Creates a plain object from a PatchPasswordRet message. Also converts values to other types if specified.
+         * Creates a plain object from a PatchStaffPasswordRet message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof dto.PatchPasswordRet
+         * @memberof dto.PatchStaffPasswordRet
          * @static
-         * @param {dto.PatchPasswordRet} message PatchPasswordRet
+         * @param {dto.PatchStaffPasswordRet} message PatchStaffPasswordRet
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        PatchPasswordRet.toObject = function toObject(message, options) {
+        PatchStaffPasswordRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -18788,32 +22690,32 @@ $root.dto = (function() {
         };
 
         /**
-         * Converts this PatchPasswordRet to JSON.
+         * Converts this PatchStaffPasswordRet to JSON.
          * @function toJSON
-         * @memberof dto.PatchPasswordRet
+         * @memberof dto.PatchStaffPasswordRet
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        PatchPasswordRet.prototype.toJSON = function toJSON() {
+        PatchStaffPasswordRet.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
         /**
-         * Gets the default type url for PatchPasswordRet
+         * Gets the default type url for PatchStaffPasswordRet
          * @function getTypeUrl
-         * @memberof dto.PatchPasswordRet
+         * @memberof dto.PatchStaffPasswordRet
          * @static
          * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns {string} The default type url
          */
-        PatchPasswordRet.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        PatchStaffPasswordRet.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
             if (typeUrlPrefix === undefined) {
                 typeUrlPrefix = "type.googleapis.com";
             }
-            return typeUrlPrefix + "/dto.PatchPasswordRet";
+            return typeUrlPrefix + "/dto.PatchStaffPasswordRet";
         };
 
-        return PatchPasswordRet;
+        return PatchStaffPasswordRet;
     })();
 
     dto.AuthorizeStaffRolesInDomainReq = (function() {
@@ -18836,7 +22738,7 @@ $root.dto = (function() {
         function AuthorizeStaffRolesInDomainReq(properties) {
             this.roleIds = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -18874,7 +22776,7 @@ $root.dto = (function() {
             if (!writer)
                 writer = $Writer.create();
             if (message.roleIds != null && message.roleIds.length)
-                for (var i = 0; i < message.roleIds.length; ++i)
+                for (let i = 0; i < message.roleIds.length; ++i)
                     writer.uint32(/* id 1, wireType 2 =*/10).string(message.roleIds[i]);
             return writer;
         };
@@ -18906,9 +22808,9 @@ $root.dto = (function() {
         AuthorizeStaffRolesInDomainReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AuthorizeStaffRolesInDomainReq();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AuthorizeStaffRolesInDomainReq();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         if (!(message.roleIds && message.roleIds.length))
@@ -18954,7 +22856,7 @@ $root.dto = (function() {
             if (message.roleIds != null && message.hasOwnProperty("roleIds")) {
                 if (!Array.isArray(message.roleIds))
                     return "roleIds: array expected";
-                for (var i = 0; i < message.roleIds.length; ++i)
+                for (let i = 0; i < message.roleIds.length; ++i)
                     if (!$util.isString(message.roleIds[i]))
                         return "roleIds: string[] expected";
             }
@@ -18972,12 +22874,12 @@ $root.dto = (function() {
         AuthorizeStaffRolesInDomainReq.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.AuthorizeStaffRolesInDomainReq)
                 return object;
-            var message = new $root.dto.AuthorizeStaffRolesInDomainReq();
+            let message = new $root.dto.AuthorizeStaffRolesInDomainReq();
             if (object.roleIds) {
                 if (!Array.isArray(object.roleIds))
                     throw TypeError(".dto.AuthorizeStaffRolesInDomainReq.roleIds: array expected");
                 message.roleIds = [];
-                for (var i = 0; i < object.roleIds.length; ++i)
+                for (let i = 0; i < object.roleIds.length; ++i)
                     message.roleIds[i] = String(object.roleIds[i]);
             }
             return message;
@@ -18995,12 +22897,12 @@ $root.dto = (function() {
         AuthorizeStaffRolesInDomainReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.roleIds = [];
             if (message.roleIds && message.roleIds.length) {
                 object.roleIds = [];
-                for (var j = 0; j < message.roleIds.length; ++j)
+                for (let j = 0; j < message.roleIds.length; ++j)
                     object.roleIds[j] = message.roleIds[j];
             }
             return object;
@@ -19054,7 +22956,7 @@ $root.dto = (function() {
          */
         function AuthorizeStaffRolesInDomainRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -19123,9 +23025,9 @@ $root.dto = (function() {
         AuthorizeStaffRolesInDomainRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AuthorizeStaffRolesInDomainRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.AuthorizeStaffRolesInDomainRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -19183,7 +23085,7 @@ $root.dto = (function() {
         AuthorizeStaffRolesInDomainRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.AuthorizeStaffRolesInDomainRet)
                 return object;
-            var message = new $root.dto.AuthorizeStaffRolesInDomainRet();
+            let message = new $root.dto.AuthorizeStaffRolesInDomainRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -19201,7 +23103,7 @@ $root.dto = (function() {
         AuthorizeStaffRolesInDomainRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -19238,6 +23140,209 @@ $root.dto = (function() {
         return AuthorizeStaffRolesInDomainRet;
     })();
 
+    dto.StaffDomainsReq = (function() {
+
+        /**
+         * Properties of a StaffDomainsReq.
+         * @memberof dto
+         * @interface IStaffDomainsReq
+         * @property {string|null} [id] StaffDomainsReq id
+         */
+
+        /**
+         * Constructs a new StaffDomainsReq.
+         * @memberof dto
+         * @classdesc Represents a StaffDomainsReq.
+         * @implements IStaffDomainsReq
+         * @constructor
+         * @param {dto.IStaffDomainsReq=} [properties] Properties to set
+         */
+        function StaffDomainsReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * StaffDomainsReq id.
+         * @member {string} id
+         * @memberof dto.StaffDomainsReq
+         * @instance
+         */
+        StaffDomainsReq.prototype.id = "";
+
+        /**
+         * Creates a new StaffDomainsReq instance using the specified properties.
+         * @function create
+         * @memberof dto.StaffDomainsReq
+         * @static
+         * @param {dto.IStaffDomainsReq=} [properties] Properties to set
+         * @returns {dto.StaffDomainsReq} StaffDomainsReq instance
+         */
+        StaffDomainsReq.create = function create(properties) {
+            return new StaffDomainsReq(properties);
+        };
+
+        /**
+         * Encodes the specified StaffDomainsReq message. Does not implicitly {@link dto.StaffDomainsReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.StaffDomainsReq
+         * @static
+         * @param {dto.IStaffDomainsReq} message StaffDomainsReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        StaffDomainsReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified StaffDomainsReq message, length delimited. Does not implicitly {@link dto.StaffDomainsReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.StaffDomainsReq
+         * @static
+         * @param {dto.IStaffDomainsReq} message StaffDomainsReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        StaffDomainsReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a StaffDomainsReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.StaffDomainsReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.StaffDomainsReq} StaffDomainsReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        StaffDomainsReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.StaffDomainsReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a StaffDomainsReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.StaffDomainsReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.StaffDomainsReq} StaffDomainsReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        StaffDomainsReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a StaffDomainsReq message.
+         * @function verify
+         * @memberof dto.StaffDomainsReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        StaffDomainsReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a StaffDomainsReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.StaffDomainsReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.StaffDomainsReq} StaffDomainsReq
+         */
+        StaffDomainsReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.StaffDomainsReq)
+                return object;
+            let message = new $root.dto.StaffDomainsReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a StaffDomainsReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.StaffDomainsReq
+         * @static
+         * @param {dto.StaffDomainsReq} message StaffDomainsReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        StaffDomainsReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this StaffDomainsReq to JSON.
+         * @function toJSON
+         * @memberof dto.StaffDomainsReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        StaffDomainsReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for StaffDomainsReq
+         * @function getTypeUrl
+         * @memberof dto.StaffDomainsReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        StaffDomainsReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.StaffDomainsReq";
+        };
+
+        return StaffDomainsReq;
+    })();
+
     dto.StaffDomainsRet = (function() {
 
         /**
@@ -19258,7 +23363,7 @@ $root.dto = (function() {
         function StaffDomainsRet(properties) {
             this.domainIds = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -19296,7 +23401,7 @@ $root.dto = (function() {
             if (!writer)
                 writer = $Writer.create();
             if (message.domainIds != null && message.domainIds.length)
-                for (var i = 0; i < message.domainIds.length; ++i)
+                for (let i = 0; i < message.domainIds.length; ++i)
                     writer.uint32(/* id 1, wireType 2 =*/10).string(message.domainIds[i]);
             return writer;
         };
@@ -19328,9 +23433,9 @@ $root.dto = (function() {
         StaffDomainsRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.StaffDomainsRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.StaffDomainsRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         if (!(message.domainIds && message.domainIds.length))
@@ -19376,7 +23481,7 @@ $root.dto = (function() {
             if (message.domainIds != null && message.hasOwnProperty("domainIds")) {
                 if (!Array.isArray(message.domainIds))
                     return "domainIds: array expected";
-                for (var i = 0; i < message.domainIds.length; ++i)
+                for (let i = 0; i < message.domainIds.length; ++i)
                     if (!$util.isString(message.domainIds[i]))
                         return "domainIds: string[] expected";
             }
@@ -19394,12 +23499,12 @@ $root.dto = (function() {
         StaffDomainsRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.StaffDomainsRet)
                 return object;
-            var message = new $root.dto.StaffDomainsRet();
+            let message = new $root.dto.StaffDomainsRet();
             if (object.domainIds) {
                 if (!Array.isArray(object.domainIds))
                     throw TypeError(".dto.StaffDomainsRet.domainIds: array expected");
                 message.domainIds = [];
-                for (var i = 0; i < object.domainIds.length; ++i)
+                for (let i = 0; i < object.domainIds.length; ++i)
                     message.domainIds[i] = String(object.domainIds[i]);
             }
             return message;
@@ -19417,12 +23522,12 @@ $root.dto = (function() {
         StaffDomainsRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.domainIds = [];
             if (message.domainIds && message.domainIds.length) {
                 object.domainIds = [];
-                for (var j = 0; j < message.domainIds.length; ++j)
+                for (let j = 0; j < message.domainIds.length; ++j)
                     object.domainIds[j] = message.domainIds[j];
             }
             return object;
@@ -19457,6 +23562,233 @@ $root.dto = (function() {
         return StaffDomainsRet;
     })();
 
+    dto.StaffRolesInDomainReq = (function() {
+
+        /**
+         * Properties of a StaffRolesInDomainReq.
+         * @memberof dto
+         * @interface IStaffRolesInDomainReq
+         * @property {string|null} [id] StaffRolesInDomainReq id
+         * @property {string|null} [domainId] StaffRolesInDomainReq domainId
+         */
+
+        /**
+         * Constructs a new StaffRolesInDomainReq.
+         * @memberof dto
+         * @classdesc Represents a StaffRolesInDomainReq.
+         * @implements IStaffRolesInDomainReq
+         * @constructor
+         * @param {dto.IStaffRolesInDomainReq=} [properties] Properties to set
+         */
+        function StaffRolesInDomainReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * StaffRolesInDomainReq id.
+         * @member {string} id
+         * @memberof dto.StaffRolesInDomainReq
+         * @instance
+         */
+        StaffRolesInDomainReq.prototype.id = "";
+
+        /**
+         * StaffRolesInDomainReq domainId.
+         * @member {string} domainId
+         * @memberof dto.StaffRolesInDomainReq
+         * @instance
+         */
+        StaffRolesInDomainReq.prototype.domainId = "";
+
+        /**
+         * Creates a new StaffRolesInDomainReq instance using the specified properties.
+         * @function create
+         * @memberof dto.StaffRolesInDomainReq
+         * @static
+         * @param {dto.IStaffRolesInDomainReq=} [properties] Properties to set
+         * @returns {dto.StaffRolesInDomainReq} StaffRolesInDomainReq instance
+         */
+        StaffRolesInDomainReq.create = function create(properties) {
+            return new StaffRolesInDomainReq(properties);
+        };
+
+        /**
+         * Encodes the specified StaffRolesInDomainReq message. Does not implicitly {@link dto.StaffRolesInDomainReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.StaffRolesInDomainReq
+         * @static
+         * @param {dto.IStaffRolesInDomainReq} message StaffRolesInDomainReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        StaffRolesInDomainReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            if (message.domainId != null && Object.hasOwnProperty.call(message, "domainId"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.domainId);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified StaffRolesInDomainReq message, length delimited. Does not implicitly {@link dto.StaffRolesInDomainReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.StaffRolesInDomainReq
+         * @static
+         * @param {dto.IStaffRolesInDomainReq} message StaffRolesInDomainReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        StaffRolesInDomainReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a StaffRolesInDomainReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.StaffRolesInDomainReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.StaffRolesInDomainReq} StaffRolesInDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        StaffRolesInDomainReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.StaffRolesInDomainReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.domainId = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a StaffRolesInDomainReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.StaffRolesInDomainReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.StaffRolesInDomainReq} StaffRolesInDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        StaffRolesInDomainReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a StaffRolesInDomainReq message.
+         * @function verify
+         * @memberof dto.StaffRolesInDomainReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        StaffRolesInDomainReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            if (message.domainId != null && message.hasOwnProperty("domainId"))
+                if (!$util.isString(message.domainId))
+                    return "domainId: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a StaffRolesInDomainReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.StaffRolesInDomainReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.StaffRolesInDomainReq} StaffRolesInDomainReq
+         */
+        StaffRolesInDomainReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.StaffRolesInDomainReq)
+                return object;
+            let message = new $root.dto.StaffRolesInDomainReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            if (object.domainId != null)
+                message.domainId = String(object.domainId);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a StaffRolesInDomainReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.StaffRolesInDomainReq
+         * @static
+         * @param {dto.StaffRolesInDomainReq} message StaffRolesInDomainReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        StaffRolesInDomainReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults) {
+                object.id = "";
+                object.domainId = "";
+            }
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            if (message.domainId != null && message.hasOwnProperty("domainId"))
+                object.domainId = message.domainId;
+            return object;
+        };
+
+        /**
+         * Converts this StaffRolesInDomainReq to JSON.
+         * @function toJSON
+         * @memberof dto.StaffRolesInDomainReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        StaffRolesInDomainReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for StaffRolesInDomainReq
+         * @function getTypeUrl
+         * @memberof dto.StaffRolesInDomainReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        StaffRolesInDomainReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.StaffRolesInDomainReq";
+        };
+
+        return StaffRolesInDomainReq;
+    })();
+
     dto.StaffRolesInDomainRet = (function() {
 
         /**
@@ -19477,7 +23809,7 @@ $root.dto = (function() {
         function StaffRolesInDomainRet(properties) {
             this.roleIds = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -19515,7 +23847,7 @@ $root.dto = (function() {
             if (!writer)
                 writer = $Writer.create();
             if (message.roleIds != null && message.roleIds.length)
-                for (var i = 0; i < message.roleIds.length; ++i)
+                for (let i = 0; i < message.roleIds.length; ++i)
                     writer.uint32(/* id 1, wireType 2 =*/10).string(message.roleIds[i]);
             return writer;
         };
@@ -19547,9 +23879,9 @@ $root.dto = (function() {
         StaffRolesInDomainRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.StaffRolesInDomainRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.StaffRolesInDomainRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         if (!(message.roleIds && message.roleIds.length))
@@ -19595,7 +23927,7 @@ $root.dto = (function() {
             if (message.roleIds != null && message.hasOwnProperty("roleIds")) {
                 if (!Array.isArray(message.roleIds))
                     return "roleIds: array expected";
-                for (var i = 0; i < message.roleIds.length; ++i)
+                for (let i = 0; i < message.roleIds.length; ++i)
                     if (!$util.isString(message.roleIds[i]))
                         return "roleIds: string[] expected";
             }
@@ -19613,12 +23945,12 @@ $root.dto = (function() {
         StaffRolesInDomainRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.StaffRolesInDomainRet)
                 return object;
-            var message = new $root.dto.StaffRolesInDomainRet();
+            let message = new $root.dto.StaffRolesInDomainRet();
             if (object.roleIds) {
                 if (!Array.isArray(object.roleIds))
                     throw TypeError(".dto.StaffRolesInDomainRet.roleIds: array expected");
                 message.roleIds = [];
-                for (var i = 0; i < object.roleIds.length; ++i)
+                for (let i = 0; i < object.roleIds.length; ++i)
                     message.roleIds[i] = String(object.roleIds[i]);
             }
             return message;
@@ -19636,12 +23968,12 @@ $root.dto = (function() {
         StaffRolesInDomainRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.roleIds = [];
             if (message.roleIds && message.roleIds.length) {
                 object.roleIds = [];
-                for (var j = 0; j < message.roleIds.length; ++j)
+                for (let j = 0; j < message.roleIds.length; ++j)
                     object.roleIds[j] = message.roleIds[j];
             }
             return object;
@@ -19676,6 +24008,209 @@ $root.dto = (function() {
         return StaffRolesInDomainRet;
     })();
 
+    dto.EnableStaffReq = (function() {
+
+        /**
+         * Properties of an EnableStaffReq.
+         * @memberof dto
+         * @interface IEnableStaffReq
+         * @property {string|null} [id] EnableStaffReq id
+         */
+
+        /**
+         * Constructs a new EnableStaffReq.
+         * @memberof dto
+         * @classdesc Represents an EnableStaffReq.
+         * @implements IEnableStaffReq
+         * @constructor
+         * @param {dto.IEnableStaffReq=} [properties] Properties to set
+         */
+        function EnableStaffReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * EnableStaffReq id.
+         * @member {string} id
+         * @memberof dto.EnableStaffReq
+         * @instance
+         */
+        EnableStaffReq.prototype.id = "";
+
+        /**
+         * Creates a new EnableStaffReq instance using the specified properties.
+         * @function create
+         * @memberof dto.EnableStaffReq
+         * @static
+         * @param {dto.IEnableStaffReq=} [properties] Properties to set
+         * @returns {dto.EnableStaffReq} EnableStaffReq instance
+         */
+        EnableStaffReq.create = function create(properties) {
+            return new EnableStaffReq(properties);
+        };
+
+        /**
+         * Encodes the specified EnableStaffReq message. Does not implicitly {@link dto.EnableStaffReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.EnableStaffReq
+         * @static
+         * @param {dto.IEnableStaffReq} message EnableStaffReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        EnableStaffReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified EnableStaffReq message, length delimited. Does not implicitly {@link dto.EnableStaffReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.EnableStaffReq
+         * @static
+         * @param {dto.IEnableStaffReq} message EnableStaffReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        EnableStaffReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes an EnableStaffReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.EnableStaffReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.EnableStaffReq} EnableStaffReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        EnableStaffReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EnableStaffReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes an EnableStaffReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.EnableStaffReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.EnableStaffReq} EnableStaffReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        EnableStaffReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies an EnableStaffReq message.
+         * @function verify
+         * @memberof dto.EnableStaffReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        EnableStaffReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates an EnableStaffReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.EnableStaffReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.EnableStaffReq} EnableStaffReq
+         */
+        EnableStaffReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.EnableStaffReq)
+                return object;
+            let message = new $root.dto.EnableStaffReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from an EnableStaffReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.EnableStaffReq
+         * @static
+         * @param {dto.EnableStaffReq} message EnableStaffReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        EnableStaffReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this EnableStaffReq to JSON.
+         * @function toJSON
+         * @memberof dto.EnableStaffReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        EnableStaffReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for EnableStaffReq
+         * @function getTypeUrl
+         * @memberof dto.EnableStaffReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        EnableStaffReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.EnableStaffReq";
+        };
+
+        return EnableStaffReq;
+    })();
+
     dto.EnableStaffRet = (function() {
 
         /**
@@ -19695,7 +24230,7 @@ $root.dto = (function() {
          */
         function EnableStaffRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -19764,9 +24299,9 @@ $root.dto = (function() {
         EnableStaffRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EnableStaffRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.EnableStaffRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -19824,7 +24359,7 @@ $root.dto = (function() {
         EnableStaffRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.EnableStaffRet)
                 return object;
-            var message = new $root.dto.EnableStaffRet();
+            let message = new $root.dto.EnableStaffRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -19842,7 +24377,7 @@ $root.dto = (function() {
         EnableStaffRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -19879,6 +24414,209 @@ $root.dto = (function() {
         return EnableStaffRet;
     })();
 
+    dto.DisableStaffReq = (function() {
+
+        /**
+         * Properties of a DisableStaffReq.
+         * @memberof dto
+         * @interface IDisableStaffReq
+         * @property {string|null} [id] DisableStaffReq id
+         */
+
+        /**
+         * Constructs a new DisableStaffReq.
+         * @memberof dto
+         * @classdesc Represents a DisableStaffReq.
+         * @implements IDisableStaffReq
+         * @constructor
+         * @param {dto.IDisableStaffReq=} [properties] Properties to set
+         */
+        function DisableStaffReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * DisableStaffReq id.
+         * @member {string} id
+         * @memberof dto.DisableStaffReq
+         * @instance
+         */
+        DisableStaffReq.prototype.id = "";
+
+        /**
+         * Creates a new DisableStaffReq instance using the specified properties.
+         * @function create
+         * @memberof dto.DisableStaffReq
+         * @static
+         * @param {dto.IDisableStaffReq=} [properties] Properties to set
+         * @returns {dto.DisableStaffReq} DisableStaffReq instance
+         */
+        DisableStaffReq.create = function create(properties) {
+            return new DisableStaffReq(properties);
+        };
+
+        /**
+         * Encodes the specified DisableStaffReq message. Does not implicitly {@link dto.DisableStaffReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.DisableStaffReq
+         * @static
+         * @param {dto.IDisableStaffReq} message DisableStaffReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DisableStaffReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified DisableStaffReq message, length delimited. Does not implicitly {@link dto.DisableStaffReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.DisableStaffReq
+         * @static
+         * @param {dto.IDisableStaffReq} message DisableStaffReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DisableStaffReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a DisableStaffReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.DisableStaffReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.DisableStaffReq} DisableStaffReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DisableStaffReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.DisableStaffReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a DisableStaffReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.DisableStaffReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.DisableStaffReq} DisableStaffReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DisableStaffReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a DisableStaffReq message.
+         * @function verify
+         * @memberof dto.DisableStaffReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        DisableStaffReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a DisableStaffReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.DisableStaffReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.DisableStaffReq} DisableStaffReq
+         */
+        DisableStaffReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.DisableStaffReq)
+                return object;
+            let message = new $root.dto.DisableStaffReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a DisableStaffReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.DisableStaffReq
+         * @static
+         * @param {dto.DisableStaffReq} message DisableStaffReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        DisableStaffReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this DisableStaffReq to JSON.
+         * @function toJSON
+         * @memberof dto.DisableStaffReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        DisableStaffReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for DisableStaffReq
+         * @function getTypeUrl
+         * @memberof dto.DisableStaffReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        DisableStaffReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.DisableStaffReq";
+        };
+
+        return DisableStaffReq;
+    })();
+
     dto.DisableStaffRet = (function() {
 
         /**
@@ -19898,7 +24636,7 @@ $root.dto = (function() {
          */
         function DisableStaffRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -19967,9 +24705,9 @@ $root.dto = (function() {
         DisableStaffRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.DisableStaffRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.DisableStaffRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -20027,7 +24765,7 @@ $root.dto = (function() {
         DisableStaffRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.DisableStaffRet)
                 return object;
-            var message = new $root.dto.DisableStaffRet();
+            let message = new $root.dto.DisableStaffRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -20045,7 +24783,7 @@ $root.dto = (function() {
         DisableStaffRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -20082,6 +24820,209 @@ $root.dto = (function() {
         return DisableStaffRet;
     })();
 
+    dto.RemoveStaffReq = (function() {
+
+        /**
+         * Properties of a RemoveStaffReq.
+         * @memberof dto
+         * @interface IRemoveStaffReq
+         * @property {string|null} [id] RemoveStaffReq id
+         */
+
+        /**
+         * Constructs a new RemoveStaffReq.
+         * @memberof dto
+         * @classdesc Represents a RemoveStaffReq.
+         * @implements IRemoveStaffReq
+         * @constructor
+         * @param {dto.IRemoveStaffReq=} [properties] Properties to set
+         */
+        function RemoveStaffReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * RemoveStaffReq id.
+         * @member {string} id
+         * @memberof dto.RemoveStaffReq
+         * @instance
+         */
+        RemoveStaffReq.prototype.id = "";
+
+        /**
+         * Creates a new RemoveStaffReq instance using the specified properties.
+         * @function create
+         * @memberof dto.RemoveStaffReq
+         * @static
+         * @param {dto.IRemoveStaffReq=} [properties] Properties to set
+         * @returns {dto.RemoveStaffReq} RemoveStaffReq instance
+         */
+        RemoveStaffReq.create = function create(properties) {
+            return new RemoveStaffReq(properties);
+        };
+
+        /**
+         * Encodes the specified RemoveStaffReq message. Does not implicitly {@link dto.RemoveStaffReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.RemoveStaffReq
+         * @static
+         * @param {dto.IRemoveStaffReq} message RemoveStaffReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RemoveStaffReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified RemoveStaffReq message, length delimited. Does not implicitly {@link dto.RemoveStaffReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.RemoveStaffReq
+         * @static
+         * @param {dto.IRemoveStaffReq} message RemoveStaffReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RemoveStaffReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a RemoveStaffReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.RemoveStaffReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.RemoveStaffReq} RemoveStaffReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RemoveStaffReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.RemoveStaffReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a RemoveStaffReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.RemoveStaffReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.RemoveStaffReq} RemoveStaffReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RemoveStaffReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a RemoveStaffReq message.
+         * @function verify
+         * @memberof dto.RemoveStaffReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        RemoveStaffReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a RemoveStaffReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.RemoveStaffReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.RemoveStaffReq} RemoveStaffReq
+         */
+        RemoveStaffReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.RemoveStaffReq)
+                return object;
+            let message = new $root.dto.RemoveStaffReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a RemoveStaffReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.RemoveStaffReq
+         * @static
+         * @param {dto.RemoveStaffReq} message RemoveStaffReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        RemoveStaffReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this RemoveStaffReq to JSON.
+         * @function toJSON
+         * @memberof dto.RemoveStaffReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        RemoveStaffReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for RemoveStaffReq
+         * @function getTypeUrl
+         * @memberof dto.RemoveStaffReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        RemoveStaffReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.RemoveStaffReq";
+        };
+
+        return RemoveStaffReq;
+    })();
+
     dto.RemoveStaffRet = (function() {
 
         /**
@@ -20101,7 +25042,7 @@ $root.dto = (function() {
          */
         function RemoveStaffRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -20170,9 +25111,9 @@ $root.dto = (function() {
         RemoveStaffRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.RemoveStaffRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.RemoveStaffRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -20230,7 +25171,7 @@ $root.dto = (function() {
         RemoveStaffRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.RemoveStaffRet)
                 return object;
-            var message = new $root.dto.RemoveStaffRet();
+            let message = new $root.dto.RemoveStaffRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -20248,7 +25189,7 @@ $root.dto = (function() {
         RemoveStaffRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -20312,7 +25253,7 @@ $root.dto = (function() {
         function ListChangeLogReq(properties) {
             this.sortBy = {};
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -20420,7 +25361,7 @@ $root.dto = (function() {
             if (message.perPage != null && Object.hasOwnProperty.call(message, "perPage"))
                 writer.uint32(/* id 20003, wireType 0 =*/160024).sint64(message.perPage);
             if (message.sortBy != null && Object.hasOwnProperty.call(message, "sortBy"))
-                for (var keys = Object.keys(message.sortBy), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(message.sortBy), i = 0; i < keys.length; ++i)
                     writer.uint32(/* id 20004, wireType 2 =*/160034).fork().uint32(/* id 1, wireType 2 =*/10).string(keys[i]).uint32(/* id 2, wireType 0 =*/16).int32(message.sortBy[keys[i]]).ldelim();
             return writer;
         };
@@ -20452,9 +25393,9 @@ $root.dto = (function() {
         ListChangeLogReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListChangeLogReq(), key, value;
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListChangeLogReq(), key, value;
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 20001: {
                         message.noPaging = reader.bool();
@@ -20471,11 +25412,11 @@ $root.dto = (function() {
                 case 20004: {
                         if (message.sortBy === $util.emptyObject)
                             message.sortBy = {};
-                        var end2 = reader.uint32() + reader.pos;
+                        let end2 = reader.uint32() + reader.pos;
                         key = "";
                         value = 0;
                         while (reader.pos < end2) {
-                            var tag2 = reader.uint32();
+                            let tag2 = reader.uint32();
                             switch (tag2 >>> 3) {
                             case 1:
                                 key = reader.string();
@@ -20554,8 +25495,8 @@ $root.dto = (function() {
             if (message.sortBy != null && message.hasOwnProperty("sortBy")) {
                 if (!$util.isObject(message.sortBy))
                     return "sortBy: object expected";
-                var key = Object.keys(message.sortBy);
-                for (var i = 0; i < key.length; ++i)
+                let key = Object.keys(message.sortBy);
+                for (let i = 0; i < key.length; ++i)
                     switch (message.sortBy[key[i]]) {
                     default:
                         return "sortBy: enum value{k:string} expected";
@@ -20590,7 +25531,7 @@ $root.dto = (function() {
         ListChangeLogReq.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.ListChangeLogReq)
                 return object;
-            var message = new $root.dto.ListChangeLogReq();
+            let message = new $root.dto.ListChangeLogReq();
             if (object.noPaging != null)
                 message.noPaging = Boolean(object.noPaging);
             if (object.page != null)
@@ -20615,7 +25556,7 @@ $root.dto = (function() {
                 if (typeof object.sortBy !== "object")
                     throw TypeError(".dto.ListChangeLogReq.sortBy: object expected");
                 message.sortBy = {};
-                for (var keys = Object.keys(object.sortBy), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(object.sortBy), i = 0; i < keys.length; ++i)
                     switch (object.sortBy[keys[i]]) {
                     default:
                         if (typeof object.sortBy[keys[i]] === "number") {
@@ -20670,30 +25611,30 @@ $root.dto = (function() {
         ListChangeLogReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.objects || options.defaults)
                 object.sortBy = {};
             if (options.defaults) {
                 object.collName = "";
                 object.recordId = "";
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.opTimeBegin = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.opTimeBegin = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.opTimeEnd = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.opTimeEnd = options.longs === String ? "0" : 0;
                 object.noPaging = false;
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.page = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.page = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.perPage = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.perPage = options.longs === String ? "0" : 0;
@@ -20724,10 +25665,10 @@ $root.dto = (function() {
                     object.perPage = options.longs === String ? String(message.perPage) : message.perPage;
                 else
                     object.perPage = options.longs === String ? $util.Long.prototype.toString.call(message.perPage) : options.longs === Number ? new $util.LongBits(message.perPage.low >>> 0, message.perPage.high >>> 0).toNumber() : message.perPage;
-            var keys2;
+            let keys2;
             if (message.sortBy && (keys2 = Object.keys(message.sortBy)).length) {
                 object.sortBy = {};
-                for (var j = 0; j < keys2.length; ++j)
+                for (let j = 0; j < keys2.length; ++j)
                     object.sortBy[keys2[j]] = options.enums === String ? $root.dto.SortDirection[message.sortBy[keys2[j]]] === undefined ? message.sortBy[keys2[j]] : $root.dto.SortDirection[message.sortBy[keys2[j]]] : message.sortBy[keys2[j]];
             }
             return object;
@@ -20789,7 +25730,7 @@ $root.dto = (function() {
         function ListChangeLogElem(properties) {
             this.fieldDiff = {};
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -20889,7 +25830,7 @@ $root.dto = (function() {
             if (message.recordId != null && Object.hasOwnProperty.call(message, "recordId"))
                 writer.uint32(/* id 3, wireType 2 =*/26).string(message.recordId);
             if (message.fieldDiff != null && Object.hasOwnProperty.call(message, "fieldDiff"))
-                for (var keys = Object.keys(message.fieldDiff), i = 0; i < keys.length; ++i) {
+                for (let keys = Object.keys(message.fieldDiff), i = 0; i < keys.length; ++i) {
                     writer.uint32(/* id 4, wireType 2 =*/34).fork().uint32(/* id 1, wireType 2 =*/10).string(keys[i]);
                     $root.google.protobuf.Any.encode(message.fieldDiff[keys[i]], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim().ldelim();
                 }
@@ -20931,9 +25872,9 @@ $root.dto = (function() {
         ListChangeLogElem.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListChangeLogElem(), key, value;
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListChangeLogElem(), key, value;
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -20950,11 +25891,11 @@ $root.dto = (function() {
                 case 4: {
                         if (message.fieldDiff === $util.emptyObject)
                             message.fieldDiff = {};
-                        var end2 = reader.uint32() + reader.pos;
+                        let end2 = reader.uint32() + reader.pos;
                         key = "";
                         value = null;
                         while (reader.pos < end2) {
-                            var tag2 = reader.uint32();
+                            let tag2 = reader.uint32();
                             switch (tag2 >>> 3) {
                             case 1:
                                 key = reader.string();
@@ -21033,9 +25974,9 @@ $root.dto = (function() {
             if (message.fieldDiff != null && message.hasOwnProperty("fieldDiff")) {
                 if (!$util.isObject(message.fieldDiff))
                     return "fieldDiff: object expected";
-                var key = Object.keys(message.fieldDiff);
-                for (var i = 0; i < key.length; ++i) {
-                    var error = $root.google.protobuf.Any.verify(message.fieldDiff[key[i]]);
+                let key = Object.keys(message.fieldDiff);
+                for (let i = 0; i < key.length; ++i) {
+                    let error = $root.google.protobuf.Any.verify(message.fieldDiff[key[i]]);
                     if (error)
                         return "fieldDiff." + error;
                 }
@@ -21066,7 +26007,7 @@ $root.dto = (function() {
         ListChangeLogElem.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.ListChangeLogElem)
                 return object;
-            var message = new $root.dto.ListChangeLogElem();
+            let message = new $root.dto.ListChangeLogElem();
             if (object.id != null)
                 message.id = String(object.id);
             if (object.collName != null)
@@ -21077,7 +26018,7 @@ $root.dto = (function() {
                 if (typeof object.fieldDiff !== "object")
                     throw TypeError(".dto.ListChangeLogElem.fieldDiff: object expected");
                 message.fieldDiff = {};
-                for (var keys = Object.keys(object.fieldDiff), i = 0; i < keys.length; ++i) {
+                for (let keys = Object.keys(object.fieldDiff), i = 0; i < keys.length; ++i) {
                     if (typeof object.fieldDiff[keys[i]] !== "object")
                         throw TypeError(".dto.ListChangeLogElem.fieldDiff: object expected");
                     message.fieldDiff[keys[i]] = $root.google.protobuf.Any.fromObject(object.fieldDiff[keys[i]]);
@@ -21106,7 +26047,7 @@ $root.dto = (function() {
         ListChangeLogElem.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.objects || options.defaults)
                 object.fieldDiff = {};
             if (options.defaults) {
@@ -21124,10 +26065,10 @@ $root.dto = (function() {
                 object.collName = message.collName;
             if (message.recordId != null && message.hasOwnProperty("recordId"))
                 object.recordId = message.recordId;
-            var keys2;
+            let keys2;
             if (message.fieldDiff && (keys2 = Object.keys(message.fieldDiff)).length) {
                 object.fieldDiff = {};
-                for (var j = 0; j < keys2.length; ++j)
+                for (let j = 0; j < keys2.length; ++j)
                     object.fieldDiff[keys2[j]] = $root.google.protobuf.Any.toObject(message.fieldDiff[keys2[j]], options);
             }
             if (message.createdBy != null && message.hasOwnProperty("createdBy"))
@@ -21191,7 +26132,7 @@ $root.dto = (function() {
         function ListChangeLogRet(properties) {
             this.list = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -21237,7 +26178,7 @@ $root.dto = (function() {
             if (!writer)
                 writer = $Writer.create();
             if (message.list != null && message.list.length)
-                for (var i = 0; i < message.list.length; ++i)
+                for (let i = 0; i < message.list.length; ++i)
                     $root.dto.ListChangeLogElem.encode(message.list[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
             if (message.total != null && Object.hasOwnProperty.call(message, "total"))
                 writer.uint32(/* id 2, wireType 0 =*/16).sint64(message.total);
@@ -21271,9 +26212,9 @@ $root.dto = (function() {
         ListChangeLogRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListChangeLogRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListChangeLogRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         if (!(message.list && message.list.length))
@@ -21323,8 +26264,8 @@ $root.dto = (function() {
             if (message.list != null && message.hasOwnProperty("list")) {
                 if (!Array.isArray(message.list))
                     return "list: array expected";
-                for (var i = 0; i < message.list.length; ++i) {
-                    var error = $root.dto.ListChangeLogElem.verify(message.list[i]);
+                for (let i = 0; i < message.list.length; ++i) {
+                    let error = $root.dto.ListChangeLogElem.verify(message.list[i]);
                     if (error)
                         return "list." + error;
                 }
@@ -21346,12 +26287,12 @@ $root.dto = (function() {
         ListChangeLogRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.ListChangeLogRet)
                 return object;
-            var message = new $root.dto.ListChangeLogRet();
+            let message = new $root.dto.ListChangeLogRet();
             if (object.list) {
                 if (!Array.isArray(object.list))
                     throw TypeError(".dto.ListChangeLogRet.list: array expected");
                 message.list = [];
-                for (var i = 0; i < object.list.length; ++i) {
+                for (let i = 0; i < object.list.length; ++i) {
                     if (typeof object.list[i] !== "object")
                         throw TypeError(".dto.ListChangeLogRet.list: object expected");
                     message.list[i] = $root.dto.ListChangeLogElem.fromObject(object.list[i]);
@@ -21381,18 +26322,18 @@ $root.dto = (function() {
         ListChangeLogRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.list = [];
             if (options.defaults)
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.total = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.total = options.longs === String ? "0" : 0;
             if (message.list && message.list.length) {
                 object.list = [];
-                for (var j = 0; j < message.list.length; ++j)
+                for (let j = 0; j < message.list.length; ++j)
                     object.list[j] = $root.dto.ListChangeLogElem.toObject(message.list[j], options);
             }
             if (message.total != null && message.hasOwnProperty("total"))
@@ -21463,7 +26404,7 @@ $root.dto = (function() {
         function ListAccessLogReq(properties) {
             this.sortBy = {};
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -21611,7 +26552,7 @@ $root.dto = (function() {
             if (message.perPage != null && Object.hasOwnProperty.call(message, "perPage"))
                 writer.uint32(/* id 20003, wireType 0 =*/160024).sint64(message.perPage);
             if (message.sortBy != null && Object.hasOwnProperty.call(message, "sortBy"))
-                for (var keys = Object.keys(message.sortBy), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(message.sortBy), i = 0; i < keys.length; ++i)
                     writer.uint32(/* id 20004, wireType 2 =*/160034).fork().uint32(/* id 1, wireType 2 =*/10).string(keys[i]).uint32(/* id 2, wireType 0 =*/16).int32(message.sortBy[keys[i]]).ldelim();
             return writer;
         };
@@ -21643,9 +26584,9 @@ $root.dto = (function() {
         ListAccessLogReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListAccessLogReq(), key, value;
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListAccessLogReq(), key, value;
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 20001: {
                         message.noPaging = reader.bool();
@@ -21662,11 +26603,11 @@ $root.dto = (function() {
                 case 20004: {
                         if (message.sortBy === $util.emptyObject)
                             message.sortBy = {};
-                        var end2 = reader.uint32() + reader.pos;
+                        let end2 = reader.uint32() + reader.pos;
                         key = "";
                         value = 0;
                         while (reader.pos < end2) {
-                            var tag2 = reader.uint32();
+                            let tag2 = reader.uint32();
                             switch (tag2 >>> 3) {
                             case 1:
                                 key = reader.string();
@@ -21761,8 +26702,8 @@ $root.dto = (function() {
             if (message.sortBy != null && message.hasOwnProperty("sortBy")) {
                 if (!$util.isObject(message.sortBy))
                     return "sortBy: object expected";
-                var key = Object.keys(message.sortBy);
-                for (var i = 0; i < key.length; ++i)
+                let key = Object.keys(message.sortBy);
+                for (let i = 0; i < key.length; ++i)
                     switch (message.sortBy[key[i]]) {
                     default:
                         return "sortBy: enum value{k:string} expected";
@@ -21809,7 +26750,7 @@ $root.dto = (function() {
         ListAccessLogReq.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.ListAccessLogReq)
                 return object;
-            var message = new $root.dto.ListAccessLogReq();
+            let message = new $root.dto.ListAccessLogReq();
             if (object.noPaging != null)
                 message.noPaging = Boolean(object.noPaging);
             if (object.page != null)
@@ -21834,7 +26775,7 @@ $root.dto = (function() {
                 if (typeof object.sortBy !== "object")
                     throw TypeError(".dto.ListAccessLogReq.sortBy: object expected");
                 message.sortBy = {};
-                for (var keys = Object.keys(object.sortBy), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(object.sortBy), i = 0; i < keys.length; ++i)
                     switch (object.sortBy[keys[i]]) {
                     default:
                         if (typeof object.sortBy[keys[i]] === "number") {
@@ -21897,18 +26838,18 @@ $root.dto = (function() {
         ListAccessLogReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.objects || options.defaults)
                 object.sortBy = {};
             if (options.defaults) {
                 object.level = "";
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.timeBegin = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.timeBegin = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.timeEnd = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.timeEnd = options.longs === String ? "0" : 0;
@@ -21919,12 +26860,12 @@ $root.dto = (function() {
                 object.tag = "";
                 object.noPaging = false;
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.page = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.page = options.longs === String ? "0" : 0;
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.perPage = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.perPage = options.longs === String ? "0" : 0;
@@ -21963,10 +26904,10 @@ $root.dto = (function() {
                     object.perPage = options.longs === String ? String(message.perPage) : message.perPage;
                 else
                     object.perPage = options.longs === String ? $util.Long.prototype.toString.call(message.perPage) : options.longs === Number ? new $util.LongBits(message.perPage.low >>> 0, message.perPage.high >>> 0).toNumber() : message.perPage;
-            var keys2;
+            let keys2;
             if (message.sortBy && (keys2 = Object.keys(message.sortBy)).length) {
                 object.sortBy = {};
-                for (var j = 0; j < keys2.length; ++j)
+                for (let j = 0; j < keys2.length; ++j)
                     object.sortBy[keys2[j]] = options.enums === String ? $root.dto.SortDirection[message.sortBy[keys2[j]]] === undefined ? message.sortBy[keys2[j]] : $root.dto.SortDirection[message.sortBy[keys2[j]]] : message.sortBy[keys2[j]];
             }
             return object;
@@ -22041,7 +26982,7 @@ $root.dto = (function() {
          */
         function ListAccessLogElem(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -22320,9 +27261,9 @@ $root.dto = (function() {
         ListAccessLogElem.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListAccessLogElem();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListAccessLogElem();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -22527,7 +27468,7 @@ $root.dto = (function() {
         ListAccessLogElem.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.ListAccessLogElem)
                 return object;
-            var message = new $root.dto.ListAccessLogElem();
+            let message = new $root.dto.ListAccessLogElem();
             if (object.id != null)
                 message.id = String(object.id);
             if (object.level != null)
@@ -22594,12 +27535,12 @@ $root.dto = (function() {
         ListAccessLogElem.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults) {
                 object.id = "";
                 object.level = "";
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.time = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.time = options.longs === String ? "0" : 0;
@@ -22723,7 +27664,7 @@ $root.dto = (function() {
         function ListAccessLogRet(properties) {
             this.list = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -22769,7 +27710,7 @@ $root.dto = (function() {
             if (!writer)
                 writer = $Writer.create();
             if (message.list != null && message.list.length)
-                for (var i = 0; i < message.list.length; ++i)
+                for (let i = 0; i < message.list.length; ++i)
                     $root.dto.ListAccessLogElem.encode(message.list[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
             if (message.total != null && Object.hasOwnProperty.call(message, "total"))
                 writer.uint32(/* id 2, wireType 0 =*/16).sint64(message.total);
@@ -22803,9 +27744,9 @@ $root.dto = (function() {
         ListAccessLogRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListAccessLogRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.ListAccessLogRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         if (!(message.list && message.list.length))
@@ -22855,8 +27796,8 @@ $root.dto = (function() {
             if (message.list != null && message.hasOwnProperty("list")) {
                 if (!Array.isArray(message.list))
                     return "list: array expected";
-                for (var i = 0; i < message.list.length; ++i) {
-                    var error = $root.dto.ListAccessLogElem.verify(message.list[i]);
+                for (let i = 0; i < message.list.length; ++i) {
+                    let error = $root.dto.ListAccessLogElem.verify(message.list[i]);
                     if (error)
                         return "list." + error;
                 }
@@ -22878,12 +27819,12 @@ $root.dto = (function() {
         ListAccessLogRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.ListAccessLogRet)
                 return object;
-            var message = new $root.dto.ListAccessLogRet();
+            let message = new $root.dto.ListAccessLogRet();
             if (object.list) {
                 if (!Array.isArray(object.list))
                     throw TypeError(".dto.ListAccessLogRet.list: array expected");
                 message.list = [];
-                for (var i = 0; i < object.list.length; ++i) {
+                for (let i = 0; i < object.list.length; ++i) {
                     if (typeof object.list[i] !== "object")
                         throw TypeError(".dto.ListAccessLogRet.list: object expected");
                     message.list[i] = $root.dto.ListAccessLogElem.fromObject(object.list[i]);
@@ -22913,18 +27854,18 @@ $root.dto = (function() {
         ListAccessLogRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.list = [];
             if (options.defaults)
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.total = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.total = options.longs === String ? "0" : 0;
             if (message.list && message.list.length) {
                 object.list = [];
-                for (var j = 0; j < message.list.length; ++j)
+                for (let j = 0; j < message.list.length; ++j)
                     object.list[j] = $root.dto.ListAccessLogElem.toObject(message.list[j], options);
             }
             if (message.total != null && message.hasOwnProperty("total"))
@@ -22964,6 +27905,209 @@ $root.dto = (function() {
         return ListAccessLogRet;
     })();
 
+    dto.GetPicCaptchaReq = (function() {
+
+        /**
+         * Properties of a GetPicCaptchaReq.
+         * @memberof dto
+         * @interface IGetPicCaptchaReq
+         * @property {string|null} [obsoleteId] GetPicCaptchaReq obsoleteId
+         */
+
+        /**
+         * Constructs a new GetPicCaptchaReq.
+         * @memberof dto
+         * @classdesc Represents a GetPicCaptchaReq.
+         * @implements IGetPicCaptchaReq
+         * @constructor
+         * @param {dto.IGetPicCaptchaReq=} [properties] Properties to set
+         */
+        function GetPicCaptchaReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GetPicCaptchaReq obsoleteId.
+         * @member {string} obsoleteId
+         * @memberof dto.GetPicCaptchaReq
+         * @instance
+         */
+        GetPicCaptchaReq.prototype.obsoleteId = "";
+
+        /**
+         * Creates a new GetPicCaptchaReq instance using the specified properties.
+         * @function create
+         * @memberof dto.GetPicCaptchaReq
+         * @static
+         * @param {dto.IGetPicCaptchaReq=} [properties] Properties to set
+         * @returns {dto.GetPicCaptchaReq} GetPicCaptchaReq instance
+         */
+        GetPicCaptchaReq.create = function create(properties) {
+            return new GetPicCaptchaReq(properties);
+        };
+
+        /**
+         * Encodes the specified GetPicCaptchaReq message. Does not implicitly {@link dto.GetPicCaptchaReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.GetPicCaptchaReq
+         * @static
+         * @param {dto.IGetPicCaptchaReq} message GetPicCaptchaReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GetPicCaptchaReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.obsoleteId != null && Object.hasOwnProperty.call(message, "obsoleteId"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.obsoleteId);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GetPicCaptchaReq message, length delimited. Does not implicitly {@link dto.GetPicCaptchaReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.GetPicCaptchaReq
+         * @static
+         * @param {dto.IGetPicCaptchaReq} message GetPicCaptchaReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GetPicCaptchaReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GetPicCaptchaReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.GetPicCaptchaReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.GetPicCaptchaReq} GetPicCaptchaReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GetPicCaptchaReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.GetPicCaptchaReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.obsoleteId = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GetPicCaptchaReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.GetPicCaptchaReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.GetPicCaptchaReq} GetPicCaptchaReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GetPicCaptchaReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GetPicCaptchaReq message.
+         * @function verify
+         * @memberof dto.GetPicCaptchaReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GetPicCaptchaReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.obsoleteId != null && message.hasOwnProperty("obsoleteId"))
+                if (!$util.isString(message.obsoleteId))
+                    return "obsoleteId: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a GetPicCaptchaReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.GetPicCaptchaReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.GetPicCaptchaReq} GetPicCaptchaReq
+         */
+        GetPicCaptchaReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.GetPicCaptchaReq)
+                return object;
+            let message = new $root.dto.GetPicCaptchaReq();
+            if (object.obsoleteId != null)
+                message.obsoleteId = String(object.obsoleteId);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GetPicCaptchaReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.GetPicCaptchaReq
+         * @static
+         * @param {dto.GetPicCaptchaReq} message GetPicCaptchaReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GetPicCaptchaReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.obsoleteId = "";
+            if (message.obsoleteId != null && message.hasOwnProperty("obsoleteId"))
+                object.obsoleteId = message.obsoleteId;
+            return object;
+        };
+
+        /**
+         * Converts this GetPicCaptchaReq to JSON.
+         * @function toJSON
+         * @memberof dto.GetPicCaptchaReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GetPicCaptchaReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for GetPicCaptchaReq
+         * @function getTypeUrl
+         * @memberof dto.GetPicCaptchaReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        GetPicCaptchaReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.GetPicCaptchaReq";
+        };
+
+        return GetPicCaptchaReq;
+    })();
+
     dto.GetPicCaptchaRet = (function() {
 
         /**
@@ -22984,7 +28128,7 @@ $root.dto = (function() {
          */
         function GetPicCaptchaRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -23063,9 +28207,9 @@ $root.dto = (function() {
         GetPicCaptchaRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.GetPicCaptchaRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.GetPicCaptchaRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.picCaptchaId = reader.string();
@@ -23130,7 +28274,7 @@ $root.dto = (function() {
         GetPicCaptchaRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.GetPicCaptchaRet)
                 return object;
-            var message = new $root.dto.GetPicCaptchaRet();
+            let message = new $root.dto.GetPicCaptchaRet();
             if (object.picCaptchaId != null)
                 message.picCaptchaId = String(object.picCaptchaId);
             if (object.picCaptchaB64s != null)
@@ -23150,7 +28294,7 @@ $root.dto = (function() {
         GetPicCaptchaRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults) {
                 object.picCaptchaId = "";
                 object.picCaptchaB64s = "";
@@ -23191,6 +28335,209 @@ $root.dto = (function() {
         return GetPicCaptchaRet;
     })();
 
+    dto.GetPicCaptchaAnswerReq = (function() {
+
+        /**
+         * Properties of a GetPicCaptchaAnswerReq.
+         * @memberof dto
+         * @interface IGetPicCaptchaAnswerReq
+         * @property {string|null} [id] GetPicCaptchaAnswerReq id
+         */
+
+        /**
+         * Constructs a new GetPicCaptchaAnswerReq.
+         * @memberof dto
+         * @classdesc Represents a GetPicCaptchaAnswerReq.
+         * @implements IGetPicCaptchaAnswerReq
+         * @constructor
+         * @param {dto.IGetPicCaptchaAnswerReq=} [properties] Properties to set
+         */
+        function GetPicCaptchaAnswerReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GetPicCaptchaAnswerReq id.
+         * @member {string} id
+         * @memberof dto.GetPicCaptchaAnswerReq
+         * @instance
+         */
+        GetPicCaptchaAnswerReq.prototype.id = "";
+
+        /**
+         * Creates a new GetPicCaptchaAnswerReq instance using the specified properties.
+         * @function create
+         * @memberof dto.GetPicCaptchaAnswerReq
+         * @static
+         * @param {dto.IGetPicCaptchaAnswerReq=} [properties] Properties to set
+         * @returns {dto.GetPicCaptchaAnswerReq} GetPicCaptchaAnswerReq instance
+         */
+        GetPicCaptchaAnswerReq.create = function create(properties) {
+            return new GetPicCaptchaAnswerReq(properties);
+        };
+
+        /**
+         * Encodes the specified GetPicCaptchaAnswerReq message. Does not implicitly {@link dto.GetPicCaptchaAnswerReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.GetPicCaptchaAnswerReq
+         * @static
+         * @param {dto.IGetPicCaptchaAnswerReq} message GetPicCaptchaAnswerReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GetPicCaptchaAnswerReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GetPicCaptchaAnswerReq message, length delimited. Does not implicitly {@link dto.GetPicCaptchaAnswerReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.GetPicCaptchaAnswerReq
+         * @static
+         * @param {dto.IGetPicCaptchaAnswerReq} message GetPicCaptchaAnswerReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GetPicCaptchaAnswerReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GetPicCaptchaAnswerReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.GetPicCaptchaAnswerReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.GetPicCaptchaAnswerReq} GetPicCaptchaAnswerReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GetPicCaptchaAnswerReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.GetPicCaptchaAnswerReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GetPicCaptchaAnswerReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.GetPicCaptchaAnswerReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.GetPicCaptchaAnswerReq} GetPicCaptchaAnswerReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GetPicCaptchaAnswerReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GetPicCaptchaAnswerReq message.
+         * @function verify
+         * @memberof dto.GetPicCaptchaAnswerReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GetPicCaptchaAnswerReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a GetPicCaptchaAnswerReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.GetPicCaptchaAnswerReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.GetPicCaptchaAnswerReq} GetPicCaptchaAnswerReq
+         */
+        GetPicCaptchaAnswerReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.GetPicCaptchaAnswerReq)
+                return object;
+            let message = new $root.dto.GetPicCaptchaAnswerReq();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GetPicCaptchaAnswerReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.GetPicCaptchaAnswerReq
+         * @static
+         * @param {dto.GetPicCaptchaAnswerReq} message GetPicCaptchaAnswerReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GetPicCaptchaAnswerReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this GetPicCaptchaAnswerReq to JSON.
+         * @function toJSON
+         * @memberof dto.GetPicCaptchaAnswerReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GetPicCaptchaAnswerReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for GetPicCaptchaAnswerReq
+         * @function getTypeUrl
+         * @memberof dto.GetPicCaptchaAnswerReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        GetPicCaptchaAnswerReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.GetPicCaptchaAnswerReq";
+        };
+
+        return GetPicCaptchaAnswerReq;
+    })();
+
     dto.GetPicCaptchaAnswerRet = (function() {
 
         /**
@@ -23210,7 +28557,7 @@ $root.dto = (function() {
          */
         function GetPicCaptchaAnswerRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -23279,9 +28626,9 @@ $root.dto = (function() {
         GetPicCaptchaAnswerRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.GetPicCaptchaAnswerRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.GetPicCaptchaAnswerRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.answer = reader.string();
@@ -23339,7 +28686,7 @@ $root.dto = (function() {
         GetPicCaptchaAnswerRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.GetPicCaptchaAnswerRet)
                 return object;
-            var message = new $root.dto.GetPicCaptchaAnswerRet();
+            let message = new $root.dto.GetPicCaptchaAnswerRet();
             if (object.answer != null)
                 message.answer = String(object.answer);
             return message;
@@ -23357,7 +28704,7 @@ $root.dto = (function() {
         GetPicCaptchaAnswerRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.answer = "";
             if (message.answer != null && message.hasOwnProperty("answer"))
@@ -23416,7 +28763,7 @@ $root.dto = (function() {
          */
         function SignInReq(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -23515,9 +28862,9 @@ $root.dto = (function() {
         SignInReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.SignInReq();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.SignInReq();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.account = reader.string();
@@ -23596,7 +28943,7 @@ $root.dto = (function() {
         SignInReq.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.SignInReq)
                 return object;
-            var message = new $root.dto.SignInReq();
+            let message = new $root.dto.SignInReq();
             if (object.account != null)
                 message.account = String(object.account);
             if (object.password != null)
@@ -23620,7 +28967,7 @@ $root.dto = (function() {
         SignInReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults) {
                 object.account = "";
                 object.password = "";
@@ -23687,7 +29034,7 @@ $root.dto = (function() {
          */
         function SignInRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -23766,9 +29113,9 @@ $root.dto = (function() {
         SignInRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.SignInRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.SignInRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.token = reader.string();
@@ -23833,7 +29180,7 @@ $root.dto = (function() {
         SignInRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.SignInRet)
                 return object;
-            var message = new $root.dto.SignInRet();
+            let message = new $root.dto.SignInRet();
             if (object.token != null)
                 message.token = String(object.token);
             if (object.expiresAt != null)
@@ -23860,11 +29207,11 @@ $root.dto = (function() {
         SignInRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults) {
                 object.token = "";
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.expiresAt = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.expiresAt = options.longs === String ? "0" : 0;
@@ -23908,6 +29255,181 @@ $root.dto = (function() {
         return SignInRet;
     })();
 
+    dto.GetOwnDomainsReq = (function() {
+
+        /**
+         * Properties of a GetOwnDomainsReq.
+         * @memberof dto
+         * @interface IGetOwnDomainsReq
+         */
+
+        /**
+         * Constructs a new GetOwnDomainsReq.
+         * @memberof dto
+         * @classdesc Represents a GetOwnDomainsReq.
+         * @implements IGetOwnDomainsReq
+         * @constructor
+         * @param {dto.IGetOwnDomainsReq=} [properties] Properties to set
+         */
+        function GetOwnDomainsReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Creates a new GetOwnDomainsReq instance using the specified properties.
+         * @function create
+         * @memberof dto.GetOwnDomainsReq
+         * @static
+         * @param {dto.IGetOwnDomainsReq=} [properties] Properties to set
+         * @returns {dto.GetOwnDomainsReq} GetOwnDomainsReq instance
+         */
+        GetOwnDomainsReq.create = function create(properties) {
+            return new GetOwnDomainsReq(properties);
+        };
+
+        /**
+         * Encodes the specified GetOwnDomainsReq message. Does not implicitly {@link dto.GetOwnDomainsReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.GetOwnDomainsReq
+         * @static
+         * @param {dto.IGetOwnDomainsReq} message GetOwnDomainsReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GetOwnDomainsReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GetOwnDomainsReq message, length delimited. Does not implicitly {@link dto.GetOwnDomainsReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.GetOwnDomainsReq
+         * @static
+         * @param {dto.IGetOwnDomainsReq} message GetOwnDomainsReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GetOwnDomainsReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GetOwnDomainsReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.GetOwnDomainsReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.GetOwnDomainsReq} GetOwnDomainsReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GetOwnDomainsReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.GetOwnDomainsReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GetOwnDomainsReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.GetOwnDomainsReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.GetOwnDomainsReq} GetOwnDomainsReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GetOwnDomainsReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GetOwnDomainsReq message.
+         * @function verify
+         * @memberof dto.GetOwnDomainsReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GetOwnDomainsReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            return null;
+        };
+
+        /**
+         * Creates a GetOwnDomainsReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.GetOwnDomainsReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.GetOwnDomainsReq} GetOwnDomainsReq
+         */
+        GetOwnDomainsReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.GetOwnDomainsReq)
+                return object;
+            return new $root.dto.GetOwnDomainsReq();
+        };
+
+        /**
+         * Creates a plain object from a GetOwnDomainsReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.GetOwnDomainsReq
+         * @static
+         * @param {dto.GetOwnDomainsReq} message GetOwnDomainsReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GetOwnDomainsReq.toObject = function toObject() {
+            return {};
+        };
+
+        /**
+         * Converts this GetOwnDomainsReq to JSON.
+         * @function toJSON
+         * @memberof dto.GetOwnDomainsReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GetOwnDomainsReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for GetOwnDomainsReq
+         * @function getTypeUrl
+         * @memberof dto.GetOwnDomainsReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        GetOwnDomainsReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.GetOwnDomainsReq";
+        };
+
+        return GetOwnDomainsReq;
+    })();
+
     dto.GetOwnDomainsElem = (function() {
 
         /**
@@ -23931,7 +29453,7 @@ $root.dto = (function() {
         function GetOwnDomainsElem(properties) {
             this.alias = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -23997,7 +29519,7 @@ $root.dto = (function() {
             if (message.name != null && Object.hasOwnProperty.call(message, "name"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.name);
             if (message.alias != null && message.alias.length)
-                for (var i = 0; i < message.alias.length; ++i)
+                for (let i = 0; i < message.alias.length; ++i)
                     writer.uint32(/* id 3, wireType 2 =*/26).string(message.alias[i]);
             if (message.icon != null && Object.hasOwnProperty.call(message, "icon"))
                 writer.uint32(/* id 4, wireType 2 =*/34).string(message.icon);
@@ -24031,9 +29553,9 @@ $root.dto = (function() {
         GetOwnDomainsElem.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.GetOwnDomainsElem();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.GetOwnDomainsElem();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -24097,7 +29619,7 @@ $root.dto = (function() {
             if (message.alias != null && message.hasOwnProperty("alias")) {
                 if (!Array.isArray(message.alias))
                     return "alias: array expected";
-                for (var i = 0; i < message.alias.length; ++i)
+                for (let i = 0; i < message.alias.length; ++i)
                     if (!$util.isString(message.alias[i]))
                         return "alias: string[] expected";
             }
@@ -24118,7 +29640,7 @@ $root.dto = (function() {
         GetOwnDomainsElem.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.GetOwnDomainsElem)
                 return object;
-            var message = new $root.dto.GetOwnDomainsElem();
+            let message = new $root.dto.GetOwnDomainsElem();
             if (object.id != null)
                 message.id = String(object.id);
             if (object.name != null)
@@ -24127,7 +29649,7 @@ $root.dto = (function() {
                 if (!Array.isArray(object.alias))
                     throw TypeError(".dto.GetOwnDomainsElem.alias: array expected");
                 message.alias = [];
-                for (var i = 0; i < object.alias.length; ++i)
+                for (let i = 0; i < object.alias.length; ++i)
                     message.alias[i] = String(object.alias[i]);
             }
             if (object.icon != null)
@@ -24147,7 +29669,7 @@ $root.dto = (function() {
         GetOwnDomainsElem.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.alias = [];
             if (options.defaults) {
@@ -24161,7 +29683,7 @@ $root.dto = (function() {
                 object.name = message.name;
             if (message.alias && message.alias.length) {
                 object.alias = [];
-                for (var j = 0; j < message.alias.length; ++j)
+                for (let j = 0; j < message.alias.length; ++j)
                     object.alias[j] = message.alias[j];
             }
             if (message.icon != null && message.hasOwnProperty("icon"))
@@ -24219,7 +29741,7 @@ $root.dto = (function() {
         function GetOwnDomainsRet(properties) {
             this.list = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -24265,7 +29787,7 @@ $root.dto = (function() {
             if (!writer)
                 writer = $Writer.create();
             if (message.list != null && message.list.length)
-                for (var i = 0; i < message.list.length; ++i)
+                for (let i = 0; i < message.list.length; ++i)
                     $root.dto.GetOwnDomainsElem.encode(message.list[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
             if (message.total != null && Object.hasOwnProperty.call(message, "total"))
                 writer.uint32(/* id 2, wireType 0 =*/16).sint64(message.total);
@@ -24299,9 +29821,9 @@ $root.dto = (function() {
         GetOwnDomainsRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.GetOwnDomainsRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.GetOwnDomainsRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         if (!(message.list && message.list.length))
@@ -24351,8 +29873,8 @@ $root.dto = (function() {
             if (message.list != null && message.hasOwnProperty("list")) {
                 if (!Array.isArray(message.list))
                     return "list: array expected";
-                for (var i = 0; i < message.list.length; ++i) {
-                    var error = $root.dto.GetOwnDomainsElem.verify(message.list[i]);
+                for (let i = 0; i < message.list.length; ++i) {
+                    let error = $root.dto.GetOwnDomainsElem.verify(message.list[i]);
                     if (error)
                         return "list." + error;
                 }
@@ -24374,12 +29896,12 @@ $root.dto = (function() {
         GetOwnDomainsRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.GetOwnDomainsRet)
                 return object;
-            var message = new $root.dto.GetOwnDomainsRet();
+            let message = new $root.dto.GetOwnDomainsRet();
             if (object.list) {
                 if (!Array.isArray(object.list))
                     throw TypeError(".dto.GetOwnDomainsRet.list: array expected");
                 message.list = [];
-                for (var i = 0; i < object.list.length; ++i) {
+                for (let i = 0; i < object.list.length; ++i) {
                     if (typeof object.list[i] !== "object")
                         throw TypeError(".dto.GetOwnDomainsRet.list: object expected");
                     message.list[i] = $root.dto.GetOwnDomainsElem.fromObject(object.list[i]);
@@ -24409,18 +29931,18 @@ $root.dto = (function() {
         GetOwnDomainsRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.list = [];
             if (options.defaults)
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.total = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.total = options.longs === String ? "0" : 0;
             if (message.list && message.list.length) {
                 object.list = [];
-                for (var j = 0; j < message.list.length; ++j)
+                for (let j = 0; j < message.list.length; ++j)
                     object.list[j] = $root.dto.GetOwnDomainsElem.toObject(message.list[j], options);
             }
             if (message.total != null && message.hasOwnProperty("total"))
@@ -24483,7 +30005,7 @@ $root.dto = (function() {
         function GetOwnRolesElem(properties) {
             this.alias = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -24549,7 +30071,7 @@ $root.dto = (function() {
             if (message.name != null && Object.hasOwnProperty.call(message, "name"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.name);
             if (message.alias != null && message.alias.length)
-                for (var i = 0; i < message.alias.length; ++i)
+                for (let i = 0; i < message.alias.length; ++i)
                     writer.uint32(/* id 3, wireType 2 =*/26).string(message.alias[i]);
             if (message.icon != null && Object.hasOwnProperty.call(message, "icon"))
                 writer.uint32(/* id 4, wireType 2 =*/34).string(message.icon);
@@ -24583,9 +30105,9 @@ $root.dto = (function() {
         GetOwnRolesElem.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.GetOwnRolesElem();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.GetOwnRolesElem();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -24649,7 +30171,7 @@ $root.dto = (function() {
             if (message.alias != null && message.hasOwnProperty("alias")) {
                 if (!Array.isArray(message.alias))
                     return "alias: array expected";
-                for (var i = 0; i < message.alias.length; ++i)
+                for (let i = 0; i < message.alias.length; ++i)
                     if (!$util.isString(message.alias[i]))
                         return "alias: string[] expected";
             }
@@ -24670,7 +30192,7 @@ $root.dto = (function() {
         GetOwnRolesElem.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.GetOwnRolesElem)
                 return object;
-            var message = new $root.dto.GetOwnRolesElem();
+            let message = new $root.dto.GetOwnRolesElem();
             if (object.id != null)
                 message.id = String(object.id);
             if (object.name != null)
@@ -24679,7 +30201,7 @@ $root.dto = (function() {
                 if (!Array.isArray(object.alias))
                     throw TypeError(".dto.GetOwnRolesElem.alias: array expected");
                 message.alias = [];
-                for (var i = 0; i < object.alias.length; ++i)
+                for (let i = 0; i < object.alias.length; ++i)
                     message.alias[i] = String(object.alias[i]);
             }
             if (object.icon != null)
@@ -24699,7 +30221,7 @@ $root.dto = (function() {
         GetOwnRolesElem.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.alias = [];
             if (options.defaults) {
@@ -24713,7 +30235,7 @@ $root.dto = (function() {
                 object.name = message.name;
             if (message.alias && message.alias.length) {
                 object.alias = [];
-                for (var j = 0; j < message.alias.length; ++j)
+                for (let j = 0; j < message.alias.length; ++j)
                     object.alias[j] = message.alias[j];
             }
             if (message.icon != null && message.hasOwnProperty("icon"))
@@ -24769,7 +30291,7 @@ $root.dto = (function() {
          */
         function GetOwnRolesReq(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -24838,9 +30360,9 @@ $root.dto = (function() {
         GetOwnRolesReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.GetOwnRolesReq();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.GetOwnRolesReq();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.domainId = reader.string();
@@ -24898,7 +30420,7 @@ $root.dto = (function() {
         GetOwnRolesReq.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.GetOwnRolesReq)
                 return object;
-            var message = new $root.dto.GetOwnRolesReq();
+            let message = new $root.dto.GetOwnRolesReq();
             if (object.domainId != null)
                 message.domainId = String(object.domainId);
             return message;
@@ -24916,7 +30438,7 @@ $root.dto = (function() {
         GetOwnRolesReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.domainId = "";
             if (message.domainId != null && message.hasOwnProperty("domainId"))
@@ -24974,7 +30496,7 @@ $root.dto = (function() {
         function GetOwnRolesRet(properties) {
             this.list = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -25020,7 +30542,7 @@ $root.dto = (function() {
             if (!writer)
                 writer = $Writer.create();
             if (message.list != null && message.list.length)
-                for (var i = 0; i < message.list.length; ++i)
+                for (let i = 0; i < message.list.length; ++i)
                     $root.dto.GetOwnRolesElem.encode(message.list[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
             if (message.total != null && Object.hasOwnProperty.call(message, "total"))
                 writer.uint32(/* id 2, wireType 0 =*/16).sint64(message.total);
@@ -25054,9 +30576,9 @@ $root.dto = (function() {
         GetOwnRolesRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.GetOwnRolesRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.GetOwnRolesRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         if (!(message.list && message.list.length))
@@ -25106,8 +30628,8 @@ $root.dto = (function() {
             if (message.list != null && message.hasOwnProperty("list")) {
                 if (!Array.isArray(message.list))
                     return "list: array expected";
-                for (var i = 0; i < message.list.length; ++i) {
-                    var error = $root.dto.GetOwnRolesElem.verify(message.list[i]);
+                for (let i = 0; i < message.list.length; ++i) {
+                    let error = $root.dto.GetOwnRolesElem.verify(message.list[i]);
                     if (error)
                         return "list." + error;
                 }
@@ -25129,12 +30651,12 @@ $root.dto = (function() {
         GetOwnRolesRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.GetOwnRolesRet)
                 return object;
-            var message = new $root.dto.GetOwnRolesRet();
+            let message = new $root.dto.GetOwnRolesRet();
             if (object.list) {
                 if (!Array.isArray(object.list))
                     throw TypeError(".dto.GetOwnRolesRet.list: array expected");
                 message.list = [];
-                for (var i = 0; i < object.list.length; ++i) {
+                for (let i = 0; i < object.list.length; ++i) {
                     if (typeof object.list[i] !== "object")
                         throw TypeError(".dto.GetOwnRolesRet.list: object expected");
                     message.list[i] = $root.dto.GetOwnRolesElem.fromObject(object.list[i]);
@@ -25164,18 +30686,18 @@ $root.dto = (function() {
         GetOwnRolesRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.list = [];
             if (options.defaults)
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.total = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.total = options.longs === String ? "0" : 0;
             if (message.list && message.list.length) {
                 object.list = [];
-                for (var j = 0; j < message.list.length; ++j)
+                for (let j = 0; j < message.list.length; ++j)
                     object.list[j] = $root.dto.GetOwnRolesElem.toObject(message.list[j], options);
             }
             if (message.total != null && message.hasOwnProperty("total"))
@@ -25215,6 +30737,181 @@ $root.dto = (function() {
         return GetOwnRolesRet;
     })();
 
+    dto.SignOutReq = (function() {
+
+        /**
+         * Properties of a SignOutReq.
+         * @memberof dto
+         * @interface ISignOutReq
+         */
+
+        /**
+         * Constructs a new SignOutReq.
+         * @memberof dto
+         * @classdesc Represents a SignOutReq.
+         * @implements ISignOutReq
+         * @constructor
+         * @param {dto.ISignOutReq=} [properties] Properties to set
+         */
+        function SignOutReq(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Creates a new SignOutReq instance using the specified properties.
+         * @function create
+         * @memberof dto.SignOutReq
+         * @static
+         * @param {dto.ISignOutReq=} [properties] Properties to set
+         * @returns {dto.SignOutReq} SignOutReq instance
+         */
+        SignOutReq.create = function create(properties) {
+            return new SignOutReq(properties);
+        };
+
+        /**
+         * Encodes the specified SignOutReq message. Does not implicitly {@link dto.SignOutReq.verify|verify} messages.
+         * @function encode
+         * @memberof dto.SignOutReq
+         * @static
+         * @param {dto.ISignOutReq} message SignOutReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        SignOutReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified SignOutReq message, length delimited. Does not implicitly {@link dto.SignOutReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof dto.SignOutReq
+         * @static
+         * @param {dto.ISignOutReq} message SignOutReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        SignOutReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a SignOutReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof dto.SignOutReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {dto.SignOutReq} SignOutReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        SignOutReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.SignOutReq();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a SignOutReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof dto.SignOutReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {dto.SignOutReq} SignOutReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        SignOutReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a SignOutReq message.
+         * @function verify
+         * @memberof dto.SignOutReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        SignOutReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            return null;
+        };
+
+        /**
+         * Creates a SignOutReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof dto.SignOutReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {dto.SignOutReq} SignOutReq
+         */
+        SignOutReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.dto.SignOutReq)
+                return object;
+            return new $root.dto.SignOutReq();
+        };
+
+        /**
+         * Creates a plain object from a SignOutReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof dto.SignOutReq
+         * @static
+         * @param {dto.SignOutReq} message SignOutReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        SignOutReq.toObject = function toObject() {
+            return {};
+        };
+
+        /**
+         * Converts this SignOutReq to JSON.
+         * @function toJSON
+         * @memberof dto.SignOutReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        SignOutReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for SignOutReq
+         * @function getTypeUrl
+         * @memberof dto.SignOutReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        SignOutReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/dto.SignOutReq";
+        };
+
+        return SignOutReq;
+    })();
+
     dto.SignOutRet = (function() {
 
         /**
@@ -25234,7 +30931,7 @@ $root.dto = (function() {
          */
         function SignOutRet(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -25303,9 +31000,9 @@ $root.dto = (function() {
         SignOutRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.SignOutRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.SignOutRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -25363,7 +31060,7 @@ $root.dto = (function() {
         SignOutRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.SignOutRet)
                 return object;
-            var message = new $root.dto.SignOutRet();
+            let message = new $root.dto.SignOutRet();
             if (object.id != null)
                 message.id = String(object.id);
             return message;
@@ -25381,7 +31078,7 @@ $root.dto = (function() {
         SignOutRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults)
                 object.id = "";
             if (message.id != null && message.hasOwnProperty("id"))
@@ -25448,7 +31145,7 @@ $root.dto = (function() {
             this.widgets = [];
             this.children = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -25574,10 +31271,10 @@ $root.dto = (function() {
             if (message.isItem != null && Object.hasOwnProperty.call(message, "isItem"))
                 writer.uint32(/* id 8, wireType 0 =*/64).bool(message.isItem);
             if (message.widgets != null && message.widgets.length)
-                for (var i = 0; i < message.widgets.length; ++i)
+                for (let i = 0; i < message.widgets.length; ++i)
                     $root.dto.MenuWidgetView.encode(message.widgets[i], writer.uint32(/* id 9, wireType 2 =*/74).fork()).ldelim();
             if (message.children != null && message.children.length)
-                for (var i = 0; i < message.children.length; ++i)
+                for (let i = 0; i < message.children.length; ++i)
                     $root.dto.MenuView.encode(message.children[i], writer.uint32(/* id 10, wireType 2 =*/82).fork()).ldelim();
             return writer;
         };
@@ -25609,9 +31306,9 @@ $root.dto = (function() {
         MenuView.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.MenuView();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.MenuView();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -25719,8 +31416,8 @@ $root.dto = (function() {
             if (message.widgets != null && message.hasOwnProperty("widgets")) {
                 if (!Array.isArray(message.widgets))
                     return "widgets: array expected";
-                for (var i = 0; i < message.widgets.length; ++i) {
-                    var error = $root.dto.MenuWidgetView.verify(message.widgets[i]);
+                for (let i = 0; i < message.widgets.length; ++i) {
+                    let error = $root.dto.MenuWidgetView.verify(message.widgets[i]);
                     if (error)
                         return "widgets." + error;
                 }
@@ -25728,8 +31425,8 @@ $root.dto = (function() {
             if (message.children != null && message.hasOwnProperty("children")) {
                 if (!Array.isArray(message.children))
                     return "children: array expected";
-                for (var i = 0; i < message.children.length; ++i) {
-                    var error = $root.dto.MenuView.verify(message.children[i]);
+                for (let i = 0; i < message.children.length; ++i) {
+                    let error = $root.dto.MenuView.verify(message.children[i]);
                     if (error)
                         return "children." + error;
                 }
@@ -25748,7 +31445,7 @@ $root.dto = (function() {
         MenuView.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.MenuView)
                 return object;
-            var message = new $root.dto.MenuView();
+            let message = new $root.dto.MenuView();
             if (object.id != null)
                 message.id = String(object.id);
             if (object.name != null)
@@ -25769,7 +31466,7 @@ $root.dto = (function() {
                 if (!Array.isArray(object.widgets))
                     throw TypeError(".dto.MenuView.widgets: array expected");
                 message.widgets = [];
-                for (var i = 0; i < object.widgets.length; ++i) {
+                for (let i = 0; i < object.widgets.length; ++i) {
                     if (typeof object.widgets[i] !== "object")
                         throw TypeError(".dto.MenuView.widgets: object expected");
                     message.widgets[i] = $root.dto.MenuWidgetView.fromObject(object.widgets[i]);
@@ -25779,7 +31476,7 @@ $root.dto = (function() {
                 if (!Array.isArray(object.children))
                     throw TypeError(".dto.MenuView.children: array expected");
                 message.children = [];
-                for (var i = 0; i < object.children.length; ++i) {
+                for (let i = 0; i < object.children.length; ++i) {
                     if (typeof object.children[i] !== "object")
                         throw TypeError(".dto.MenuView.children: object expected");
                     message.children[i] = $root.dto.MenuView.fromObject(object.children[i]);
@@ -25800,7 +31497,7 @@ $root.dto = (function() {
         MenuView.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults) {
                 object.widgets = [];
                 object.children = [];
@@ -25833,12 +31530,12 @@ $root.dto = (function() {
                 object.isItem = message.isItem;
             if (message.widgets && message.widgets.length) {
                 object.widgets = [];
-                for (var j = 0; j < message.widgets.length; ++j)
+                for (let j = 0; j < message.widgets.length; ++j)
                     object.widgets[j] = $root.dto.MenuWidgetView.toObject(message.widgets[j], options);
             }
             if (message.children && message.children.length) {
                 object.children = [];
-                for (var j = 0; j < message.children.length; ++j)
+                for (let j = 0; j < message.children.length; ++j)
                     object.children[j] = $root.dto.MenuView.toObject(message.children[j], options);
             }
             return object;
@@ -25899,7 +31596,7 @@ $root.dto = (function() {
          */
         function MenuWidgetView(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -26038,9 +31735,9 @@ $root.dto = (function() {
         MenuWidgetView.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.MenuWidgetView();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.MenuWidgetView();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.id = reader.string();
@@ -26147,7 +31844,7 @@ $root.dto = (function() {
         MenuWidgetView.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.MenuWidgetView)
                 return object;
-            var message = new $root.dto.MenuWidgetView();
+            let message = new $root.dto.MenuWidgetView();
             if (object.id != null)
                 message.id = String(object.id);
             if (object.name != null)
@@ -26179,7 +31876,7 @@ $root.dto = (function() {
         MenuWidgetView.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults) {
                 object.id = "";
                 object.name = "";
@@ -26258,7 +31955,7 @@ $root.dto = (function() {
          */
         function GetOwnMenusReq(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -26337,9 +32034,9 @@ $root.dto = (function() {
         GetOwnMenusReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.GetOwnMenusReq();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.GetOwnMenusReq();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         message.domainId = reader.string();
@@ -26404,7 +32101,7 @@ $root.dto = (function() {
         GetOwnMenusReq.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.GetOwnMenusReq)
                 return object;
-            var message = new $root.dto.GetOwnMenusReq();
+            let message = new $root.dto.GetOwnMenusReq();
             if (object.domainId != null)
                 message.domainId = String(object.domainId);
             if (object.roleId != null)
@@ -26424,7 +32121,7 @@ $root.dto = (function() {
         GetOwnMenusReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults) {
                 object.domainId = "";
                 object.roleId = "";
@@ -26486,7 +32183,7 @@ $root.dto = (function() {
         function GetOwnMenusRet(properties) {
             this.list = [];
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -26532,7 +32229,7 @@ $root.dto = (function() {
             if (!writer)
                 writer = $Writer.create();
             if (message.list != null && message.list.length)
-                for (var i = 0; i < message.list.length; ++i)
+                for (let i = 0; i < message.list.length; ++i)
                     $root.dto.MenuView.encode(message.list[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
             if (message.total != null && Object.hasOwnProperty.call(message, "total"))
                 writer.uint32(/* id 2, wireType 0 =*/16).sint64(message.total);
@@ -26566,9 +32263,9 @@ $root.dto = (function() {
         GetOwnMenusRet.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.GetOwnMenusRet();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.dto.GetOwnMenusRet();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
                         if (!(message.list && message.list.length))
@@ -26618,8 +32315,8 @@ $root.dto = (function() {
             if (message.list != null && message.hasOwnProperty("list")) {
                 if (!Array.isArray(message.list))
                     return "list: array expected";
-                for (var i = 0; i < message.list.length; ++i) {
-                    var error = $root.dto.MenuView.verify(message.list[i]);
+                for (let i = 0; i < message.list.length; ++i) {
+                    let error = $root.dto.MenuView.verify(message.list[i]);
                     if (error)
                         return "list." + error;
                 }
@@ -26641,12 +32338,12 @@ $root.dto = (function() {
         GetOwnMenusRet.fromObject = function fromObject(object) {
             if (object instanceof $root.dto.GetOwnMenusRet)
                 return object;
-            var message = new $root.dto.GetOwnMenusRet();
+            let message = new $root.dto.GetOwnMenusRet();
             if (object.list) {
                 if (!Array.isArray(object.list))
                     throw TypeError(".dto.GetOwnMenusRet.list: array expected");
                 message.list = [];
-                for (var i = 0; i < object.list.length; ++i) {
+                for (let i = 0; i < object.list.length; ++i) {
                     if (typeof object.list[i] !== "object")
                         throw TypeError(".dto.GetOwnMenusRet.list: object expected");
                     message.list[i] = $root.dto.MenuView.fromObject(object.list[i]);
@@ -26676,18 +32373,18 @@ $root.dto = (function() {
         GetOwnMenusRet.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.arrays || options.defaults)
                 object.list = [];
             if (options.defaults)
                 if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, false);
                     object.total = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.total = options.longs === String ? "0" : 0;
             if (message.list && message.list.length) {
                 object.list = [];
-                for (var j = 0; j < message.list.length; ++j)
+                for (let j = 0; j < message.list.length; ++j)
                     object.list[j] = $root.dto.MenuView.toObject(message.list[j], options);
             }
             if (message.total != null && message.hasOwnProperty("total"))
@@ -26730,14 +32427,14 @@ $root.dto = (function() {
     return dto;
 })();
 
-$root.google = (function() {
+export const google = $root.google = (() => {
 
     /**
      * Namespace google.
      * @exports google
      * @namespace
      */
-    var google = {};
+    const google = {};
 
     google.protobuf = (function() {
 
@@ -26746,7 +32443,7 @@ $root.google = (function() {
          * @memberof google
          * @namespace
          */
-        var protobuf = {};
+        const protobuf = {};
 
         protobuf.Any = (function() {
 
@@ -26768,7 +32465,7 @@ $root.google = (function() {
              */
             function Any(properties) {
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -26847,9 +32544,9 @@ $root.google = (function() {
             Any.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.Any();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.Any();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1: {
                             message.type_url = reader.string();
@@ -26914,7 +32611,7 @@ $root.google = (function() {
             Any.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.Any)
                     return object;
-                var message = new $root.google.protobuf.Any();
+                let message = new $root.google.protobuf.Any();
                 if (object.type_url != null)
                     message.type_url = String(object.type_url);
                 if (object.value != null)
@@ -26937,7 +32634,7 @@ $root.google = (function() {
             Any.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.defaults) {
                     object.type_url = "";
                     if (options.bytes === String)
@@ -26990,4 +32687,4 @@ $root.google = (function() {
     return google;
 })();
 
-module.exports = $root;
+export { $root as default };

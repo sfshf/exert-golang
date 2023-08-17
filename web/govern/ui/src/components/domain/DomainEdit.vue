@@ -50,7 +50,7 @@ el-container
 </template>
 
 <script lang="ts" setup>
-import { Ref, ref, defineProps, defineEmits, computed, onMounted, watch } from 'vue'
+import { type Ref, ref, computed, onMounted, watch } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { profileDomain, editDomain } from '@/apis'
 

@@ -741,6 +741,103 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of a ProfileDomainReq. */
+    interface IProfileDomainReq {
+
+        /** ProfileDomainReq id */
+        id?: (string|null);
+    }
+
+    /** Represents a ProfileDomainReq. */
+    class ProfileDomainReq implements IProfileDomainReq {
+
+        /**
+         * Constructs a new ProfileDomainReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IProfileDomainReq);
+
+        /** ProfileDomainReq id. */
+        public id: string;
+
+        /**
+         * Creates a new ProfileDomainReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ProfileDomainReq instance
+         */
+        public static create(properties?: dto.IProfileDomainReq): dto.ProfileDomainReq;
+
+        /**
+         * Encodes the specified ProfileDomainReq message. Does not implicitly {@link dto.ProfileDomainReq.verify|verify} messages.
+         * @param message ProfileDomainReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IProfileDomainReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ProfileDomainReq message, length delimited. Does not implicitly {@link dto.ProfileDomainReq.verify|verify} messages.
+         * @param message ProfileDomainReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IProfileDomainReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ProfileDomainReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ProfileDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.ProfileDomainReq;
+
+        /**
+         * Decodes a ProfileDomainReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ProfileDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.ProfileDomainReq;
+
+        /**
+         * Verifies a ProfileDomainReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ProfileDomainReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ProfileDomainReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.ProfileDomainReq;
+
+        /**
+         * Creates a plain object from a ProfileDomainReq message. Also converts values to other types if specified.
+         * @param message ProfileDomainReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.ProfileDomainReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ProfileDomainReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for ProfileDomainReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of a ProfileDomainRet. */
     interface IProfileDomainRet {
 
@@ -913,6 +1010,9 @@ export namespace dto {
     /** Properties of an EditDomainReq. */
     interface IEditDomainReq {
 
+        /** EditDomainReq id */
+        id?: (string|null);
+
         /** EditDomainReq name */
         name?: (string|null);
 
@@ -940,6 +1040,9 @@ export namespace dto {
          * @param [properties] Properties to set
          */
         constructor(properties?: dto.IEditDomainReq);
+
+        /** EditDomainReq id. */
+        public id: string;
 
         /** EditDomainReq name. */
         public name: string;
@@ -1134,6 +1237,103 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of an EnableDomainReq. */
+    interface IEnableDomainReq {
+
+        /** EnableDomainReq id */
+        id?: (string|null);
+    }
+
+    /** Represents an EnableDomainReq. */
+    class EnableDomainReq implements IEnableDomainReq {
+
+        /**
+         * Constructs a new EnableDomainReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IEnableDomainReq);
+
+        /** EnableDomainReq id. */
+        public id: string;
+
+        /**
+         * Creates a new EnableDomainReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns EnableDomainReq instance
+         */
+        public static create(properties?: dto.IEnableDomainReq): dto.EnableDomainReq;
+
+        /**
+         * Encodes the specified EnableDomainReq message. Does not implicitly {@link dto.EnableDomainReq.verify|verify} messages.
+         * @param message EnableDomainReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IEnableDomainReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified EnableDomainReq message, length delimited. Does not implicitly {@link dto.EnableDomainReq.verify|verify} messages.
+         * @param message EnableDomainReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IEnableDomainReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes an EnableDomainReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns EnableDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.EnableDomainReq;
+
+        /**
+         * Decodes an EnableDomainReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns EnableDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.EnableDomainReq;
+
+        /**
+         * Verifies an EnableDomainReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates an EnableDomainReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns EnableDomainReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.EnableDomainReq;
+
+        /**
+         * Creates a plain object from an EnableDomainReq message. Also converts values to other types if specified.
+         * @param message EnableDomainReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.EnableDomainReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this EnableDomainReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for EnableDomainReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of an EnableDomainRet. */
     interface IEnableDomainRet {
 
@@ -1231,6 +1431,103 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of a DisableDomainReq. */
+    interface IDisableDomainReq {
+
+        /** DisableDomainReq id */
+        id?: (string|null);
+    }
+
+    /** Represents a DisableDomainReq. */
+    class DisableDomainReq implements IDisableDomainReq {
+
+        /**
+         * Constructs a new DisableDomainReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IDisableDomainReq);
+
+        /** DisableDomainReq id. */
+        public id: string;
+
+        /**
+         * Creates a new DisableDomainReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns DisableDomainReq instance
+         */
+        public static create(properties?: dto.IDisableDomainReq): dto.DisableDomainReq;
+
+        /**
+         * Encodes the specified DisableDomainReq message. Does not implicitly {@link dto.DisableDomainReq.verify|verify} messages.
+         * @param message DisableDomainReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IDisableDomainReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified DisableDomainReq message, length delimited. Does not implicitly {@link dto.DisableDomainReq.verify|verify} messages.
+         * @param message DisableDomainReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IDisableDomainReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a DisableDomainReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns DisableDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.DisableDomainReq;
+
+        /**
+         * Decodes a DisableDomainReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns DisableDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.DisableDomainReq;
+
+        /**
+         * Verifies a DisableDomainReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a DisableDomainReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns DisableDomainReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.DisableDomainReq;
+
+        /**
+         * Creates a plain object from a DisableDomainReq message. Also converts values to other types if specified.
+         * @param message DisableDomainReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.DisableDomainReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this DisableDomainReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for DisableDomainReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of a DisableDomainRet. */
     interface IDisableDomainRet {
 
@@ -1322,6 +1619,103 @@ export namespace dto {
 
         /**
          * Gets the default type url for DisableDomainRet
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
+    /** Properties of a RemoveDomainReq. */
+    interface IRemoveDomainReq {
+
+        /** RemoveDomainReq id */
+        id?: (string|null);
+    }
+
+    /** Represents a RemoveDomainReq. */
+    class RemoveDomainReq implements IRemoveDomainReq {
+
+        /**
+         * Constructs a new RemoveDomainReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IRemoveDomainReq);
+
+        /** RemoveDomainReq id. */
+        public id: string;
+
+        /**
+         * Creates a new RemoveDomainReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns RemoveDomainReq instance
+         */
+        public static create(properties?: dto.IRemoveDomainReq): dto.RemoveDomainReq;
+
+        /**
+         * Encodes the specified RemoveDomainReq message. Does not implicitly {@link dto.RemoveDomainReq.verify|verify} messages.
+         * @param message RemoveDomainReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IRemoveDomainReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified RemoveDomainReq message, length delimited. Does not implicitly {@link dto.RemoveDomainReq.verify|verify} messages.
+         * @param message RemoveDomainReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IRemoveDomainReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a RemoveDomainReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns RemoveDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.RemoveDomainReq;
+
+        /**
+         * Decodes a RemoveDomainReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns RemoveDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.RemoveDomainReq;
+
+        /**
+         * Verifies a RemoveDomainReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a RemoveDomainReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns RemoveDomainReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.RemoveDomainReq;
+
+        /**
+         * Creates a plain object from a RemoveDomainReq message. Also converts values to other types if specified.
+         * @param message RemoveDomainReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.RemoveDomainReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this RemoveDomainReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for RemoveDomainReq
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
@@ -2096,6 +2490,103 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of a ProfileMenuReq. */
+    interface IProfileMenuReq {
+
+        /** ProfileMenuReq id */
+        id?: (string|null);
+    }
+
+    /** Represents a ProfileMenuReq. */
+    class ProfileMenuReq implements IProfileMenuReq {
+
+        /**
+         * Constructs a new ProfileMenuReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IProfileMenuReq);
+
+        /** ProfileMenuReq id. */
+        public id: string;
+
+        /**
+         * Creates a new ProfileMenuReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ProfileMenuReq instance
+         */
+        public static create(properties?: dto.IProfileMenuReq): dto.ProfileMenuReq;
+
+        /**
+         * Encodes the specified ProfileMenuReq message. Does not implicitly {@link dto.ProfileMenuReq.verify|verify} messages.
+         * @param message ProfileMenuReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IProfileMenuReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ProfileMenuReq message, length delimited. Does not implicitly {@link dto.ProfileMenuReq.verify|verify} messages.
+         * @param message ProfileMenuReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IProfileMenuReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ProfileMenuReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ProfileMenuReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.ProfileMenuReq;
+
+        /**
+         * Decodes a ProfileMenuReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ProfileMenuReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.ProfileMenuReq;
+
+        /**
+         * Verifies a ProfileMenuReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ProfileMenuReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ProfileMenuReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.ProfileMenuReq;
+
+        /**
+         * Creates a plain object from a ProfileMenuReq message. Also converts values to other types if specified.
+         * @param message ProfileMenuReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.ProfileMenuReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ProfileMenuReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for ProfileMenuReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of a ProfileMenuRet. */
     interface IProfileMenuRet {
 
@@ -2513,6 +3004,103 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of an EnableMenuReq. */
+    interface IEnableMenuReq {
+
+        /** EnableMenuReq id */
+        id?: (string|null);
+    }
+
+    /** Represents an EnableMenuReq. */
+    class EnableMenuReq implements IEnableMenuReq {
+
+        /**
+         * Constructs a new EnableMenuReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IEnableMenuReq);
+
+        /** EnableMenuReq id. */
+        public id: string;
+
+        /**
+         * Creates a new EnableMenuReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns EnableMenuReq instance
+         */
+        public static create(properties?: dto.IEnableMenuReq): dto.EnableMenuReq;
+
+        /**
+         * Encodes the specified EnableMenuReq message. Does not implicitly {@link dto.EnableMenuReq.verify|verify} messages.
+         * @param message EnableMenuReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IEnableMenuReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified EnableMenuReq message, length delimited. Does not implicitly {@link dto.EnableMenuReq.verify|verify} messages.
+         * @param message EnableMenuReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IEnableMenuReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes an EnableMenuReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns EnableMenuReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.EnableMenuReq;
+
+        /**
+         * Decodes an EnableMenuReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns EnableMenuReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.EnableMenuReq;
+
+        /**
+         * Verifies an EnableMenuReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates an EnableMenuReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns EnableMenuReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.EnableMenuReq;
+
+        /**
+         * Creates a plain object from an EnableMenuReq message. Also converts values to other types if specified.
+         * @param message EnableMenuReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.EnableMenuReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this EnableMenuReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for EnableMenuReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of an EnableMenuRet. */
     interface IEnableMenuRet {
 
@@ -2610,6 +3198,103 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of a DisableMenuReq. */
+    interface IDisableMenuReq {
+
+        /** DisableMenuReq id */
+        id?: (string|null);
+    }
+
+    /** Represents a DisableMenuReq. */
+    class DisableMenuReq implements IDisableMenuReq {
+
+        /**
+         * Constructs a new DisableMenuReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IDisableMenuReq);
+
+        /** DisableMenuReq id. */
+        public id: string;
+
+        /**
+         * Creates a new DisableMenuReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns DisableMenuReq instance
+         */
+        public static create(properties?: dto.IDisableMenuReq): dto.DisableMenuReq;
+
+        /**
+         * Encodes the specified DisableMenuReq message. Does not implicitly {@link dto.DisableMenuReq.verify|verify} messages.
+         * @param message DisableMenuReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IDisableMenuReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified DisableMenuReq message, length delimited. Does not implicitly {@link dto.DisableMenuReq.verify|verify} messages.
+         * @param message DisableMenuReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IDisableMenuReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a DisableMenuReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns DisableMenuReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.DisableMenuReq;
+
+        /**
+         * Decodes a DisableMenuReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns DisableMenuReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.DisableMenuReq;
+
+        /**
+         * Verifies a DisableMenuReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a DisableMenuReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns DisableMenuReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.DisableMenuReq;
+
+        /**
+         * Creates a plain object from a DisableMenuReq message. Also converts values to other types if specified.
+         * @param message DisableMenuReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.DisableMenuReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this DisableMenuReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for DisableMenuReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of a DisableMenuRet. */
     interface IDisableMenuRet {
 
@@ -2701,6 +3386,103 @@ export namespace dto {
 
         /**
          * Gets the default type url for DisableMenuRet
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
+    /** Properties of a RemoveMenuReq. */
+    interface IRemoveMenuReq {
+
+        /** RemoveMenuReq id */
+        id?: (string|null);
+    }
+
+    /** Represents a RemoveMenuReq. */
+    class RemoveMenuReq implements IRemoveMenuReq {
+
+        /**
+         * Constructs a new RemoveMenuReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IRemoveMenuReq);
+
+        /** RemoveMenuReq id. */
+        public id: string;
+
+        /**
+         * Creates a new RemoveMenuReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns RemoveMenuReq instance
+         */
+        public static create(properties?: dto.IRemoveMenuReq): dto.RemoveMenuReq;
+
+        /**
+         * Encodes the specified RemoveMenuReq message. Does not implicitly {@link dto.RemoveMenuReq.verify|verify} messages.
+         * @param message RemoveMenuReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IRemoveMenuReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified RemoveMenuReq message, length delimited. Does not implicitly {@link dto.RemoveMenuReq.verify|verify} messages.
+         * @param message RemoveMenuReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IRemoveMenuReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a RemoveMenuReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns RemoveMenuReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.RemoveMenuReq;
+
+        /**
+         * Decodes a RemoveMenuReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns RemoveMenuReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.RemoveMenuReq;
+
+        /**
+         * Verifies a RemoveMenuReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a RemoveMenuReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns RemoveMenuReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.RemoveMenuReq;
+
+        /**
+         * Creates a plain object from a RemoveMenuReq message. Also converts values to other types if specified.
+         * @param message RemoveMenuReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.RemoveMenuReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this RemoveMenuReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for RemoveMenuReq
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
@@ -3433,6 +4215,103 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of a ProfileMenuWidgetReq. */
+    interface IProfileMenuWidgetReq {
+
+        /** ProfileMenuWidgetReq id */
+        id?: (string|null);
+    }
+
+    /** Represents a ProfileMenuWidgetReq. */
+    class ProfileMenuWidgetReq implements IProfileMenuWidgetReq {
+
+        /**
+         * Constructs a new ProfileMenuWidgetReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IProfileMenuWidgetReq);
+
+        /** ProfileMenuWidgetReq id. */
+        public id: string;
+
+        /**
+         * Creates a new ProfileMenuWidgetReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ProfileMenuWidgetReq instance
+         */
+        public static create(properties?: dto.IProfileMenuWidgetReq): dto.ProfileMenuWidgetReq;
+
+        /**
+         * Encodes the specified ProfileMenuWidgetReq message. Does not implicitly {@link dto.ProfileMenuWidgetReq.verify|verify} messages.
+         * @param message ProfileMenuWidgetReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IProfileMenuWidgetReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ProfileMenuWidgetReq message, length delimited. Does not implicitly {@link dto.ProfileMenuWidgetReq.verify|verify} messages.
+         * @param message ProfileMenuWidgetReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IProfileMenuWidgetReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ProfileMenuWidgetReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ProfileMenuWidgetReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.ProfileMenuWidgetReq;
+
+        /**
+         * Decodes a ProfileMenuWidgetReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ProfileMenuWidgetReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.ProfileMenuWidgetReq;
+
+        /**
+         * Verifies a ProfileMenuWidgetReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ProfileMenuWidgetReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ProfileMenuWidgetReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.ProfileMenuWidgetReq;
+
+        /**
+         * Creates a plain object from a ProfileMenuWidgetReq message. Also converts values to other types if specified.
+         * @param message ProfileMenuWidgetReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.ProfileMenuWidgetReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ProfileMenuWidgetReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for ProfileMenuWidgetReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of a ProfileMenuWidgetRet. */
     interface IProfileMenuWidgetRet {
 
@@ -3838,6 +4717,103 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of an EnableMenuWidgetReq. */
+    interface IEnableMenuWidgetReq {
+
+        /** EnableMenuWidgetReq id */
+        id?: (string|null);
+    }
+
+    /** Represents an EnableMenuWidgetReq. */
+    class EnableMenuWidgetReq implements IEnableMenuWidgetReq {
+
+        /**
+         * Constructs a new EnableMenuWidgetReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IEnableMenuWidgetReq);
+
+        /** EnableMenuWidgetReq id. */
+        public id: string;
+
+        /**
+         * Creates a new EnableMenuWidgetReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns EnableMenuWidgetReq instance
+         */
+        public static create(properties?: dto.IEnableMenuWidgetReq): dto.EnableMenuWidgetReq;
+
+        /**
+         * Encodes the specified EnableMenuWidgetReq message. Does not implicitly {@link dto.EnableMenuWidgetReq.verify|verify} messages.
+         * @param message EnableMenuWidgetReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IEnableMenuWidgetReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified EnableMenuWidgetReq message, length delimited. Does not implicitly {@link dto.EnableMenuWidgetReq.verify|verify} messages.
+         * @param message EnableMenuWidgetReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IEnableMenuWidgetReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes an EnableMenuWidgetReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns EnableMenuWidgetReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.EnableMenuWidgetReq;
+
+        /**
+         * Decodes an EnableMenuWidgetReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns EnableMenuWidgetReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.EnableMenuWidgetReq;
+
+        /**
+         * Verifies an EnableMenuWidgetReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates an EnableMenuWidgetReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns EnableMenuWidgetReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.EnableMenuWidgetReq;
+
+        /**
+         * Creates a plain object from an EnableMenuWidgetReq message. Also converts values to other types if specified.
+         * @param message EnableMenuWidgetReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.EnableMenuWidgetReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this EnableMenuWidgetReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for EnableMenuWidgetReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of an EnableMenuWidgetRet. */
     interface IEnableMenuWidgetRet {
 
@@ -3935,6 +4911,103 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of a DisableMenuWidgetReq. */
+    interface IDisableMenuWidgetReq {
+
+        /** DisableMenuWidgetReq id */
+        id?: (string|null);
+    }
+
+    /** Represents a DisableMenuWidgetReq. */
+    class DisableMenuWidgetReq implements IDisableMenuWidgetReq {
+
+        /**
+         * Constructs a new DisableMenuWidgetReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IDisableMenuWidgetReq);
+
+        /** DisableMenuWidgetReq id. */
+        public id: string;
+
+        /**
+         * Creates a new DisableMenuWidgetReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns DisableMenuWidgetReq instance
+         */
+        public static create(properties?: dto.IDisableMenuWidgetReq): dto.DisableMenuWidgetReq;
+
+        /**
+         * Encodes the specified DisableMenuWidgetReq message. Does not implicitly {@link dto.DisableMenuWidgetReq.verify|verify} messages.
+         * @param message DisableMenuWidgetReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IDisableMenuWidgetReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified DisableMenuWidgetReq message, length delimited. Does not implicitly {@link dto.DisableMenuWidgetReq.verify|verify} messages.
+         * @param message DisableMenuWidgetReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IDisableMenuWidgetReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a DisableMenuWidgetReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns DisableMenuWidgetReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.DisableMenuWidgetReq;
+
+        /**
+         * Decodes a DisableMenuWidgetReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns DisableMenuWidgetReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.DisableMenuWidgetReq;
+
+        /**
+         * Verifies a DisableMenuWidgetReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a DisableMenuWidgetReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns DisableMenuWidgetReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.DisableMenuWidgetReq;
+
+        /**
+         * Creates a plain object from a DisableMenuWidgetReq message. Also converts values to other types if specified.
+         * @param message DisableMenuWidgetReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.DisableMenuWidgetReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this DisableMenuWidgetReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for DisableMenuWidgetReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of a DisableMenuWidgetRet. */
     interface IDisableMenuWidgetRet {
 
@@ -4026,6 +5099,103 @@ export namespace dto {
 
         /**
          * Gets the default type url for DisableMenuWidgetRet
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
+    /** Properties of a RemoveMenuWidgetReq. */
+    interface IRemoveMenuWidgetReq {
+
+        /** RemoveMenuWidgetReq id */
+        id?: (string|null);
+    }
+
+    /** Represents a RemoveMenuWidgetReq. */
+    class RemoveMenuWidgetReq implements IRemoveMenuWidgetReq {
+
+        /**
+         * Constructs a new RemoveMenuWidgetReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IRemoveMenuWidgetReq);
+
+        /** RemoveMenuWidgetReq id. */
+        public id: string;
+
+        /**
+         * Creates a new RemoveMenuWidgetReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns RemoveMenuWidgetReq instance
+         */
+        public static create(properties?: dto.IRemoveMenuWidgetReq): dto.RemoveMenuWidgetReq;
+
+        /**
+         * Encodes the specified RemoveMenuWidgetReq message. Does not implicitly {@link dto.RemoveMenuWidgetReq.verify|verify} messages.
+         * @param message RemoveMenuWidgetReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IRemoveMenuWidgetReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified RemoveMenuWidgetReq message, length delimited. Does not implicitly {@link dto.RemoveMenuWidgetReq.verify|verify} messages.
+         * @param message RemoveMenuWidgetReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IRemoveMenuWidgetReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a RemoveMenuWidgetReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns RemoveMenuWidgetReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.RemoveMenuWidgetReq;
+
+        /**
+         * Decodes a RemoveMenuWidgetReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns RemoveMenuWidgetReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.RemoveMenuWidgetReq;
+
+        /**
+         * Verifies a RemoveMenuWidgetReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a RemoveMenuWidgetReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns RemoveMenuWidgetReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.RemoveMenuWidgetReq;
+
+        /**
+         * Creates a plain object from a RemoveMenuWidgetReq message. Also converts values to other types if specified.
+         * @param message RemoveMenuWidgetReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.RemoveMenuWidgetReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this RemoveMenuWidgetReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for RemoveMenuWidgetReq
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
@@ -4782,6 +5952,103 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of a ProfileRoleReq. */
+    interface IProfileRoleReq {
+
+        /** ProfileRoleReq id */
+        id?: (string|null);
+    }
+
+    /** Represents a ProfileRoleReq. */
+    class ProfileRoleReq implements IProfileRoleReq {
+
+        /**
+         * Constructs a new ProfileRoleReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IProfileRoleReq);
+
+        /** ProfileRoleReq id. */
+        public id: string;
+
+        /**
+         * Creates a new ProfileRoleReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ProfileRoleReq instance
+         */
+        public static create(properties?: dto.IProfileRoleReq): dto.ProfileRoleReq;
+
+        /**
+         * Encodes the specified ProfileRoleReq message. Does not implicitly {@link dto.ProfileRoleReq.verify|verify} messages.
+         * @param message ProfileRoleReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IProfileRoleReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ProfileRoleReq message, length delimited. Does not implicitly {@link dto.ProfileRoleReq.verify|verify} messages.
+         * @param message ProfileRoleReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IProfileRoleReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ProfileRoleReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ProfileRoleReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.ProfileRoleReq;
+
+        /**
+         * Decodes a ProfileRoleReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ProfileRoleReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.ProfileRoleReq;
+
+        /**
+         * Verifies a ProfileRoleReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ProfileRoleReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ProfileRoleReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.ProfileRoleReq;
+
+        /**
+         * Creates a plain object from a ProfileRoleReq message. Also converts values to other types if specified.
+         * @param message ProfileRoleReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.ProfileRoleReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ProfileRoleReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for ProfileRoleReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of a ProfileRoleRet. */
     interface IProfileRoleRet {
 
@@ -5163,6 +6430,103 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of a RoleDomainsReq. */
+    interface IRoleDomainsReq {
+
+        /** RoleDomainsReq id */
+        id?: (string|null);
+    }
+
+    /** Represents a RoleDomainsReq. */
+    class RoleDomainsReq implements IRoleDomainsReq {
+
+        /**
+         * Constructs a new RoleDomainsReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IRoleDomainsReq);
+
+        /** RoleDomainsReq id. */
+        public id: string;
+
+        /**
+         * Creates a new RoleDomainsReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns RoleDomainsReq instance
+         */
+        public static create(properties?: dto.IRoleDomainsReq): dto.RoleDomainsReq;
+
+        /**
+         * Encodes the specified RoleDomainsReq message. Does not implicitly {@link dto.RoleDomainsReq.verify|verify} messages.
+         * @param message RoleDomainsReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IRoleDomainsReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified RoleDomainsReq message, length delimited. Does not implicitly {@link dto.RoleDomainsReq.verify|verify} messages.
+         * @param message RoleDomainsReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IRoleDomainsReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a RoleDomainsReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns RoleDomainsReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.RoleDomainsReq;
+
+        /**
+         * Decodes a RoleDomainsReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns RoleDomainsReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.RoleDomainsReq;
+
+        /**
+         * Verifies a RoleDomainsReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a RoleDomainsReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns RoleDomainsReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.RoleDomainsReq;
+
+        /**
+         * Creates a plain object from a RoleDomainsReq message. Also converts values to other types if specified.
+         * @param message RoleDomainsReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.RoleDomainsReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this RoleDomainsReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for RoleDomainsReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of a RoleDomainsRet. */
     interface IRoleDomainsRet {
 
@@ -5254,6 +6618,109 @@ export namespace dto {
 
         /**
          * Gets the default type url for RoleDomainsRet
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
+    /** Properties of a RoleAuthoritiesReq. */
+    interface IRoleAuthoritiesReq {
+
+        /** RoleAuthoritiesReq id */
+        id?: (string|null);
+
+        /** RoleAuthoritiesReq domainId */
+        domainId?: (string|null);
+    }
+
+    /** Represents a RoleAuthoritiesReq. */
+    class RoleAuthoritiesReq implements IRoleAuthoritiesReq {
+
+        /**
+         * Constructs a new RoleAuthoritiesReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IRoleAuthoritiesReq);
+
+        /** RoleAuthoritiesReq id. */
+        public id: string;
+
+        /** RoleAuthoritiesReq domainId. */
+        public domainId: string;
+
+        /**
+         * Creates a new RoleAuthoritiesReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns RoleAuthoritiesReq instance
+         */
+        public static create(properties?: dto.IRoleAuthoritiesReq): dto.RoleAuthoritiesReq;
+
+        /**
+         * Encodes the specified RoleAuthoritiesReq message. Does not implicitly {@link dto.RoleAuthoritiesReq.verify|verify} messages.
+         * @param message RoleAuthoritiesReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IRoleAuthoritiesReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified RoleAuthoritiesReq message, length delimited. Does not implicitly {@link dto.RoleAuthoritiesReq.verify|verify} messages.
+         * @param message RoleAuthoritiesReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IRoleAuthoritiesReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a RoleAuthoritiesReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns RoleAuthoritiesReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.RoleAuthoritiesReq;
+
+        /**
+         * Decodes a RoleAuthoritiesReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns RoleAuthoritiesReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.RoleAuthoritiesReq;
+
+        /**
+         * Verifies a RoleAuthoritiesReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a RoleAuthoritiesReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns RoleAuthoritiesReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.RoleAuthoritiesReq;
+
+        /**
+         * Creates a plain object from a RoleAuthoritiesReq message. Also converts values to other types if specified.
+         * @param message RoleAuthoritiesReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.RoleAuthoritiesReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this RoleAuthoritiesReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for RoleAuthoritiesReq
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
@@ -5569,6 +7036,103 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of an EnableRoleReq. */
+    interface IEnableRoleReq {
+
+        /** EnableRoleReq id */
+        id?: (string|null);
+    }
+
+    /** Represents an EnableRoleReq. */
+    class EnableRoleReq implements IEnableRoleReq {
+
+        /**
+         * Constructs a new EnableRoleReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IEnableRoleReq);
+
+        /** EnableRoleReq id. */
+        public id: string;
+
+        /**
+         * Creates a new EnableRoleReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns EnableRoleReq instance
+         */
+        public static create(properties?: dto.IEnableRoleReq): dto.EnableRoleReq;
+
+        /**
+         * Encodes the specified EnableRoleReq message. Does not implicitly {@link dto.EnableRoleReq.verify|verify} messages.
+         * @param message EnableRoleReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IEnableRoleReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified EnableRoleReq message, length delimited. Does not implicitly {@link dto.EnableRoleReq.verify|verify} messages.
+         * @param message EnableRoleReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IEnableRoleReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes an EnableRoleReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns EnableRoleReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.EnableRoleReq;
+
+        /**
+         * Decodes an EnableRoleReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns EnableRoleReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.EnableRoleReq;
+
+        /**
+         * Verifies an EnableRoleReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates an EnableRoleReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns EnableRoleReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.EnableRoleReq;
+
+        /**
+         * Creates a plain object from an EnableRoleReq message. Also converts values to other types if specified.
+         * @param message EnableRoleReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.EnableRoleReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this EnableRoleReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for EnableRoleReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of an EnableRoleRet. */
     interface IEnableRoleRet {
 
@@ -5666,6 +7230,103 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of a DisableRoleReq. */
+    interface IDisableRoleReq {
+
+        /** DisableRoleReq id */
+        id?: (string|null);
+    }
+
+    /** Represents a DisableRoleReq. */
+    class DisableRoleReq implements IDisableRoleReq {
+
+        /**
+         * Constructs a new DisableRoleReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IDisableRoleReq);
+
+        /** DisableRoleReq id. */
+        public id: string;
+
+        /**
+         * Creates a new DisableRoleReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns DisableRoleReq instance
+         */
+        public static create(properties?: dto.IDisableRoleReq): dto.DisableRoleReq;
+
+        /**
+         * Encodes the specified DisableRoleReq message. Does not implicitly {@link dto.DisableRoleReq.verify|verify} messages.
+         * @param message DisableRoleReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IDisableRoleReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified DisableRoleReq message, length delimited. Does not implicitly {@link dto.DisableRoleReq.verify|verify} messages.
+         * @param message DisableRoleReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IDisableRoleReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a DisableRoleReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns DisableRoleReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.DisableRoleReq;
+
+        /**
+         * Decodes a DisableRoleReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns DisableRoleReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.DisableRoleReq;
+
+        /**
+         * Verifies a DisableRoleReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a DisableRoleReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns DisableRoleReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.DisableRoleReq;
+
+        /**
+         * Creates a plain object from a DisableRoleReq message. Also converts values to other types if specified.
+         * @param message DisableRoleReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.DisableRoleReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this DisableRoleReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for DisableRoleReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of a DisableRoleRet. */
     interface IDisableRoleRet {
 
@@ -5757,6 +7418,103 @@ export namespace dto {
 
         /**
          * Gets the default type url for DisableRoleRet
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
+    /** Properties of a RemoveRoleReq. */
+    interface IRemoveRoleReq {
+
+        /** RemoveRoleReq id */
+        id?: (string|null);
+    }
+
+    /** Represents a RemoveRoleReq. */
+    class RemoveRoleReq implements IRemoveRoleReq {
+
+        /**
+         * Constructs a new RemoveRoleReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IRemoveRoleReq);
+
+        /** RemoveRoleReq id. */
+        public id: string;
+
+        /**
+         * Creates a new RemoveRoleReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns RemoveRoleReq instance
+         */
+        public static create(properties?: dto.IRemoveRoleReq): dto.RemoveRoleReq;
+
+        /**
+         * Encodes the specified RemoveRoleReq message. Does not implicitly {@link dto.RemoveRoleReq.verify|verify} messages.
+         * @param message RemoveRoleReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IRemoveRoleReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified RemoveRoleReq message, length delimited. Does not implicitly {@link dto.RemoveRoleReq.verify|verify} messages.
+         * @param message RemoveRoleReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IRemoveRoleReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a RemoveRoleReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns RemoveRoleReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.RemoveRoleReq;
+
+        /**
+         * Decodes a RemoveRoleReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns RemoveRoleReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.RemoveRoleReq;
+
+        /**
+         * Verifies a RemoveRoleReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a RemoveRoleReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns RemoveRoleReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.RemoveRoleReq;
+
+        /**
+         * Creates a plain object from a RemoveRoleReq message. Also converts values to other types if specified.
+         * @param message RemoveRoleReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.RemoveRoleReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this RemoveRoleReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for RemoveRoleReq
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
@@ -6591,6 +8349,103 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of a ProfileStaffReq. */
+    interface IProfileStaffReq {
+
+        /** ProfileStaffReq id */
+        id?: (string|null);
+    }
+
+    /** Represents a ProfileStaffReq. */
+    class ProfileStaffReq implements IProfileStaffReq {
+
+        /**
+         * Constructs a new ProfileStaffReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IProfileStaffReq);
+
+        /** ProfileStaffReq id. */
+        public id: string;
+
+        /**
+         * Creates a new ProfileStaffReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ProfileStaffReq instance
+         */
+        public static create(properties?: dto.IProfileStaffReq): dto.ProfileStaffReq;
+
+        /**
+         * Encodes the specified ProfileStaffReq message. Does not implicitly {@link dto.ProfileStaffReq.verify|verify} messages.
+         * @param message ProfileStaffReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IProfileStaffReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ProfileStaffReq message, length delimited. Does not implicitly {@link dto.ProfileStaffReq.verify|verify} messages.
+         * @param message ProfileStaffReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IProfileStaffReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ProfileStaffReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ProfileStaffReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.ProfileStaffReq;
+
+        /**
+         * Decodes a ProfileStaffReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ProfileStaffReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.ProfileStaffReq;
+
+        /**
+         * Verifies a ProfileStaffReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ProfileStaffReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ProfileStaffReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.ProfileStaffReq;
+
+        /**
+         * Creates a plain object from a ProfileStaffReq message. Also converts values to other types if specified.
+         * @param message ProfileStaffReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.ProfileStaffReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ProfileStaffReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for ProfileStaffReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of a ProfileStaffRet. */
     interface IProfileStaffRet {
 
@@ -7032,200 +8887,200 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
-    /** Properties of a PatchPasswordReq. */
-    interface IPatchPasswordReq {
+    /** Properties of a PatchStaffPasswordReq. */
+    interface IPatchStaffPasswordReq {
 
-        /** PatchPasswordReq oldPassword */
+        /** PatchStaffPasswordReq oldPassword */
         oldPassword?: (string|null);
 
-        /** PatchPasswordReq newPassword */
+        /** PatchStaffPasswordReq newPassword */
         newPassword?: (string|null);
     }
 
-    /** Represents a PatchPasswordReq. */
-    class PatchPasswordReq implements IPatchPasswordReq {
+    /** Represents a PatchStaffPasswordReq. */
+    class PatchStaffPasswordReq implements IPatchStaffPasswordReq {
 
         /**
-         * Constructs a new PatchPasswordReq.
+         * Constructs a new PatchStaffPasswordReq.
          * @param [properties] Properties to set
          */
-        constructor(properties?: dto.IPatchPasswordReq);
+        constructor(properties?: dto.IPatchStaffPasswordReq);
 
-        /** PatchPasswordReq oldPassword. */
+        /** PatchStaffPasswordReq oldPassword. */
         public oldPassword: string;
 
-        /** PatchPasswordReq newPassword. */
+        /** PatchStaffPasswordReq newPassword. */
         public newPassword: string;
 
         /**
-         * Creates a new PatchPasswordReq instance using the specified properties.
+         * Creates a new PatchStaffPasswordReq instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns PatchPasswordReq instance
+         * @returns PatchStaffPasswordReq instance
          */
-        public static create(properties?: dto.IPatchPasswordReq): dto.PatchPasswordReq;
+        public static create(properties?: dto.IPatchStaffPasswordReq): dto.PatchStaffPasswordReq;
 
         /**
-         * Encodes the specified PatchPasswordReq message. Does not implicitly {@link dto.PatchPasswordReq.verify|verify} messages.
-         * @param message PatchPasswordReq message or plain object to encode
+         * Encodes the specified PatchStaffPasswordReq message. Does not implicitly {@link dto.PatchStaffPasswordReq.verify|verify} messages.
+         * @param message PatchStaffPasswordReq message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: dto.IPatchPasswordReq, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: dto.IPatchStaffPasswordReq, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified PatchPasswordReq message, length delimited. Does not implicitly {@link dto.PatchPasswordReq.verify|verify} messages.
-         * @param message PatchPasswordReq message or plain object to encode
+         * Encodes the specified PatchStaffPasswordReq message, length delimited. Does not implicitly {@link dto.PatchStaffPasswordReq.verify|verify} messages.
+         * @param message PatchStaffPasswordReq message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: dto.IPatchPasswordReq, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: dto.IPatchStaffPasswordReq, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a PatchPasswordReq message from the specified reader or buffer.
+         * Decodes a PatchStaffPasswordReq message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns PatchPasswordReq
+         * @returns PatchStaffPasswordReq
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.PatchPasswordReq;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.PatchStaffPasswordReq;
 
         /**
-         * Decodes a PatchPasswordReq message from the specified reader or buffer, length delimited.
+         * Decodes a PatchStaffPasswordReq message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns PatchPasswordReq
+         * @returns PatchStaffPasswordReq
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.PatchPasswordReq;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.PatchStaffPasswordReq;
 
         /**
-         * Verifies a PatchPasswordReq message.
+         * Verifies a PatchStaffPasswordReq message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates a PatchPasswordReq message from a plain object. Also converts values to their respective internal types.
+         * Creates a PatchStaffPasswordReq message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns PatchPasswordReq
+         * @returns PatchStaffPasswordReq
          */
-        public static fromObject(object: { [k: string]: any }): dto.PatchPasswordReq;
+        public static fromObject(object: { [k: string]: any }): dto.PatchStaffPasswordReq;
 
         /**
-         * Creates a plain object from a PatchPasswordReq message. Also converts values to other types if specified.
-         * @param message PatchPasswordReq
+         * Creates a plain object from a PatchStaffPasswordReq message. Also converts values to other types if specified.
+         * @param message PatchStaffPasswordReq
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: dto.PatchPasswordReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: dto.PatchStaffPasswordReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this PatchPasswordReq to JSON.
+         * Converts this PatchStaffPasswordReq to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
 
         /**
-         * Gets the default type url for PatchPasswordReq
+         * Gets the default type url for PatchStaffPasswordReq
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
-    /** Properties of a PatchPasswordRet. */
-    interface IPatchPasswordRet {
+    /** Properties of a PatchStaffPasswordRet. */
+    interface IPatchStaffPasswordRet {
 
-        /** PatchPasswordRet id */
+        /** PatchStaffPasswordRet id */
         id?: (string|null);
     }
 
-    /** Represents a PatchPasswordRet. */
-    class PatchPasswordRet implements IPatchPasswordRet {
+    /** Represents a PatchStaffPasswordRet. */
+    class PatchStaffPasswordRet implements IPatchStaffPasswordRet {
 
         /**
-         * Constructs a new PatchPasswordRet.
+         * Constructs a new PatchStaffPasswordRet.
          * @param [properties] Properties to set
          */
-        constructor(properties?: dto.IPatchPasswordRet);
+        constructor(properties?: dto.IPatchStaffPasswordRet);
 
-        /** PatchPasswordRet id. */
+        /** PatchStaffPasswordRet id. */
         public id: string;
 
         /**
-         * Creates a new PatchPasswordRet instance using the specified properties.
+         * Creates a new PatchStaffPasswordRet instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns PatchPasswordRet instance
+         * @returns PatchStaffPasswordRet instance
          */
-        public static create(properties?: dto.IPatchPasswordRet): dto.PatchPasswordRet;
+        public static create(properties?: dto.IPatchStaffPasswordRet): dto.PatchStaffPasswordRet;
 
         /**
-         * Encodes the specified PatchPasswordRet message. Does not implicitly {@link dto.PatchPasswordRet.verify|verify} messages.
-         * @param message PatchPasswordRet message or plain object to encode
+         * Encodes the specified PatchStaffPasswordRet message. Does not implicitly {@link dto.PatchStaffPasswordRet.verify|verify} messages.
+         * @param message PatchStaffPasswordRet message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: dto.IPatchPasswordRet, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: dto.IPatchStaffPasswordRet, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified PatchPasswordRet message, length delimited. Does not implicitly {@link dto.PatchPasswordRet.verify|verify} messages.
-         * @param message PatchPasswordRet message or plain object to encode
+         * Encodes the specified PatchStaffPasswordRet message, length delimited. Does not implicitly {@link dto.PatchStaffPasswordRet.verify|verify} messages.
+         * @param message PatchStaffPasswordRet message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: dto.IPatchPasswordRet, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: dto.IPatchStaffPasswordRet, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a PatchPasswordRet message from the specified reader or buffer.
+         * Decodes a PatchStaffPasswordRet message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns PatchPasswordRet
+         * @returns PatchStaffPasswordRet
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.PatchPasswordRet;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.PatchStaffPasswordRet;
 
         /**
-         * Decodes a PatchPasswordRet message from the specified reader or buffer, length delimited.
+         * Decodes a PatchStaffPasswordRet message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns PatchPasswordRet
+         * @returns PatchStaffPasswordRet
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.PatchPasswordRet;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.PatchStaffPasswordRet;
 
         /**
-         * Verifies a PatchPasswordRet message.
+         * Verifies a PatchStaffPasswordRet message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates a PatchPasswordRet message from a plain object. Also converts values to their respective internal types.
+         * Creates a PatchStaffPasswordRet message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns PatchPasswordRet
+         * @returns PatchStaffPasswordRet
          */
-        public static fromObject(object: { [k: string]: any }): dto.PatchPasswordRet;
+        public static fromObject(object: { [k: string]: any }): dto.PatchStaffPasswordRet;
 
         /**
-         * Creates a plain object from a PatchPasswordRet message. Also converts values to other types if specified.
-         * @param message PatchPasswordRet
+         * Creates a plain object from a PatchStaffPasswordRet message. Also converts values to other types if specified.
+         * @param message PatchStaffPasswordRet
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: dto.PatchPasswordRet, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: dto.PatchStaffPasswordRet, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this PatchPasswordRet to JSON.
+         * Converts this PatchStaffPasswordRet to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
 
         /**
-         * Gets the default type url for PatchPasswordRet
+         * Gets the default type url for PatchStaffPasswordRet
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
@@ -7426,6 +9281,103 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of a StaffDomainsReq. */
+    interface IStaffDomainsReq {
+
+        /** StaffDomainsReq id */
+        id?: (string|null);
+    }
+
+    /** Represents a StaffDomainsReq. */
+    class StaffDomainsReq implements IStaffDomainsReq {
+
+        /**
+         * Constructs a new StaffDomainsReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IStaffDomainsReq);
+
+        /** StaffDomainsReq id. */
+        public id: string;
+
+        /**
+         * Creates a new StaffDomainsReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns StaffDomainsReq instance
+         */
+        public static create(properties?: dto.IStaffDomainsReq): dto.StaffDomainsReq;
+
+        /**
+         * Encodes the specified StaffDomainsReq message. Does not implicitly {@link dto.StaffDomainsReq.verify|verify} messages.
+         * @param message StaffDomainsReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IStaffDomainsReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified StaffDomainsReq message, length delimited. Does not implicitly {@link dto.StaffDomainsReq.verify|verify} messages.
+         * @param message StaffDomainsReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IStaffDomainsReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a StaffDomainsReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns StaffDomainsReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.StaffDomainsReq;
+
+        /**
+         * Decodes a StaffDomainsReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns StaffDomainsReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.StaffDomainsReq;
+
+        /**
+         * Verifies a StaffDomainsReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a StaffDomainsReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns StaffDomainsReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.StaffDomainsReq;
+
+        /**
+         * Creates a plain object from a StaffDomainsReq message. Also converts values to other types if specified.
+         * @param message StaffDomainsReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.StaffDomainsReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this StaffDomainsReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for StaffDomainsReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of a StaffDomainsRet. */
     interface IStaffDomainsRet {
 
@@ -7517,6 +9469,109 @@ export namespace dto {
 
         /**
          * Gets the default type url for StaffDomainsRet
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
+    /** Properties of a StaffRolesInDomainReq. */
+    interface IStaffRolesInDomainReq {
+
+        /** StaffRolesInDomainReq id */
+        id?: (string|null);
+
+        /** StaffRolesInDomainReq domainId */
+        domainId?: (string|null);
+    }
+
+    /** Represents a StaffRolesInDomainReq. */
+    class StaffRolesInDomainReq implements IStaffRolesInDomainReq {
+
+        /**
+         * Constructs a new StaffRolesInDomainReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IStaffRolesInDomainReq);
+
+        /** StaffRolesInDomainReq id. */
+        public id: string;
+
+        /** StaffRolesInDomainReq domainId. */
+        public domainId: string;
+
+        /**
+         * Creates a new StaffRolesInDomainReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns StaffRolesInDomainReq instance
+         */
+        public static create(properties?: dto.IStaffRolesInDomainReq): dto.StaffRolesInDomainReq;
+
+        /**
+         * Encodes the specified StaffRolesInDomainReq message. Does not implicitly {@link dto.StaffRolesInDomainReq.verify|verify} messages.
+         * @param message StaffRolesInDomainReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IStaffRolesInDomainReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified StaffRolesInDomainReq message, length delimited. Does not implicitly {@link dto.StaffRolesInDomainReq.verify|verify} messages.
+         * @param message StaffRolesInDomainReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IStaffRolesInDomainReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a StaffRolesInDomainReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns StaffRolesInDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.StaffRolesInDomainReq;
+
+        /**
+         * Decodes a StaffRolesInDomainReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns StaffRolesInDomainReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.StaffRolesInDomainReq;
+
+        /**
+         * Verifies a StaffRolesInDomainReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a StaffRolesInDomainReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns StaffRolesInDomainReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.StaffRolesInDomainReq;
+
+        /**
+         * Creates a plain object from a StaffRolesInDomainReq message. Also converts values to other types if specified.
+         * @param message StaffRolesInDomainReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.StaffRolesInDomainReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this StaffRolesInDomainReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for StaffRolesInDomainReq
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
@@ -7620,6 +9675,103 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of an EnableStaffReq. */
+    interface IEnableStaffReq {
+
+        /** EnableStaffReq id */
+        id?: (string|null);
+    }
+
+    /** Represents an EnableStaffReq. */
+    class EnableStaffReq implements IEnableStaffReq {
+
+        /**
+         * Constructs a new EnableStaffReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IEnableStaffReq);
+
+        /** EnableStaffReq id. */
+        public id: string;
+
+        /**
+         * Creates a new EnableStaffReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns EnableStaffReq instance
+         */
+        public static create(properties?: dto.IEnableStaffReq): dto.EnableStaffReq;
+
+        /**
+         * Encodes the specified EnableStaffReq message. Does not implicitly {@link dto.EnableStaffReq.verify|verify} messages.
+         * @param message EnableStaffReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IEnableStaffReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified EnableStaffReq message, length delimited. Does not implicitly {@link dto.EnableStaffReq.verify|verify} messages.
+         * @param message EnableStaffReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IEnableStaffReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes an EnableStaffReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns EnableStaffReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.EnableStaffReq;
+
+        /**
+         * Decodes an EnableStaffReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns EnableStaffReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.EnableStaffReq;
+
+        /**
+         * Verifies an EnableStaffReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates an EnableStaffReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns EnableStaffReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.EnableStaffReq;
+
+        /**
+         * Creates a plain object from an EnableStaffReq message. Also converts values to other types if specified.
+         * @param message EnableStaffReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.EnableStaffReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this EnableStaffReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for EnableStaffReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of an EnableStaffRet. */
     interface IEnableStaffRet {
 
@@ -7717,6 +9869,103 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of a DisableStaffReq. */
+    interface IDisableStaffReq {
+
+        /** DisableStaffReq id */
+        id?: (string|null);
+    }
+
+    /** Represents a DisableStaffReq. */
+    class DisableStaffReq implements IDisableStaffReq {
+
+        /**
+         * Constructs a new DisableStaffReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IDisableStaffReq);
+
+        /** DisableStaffReq id. */
+        public id: string;
+
+        /**
+         * Creates a new DisableStaffReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns DisableStaffReq instance
+         */
+        public static create(properties?: dto.IDisableStaffReq): dto.DisableStaffReq;
+
+        /**
+         * Encodes the specified DisableStaffReq message. Does not implicitly {@link dto.DisableStaffReq.verify|verify} messages.
+         * @param message DisableStaffReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IDisableStaffReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified DisableStaffReq message, length delimited. Does not implicitly {@link dto.DisableStaffReq.verify|verify} messages.
+         * @param message DisableStaffReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IDisableStaffReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a DisableStaffReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns DisableStaffReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.DisableStaffReq;
+
+        /**
+         * Decodes a DisableStaffReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns DisableStaffReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.DisableStaffReq;
+
+        /**
+         * Verifies a DisableStaffReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a DisableStaffReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns DisableStaffReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.DisableStaffReq;
+
+        /**
+         * Creates a plain object from a DisableStaffReq message. Also converts values to other types if specified.
+         * @param message DisableStaffReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.DisableStaffReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this DisableStaffReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for DisableStaffReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of a DisableStaffRet. */
     interface IDisableStaffRet {
 
@@ -7808,6 +10057,103 @@ export namespace dto {
 
         /**
          * Gets the default type url for DisableStaffRet
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
+    /** Properties of a RemoveStaffReq. */
+    interface IRemoveStaffReq {
+
+        /** RemoveStaffReq id */
+        id?: (string|null);
+    }
+
+    /** Represents a RemoveStaffReq. */
+    class RemoveStaffReq implements IRemoveStaffReq {
+
+        /**
+         * Constructs a new RemoveStaffReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IRemoveStaffReq);
+
+        /** RemoveStaffReq id. */
+        public id: string;
+
+        /**
+         * Creates a new RemoveStaffReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns RemoveStaffReq instance
+         */
+        public static create(properties?: dto.IRemoveStaffReq): dto.RemoveStaffReq;
+
+        /**
+         * Encodes the specified RemoveStaffReq message. Does not implicitly {@link dto.RemoveStaffReq.verify|verify} messages.
+         * @param message RemoveStaffReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IRemoveStaffReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified RemoveStaffReq message, length delimited. Does not implicitly {@link dto.RemoveStaffReq.verify|verify} messages.
+         * @param message RemoveStaffReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IRemoveStaffReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a RemoveStaffReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns RemoveStaffReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.RemoveStaffReq;
+
+        /**
+         * Decodes a RemoveStaffReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns RemoveStaffReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.RemoveStaffReq;
+
+        /**
+         * Verifies a RemoveStaffReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a RemoveStaffReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns RemoveStaffReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.RemoveStaffReq;
+
+        /**
+         * Creates a plain object from a RemoveStaffReq message. Also converts values to other types if specified.
+         * @param message RemoveStaffReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.RemoveStaffReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this RemoveStaffReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for RemoveStaffReq
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
@@ -8781,6 +11127,103 @@ export namespace dto {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
+    /** Properties of a GetPicCaptchaReq. */
+    interface IGetPicCaptchaReq {
+
+        /** GetPicCaptchaReq obsoleteId */
+        obsoleteId?: (string|null);
+    }
+
+    /** Represents a GetPicCaptchaReq. */
+    class GetPicCaptchaReq implements IGetPicCaptchaReq {
+
+        /**
+         * Constructs a new GetPicCaptchaReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IGetPicCaptchaReq);
+
+        /** GetPicCaptchaReq obsoleteId. */
+        public obsoleteId: string;
+
+        /**
+         * Creates a new GetPicCaptchaReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns GetPicCaptchaReq instance
+         */
+        public static create(properties?: dto.IGetPicCaptchaReq): dto.GetPicCaptchaReq;
+
+        /**
+         * Encodes the specified GetPicCaptchaReq message. Does not implicitly {@link dto.GetPicCaptchaReq.verify|verify} messages.
+         * @param message GetPicCaptchaReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IGetPicCaptchaReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified GetPicCaptchaReq message, length delimited. Does not implicitly {@link dto.GetPicCaptchaReq.verify|verify} messages.
+         * @param message GetPicCaptchaReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IGetPicCaptchaReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a GetPicCaptchaReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns GetPicCaptchaReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.GetPicCaptchaReq;
+
+        /**
+         * Decodes a GetPicCaptchaReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns GetPicCaptchaReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.GetPicCaptchaReq;
+
+        /**
+         * Verifies a GetPicCaptchaReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a GetPicCaptchaReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns GetPicCaptchaReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.GetPicCaptchaReq;
+
+        /**
+         * Creates a plain object from a GetPicCaptchaReq message. Also converts values to other types if specified.
+         * @param message GetPicCaptchaReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.GetPicCaptchaReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this GetPicCaptchaReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for GetPicCaptchaReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of a GetPicCaptchaRet. */
     interface IGetPicCaptchaRet {
 
@@ -8878,6 +11321,103 @@ export namespace dto {
 
         /**
          * Gets the default type url for GetPicCaptchaRet
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
+    /** Properties of a GetPicCaptchaAnswerReq. */
+    interface IGetPicCaptchaAnswerReq {
+
+        /** GetPicCaptchaAnswerReq id */
+        id?: (string|null);
+    }
+
+    /** Represents a GetPicCaptchaAnswerReq. */
+    class GetPicCaptchaAnswerReq implements IGetPicCaptchaAnswerReq {
+
+        /**
+         * Constructs a new GetPicCaptchaAnswerReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IGetPicCaptchaAnswerReq);
+
+        /** GetPicCaptchaAnswerReq id. */
+        public id: string;
+
+        /**
+         * Creates a new GetPicCaptchaAnswerReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns GetPicCaptchaAnswerReq instance
+         */
+        public static create(properties?: dto.IGetPicCaptchaAnswerReq): dto.GetPicCaptchaAnswerReq;
+
+        /**
+         * Encodes the specified GetPicCaptchaAnswerReq message. Does not implicitly {@link dto.GetPicCaptchaAnswerReq.verify|verify} messages.
+         * @param message GetPicCaptchaAnswerReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IGetPicCaptchaAnswerReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified GetPicCaptchaAnswerReq message, length delimited. Does not implicitly {@link dto.GetPicCaptchaAnswerReq.verify|verify} messages.
+         * @param message GetPicCaptchaAnswerReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IGetPicCaptchaAnswerReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a GetPicCaptchaAnswerReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns GetPicCaptchaAnswerReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.GetPicCaptchaAnswerReq;
+
+        /**
+         * Decodes a GetPicCaptchaAnswerReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns GetPicCaptchaAnswerReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.GetPicCaptchaAnswerReq;
+
+        /**
+         * Verifies a GetPicCaptchaAnswerReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a GetPicCaptchaAnswerReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns GetPicCaptchaAnswerReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.GetPicCaptchaAnswerReq;
+
+        /**
+         * Creates a plain object from a GetPicCaptchaAnswerReq message. Also converts values to other types if specified.
+         * @param message GetPicCaptchaAnswerReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.GetPicCaptchaAnswerReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this GetPicCaptchaAnswerReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for GetPicCaptchaAnswerReq
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
@@ -9193,6 +11733,97 @@ export namespace dto {
 
         /**
          * Gets the default type url for SignInRet
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
+    /** Properties of a GetOwnDomainsReq. */
+    interface IGetOwnDomainsReq {
+    }
+
+    /** Represents a GetOwnDomainsReq. */
+    class GetOwnDomainsReq implements IGetOwnDomainsReq {
+
+        /**
+         * Constructs a new GetOwnDomainsReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.IGetOwnDomainsReq);
+
+        /**
+         * Creates a new GetOwnDomainsReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns GetOwnDomainsReq instance
+         */
+        public static create(properties?: dto.IGetOwnDomainsReq): dto.GetOwnDomainsReq;
+
+        /**
+         * Encodes the specified GetOwnDomainsReq message. Does not implicitly {@link dto.GetOwnDomainsReq.verify|verify} messages.
+         * @param message GetOwnDomainsReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.IGetOwnDomainsReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified GetOwnDomainsReq message, length delimited. Does not implicitly {@link dto.GetOwnDomainsReq.verify|verify} messages.
+         * @param message GetOwnDomainsReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.IGetOwnDomainsReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a GetOwnDomainsReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns GetOwnDomainsReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.GetOwnDomainsReq;
+
+        /**
+         * Decodes a GetOwnDomainsReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns GetOwnDomainsReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.GetOwnDomainsReq;
+
+        /**
+         * Verifies a GetOwnDomainsReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a GetOwnDomainsReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns GetOwnDomainsReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.GetOwnDomainsReq;
+
+        /**
+         * Creates a plain object from a GetOwnDomainsReq message. Also converts values to other types if specified.
+         * @param message GetOwnDomainsReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.GetOwnDomainsReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this GetOwnDomainsReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for GetOwnDomainsReq
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
@@ -9726,6 +12357,97 @@ export namespace dto {
 
         /**
          * Gets the default type url for GetOwnRolesRet
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
+    /** Properties of a SignOutReq. */
+    interface ISignOutReq {
+    }
+
+    /** Represents a SignOutReq. */
+    class SignOutReq implements ISignOutReq {
+
+        /**
+         * Constructs a new SignOutReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: dto.ISignOutReq);
+
+        /**
+         * Creates a new SignOutReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns SignOutReq instance
+         */
+        public static create(properties?: dto.ISignOutReq): dto.SignOutReq;
+
+        /**
+         * Encodes the specified SignOutReq message. Does not implicitly {@link dto.SignOutReq.verify|verify} messages.
+         * @param message SignOutReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: dto.ISignOutReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified SignOutReq message, length delimited. Does not implicitly {@link dto.SignOutReq.verify|verify} messages.
+         * @param message SignOutReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: dto.ISignOutReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a SignOutReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns SignOutReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): dto.SignOutReq;
+
+        /**
+         * Decodes a SignOutReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns SignOutReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): dto.SignOutReq;
+
+        /**
+         * Verifies a SignOutReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a SignOutReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns SignOutReq
+         */
+        public static fromObject(object: { [k: string]: any }): dto.SignOutReq;
+
+        /**
+         * Creates a plain object from a SignOutReq message. Also converts values to other types if specified.
+         * @param message SignOutReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: dto.SignOutReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this SignOutReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for SignOutReq
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */

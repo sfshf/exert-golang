@@ -3,7 +3,7 @@ import config from '@/config/index'
 import { isSignIn } from '@/apis'
 
 // global axios defaults
-axios.defaults.baseURL = config.apiBaseURL
+axios.defaults.baseURL = config.apiBaseURL()
 // global axios intercepters
 axios.interceptors.request.use((cfg) => {
   // using protocol buffers encoding.

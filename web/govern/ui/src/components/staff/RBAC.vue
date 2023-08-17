@@ -38,7 +38,7 @@ el-row
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps, defineEmits, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import { listRole, authorizeStaffRolesInDomain, getDomainsOfStaff, getStaffRolesInDomain, getAuthoritiesOfRole, listDomain, getDomainsOfRole, listMenu, listMenuWidget } from '@/apis'
 import MenuWidget from '@/components/menu/MenuWidget.vue'

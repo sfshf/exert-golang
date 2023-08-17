@@ -14,7 +14,7 @@ el-menu(
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps, defineEmits } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const props = defineProps(['menus'])

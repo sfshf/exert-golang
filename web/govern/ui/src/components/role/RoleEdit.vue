@@ -42,7 +42,7 @@ el-container
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps, defineEmits, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { profileRole, editRole } from '@/apis'
 import AuthorizeRole from '@/components/role/AuthorizeRole.vue'

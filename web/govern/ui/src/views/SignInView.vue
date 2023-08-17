@@ -195,7 +195,7 @@ const handleEnterKey = (event:any) => {
 <style lang="scss" scoped>
 #container {
   background: #595959;
-  background-image: url("~@/assets/log_in_bg.jpg");
+  background-image: url("@/assets/sign_in_bg.jpg");
   height: 100%;
   width: 100%;
   position: absolute;

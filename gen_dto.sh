@@ -7,7 +7,7 @@ go fmt ./...
 
 # second
 cd web/govern/ui && \
-npx pbjs -t static-module -w commonjs -o ./src/dto/govern_web.js ../../../proto/govern_web.proto && \
+npx pbjs -t static-module -w es6 -o ./src/dto/govern_web.js ../../../proto/govern_web.proto && \
 npx pbts -o ./src/dto/govern_web.d.ts ./src/dto/govern_web.js
 
 

@@ -1,0 +1,91 @@
+services:
+  exert-golang-mongo:
+    image: mongo:latest
+    pull_policy: missing
+    command: 'mongod --replSet rs0'
+    container_name: exert-golang-mongo
+    hostname: mongo.exert-golang.cn
+    restart: always
+    networks:
+      repo_net:
+        ipv4_address: 172.168.1.50
+    ports:
+      - "27017:27017"
+    volumes:
+      - /srv/exert-golang/mongo/db:/data/db
+      - /srv/exert-golang/mongo/configdb:/data/configdb
+  exert-golang-redis:
+    image: redis:latest
+    pull_policy: missing
+    container_name: exert-golang-redis
+    hostname: redis.exert-golang.cn
+    restart: always
+    networks:
+      repo_net:
+        ipv4_address: 172.168.1.51
+    ports:
+      - "6379:6379"
+    volumes:
+      - /srv/exert-golang/redis/db:/data/db
+      - /srv/exert-golang/redis/configdb:/data/configdb
+  govern-mongo-tmp:
+    image: mongo:latest
+    pull_policy: missing
+    command: 'mongo 172.168.1.50/govern --eval "rs.initiate({ _id: ''rs0'', members: [ { _id: 0, host: ''localhost:27017'' } ]})"'
+    depends_on:
+      - exert-golang-mongo
+    container_name: govern-mongo-tmp
+    links:
+      - exert-golang-mongo
+    restart: on-failure
+    networks:
+      repo_net:
+        ipv4_address: 172.168.1.52
+    extra_hosts:
+      - "mongo.exert-golang.cn:172.168.1.50"
+  govern:
+    image: govern:latest
+    pull_policy: build
+    build:
+      context: .
+      dockerfile: ./cmd/govern/Dockerfile
+      target: websrv-binary
+    depends_on:
+      - exert-golang-mongo
+      - exert-golang-redis
+    container_name: govern
+    hostname: main.govern.cn
+    restart: always
+    networks:
+      repo_net:
+        ipv4_address: 172.168.1.53
+    ports:
+      - "8000:8000"
+    extra_hosts:
+      - "mongo.exert-golang.cn:172.168.1.50"
+      - "exert-golang-mongo:172.168.1.50"
+      - "redis.exert-golang.cn:172.168.1.51"
+      - "exert-golang-redis:172.168.1.51"
+  govern-view:
+    image: govern-view:latest
+    pull_policy: build
+    build:
+      context: .
+      dockerfile: ./cmd/govern/Dockerfile
+      target: webui-deploy
+    depends_on:
+      - govern
+    container_name: govern-view
+    hostname: main.govern-view.cn
+    restart: always
+    networks:
+      repo_net:
+        ipv4_address: 172.168.1.54
+    ports:
+      - "8080:80"
+    extra_hosts:
+      - "main.govern.cn:172.168.1.53"
+      - "govern:172.168.1.53"
+networks:
+  repo_net:
+    external: true

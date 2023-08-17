@@ -1,0 +1,76 @@
+# This file is a template, and might need editing before it works on your project.
+# To contribute improvements to CI/CD templates, please follow the Development guide at:
+# https://docs.gitlab.com/ee/development/cicd/templates.html
+# This specific template is located at:
+# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
+
+# This is a sample GitLab CI/CD configuration file that should run without any modifications.
+# It demonstrates a basic 3 stage CI/CD pipeline. Instead of real tests or scripts,
+# it uses echo commands to simulate the pipeline execution.
+#
+# A pipeline is composed of independent jobs that run scripts, grouped into stages.
+# Stages run in sequential order, but jobs within stages run in parallel.
+#
+# For more information, see: https://docs.gitlab.com/ee/ci/yaml/index.html#stages
+
+stages:          # List of stages for jobs, and their order of execution
+  - build
+  # - test
+  - deploy
+
+build-job:       # This job runs in the build stage, which runs first.
+  stage: build
+  script:
+    - echo "Compiling the govern web server code..."
+    - docker image prune -f
+    - docker build -t govern:latest --target websrv-binary -f ./cmd/govern/Dockerfile .
+    - echo "Compile the govern web server code complete."
+    - echo "Compiling the govern web ui code..."
+    - docker build -t govern-view:latest --target webui-deploy -f ./cmd/govern/Dockerfile .
+    - echo "Compile the govern web ui code complete."
+
+# unit-test-job:   # This job runs in the test stage.
+#   stage: test    # It only starts when the job in the build stage completes successfully.
+#   script:
+#     - echo "Running unit tests... This will take about 60 seconds."
+#     - sleep 60
+#     - echo "Code coverage is 90%"
+
+# lint-test-job:   # This job also runs in the test stage.
+#   stage: test    # It can run at the same time as unit-test-job (in parallel).
+#   script:
+#     - echo "Linting code... This will take about 10 seconds."
+#     - sleep 10
+#     - echo "No lint issues found."
+
+deploy-job:      # This job runs in the deploy stage.
+  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
+  script:
+    - echo "Deploying govern web server..."
+    - docker ps -a --format '{{.Names}}' | grep -x govern && docker stop govern
+    - docker ps -a --format '{{.Names}}' | grep -x govern && docker rm govern
+    - docker run -itd 
+      --name govern 
+      --restart always 
+      --hostname main.govern.cn 
+      --add-host mongo.exert-golang.cn:172.168.1.50 
+      --add-host exert-golang-mongo:172.168.1.50
+      --add-host redis.exert-golang.cn:172.168.1.51
+      --add-host exert-golang-redis:172.168.1.51
+      --network repo_net 
+      --ip 172.168.1.53 
+      -p 8000:8000 
+      govern:latest
+    - echo "Govern web server successfully deployed."
+    - echo "Deploying govern web ui..."
+    - docker ps -a --format '{{.Names}}' | grep -x govern-view && docker stop govern-view
+    - docker ps -a --format '{{.Names}}' | grep -x govern-view && docker rm govern-view
+    - docker run -itd 
+      --name govern-view 
+      --restart always 
+      --hostname main.govern-view.cn
+      --network repo_net 
+      --ip 172.168.1.54 
+      -p 8080:80 
+      govern-view:latest
+    - echo "Govern web ui successfully deployed."

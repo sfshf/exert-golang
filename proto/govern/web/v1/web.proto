@@ -1,0 +1,1284 @@
+syntax = "proto3";
+
+package govern.web.v1;
+
+import "google/protobuf/any.proto";
+import "google/type/datetime.proto";
+
+// common messages.
+
+// Error error response.
+message Error {
+  string msg = 1; // error message
+}
+
+// domain dtos.
+
+// AddDomainRequest arguments to add a domain.
+message AddDomainRequest {
+  // @gotags: binding:"required" label:"名称"
+  string name = 1; // 名称
+  // @gotags: binding:"" label:"别名"
+  repeated string alias = 2; // 别名
+  // @gotags: binding:"" label:"序号"
+  sint32 seq = 3; // 序号
+  // @gotags: binding:"" label:"图标"
+  string icon = 4; // 图标
+  // @gotags: binding:"" label:"备注"
+  string memo = 5; // 备注
+  // @gotags: copier:"ParentID" binding:"" label:"父级Id"
+  string parent_id = 6; // 父级Id
+}
+
+// AddDomainResponse return of adding a domain.
+message AddDomainResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// ListDomainRequest search arguments to list domains.
+message ListDomainRequest {
+  // @gotags: form:"noPaging" binging:"" label:"是否不分页"
+  bool no_paging = 20001; // 是否不分页
+  // @gotags: form:"page" binding:"" label:"当前页码"
+  sint64 page = 20002; // 当前页码
+  // @gotags: form:"perPage" binding:"" label:"每页数据量"
+  sint64 per_page = 20003; // 每页数据量
+  // @gotags: form:"sortBy" binding:"" label:"字段排序条件"
+  map<string, sint32> sort_by = 20004; // 字段排序条件
+  // @gotags: form:"deleted" binding:"" label:"是否被软删除"
+  optional bool deleted = 20005; // 是否被软删除
+  // @gotags: form:"name" binding:"" label:"名称"
+  string name = 1; // 名称
+  // @gotags: form:"needTree" binding:"" label:"数据是否要转为树结构"
+  bool need_tree = 2; // 数据是否要转为树结构
+}
+
+// DomainListElem view model of listing domains.
+message DomainListElem {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+  string name = 2; // 名称
+  repeated string alias = 3; // 别名
+  sint32 seq = 4; // 序号
+  string icon = 5; // 图标
+  string memo = 6; // 备注
+  // @gotags: copier:"ParentID"
+  string parent_id = 7; // 父级Id
+  string created_by = 20000; // 创建者
+  google.type.DateTime created_at = 20001; // 创建时间
+  string updated_by = 20002; // 更新者
+  google.type.DateTime updated_at = 20003; // 更新时间
+  string deleted_by = 20004; // 禁用者
+  google.type.DateTime deleted_at = 20005; // 禁用时间
+  repeated DomainListElem children = 20006; // 子节点
+}
+
+// ListDomainResponse return of listing domains.
+message ListDomainResponse {
+  repeated DomainListElem list = 1; // 列表
+  sint64 total = 2; // 总量
+}
+
+// ProfileDomainRequest arguments to profile a domain.
+message ProfileDomainRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
+// ProfileDomainResponse return of profiling a domain.
+message ProfileDomainResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+  string name = 2; // 名称
+  repeated string alias = 3; // 别名
+  sint32 seq = 4; // 序号
+  string icon = 5; // 图标
+  string memo = 6; // 备注
+  // @gotags: copier:"ParentID"
+  string parent_id = 7; // 父级Id
+  string created_by = 20000; // 创建者
+  google.type.DateTime created_at = 20001; // 创建时间
+  string updated_by = 20002; // 更新者
+  google.type.DateTime updated_at = 20003; // 更新时间
+  string deleted_by = 20004; // 禁用者
+  google.type.DateTime deleted_at = 20005; // 禁用时间
+}
+
+// EditDomainRequest arguments to edit a domain.
+message EditDomainRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+  // @gotags: binding:"required" label:"名称"
+  string name = 2; // 名称
+  // @gotags: binding:"" label:"别名"
+  repeated string alias = 3; // 别名
+  // @gotags: binding:"" label:"序号"
+  sint32 seq = 4; // 序号
+  // @gotags: binding:"" label:"图标"
+  string icon = 5; // 图标
+  // @gotags: binding:"" label:"备注"
+  string memo = 6; // 备注
+  // @gotags: copier:"ParentID" binding:"" label:"父级Id"
+  string parent_id = 7; // 父级Id
+}
+
+// EditDomainResponse return of editing a domain.
+message EditDomainResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// EnableDomainRequest arguments to enable a domain.
+message EnableDomainRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
+// EnableDomainResponse return of enabling a domain.
+message EnableDomainResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// DisableDomainRequest arguments to disable a domain.
+message DisableDomainRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
+// DisableDomainResponse return of disabling a domain.
+message DisableDomainResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// RemoveDomainRequest arguments to remove a domain.
+message RemoveDomainRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
+// RemoveDomainResponse return of removing a domain.
+message RemoveDomainResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// domain services
+
+service DomainService {
+  rpc AddDomain (AddDomainRequest) returns (AddDomainResponse);
+  rpc ListDomain (ListDomainRequest) returns (ListDomainResponse);
+  rpc ProfileDomain (ProfileDomainRequest) returns (ProfileDomainResponse);
+  rpc EditDomain (EditDomainRequest) returns (EditDomainResponse);
+  rpc EnableDomain (EnableDomainRequest) returns (EnableDomainResponse);
+  rpc DisableDomain (DisableDomainRequest) returns (DisableDomainResponse);
+  rpc RemoveDomain (RemoveDomainRequest) returns (RemoveDomainResponse);
+}
+
+// menu dtos.
+
+// AddMenuRequest arguments to add a menu.
+message AddMenuRequest {
+  // @gotags: binding:"" label:"名称"
+  string name = 1; // 名称
+  // @gotags: binding:"" label:"序号"
+  sint32 seq = 2; // 序号
+  // @gotags: binding:"" label:"图标"
+  string icon = 3; // 图标
+  // @gotags: binding:"" label:"页面路由"
+  string route = 4; // 页面路由
+  // @gotags: binding:"" label:"备注"
+  string memo = 5; // 备注
+  // @gotags: binding:"" label:"是否显示"
+  bool show = 6;// 是否显示
+  // @gotags: copier:"ParentID" binding:"" label:"父级Id"
+  string parent_id = 7; // 父级Id
+  // @gotags: binding:"" label:"是否是菜单项"
+  bool is_item = 8; // 是否是菜单项
+}
+
+// AddMenuResponse return of adding a menu.
+message AddMenuResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// ListMenuRequest search arguments to list menus.
+message ListMenuRequest {
+  // @gotags: form:"noPaging" binging:"" label:"是否不分页"
+  bool no_paging = 20001; // 是否不分页
+  // @gotags: form:"page" binding:"" label:"当前页码"
+  sint64 page = 20002; // 当前页码
+  // @gotags: form:"perPage" binding:"" label:"每页数据量"
+  sint64 per_page = 20003; // 每页数据量
+  // @gotags: form:"sortBy" binding:"" label:"字段排序条件"
+  map<string, sint32> sort_by = 20004; // 字段排序条件
+  // @gotags: form:"deleted" binding:"" label:"是否被软删除"
+  optional bool deleted = 20005; // 是否被软删除
+  // @gotags: form:"name" binding:"" label:"名称"
+  string name = 1; // 名称
+  // @gotags: form:"needTree" binding:"" label:"数据是否要转为树结构"
+  bool need_tree = 2; // 数据是否要转为树结构
+  // @gotags: form:"route" binding:"" label:"页面路由"
+  string route = 3; // 页面路由
+  // @gotags: form:"show" binding:"" label:"是否已显示"
+  optional bool show = 4; // 是否已显示
+}
+
+// MenuListElem view model of listing domains.
+message MenuListElem {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+  string name = 2; // 名称
+  sint32 seq = 3; // 序号
+  string icon = 4; // 图标
+  string route = 5; // 页面路由
+  string memo = 6; // 备注
+  // @gotags: copier:"ParentID"
+  string parent_id = 7; // 父级Id
+  bool show = 8; // 是否已显示
+  bool is_item = 9; // 是否是菜单项
+  string created_by = 20000; // 创建者
+  google.type.DateTime created_at = 20001; // 创建时间
+  string updated_by = 20002; // 更新者
+  google.type.DateTime updated_at = 20003; // 更新时间
+  string deleted_by = 20004; // 禁用者
+  google.type.DateTime deleted_at = 20005; // 禁用时间
+  repeated MenuListElem children = 20006; // 子节点
+}
+
+// ListMenuResponse return of listing menus.
+message ListMenuResponse {
+  repeated MenuListElem list = 1; // 列表
+  sint64 total = 2; // 总量
+}
+
+// ProfileMenuRequest arguments to profile a menu.
+message ProfileMenuRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
+// ProfileMenuResponse return of profiling a menu.
+message ProfileMenuResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+  string name = 2; // 名称
+  sint32 seq = 3; // 序号
+  string icon = 4; // 图标
+  string route = 5; // 页面路由
+  string memo = 6; // 备注
+  // @gotags: copier:"ParentID"
+  string parent_id = 7; // 父级Id
+  bool show = 8; // 是否已显示
+  bool is_item = 9; // 是否是菜单项
+  string created_by = 20000; // 创建者
+  google.type.DateTime created_at = 20001; // 创建时间
+  string updated_by = 20002; // 更新者
+  google.type.DateTime updated_at = 20003; // 更新时间
+  string deleted_by = 20004; // 禁用者
+  google.type.DateTime deleted_at = 20005; // 禁用时间
+}
+
+// EditMenuRequest arguments to editing a menu.
+message EditMenuRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+  // @gotags: binding:"required" label:"名称"
+  string name = 2; // 名称
+  // @gotags: binding:"" label:"序号"
+  sint32 seq = 3; // 序号
+  // @gotags: binding:"" label:"图标"
+  string icon = 4; // 图标
+  // @gotags: binding:"" label:"页面路由"
+  string route = 5; // 页面路由
+  // @gotags: binding:"" label:"备注"
+  string memo = 6; // 备注
+  // @gotags: binding:"" label:"是否显示"
+  bool show = 7; // 是否显示
+  // @gotags: copier:"ParentID" binding:"" label:"父级Id"
+  string parent_id = 8; // 父级Id
+  // @gotags: binding:"" label:"是否是菜单项"
+  bool is_item = 9; // 是否是菜单项
+}
+
+// EditMenuResponse return of editing a menu.
+message EditMenuResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// EnableMenuRequest arguments to enable a menu.
+message EnableMenuRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
+// EnableMenuResponse return of enabling a menu.
+message EnableMenuResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// DisableMenuRequest arguments to disable a menu.
+message DisableMenuRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
+// DisableMenuResponse return of disabling a menu.
+message DisableMenuResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// RemoveMenuRequest arguments to remove a menu.
+message RemoveMenuRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
+// RemoveMenuResponse return of removing a menu.
+message RemoveMenuResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// menu services.
+
+service MenuService {
+  rpc AddMenu (AddMenuRequest) returns (AddMenuResponse);
+  rpc ListMenu (ListMenuRequest) returns (ListMenuResponse);
+  rpc ProfileMenu (ProfileMenuRequest) returns (ProfileMenuResponse);
+  rpc EditMenu (EditMenuRequest) returns (EditMenuResponse);
+  rpc EnableMenu (EnableMenuRequest) returns (EnableMenuResponse);
+  rpc DisableMenu (DisableMenuRequest) returns (DisableMenuResponse);
+  rpc RemoveMenu (RemoveMenuRequest) returns (RemoveMenuResponse);
+}
+
+// menu-widget dtos.
+
+// AddMenuWidgetRequest arguments to add a menu-widget.
+message AddMenuWidgetRequest {
+  // @gotags: binding:"required" label:"MenuId"
+  string menu_id = 1; // MenuId
+  // @gotags: binding:"required" label:"名称"
+  string name = 2; // 名称
+  // @gotags: binding:"" label:"序号"
+  sint32 seq = 3; // 序号
+  // @gotags: binding:"" label:"图标"
+  string icon = 4; // 图标
+  // @gotags: binding:"required" label:"相应的API的Method"
+  string api_method = 5; // 相应的API的Method
+  // @gotags: binding:"required" label:"相应的API的Path"
+  string api_path = 6; // 相应的API的Path
+  // @gotags: binding:"" label:"备注"
+  string memo = 7; // 备注
+  // @gotags: binding:"" label:"是否已显示"
+  bool show = 8; // 是否已显示
+}
+
+// AddMenuWidgetResponse return of adding a menu-widget.
+message AddMenuWidgetResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// ListMenuWidgetRequest search arguments to list menu-widgets.
+message ListMenuWidgetRequest {
+  // @gotags: form:"noPaging" binging:"" label:"是否不分页"
+  bool no_paging = 20001; // 是否不分页
+  // @gotags: form:"page" binding:"" label:"当前页码"
+  sint64 page = 20002; // 当前页码
+  // @gotags: form:"perPage" binding:"" label:"每页数据量"
+  sint64 per_page = 20003; // 每页数据量
+  // @gotags: form:"sortBy" binding:"" label:"字段排序条件"
+  map<string, sint32> sort_by = 20004; // 字段排序条件
+  // @gotags: form:"deleted" binding:"" label:"是否被软删除"
+  optional bool deleted = 20005; // 是否被软删除
+  // @gotags: binding:"required" label:"MenuId"
+  string menu_id = 1; // MenuId
+  // @gotags: form:"name" binding:"" label:"名称"
+  string name = 2; // 名称
+}
+
+// MenuWidgetListElem an element of menu-widget list.
+message MenuWidgetListElem {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+  string name = 2; // 名称
+  sint32 seq = 3; // 序号
+  string icon = 4; // 图标
+  string api_method = 5; // 相应的API的Method
+  string api_path = 6; // 相应的API的Path
+  bool show = 7; // 是否已显示
+  string created_by = 20000; // 创建者
+  google.type.DateTime created_at = 20001; // 创建时间
+  string updated_by = 20002; // 更新者
+  google.type.DateTime updated_at = 20003; // 更新时间
+  string deleted_by = 20004; // 禁用者
+  google.type.DateTime deleted_at = 20005; // 禁用时间
+}
+
+// ListMenuWidgetResponse  return of listing menu-widgets.
+message ListMenuWidgetResponse {
+  repeated MenuWidgetListElem list = 1; // 列表
+  sint64 total = 2; // 总量
+}
+
+// ProfileMenuWidgetRequest arguments to profile a menu-widget.
+message ProfileMenuWidgetRequest {
+  // @gotags: binding:"required" label:"MenuId"
+  string menu_id = 1; // MenuId
+  // @gotags: binding:"required" label:"Id"
+  string id = 2; // Id
+}
+
+// ProfileMenuWidgetResponse return of profiling a menu-widget.
+message ProfileMenuWidgetResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+  string name = 2; // 名称
+  sint32 seq = 3; // 序号
+  string icon = 4; // 图标
+  string api_method = 5; // 相应的API的Method
+  string api_path = 6; // 相应的API的Path
+  string memo = 7; // 备注
+  bool show = 8; // 是否已显示
+  string created_by = 20000; // 创建者
+  google.type.DateTime created_at = 20001; // 创建时间
+  string updated_by = 20002; // 更新者
+  google.type.DateTime updated_at = 20003; // 更新时间
+  string deleted_by = 20004; // 禁用者
+  google.type.DateTime deleted_at = 20005; // 禁用时间
+}
+
+// EditMenuWidgetRequest arguments to edit a menu-widget.
+message EditMenuWidgetRequest {
+  // @gotags: binding:"required" label:"MenuId"
+  string menu_id = 1; // MenuId
+  // @gotags: binding:"required" label:"Id"
+  string id = 2; // Id
+  // @gotags: binding:"required" label:"名称"
+  string name = 3; // 名称
+  // @gotags: binding:"" label:"序号"
+  sint32 seq = 4; // 序号
+  // @gotags: binding:"" label:"图标"
+  string icon = 5; // 图标
+  // @gotags: binding:"required" label:"相应的API的Method"
+  string api_method = 6; // 相应的API的Method
+  // @gotags: binding:"required" label:"相应的API的Path"
+  string api_path = 7; // 相应的API的Path
+  // @gotags: binding:"" label:"备注"
+  string memo = 8; // 备注
+  // @gotags: binding:"" label:"是否已显示"
+  bool show = 9; // 是否已显示
+}
+
+// EditMenuWidgetResponse return of editing a menu-widget.
+message EditMenuWidgetResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// EnableMenuWidgetRequest arguments to enable a menu-widget.
+message EnableMenuWidgetRequest {
+  // @gotags: binding:"required" label:"MenuId"
+  string menu_id = 1; // MenuId
+  // @gotags: binding:"required" label:"Id"
+  string id = 2; // Id
+}
+
+// EnableMenuWidgetResponse return of enabling a menu-widget.
+message EnableMenuWidgetResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// DisableMenuWidgetRequest arguments to disable a menu-widget.
+message DisableMenuWidgetRequest {
+  // @gotags: binding:"required" label:"MenuId"
+  string menu_id = 1; // MenuId
+  // @gotags: binding:"required" label:"Id"
+  string id = 2; // Id
+}
+
+// DisableMenuWidgetResponse return of disabling a menu-widget.
+message DisableMenuWidgetResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// RemoveMenuWidgetRequest arguments to remove a menu-widget.
+message RemoveMenuWidgetRequest {
+  // @gotags: binding:"required" label:"MenuId"
+  string menu_id = 1; // MenuId
+  // @gotags: binding:"required" label:"Id"
+  string id = 2; // Id
+}
+
+// RemoveMenuWidgetResponse return of removing a menu-widget.
+message RemoveMenuWidgetResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// menu-widget services.
+
+service MenuWidgetService {
+  rpc AddMenuWidget (AddMenuWidgetRequest) returns (AddMenuWidgetResponse);
+  rpc ListMenuWidget (ListMenuWidgetRequest) returns (ListMenuWidgetResponse);
+  rpc ProfileMenuWidget (ProfileMenuWidgetRequest) returns (ProfileMenuWidgetResponse);
+  rpc EditMenuWidget (EditMenuWidgetRequest) returns (EditMenuWidgetResponse);
+  rpc EnableMenuWidget (EnableMenuWidgetRequest) returns (EnableMenuWidgetResponse);
+  rpc DisableMenuWidget (DisableMenuWidgetRequest) returns (DisableMenuWidgetResponse);
+  rpc RemoveMenuWidget (RemoveMenuWidgetRequest) returns (RemoveMenuWidgetResponse);
+}
+
+// role dtos.
+
+// AddRoleRequest arguments to add a role.
+message AddRoleRequest {
+  // @gotags: binding:"required" label:"名称"
+  string name = 1; // 名称
+  // @gotags: binding:"" label:"别名"
+  repeated string alias = 2; // 别名
+  // @gotags: binding:"" label:"序号"
+  sint32 seq = 3; // 序号
+  // @gotags: binding:"" label:"图标"
+  string icon = 4; // 图标
+  // @gotags: binding:"" label:"备注"
+  string memo = 5; // 备注
+}
+
+// AddRoleResponse return of adding a role.
+message AddRoleResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// ListRoleRequest search arguments to list roles.
+message ListRoleRequest {
+  // @gotags: form:"noPaging" binging:"" label:"是否不分页"
+  bool no_paging = 20001; // 是否不分页
+  // @gotags: form:"page" binding:"" label:"当前页码"
+  sint64 page = 20002; // 当前页码
+  // @gotags: form:"perPage" binding:"" label:"每页数据量"
+  sint64 per_page = 20003; // 每页数据量
+  // @gotags: form:"sortBy" binding:"" label:"字段排序条件"
+  map<string, sint32> sort_by = 20004; // 字段排序条件
+  // @gotags: form:"deleted" binding:"" label:"是否被软删除"
+  optional bool deleted = 20005; // 是否被软删除
+  // @gotags: form:"name" binding:"" label:"名称"
+  string name = 1; // 名称
+  // @gotags: form:"alias" binding:"" label:"别名" 
+  string alias = 2; // 别名
+  // @gotags: form:"createdBy" binding:"" label:"创建者" 
+  string created_by = 3; // 创建者
+  // @gotags: form:"createdAtBegin" binding:"" label:"创建时间起始" 
+  sint64 created_at_begin = 4; // 创建时间起始
+  // @gotags: form:"createdAtEnd" binding:"" label:"创建时间结束" 
+  sint64 created_at_end = 5; // 创建时间结束
+  // @gotags: form:"domainId" binding:"" label:"域ID" 
+  string domain_id = 6; // 域ID
+}
+
+// RoleListElem an element of role list.
+message RoleListElem {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+  string name = 2; // 名称
+  repeated string alias = 3; // 别名
+  sint32 seq = 4; // 序号
+  string icon = 5; // 图标
+  string memo = 6; // 备注
+  repeated string domain_ids = 7; // 域Ids
+  repeated string domain_names = 8; // 域名s
+  string created_by = 20000; // 创建者
+  google.type.DateTime created_at = 20001; // 创建时间
+  string updated_by = 20002; // 更新者
+  google.type.DateTime updated_at = 20003; // 更新时间
+  string deleted_by = 20004; // 禁用者
+  google.type.DateTime deleted_at = 20005; // 禁用时间
+}
+
+// ListRoleResponse return of listing roles.
+message ListRoleResponse {
+  repeated RoleListElem list = 1; // 列表
+  sint64 total = 2; // 总量
+}
+
+// ProfileRoleRequest arguments to profile a role.
+message ProfileRoleRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
+// ProfileRoleResponse return of profiling a role.
+message ProfileRoleResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+  string name = 2; // 名称
+  repeated string alias = 3; // 别名
+  sint32 seq = 4; // 序号
+  string icon = 5; // 图标
+  string memo = 6; // 备注
+  string created_by = 20000; // 创建者
+  google.type.DateTime created_at = 20001; // 创建时间
+  string updated_by = 20002; // 更新者
+  google.type.DateTime updated_at = 20003; // 更新时间
+  string deleted_by = 20004; // 禁用者
+  google.type.DateTime deleted_at = 20005; // 禁用时间
+}
+
+// EditRoleRequest arguments to edit a role.
+message EditRoleRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+  // @gotags: binding:"required" label:"名称"
+  string name = 2; // 名称
+  // @gotags: binding:"" label:"别名"
+  repeated string alias = 3; // 别名
+  // @gotags: binding:"" label:"序号"
+  sint32 seq = 4; // 序号
+  // @gotags: binding:"" label:"图标"
+  string icon = 5; // 图标
+  // @gotags: binding:"" label:"备注"
+  string memo = 6; // 备注
+}
+
+// EditRoleResponse return of editing a role.
+message EditRoleResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// RoleDomainsRequest arguments to get domains of a role.
+message RoleDomainsRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
+// RoleDomainsResponse return of getting domains of a role.
+message RoleDomainsResponse {
+  repeated string domain_ids = 1; // 域Ids
+}
+
+// RoleAuthoritiesRequest arguments to get authorities of a role.
+message RoleAuthoritiesRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+  // @gotags: binding:"required" label:"DomainId"
+  string domain_id = 2; // DomainId
+}
+
+// RoleAuthoritiesResponse return of getting authorities of a role.
+message RoleAuthoritiesResponse {
+  repeated string menu_ids = 1; // 菜单Ids
+  repeated string widget_ids = 2; // 组件Ids
+}
+
+// AuthorizeRoleRequest arguments to authorize a role.
+message AuthorizeRoleRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+  // @gotags: binding:"required" label:"DomainId"
+  string domain_id = 2; // DomainId
+  // @gotags: binding:"" label:"菜单的Ids"
+  repeated string menu_ids = 3; // 菜单的Ids
+  // @gotags: binding:"" label:"控件的Ids"
+  repeated string widget_ids = 4; // 控件的Ids
+}
+
+// AuthorizeRoleResponse return of authorizing a role.
+message AuthorizeRoleResponse {
+  string id = 1; // RoleId
+  string domain_id = 2; // DomainId
+}
+
+// EnableRoleRequest arguments to enable a role.
+message EnableRoleRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
+// EnableRoleResponse return of enabling a role.
+message EnableRoleResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// DisableRoleRequest arguments to disable a role.
+message DisableRoleRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
+// DisableRoleResponse return of disabling a role.
+message DisableRoleResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// RemoveRoleRequest arguments to remove a role.
+message RemoveRoleRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
+// RemoveRoleResponse return of removing a role.
+message RemoveRoleResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// role services.
+service RoleService {
+  rpc AddRole (AddRoleRequest) returns (AddRoleResponse);
+  rpc ListRole (ListRoleRequest) returns (ListRoleResponse);
+  rpc ProfileRole (ProfileRoleRequest) returns (ProfileRoleResponse);
+  rpc EditRole (EditRoleRequest) returns (EditRoleResponse);
+  rpc RoleDomains (RoleDomainsRequest) returns (RoleDomainsResponse);
+  rpc RoleAuthorities (RoleAuthoritiesRequest) returns (RoleAuthoritiesResponse);
+  rpc AuthorizeRole (AuthorizeRoleRequest) returns (AuthorizeRoleResponse);
+  rpc EnableRole (EnableRoleRequest) returns (EnableRoleResponse);
+  rpc DisableRole (DisableRoleRequest) returns (DisableRoleResponse);
+  rpc RemoveRole (RemoveRoleRequest) returns (RemoveRoleResponse);
+}
+
+// staff dtos.
+
+// AddStaffRequest request parameters to add a staff.
+message AddStaffRequest {
+  // @gotags: binding:"gte=2,lte=32" label:"账号"
+  string account = 1; // 账号
+  // @gotags: binding:"gte=8,lte=32" label:"密码"
+  string password = 2; // 密码
+  // @gotags: binding:"gte=2,lte=32" label:"昵称"
+  string nick_name = 3; // 昵称
+  // @gotags: binding:"gte=2,lte=32" label:"真实姓名"
+  string real_name = 4; // 真实姓名
+  // @gotags: binding:"required,email" label:"邮箱"
+  string email = 5; // 邮箱
+  // @gotags: binding:"gte=11,lte=17" label:"手机号"
+  string phone = 6; // 手机号
+  // @gotags: binding:"omitempty,oneof=Male Female" label:"性别"
+  string gender = 7; // 性别
+  // @gotags: binding:"" label:"头像"
+  string avatar = 9; // 头像
+  // @gotags: binding:"omitempty,dive,ip" label:"登录IP白名单"
+  repeated string sign_in_ip_whitelist = 10; // 登录IP白名单
+}
+
+// AddStaffResponse return of adding a staff.
+message AddStaffResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// ListStaffRequest  request parameter to list staffs.
+message ListStaffRequest {
+  // @gotags: form:"noPaging" binging:"" label:"是否不分页"
+  bool no_paging = 20001; // 是否不分页
+  // @gotags: form:"page" binding:"" label:"当前页码"
+  sint64 page = 20002; // 当前页码
+  // @gotags: form:"perPage" binding:"" label:"每页数据量"
+  sint64 per_page = 20003; // 每页数据量
+  // @gotags: form:"sortBy" binding:"" label:"字段排序条件"
+  map<string, sint32> sort_by = 20004; // 字段排序条件
+  // @gotags: form:"deleted" binding:"" label:"是否被软删除"
+  optional bool deleted = 20005; // 是否被软删除
+  // @gotags: form:"account" binding:"" label:"账号"
+  string account = 1; // 账号
+  // @gotags: form:"signIn" binding:"" label:"是否已登录"
+  bool sign_in = 2; // 是否已登录
+  // @gotags: form:"nickName" binding:"" label:"昵称"
+  string nick_name = 3; // 昵称
+  // @gotags: form:"realName" binding:"" label:"真实姓名"
+  string real_name = 4; // 真实姓名
+  // @gotags: form:"email" binding:"" label:"邮箱"
+  string email = 5; // 邮箱
+  // @gotags: form:"phone" binding:"" label:"手机号"
+  string phone = 6; // 手机号
+  // @gotags: form:"gender" binding:"omitempty,oneof=Male Female" label:"性别"
+  string gender = 7; // 性别
+  // @gotags: form:"lastSignInIp" binding:"" label:"最近登录IP"
+  string last_sign_in_ip = 8; // 最近登录IP
+  // @gotags: form:"lastSignInTimeBegin" binding:"omitempty,gte=0" label:"最近登录时间起始"
+  sint64 last_sign_in_time_begin = 9; // 最近登录时间起始
+  // @gotags: form:"lastSignInTimeEnd" binding:"omitempty,gte=0" label:"最近登录时间结束"
+  sint64 last_sign_in_time_end = 10; // 最近登录时间结束
+}
+
+// StaffListElem an element of staff list.
+message StaffListElem {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+  string account = 2; // 账号
+  string nick_name = 3; // 昵称
+  string real_name = 4; // 真是姓名
+  string email = 5; // 邮箱
+  string phone = 6; // 手机号
+  string gender = 7; // 性别
+  string avatar = 8; // 头像
+  bool sign_in = 9; // 是否已登录
+  bool status = 10; // 用户聊天室状态（在线、下线、繁忙、空闲）
+  string sign_in_token = 11; // 是否已登录
+  string last_sign_in_ip = 12; // 最近登录IP
+  sint64 last_sign_in_time = 13; // 最近登录时间
+  string created_by = 20000; // 创建者
+  google.type.DateTime created_at = 20001; // 创建时间
+  string updated_by = 20002; // 更新者
+  google.type.DateTime updated_at = 20003; // 更新时间
+  string deleted_by = 20004; // 禁用者
+  google.type.DateTime deleted_at = 20005; // 禁用时间
+}
+
+// ListStaffResponse return of listing staffs.
+message ListStaffResponse {
+  repeated StaffListElem list = 1; // 列表
+  sint64 total = 2; // 总量
+}
+
+// ProfileStaffRequest arguments to profile a staff.
+message ProfileStaffRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
+// ProfileStaffResponse return of profiling a staff.
+message ProfileStaffResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+  string account = 2; // 账号
+  string nick_name = 3; // 昵称
+  string real_name = 4; // 真实姓名
+  string email = 5; // 邮箱
+  string phone = 6; // 手机号
+  string gender = 7; // 性别
+  string avatar = 8; // 头像
+  repeated string sign_in_ip_whitelist = 9; // 登录IP白名单
+  bool sign_in = 10; // 是否已登录
+  string sign_in_token = 11; // 是否已登录
+  string last_sign_in_ip = 12; // 最近登录IP
+  sint64 last_sign_in_time = 13; // 最近登录时间
+  string created_by = 20000; // 创建者
+  google.type.DateTime created_at = 20001; // 创建时间
+  string updated_by = 20002; // 更新者
+  google.type.DateTime updated_at = 20003; // 更新时间
+  string deleted_by = 20004; // 禁用者
+  google.type.DateTime deleted_at = 20005; // 禁用时间
+}
+
+// EditStaffRequest arguments to edit a staff.
+message EditStaffRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+  // @gotags: binding:"gte=2,lte=32" label:"账号"
+  string account = 2; // 账号
+  // @gotags: binding:"gte=2,lte=32" label:"昵称"
+  string nick_name = 3; // 昵称
+  // @gotags: binding:"gte=2,lte=32" label:"真实姓名"
+  string real_name = 4; // 真实姓名
+  // @gotags: binding:"required,email" label:"邮箱"
+  string email = 5; // 邮箱
+  // @gotags: binding:"gte=11,lte=17" label:"手机号"
+  string phone = 6; // 手机号
+  // @gotags: binding:"omitempty,oneof=Male Female" label:"性别"
+  string gender = 7; // 性别
+  // @gotags: binding:"" label:"头像"
+  string avatar = 8; // 头像
+  // @gotags: binding:"omitempty,dive,ip" label:"登录IP白名单"
+  repeated string sign_in_ip_whitelist = 9; // 登录IP白名单
+}
+
+// EditStaffResponse return of editing a staff.
+message EditStaffResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// PatchStaffPasswordRequest request parameter to update the password of a specific staff.
+message PatchStaffPasswordRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+  // @gotags: binding:"gte=8,lte=32" label:"旧密码"
+  string old_password = 2; // 旧密码
+  // @gotags: binding:"gte=8,lte=32" label:"新密码"
+  string new_password = 3; // 新密码
+}
+
+// PatchStaffPasswordResponse return of updating the password of a specific staff.
+message PatchStaffPasswordResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // StaffId
+}
+
+// AuthorizeStaffRolesInDomainRequest  request parameter to update the roles of a specific staff.
+message AuthorizeStaffRolesInDomainRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+  // @gotags: binding:"required" label:"DomainId"
+  string domain_id = 2; // DomainId
+  // @gotags: binding:"" label:"角色Ids"
+  repeated string role_ids = 3; // 角色Ids
+}
+
+// AuthorizeStaffRolesInDomainResponse return of updating the roles of a specific staff.
+message AuthorizeStaffRolesInDomainResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // StaffId
+}
+
+// StaffDomainsRequest arguments to get domains of a staff.
+message StaffDomainsRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
+// StaffDomainsResponse return of getting domains of a staff.
+message StaffDomainsResponse {
+  repeated string domain_ids = 1; // 域Ids
+}
+
+// StaffRolesInDomainRequest arguments to get roles of a staff in some domain.
+message StaffRolesInDomainRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+  // @gotags: binding:"required" label:"DomainId"
+  string domain_id = 2; // DomainId
+}
+
+// StaffRolesInDomainResponse return of getting roles of a staff in some domain.
+message StaffRolesInDomainResponse {
+  repeated string role_ids = 1; // 角色Ids
+}
+
+// EnableStaffRequest arguments to enable a staff.
+message EnableStaffRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
+// EnableStaffResponse return of enabling a staff.
+message EnableStaffResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// DisableStaffRequest arguments to disable a staff.
+message DisableStaffRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
+// DisableStaffResponse return of disabling a staff.
+message DisableStaffResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// RemoveStaffRequest arguments to remove a staff.
+message RemoveStaffRequest {
+  // @gotags: binding:"required" label:"Id"
+  string id = 1; // Id
+}
+
+// RemoveStaffResponse return of removing a staff.
+message RemoveStaffResponse {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+}
+
+// staff services.
+service StaffService {
+  rpc AddStaff (AddStaffRequest) returns (AddStaffResponse);
+  rpc ListStaff (ListStaffRequest) returns (ListStaffResponse);
+  rpc ProfileStaff (ProfileStaffRequest) returns (ProfileStaffResponse);
+  rpc EditStaff (EditStaffRequest) returns (EditStaffResponse);
+  rpc PatchStaffPassword (PatchStaffPasswordRequest) returns (PatchStaffPasswordResponse);
+  rpc AuthorizeStaffRolesInDomain (AuthorizeStaffRolesInDomainRequest) returns (AuthorizeStaffRolesInDomainResponse);
+  rpc StaffDomains (StaffDomainsRequest) returns (StaffDomainsResponse);
+  rpc StaffRolesInDomain (StaffRolesInDomainRequest) returns (StaffRolesInDomainResponse);
+  rpc EnableStaff (EnableStaffRequest) returns (EnableStaffResponse);
+  rpc DisableStaff (DisableStaffRequest) returns (DisableStaffResponse);
+  rpc RemoveStaff (RemoveStaffRequest) returns (RemoveStaffResponse);
+}
+
+// change-log dtos.
+
+// ChangeLogListRequest request parameters to list change-logs.
+message ListChangeLogRequest {
+  // @gotags: form:"noPaging" binging:"" label:"是否不分页"
+  bool no_paging = 20001; // 是否不分页
+  // @gotags: form:"page" binding:"" label:"当前页码"
+  sint64 page = 20002; // 当前页码
+  // @gotags: form:"perPage" binding:"" label:"每页数据量"
+  sint64 per_page = 20003; // 每页数据量
+  // @gotags: form:"sortBy" binding:"" label:"字段排序条件"
+  map<string, sint32> sort_by = 20004; // 字段排序条件
+  // @gotags: form:"collName" binding:"" label:"集合（表）名 
+  string coll_name = 1; // 集合（表）名
+  // @gotags: form:"recordId" binding:"" label:"记录ID" 
+  string record_id = 2; // 记录ID
+  // @gotags: form:"opTimeBegin" binding:"" label:"操作时间起始" 
+  sint64 op_time_begin = 3; // 操作时间起始
+  // @gotags: form:"opTimeEnd" binding:"" label:"操作时间结束" 
+  sint64 op_time_end = 4; // 操作时间结束
+}
+
+// ListChangeLogElem an element of change-logs list.
+message ListChangeLogElem {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+  string coll_name = 2; // 集合（表）名
+  string record_id = 3; // 记录ID
+  map<string, google.protobuf.Any> field_diff = 4; // 记录差异
+  string created_by = 20000; // 创建者
+  google.type.DateTime created_at = 20001; // 创建时间
+  string updated_by = 20002; // 更新者
+  google.type.DateTime updated_at = 20003; // 更新时间
+}
+
+// ListChangeLogResponse return of listing change logs.
+message ListChangeLogResponse {
+  repeated ListChangeLogElem list = 1; // 列表
+  sint64 total = 2; // 总量
+}
+
+// change-log services.
+
+service ChangeLogService {
+  rpc ListChangeLog (ListChangeLogRequest) returns (ListChangeLogResponse);
+}
+
+// access-log dtos.
+
+// AccessLogListRequest request parameters to list access-logs.
+message ListAccessLogRequest {
+  // @gotags: form:"noPaging" binging:"" label:"是否不分页"
+  bool no_paging = 20001; // 是否不分页
+  // @gotags: form:"page" binding:"" label:"当前页码"
+  sint64 page = 20002; // 当前页码
+  // @gotags: form:"perPage" binding:"" label:"每页数据量"
+  sint64 per_page = 20003; // 每页数据量
+  // @gotags: form:"sortBy" binding:"" label:"字段排序条件"
+  map<string, sint32> sort_by = 20004; // 字段排序条件
+  // @gotags: form:"level" binding:"" label:"日志级别"
+  string level = 1; // 日志级别
+  // @gotags: form:"timeBegin" binding:"" label:"访问时间起始"
+  sint64 time_begin = 2; // 访问时间起始
+  // @gotags: form:"timeEnd" binding:"" label:"访问时间结束"
+  sint64 time_end = 3; // 访问时间结束
+  // @gotags: form:"clientIp" binding:"" label:"客户端IP"
+  string client_ip = 4; // 客户端IP
+  // @gotags: form:"path" binding:"" label:"请求路径"
+  string path = 5; // 请求路径
+  // @gotags: form:"traceId" binding:"" label:"跟踪Id"
+  string trace_id = 6; // 跟踪Id
+  // @gotags: from:"sessionId" binding:"" label:"会话Id"
+  string session_id = 7; // 会话Id
+  // @gotags: form:"tag" binding:"" label:"标签"
+  string tag = 8; // 标签
+}
+
+// ListAccessLogElem an element of access-logs list.
+message ListAccessLogElem {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+  string level = 2; // 日志级别
+  sint64 time = 3; // 访问时间
+  string client_ip = 4; // 客户端IP
+  string proto = 5; // 网络协议 -- HTTP/1.0 or HTTP/1.1 ...
+  string method = 6; // 请求方法
+  string path = 7; // 请求路径
+  string queries = 8; // 查询条件
+  string request_headers = 9; // 请求头部
+  string request_body = 10; // 请求体
+  string status_code = 11; // 响应状态码
+  string response_headers = 12; // 响应头部
+  string response_body = 13; // 响应体
+  string latency = 14; // 请求延迟
+  string trace_id = 15; // 跟踪Id
+  string session_id = 20004; // 会话Id
+  string tag = 20005; // 标签
+  string stack = 20006; // 栈信息
+  string created_by = 20000; // 创建者
+  google.type.DateTime created_at = 20001; // 创建时间
+  string updated_by = 20002; // 更新者
+  google.type.DateTime updated_at = 20003; // 更新时间
+}
+
+// ListAccessLogResponse return of listing access logs.
+message ListAccessLogResponse {
+  repeated ListAccessLogElem list = 1; // 列表
+  sint64 total = 2; // 总量
+}
+
+// access-log services.
+
+service AccessLogService {
+  rpc ListAccessLog (ListAccessLogRequest) returns (ListAccessLogResponse);
+}
+
+// auth dtos.
+
+// GetPicCaptchaRequest arguments to get picture captcha.
+message GetPicCaptchaRequest {
+  // @gotags: binging:"" label:"ObsoleteId"
+  string obsolete_id = 1; // ObsoleteId
+}
+
+// GetPicCaptchaResponse return of getting picture captcha.
+message GetPicCaptchaResponse {
+  string pic_captcha_id = 1; // 验证码Id
+  string pic_captcha_b64s = 2; // 验证码图片
+}
+
+// GetPicCaptchaAnswerRequest arguments to get picture captcha answer.
+message GetPicCaptchaAnswerRequest {
+  // @gotags: binging:"" label:"Id"
+  string id = 1; // Id
+}
+
+// GetPicCaptchaAnswerResponse return of getting picture captcha answer.
+message GetPicCaptchaAnswerResponse {
+  string answer = 1; // 验证码值
+}
+
+// SignInRequest sign-in request arguments.
+message SignInRequest {
+  // @gotags: binding:"gte=2,lte=32" label:"账号"
+  string account = 1; // 账号
+  // @gotags: binding:"gte=8,lte=32" label:"密码"
+  string password = 2; // 密码
+  // @gotags: binding:"required" label:"验证码Id"
+  string pic_captcha_id = 3; // 验证码Id
+  // @gotags: binding:"required" label:"验证码值"
+  string pic_captcha_answer = 4; // 验证码值
+}
+
+// SignInResponse return of sign-in.
+message SignInResponse {
+  string token = 1; // 登录token
+  sint64 expires_at = 2; // token有效期
+}
+
+// GetOwnDomainsRequest arguments to get own domains.
+message GetOwnDomainsRequest {}
+
+// GetOwnDomainsElem domain element.
+message GetOwnDomainsElem {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+  string name = 2; // 名称
+  repeated string alias = 3; // 别名
+  string icon = 4; // 图标
+}
+
+// GetOwnDomainsResponse return of getting own domains.
+message GetOwnDomainsResponse {
+  repeated GetOwnDomainsElem list = 1; // 列表
+  sint64 total = 2; // 总量
+}
+
+// GetOwnRolesElem element to return.
+message GetOwnRolesElem {
+  // @gotags: copier:"ID"
+  string id = 1; // Id
+  string name = 2; // 名称
+  repeated string alias = 3; // 别名
+  string icon = 4; // 图标
+}
+
+// GetOwnRolesRequest request parameters.
+message GetOwnRolesRequest {
+  // @gotags: form:"domainId" binding:"" label:"域Id"
+  string domain_id = 1; // 域Id
+}
+
+// GetOwnRolesResponse return of getting own roles.
+message GetOwnRolesResponse {
+  repeated GetOwnRolesElem list = 1; // 列表
+  sint64 total = 2; // 总量
+}
+
+// SignOutRequest arguments to sign out.
+message SignOutRequest {}
+
+// SignOutResponse return of signing out.
+message SignOutResponse {
+  string id = 1; // Id
+}
+
+// MenuView menu view.
+message MenuView {
+  // @gotags: yaml:"-" copier:"ID"
+  string id = 1;
+  // @gotags: yaml:"name"
+  string name = 2;
+  // @gotags: yaml:"seq"
+  sint32 seq = 3;
+  // @gotags: yaml:"icon"
+  string icon = 4;
+  // @gotags: yaml:"route"
+  string route = 5;
+  // @gotags: yaml:"memo"
+  string memo = 6;
+  // @gotags: yaml:"show"
+  bool show = 7;
+  // @gotags: yaml:"isItem"
+  bool is_item = 8;
+  // @gotags: yaml:"widgets"
+  repeated MenuWidgetView widgets = 9;
+  // @gotags: yaml:"children"
+  repeated MenuView children = 10;
+}
+
+// MenuWidgetView menu-widget view.
+message MenuWidgetView {
+  // @gotags: yaml:"-" copier:"ID"
+  string id = 1;
+  // @gotags: yaml:"name"
+  string name = 2;
+  // @gotags: yaml:"seq"
+  sint32 seq = 3;
+  // @gotags: yaml:"icon"
+  string icon = 4;
+  // @gotags: yaml:"apiMethod"
+  string api_method = 5;
+  // @gotags: yaml:"apiPath"
+  string api_path = 6;
+  // @gotags: yaml:"memo"
+  string memo = 7;
+  // @gotags: yaml:"show"
+  bool show = 8;
+}
+
+// GetOwnMenusRequest request parameters.
+message GetOwnMenusRequest {
+  // @gotags: form:"domainId" binding:"" label:"域Id"
+  string domain_id = 1; // 域Id
+  // @gotags: form:"roleId" binding:"" label:"角色Id"
+  string role_id = 2; // 角色Id
+}
+
+// GetOwnMenusResponse return of getting own menus.
+message GetOwnMenusResponse {
+  repeated MenuView list = 1; // 列表
+  sint64 total = 2; // 总量
+}
+
+// auth services.
+
+service AuthService {
+  rpc GetPicCaptcha (GetPicCaptchaRequest) returns (GetPicCaptchaResponse);
+  rpc GetPicCaptchaAnswer (GetPicCaptchaAnswerRequest) returns (GetPicCaptchaAnswerResponse);
+  rpc SignIn (SignInRequest) returns (SignInResponse);
+  rpc GetOwnDomains (GetOwnDomainsRequest) returns (GetOwnDomainsResponse);
+  rpc GetOwnRoles (GetOwnRolesRequest) returns (GetOwnRolesResponse);
+  rpc GetOwnMenus (GetOwnMenusRequest) returns (GetOwnMenusResponse);
+  rpc SignOut (SignOutRequest) returns (SignOutResponse);
+}
